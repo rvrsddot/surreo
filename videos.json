@@ -1,0 +1,46 @@
+{
+  "_nota": "Tutti i video YouTube della gallery. 'id' = 11 caratteri dopo youtu.be/ . Struttura consumata da app.js.",
+
+  "beside": {
+    "_nota": "video associati al pulsante-video del progetto (apre modal)",
+    "dum-md-drone": ["_ho1UMWaL74"],
+    "orikata": ["uXWFXOFQVOY"],
+    "parallels-archives": ["USaPDEHLuqc"],
+    "vr-melies": ["KExU3SF-ac0", "XmuFkUJ4LNY"],
+    "a-perspective": ["w_HGoSJ96hs"]
+  },
+
+  "exhibitCards": {
+    "_nota": "card-video SINGOLE aggiunte alla fine della sezione Exhibit",
+    "items": [
+      { "title": "Generative Visual Sub Fest", "id": "0yWIBXWI3UI" },
+      { "title": "Collapse Videomapping",       "id": "XmuFkUJ4LNY" },
+      { "title": "Pufferfish Videomapping",     "id": "w_HGoSJ96hs" }
+    ]
+  },
+
+  "visual": {
+    "_nota": "nuova sezione VISUAL / VIDEOCLIP EMOTION: immagine progetto + video affianco (layout in arrivo con la tua foto)",
+    "items": [
+      { "id": "gian-e-gli-spiriti", "videos": ["50JUp5OBKYA", "RT1qlBflC_E"] },
+      { "id": "appicciafuoco",      "videos": ["OhiD2niHKg4", "G54rveBZ1jA"] },
+      { "id": "imuri-band",         "videos": ["QdkUsGaTKwI", "pHEPOyjHl8Y"] },
+      { "id": "suburbi",            "videos": ["-Ffq06um9NQ"] },
+      { "id": "merletto-di-offida", "videos": ["tyXbNudW4gA"] },
+      { "slug": "corvinus", "title": "CORVINUS", "videos": ["nPdgEopXwb0"] },
+      { "id": "samisdat",           "videos": ["HV430-QtFyE"] }
+    ]
+  },
+
+  "website": {
+    "_nota": "sezione WEBSITE separata, 3 colonne, card-video con tasto VISIT",
+    "items": [
+      { "title": "Palandrani Technical", "id": "vP8bnAcAL2A", "url": "https://palandranitechnical.eu" },
+      { "title": "SPD Ingegneria",       "id": "dEFPgt3Fn4E", "url": "https://www.spdingegneria.it" },
+      { "title": "Suburbiæ Fest",        "id": "37LtPyJmcDI", "url": "https://suburbiaefest.com" },
+      { "title": "Panetta Bakery",       "id": "OqHxsWaCSek", "url": "https://panettabakery.com" },
+      { "title": "Parallel Archives",    "id": "e8C6QDVxe7M", "url": "" },
+      { "title": "B-Handmade",           "id": "c8U7ceBaT-c", "url": "https://b-handmade.com" }
+    ]
+  }
+}

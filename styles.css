@@ -1,0 +1,286 @@
+/* ---------- reset & tokens ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #dbe0e6;                 /* pastello blu-grigio in stile dawn.la */
+  --ink: #1a1c1f;
+  --ink-soft: #6c7079;
+  --line: #b8bec8;
+  --card: #ecf0f4;               /* card leggermente più chiare del bg */
+  --bd: 1.6px solid var(--ink);
+  --maxw: 1600px;
+  --gap: clamp(12px, 1.6vw, 22px);
+  --pad: clamp(18px, 4vw, 56px);
+  --card-gap: clamp(6px, .7vw, 9px);
+  --radius: clamp(18px, 2.4vw, 34px);   /* pill morbido */
+  --dot-red: #d94a3d;
+  --dot-yellow: #e8c649;
+  --dot-gray: #9aa1ab;
+  --font: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: 1.35;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ---------- header ---------- */
+.site-head { padding: clamp(20px, 4vw, 40px) var(--pad) 0; max-width: var(--maxw); margin: 0 auto; }
+.site-head__row {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding-bottom: clamp(30px, 8vw, 90px);
+  border-bottom: var(--bd);
+}
+.brand {
+  font-weight: 700; letter-spacing: -0.03em; text-decoration: none; color: var(--ink);
+  font-size: clamp(15px, 1.6vw, 19px); text-transform: uppercase;
+}
+.brand span { font-weight: 400; opacity: .5; margin-left: .35em; }
+.site-nav__meta { font-size: 13px; color: var(--ink-soft); letter-spacing: .01em; }
+
+.lede {
+  font-weight: 500; letter-spacing: -0.04em; line-height: .95;
+  font-size: clamp(40px, 9vw, 128px);
+  margin: clamp(28px, 6vw, 64px) 0 0;
+}
+.lede__dot { color: var(--ink-soft); }
+.sub { margin: 18px 0 0; color: var(--ink-soft); font-size: clamp(14px, 1.4vw, 16px); max-width: 44ch; display: flex; align-items: center; gap: .5ch; flex-wrap: wrap; }
+.sub .arrow-mini { width: 20px; height: 20px; vertical-align: middle; }
+
+/* ---------- sections: "cartella pill" stile dawn.la ---------- */
+.section {
+  max-width: var(--maxw);
+  margin: clamp(14px, 1.6vw, 22px) auto 0;
+  padding: clamp(20px, 2.2vw, 32px);
+  border: var(--bd);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+.section:first-of-type { margin-top: clamp(20px, 2.4vw, 30px); }
+.section:last-of-type { margin-bottom: clamp(20px, 2.4vw, 30px); }
+.section__head {
+  display: flex; align-items: center; gap: 16px;
+  padding: 0 clamp(6px, .8vw, 10px) clamp(12px, 1.4vw, 18px);
+  margin-bottom: var(--gap);
+  border-bottom: var(--bd);
+}
+.section__title {
+  font-weight: 600; letter-spacing: -0.02em; line-height: 1;
+  font-size: clamp(20px, 2.8vw, 34px); flex: 1; text-transform: uppercase;
+}
+/* semaforo stile Apple / dawn.la: rosso, giallo, grigio */
+.section__dots { display: flex; align-items: center; gap: clamp(6px, .7vw, 10px); flex: none; }
+.section__dots i {
+  display: block; width: clamp(11px, 1.1vw, 15px); height: clamp(11px, 1.1vw, 15px);
+  border-radius: 999px; border: 1px solid rgba(0,0,0,.15);
+}
+.section__dots i:nth-child(1) { background: var(--dot-red); }
+.section__dots i:nth-child(2) { background: var(--dot-yellow); }
+.section__dots i:nth-child(3) { background: var(--dot-gray); }
+
+.grid {
+  display: grid; gap: var(--gap);
+  grid-template-columns: repeat(5, 1fr);
+}
+@media (max-width: 1300px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 1000px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 720px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px)  { .grid { grid-template-columns: 1fr; } }
+
+/* ---------- card / flip ---------- */
+.card { perspective: 1800px; }
+.card__inner {
+  position: relative; width: 100%;
+  transition: transform .7s cubic-bezier(.16,1,.3,1);
+  transform-style: preserve-3d;
+}
+.card.is-flipped .card__inner { transform: rotateY(180deg); }
+
+.card__face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+
+/* --- front: due box separati con gap --- */
+.card__front {
+  position: relative;                 /* definisce l'altezza della card */
+  display: flex; flex-direction: column; gap: var(--card-gap);
+}
+.stage {
+  position: relative; aspect-ratio: 1 / 1; overflow: hidden;
+  border: var(--bd); background: #ffffff; border-radius: calc(var(--radius) * .55);
+}
+.stage__img {
+  position: absolute; top: -1px; left: -1px;              /* overscan: niente bordino */
+  width: calc(100% + 2px); height: calc(100% + 2px);
+  object-fit: cover; opacity: 0; transition: opacity .18s ease;
+}
+.stage__img.is-active { opacity: 1; }
+.card.is-scrub .stage__img { transition: none; }
+
+.titlebox {
+  border: var(--bd); background: #fff;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: clamp(8px, .9vw, 11px) clamp(12px, 1.4vw, 18px);
+  min-height: 0;
+  border-radius: 999px;   /* pill piena */
+}
+.card__name {
+  font-size: clamp(12px, 1vw, 15px); font-weight: 500; letter-spacing: -0.01em;
+  text-transform: uppercase; line-height: 1.1;
+}
+.card__idx { font-size: 11px; color: var(--ink-soft); font-weight: 500; flex: none; }
+
+/* --- pulsante freccia (usa ARROW1.svg che ha gia' cerchio+bordo) --- */
+.card__tools {
+  position: absolute; top: clamp(10px, 1vw, 14px); right: clamp(10px, 1vw, 14px); z-index: 3;
+  display: flex; flex-direction: column; gap: clamp(7px, .8vw, 10px);
+}
+.flip-btn, .video-btn {
+  width: clamp(38px, 3.2vw, 48px); height: clamp(38px, 3.2vw, 48px);
+  padding: 0; border: 0; background: none; cursor: pointer;
+  transition: transform .2s ease; line-height: 0; flex: none;
+}
+.flip-btn img, .video-btn svg { width: 100%; height: 100%; display: block; }
+.flip-btn:hover, .video-btn:hover { transform: scale(1.07) rotate(3deg); }
+.flip-btn:active, .video-btn:active { transform: scale(.94); }
+.video-btn:hover .vb-bg { fill: #f00; }
+.video-btn:hover .vb-play { fill: #fff; }
+
+/* --- back: box unico nero --- */
+.card__back {
+  position: absolute; inset: 0; transform: rotateY(180deg);
+  background: var(--ink); color: var(--bg);
+  border: 1.6px solid var(--ink); border-radius: 0;
+  display: flex; flex-direction: column; padding: clamp(18px, 2.2vw, 26px);
+}
+.back__top { display: flex; align-items: flex-start; justify-content: space-between; }
+.back__eyebrow { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .55; font-weight: 500; }
+.card__back .flip-btn { position: static; }
+.card__back .flip-btn img { transform: rotate(180deg); }
+.back__body { margin-top: auto; }
+.back__name {
+  font-size: clamp(22px, 3vw, 38px); font-weight: 500; letter-spacing: -0.03em;
+  line-height: 1; margin: 0 0 14px;
+}
+.back__desc { font-size: 14px; color: rgba(244,242,236,.6); max-width: 34ch; }
+.back__foot { display: flex; justify-content: space-between; font-size: 11px; opacity: .5; margin-top: 18px; font-weight: 500; }
+
+/* entrance */
+.card { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s cubic-bezier(.16,1,.3,1); }
+.card.is-in { opacity: 1; transform: none; }
+
+/* ---------- footer ---------- */
+.site-foot {
+  max-width: var(--maxw); margin: 0 auto; padding: 24px var(--pad) 48px;
+  border-top: var(--bd);
+  display: flex; justify-content: space-between;
+  font-size: 12px; color: var(--ink-soft); font-weight: 500;
+}
+
+/* ---------- overlay video (modal) ---------- */
+.vmodal {
+  position: fixed; inset: 0; z-index: 100; display: none;
+  background: rgba(10,9,8,.86); backdrop-filter: blur(4px);
+  padding: clamp(16px, 4vw, 48px);
+}
+.vmodal.is-open { display: grid; place-items: center; }
+.vmodal__box { width: min(1000px, 100%); }
+.vmodal__stage {
+  position: relative; width: 100%; aspect-ratio: 16 / 9;
+  border: 1.6px solid #fff; background: #000; overflow: hidden;
+}
+.vmodal__stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.vmodal__bar {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  margin-top: 14px; color: #f4f2ec;
+}
+.vmodal__title { font-weight: 600; font-size: clamp(15px, 1.6vw, 20px); letter-spacing: -0.02em; margin-right: auto; }
+.vmodal__tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.vmodal__tab {
+  font: inherit; font-size: 12px; font-weight: 500; color: #f4f2ec;
+  background: transparent; border: 1px solid rgba(244,242,236,.35); border-radius: 999px;
+  padding: 6px 14px; cursor: pointer; transition: background .2s, color .2s;
+}
+.vmodal__tab.is-active, .vmodal__tab:hover { background: #f4f2ec; color: #16130f; }
+.vmodal__close {
+  position: fixed; top: 20px; right: 24px; width: 44px; height: 44px;
+  border: 1px solid rgba(244,242,236,.4); background: transparent; color: #f4f2ec;
+  border-radius: 999px; font-size: 22px; cursor: pointer; line-height: 1;
+  display: grid; place-items: center; transition: background .2s, color .2s;
+}
+.vmodal__close:hover { background: #f4f2ec; color: #16130f; }
+
+/* ---------- facciata video inline (videoclip + siti) ---------- */
+.vc-video { position: relative; aspect-ratio: 16 / 9; border: var(--bd); overflow: hidden; background: #000; border-radius: calc(var(--radius) * .55); }
+.vc-thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.vc-title {
+  position: absolute; top: 10px; left: 12px; right: 12px; z-index: 2;
+  color: #fff; font-weight: 600; font-size: 14px; letter-spacing: -0.01em;
+  text-shadow: 0 1px 4px rgba(0,0,0,.7);
+}
+.vc-visit {
+  position: absolute; bottom: 10px; right: 12px; z-index: 2;
+  color: #fff; font-size: 11px; font-weight: 600; letter-spacing: .03em; text-decoration: none;
+  background: rgba(0,0,0,.55); padding: 4px 9px; border: 1px solid rgba(255,255,255,.5);
+}
+.vc-visit:hover { background: #fff; color: #000; }
+.vc-play {
+  position: absolute; inset: 0; margin: auto; width: 68px; height: 48px;
+  border: 0; background: none; cursor: pointer; padding: 0; display: grid; place-items: center;
+}
+.vc-play-bg { fill: #212121; opacity: .82; transition: fill .2s, opacity .2s; }
+.vc-video:hover .vc-play-bg { fill: #f00; opacity: 1; }
+.vc-iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* ---------- sezione VIDEOCLIP (immagine + video) ---------- */
+/* --vclip-h calcolato in JS (fitVclip) sulla larghezza reale del contenitore,
+   cosi' la riga quadrato + 2 video 16:9 entra esatta senza uscire dalla griglia. */
+:root { --vclip-h: 226px; --vclip-h1: 178px; }
+.vclip-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.vclip-item--double { grid-column: 1 / -1; }
+/* intestazione per progetto: pill col nome (stile dawn.la) */
+.vclip-head {
+  display: flex; align-items: center;
+  margin-bottom: var(--card-gap);
+  font-weight: 600; text-transform: uppercase; letter-spacing: -0.01em;
+  font-size: clamp(12px, 1.15vw, 15px);
+}
+.vclip-head span {
+  display: inline-block; padding: 6px 14px;
+  border: var(--bd); border-radius: 999px; background: #fff;
+}
+.vclip-row { display: flex; gap: clamp(6px, .7vw, 10px); align-items: flex-start; }
+.vclip-item--double .vclip-media { width: var(--vclip-h); }
+.vclip-item--single .vclip-media { width: var(--vclip-h1); }
+.vclip-media { flex: 0 0 auto; }
+.vclip-sq { position: relative; aspect-ratio: 1 / 1; border: var(--bd); overflow: hidden; background: #ffffff; border-radius: calc(var(--radius) * .55); }
+.vclip-sq img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.vclip-noimg { position: absolute; inset: 0; background: #16130f; }
+.vclip-item--double .vc-video { height: var(--vclip-h); }
+.vclip-item--single .vc-video { height: var(--vclip-h1); }
+.vclip-row .vc-video { width: auto; flex: 0 0 auto; }
+
+/* ---------- sezione SITI/WEBSITE (3 colonne, solo video) ---------- */
+.grid--3 { grid-template-columns: repeat(3, 1fr); }
+.site-card .vc-video { width: 100%; }
+
+@media (max-width: 900px) { .grid--3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 700px) {
+  .grid--3 { grid-template-columns: 1fr; }
+  .vclip-list { grid-template-columns: 1fr; }
+  .vclip-item--single, .vclip-item--double { grid-column: 1 / -1; }
+  .vclip-row { flex-direction: column; }
+  .vclip-media, .vclip-item--single .vclip-media { width: 100%; }
+  .vclip-row .vc-video { height: auto; width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card, .card__inner, .stage__img, .flip-btn { transition: none !important; }
+}

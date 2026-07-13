@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Surreo Studio — Progetti</title>
+  <meta name="description" content="Selezione di progetti — Surreo Studio." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main id="sections" aria-live="polite"></main>
+
+  <template id="card-tpl">
+    <article class="card">
+      <div class="card__inner">
+        <!-- FRONTE -->
+        <div class="card__face card__front">
+          <div class="stage">
+            <div class="card__tools">
+              <button class="flip-btn" type="button" aria-label="Mostra info progetto">
+                <img src="assets/icons/arrow1.svg" alt="" width="56" height="56" />
+              </button>
+              <!-- il pulsante video viene aggiunto da JS solo se il progetto ha video -->
+            </div>
+          </div>
+          <div class="titlebox">
+            <span class="card__name"></span>
+            <span class="card__idx"><span class="cur">1</span>/<span class="tot">1</span></span>
+          </div>
+        </div>
+        <!-- RETRO -->
+        <div class="card__face card__back">
+          <div class="back__top">
+            <span class="back__eyebrow">Progetto</span>
+            <button class="flip-btn flip-btn--back" type="button" aria-label="Torna al progetto">
+              <img src="assets/icons/arrow1.svg" alt="" width="56" height="56" />
+            </button>
+          </div>
+          <div class="back__body">
+            <h2 class="back__name"></h2>
+            <p class="back__desc">Descrizione in arrivo.</p>
+          </div>
+          <div class="back__foot"><span class="back__n"></span></div>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js?v=16"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+# Sorgenti pesanti: NON caricare i PNG originali (1.4GB) sul repo.
+# Servono solo a rigenerare gli asset con build_assets.py.
+# NB: leading slash + suffix per non escludere anche assets/projects (macOS case-insensitive).
+/PROJECTS/
+/PROJECTS
+.DS_Store
