@@ -431,27 +431,60 @@
   function startScrub(cards) {
     cards.forEach((c) => c.el.classList.add("is-scrub"));
     let ticking = false;
+    let parentScrollY = 0;   // se il parent ce lo comunica via postMessage
+    let scrollDetected = false;
+
     function update() {
       ticking = false;
       const vh = window.innerHeight;
       cards.forEach((c) => {
-        if (!c.active || !c.loaded) return;
+        if (!c.loaded) return;
         const r = c.el.getBoundingClientRect();
-        // progresso 0→1 mentre la card attraversa il viewport
-        const prog = (vh - r.top) / (vh + r.height);
+        // se il parent ci ha detto la sua scrollY, la sottraiamo per compensare
+        const top = r.top - parentScrollY;
+        if (r.bottom < -100 || top > vh + 100) return; // molto fuori: salta
+        const prog = (vh - top) / (vh + r.height);
         const clamped = Math.min(1, Math.max(0, prog));
         const i = Math.round(clamped * (c.frames.length - 1));
         if (i !== c.idx) c.paint(i);
       });
     }
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (!ticking) { requestAnimationFrame(update); ticking = true; }
-      },
-      { passive: true }
-    );
-    window.addEventListener("resize", update, { passive: true });
+    const req = () => {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    };
+
+    // 1) scroll interno dell'iframe (o standalone)
+    window.addEventListener("scroll", () => { scrollDetected = true; req(); }, { passive: true });
+
+    // 2) parent che scrolla su Readymag ci manda l'offset via postMessage
+    window.addEventListener("message", (e) => {
+      if (e.data && e.data.type === "surreo:parent-scroll" && typeof e.data.y === "number") {
+        parentScrollY = e.data.y - (e.data.iframeTop || 0);
+        scrollDetected = true;
+        req();
+      }
+    });
+
+    // 3) IntersectionObserver di riserva: si attiva a piu' soglie e forza update
+    const thresholds = Array.from({length: 21}, (_, i) => i / 20);
+    const io = new IntersectionObserver(() => req(), { threshold: thresholds });
+    cards.forEach((c) => io.observe(c.el));
+
+    window.addEventListener("resize", req, { passive: true });
     setTimeout(update, 300);
+
+    // 4) FALLBACK: se dopo 2s nessuno scroll e' stato rilevato (iframe embed dove
+    //    il parent non collabora), attivo autoplay lento su ogni card
+    setTimeout(() => {
+      if (scrollDetected) return;
+      const STEP = 1100;
+      cards.forEach((c) => {
+        setTimeout(() => {
+          setInterval(() => {
+            if (c.loaded && !c.el.classList.contains("is-flipped")) c.paint(c.idx + 1);
+          }, STEP);
+        }, Math.random() * STEP);
+      });
+    }, 2000);
   }
 })();
