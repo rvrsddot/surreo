@@ -8,6 +8,28 @@
 
   let VIDEOS = {};
 
+  /* --- se siamo dentro un iframe, comunica la nostra altezza al parent ---
+     Il parent (es. widget HTML su Readymag) resta in ascolto e ridimensiona
+     l'iframe automaticamente. Emette al load e ad ogni cambio di layout. */
+  if (window.parent !== window) {
+    let lastH = 0;
+    const sendHeight = () => {
+      const h = Math.max(
+        document.documentElement.scrollHeight,
+        document.body ? document.body.scrollHeight : 0
+      );
+      if (h !== lastH) {
+        lastH = h;
+        try { window.parent.postMessage({ type: "surreo:height", height: h }, "*"); } catch (e) {}
+      }
+    };
+    window.addEventListener("load", sendHeight);
+    window.addEventListener("resize", sendHeight, { passive: true });
+    // segnala altezza anche mentre le immagini si caricano progressivamente
+    const ro = new ResizeObserver(sendHeight);
+    ro.observe(document.documentElement);
+  }
+
   Promise.all([
     fetch("projects.json", { cache: "no-store" }).then((r) => r.json()),
     fetch("videos.json", { cache: "no-store" }).then((r) => r.json()).catch(() => ({})),
