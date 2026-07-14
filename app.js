@@ -3,7 +3,9 @@
 
   const sectionsEl = document.getElementById("sections");
   const tpl = document.getElementById("card-tpl");
-  const isTouch = matchMedia("(max-width: 760px), (hover: none) and (pointer: coarse)").matches;
+  /* touch detection via CAPACITÀ del dispositivo, non larghezza viewport:
+     dentro un iframe Readymag stretto su desktop, l'utente ha comunque il mouse -> hover */
+  const isTouch = matchMedia("(hover: none) and (pointer: coarse)").matches;
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   let VIDEOS = {};

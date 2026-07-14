@@ -2,12 +2,12 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #dbe0e6;                 /* pastello blu-grigio in stile dawn.la */
-  --ink: #1a1c1f;
+  --bg: #ffffff;
+  --ink: #000000;
   --ink-soft: #6c7079;
-  --line: #b8bec8;
-  --card: #ecf0f4;               /* card leggermente più chiare del bg */
-  --bd: 1.6px solid var(--ink);
+  --line: #000000;
+  --card: #ffffff;
+  --bd: 1px solid var(--ink);
   --maxw: 1600px;
   --gap: clamp(12px, 1.6vw, 22px);
   --pad: clamp(18px, 4vw, 56px);
@@ -38,18 +38,18 @@ body {
 }
 .brand {
   font-weight: 700; letter-spacing: -0.03em; text-decoration: none; color: var(--ink);
-  font-size: clamp(15px, 1.6vw, 19px); text-transform: uppercase;
+  font-size: clamp(12px, 1.2vw, 15px); text-transform: uppercase;
 }
 .brand span { font-weight: 400; opacity: .5; margin-left: .35em; }
-.site-nav__meta { font-size: 13px; color: var(--ink-soft); letter-spacing: .01em; }
+.site-nav__meta { font-size: 11px; color: var(--ink-soft); letter-spacing: .01em; }
 
 .lede {
   font-weight: 500; letter-spacing: -0.04em; line-height: .95;
-  font-size: clamp(40px, 9vw, 128px);
+  font-size: clamp(32px, 7vw, 96px);
   margin: clamp(28px, 6vw, 64px) 0 0;
 }
 .lede__dot { color: var(--ink-soft); }
-.sub { margin: 18px 0 0; color: var(--ink-soft); font-size: clamp(14px, 1.4vw, 16px); max-width: 44ch; display: flex; align-items: center; gap: .5ch; flex-wrap: wrap; }
+.sub { margin: 14px 0 0; color: var(--ink-soft); font-size: clamp(11px, 1.1vw, 13px); max-width: 44ch; display: flex; align-items: center; gap: .5ch; flex-wrap: wrap; }
 .sub .arrow-mini { width: 20px; height: 20px; vertical-align: middle; }
 
 /* ---------- sections: "cartella pill" stile dawn.la ---------- */
@@ -71,7 +71,7 @@ body {
 }
 .section__title {
   font-weight: 600; letter-spacing: -0.02em; line-height: 1;
-  font-size: clamp(20px, 2.8vw, 34px); flex: 1; text-transform: uppercase;
+  font-size: clamp(15px, 2vw, 24px); flex: 1; text-transform: uppercase;
 }
 /* semaforo stile Apple / dawn.la: rosso, giallo, grigio */
 .section__dots { display: flex; align-items: center; gap: clamp(6px, .7vw, 10px); flex: none; }
@@ -89,8 +89,8 @@ body {
 }
 @media (max-width: 1100px) { .grid { grid-template-columns: repeat(4, 1fr); } }
 @media (max-width: 820px)  { .grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 560px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
-/* iPhone e simili: NON scendere sotto le 2 colonne, evita card giganti */
+@media (max-width: 620px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 460px)  { .grid { grid-template-columns: 1fr; } }
 
 /* ---------- card / flip ---------- */
 .card { perspective: 1800px; }
@@ -128,10 +128,10 @@ body {
   border-radius: 999px;   /* pill piena */
 }
 .card__name {
-  font-size: clamp(12px, 1vw, 15px); font-weight: 500; letter-spacing: -0.01em;
+  font-size: clamp(10px, .8vw, 12px); font-weight: 500; letter-spacing: -0.01em;
   text-transform: uppercase; line-height: 1.1;
 }
-.card__idx { font-size: 11px; color: var(--ink-soft); font-weight: 500; flex: none; }
+.card__idx { font-size: 9px; color: var(--ink-soft); font-weight: 500; flex: none; }
 
 /* --- pulsante freccia (usa ARROW1.svg che ha gia' cerchio+bordo) --- */
 .card__tools {
@@ -152,21 +152,21 @@ body {
 /* --- back: box unico nero --- */
 .card__back {
   position: absolute; inset: 0; transform: rotateY(180deg);
-  background: var(--ink); color: var(--bg);
-  border: 1.6px solid var(--ink); border-radius: 0;
-  display: flex; flex-direction: column; padding: clamp(18px, 2.2vw, 26px);
+  background: var(--ink); color: #ffffff;
+  border: 1px solid var(--ink); border-radius: 0;
+  display: flex; flex-direction: column; padding: clamp(14px, 1.8vw, 22px);
 }
 .back__top { display: flex; align-items: flex-start; justify-content: space-between; }
-.back__eyebrow { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .55; font-weight: 500; }
+.back__eyebrow { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; opacity: .55; font-weight: 500; }
 .card__back .flip-btn { position: static; }
 .card__back .flip-btn img { transform: rotate(180deg); }
 .back__body { margin-top: auto; }
 .back__name {
-  font-size: clamp(22px, 3vw, 38px); font-weight: 500; letter-spacing: -0.03em;
-  line-height: 1; margin: 0 0 14px;
+  font-size: clamp(16px, 2.2vw, 28px); font-weight: 500; letter-spacing: -0.03em;
+  line-height: 1; margin: 0 0 10px;
 }
-.back__desc { font-size: 14px; color: rgba(244,242,236,.6); max-width: 34ch; }
-.back__foot { display: flex; justify-content: space-between; font-size: 11px; opacity: .5; margin-top: 18px; font-weight: 500; }
+.back__desc { font-size: 11px; color: rgba(255,255,255,.6); max-width: 34ch; line-height: 1.4; }
+.back__foot { display: flex; justify-content: space-between; font-size: 9px; opacity: .5; margin-top: 14px; font-weight: 500; }
 
 /* entrance */
 .card { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s cubic-bezier(.16,1,.3,1); }
@@ -177,7 +177,7 @@ body {
   max-width: var(--maxw); margin: 0 auto; padding: 24px var(--pad) 48px;
   border-top: var(--bd);
   display: flex; justify-content: space-between;
-  font-size: 12px; color: var(--ink-soft); font-weight: 500;
+  font-size: 10px; color: var(--ink-soft); font-weight: 500;
 }
 
 /* ---------- overlay video (modal) ---------- */
@@ -190,17 +190,17 @@ body {
 .vmodal__box { width: min(1000px, 100%); }
 .vmodal__stage {
   position: relative; width: 100%; aspect-ratio: 16 / 9;
-  border: 1.6px solid #fff; background: #000; overflow: hidden;
+  border: 1px solid #fff; background: #000; overflow: hidden;
 }
 .vmodal__stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .vmodal__bar {
   display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
   margin-top: 14px; color: #f4f2ec;
 }
-.vmodal__title { font-weight: 600; font-size: clamp(15px, 1.6vw, 20px); letter-spacing: -0.02em; margin-right: auto; }
+.vmodal__title { font-weight: 600; font-size: clamp(12px, 1.3vw, 16px); letter-spacing: -0.02em; margin-right: auto; }
 .vmodal__tabs { display: flex; gap: 8px; flex-wrap: wrap; }
 .vmodal__tab {
-  font: inherit; font-size: 12px; font-weight: 500; color: #f4f2ec;
+  font: inherit; font-size: 10px; font-weight: 500; color: #f4f2ec;
   background: transparent; border: 1px solid rgba(244,242,236,.35); border-radius: 999px;
   padding: 6px 14px; cursor: pointer; transition: background .2s, color .2s;
 }
@@ -218,12 +218,12 @@ body {
 .vc-thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .vc-title {
   position: absolute; top: 10px; left: 12px; right: 12px; z-index: 2;
-  color: #fff; font-weight: 600; font-size: 14px; letter-spacing: -0.01em;
+  color: #fff; font-weight: 600; font-size: 11px; letter-spacing: -0.01em;
   text-shadow: 0 1px 4px rgba(0,0,0,.7);
 }
 .vc-visit {
   position: absolute; bottom: 10px; right: 12px; z-index: 2;
-  color: #fff; font-size: 11px; font-weight: 600; letter-spacing: .03em; text-decoration: none;
+  color: #fff; font-size: 9px; font-weight: 600; letter-spacing: .03em; text-decoration: none;
   background: rgba(0,0,0,.55); padding: 4px 9px; border: 1px solid rgba(255,255,255,.5);
 }
 .vc-visit:hover { background: #fff; color: #000; }
@@ -250,7 +250,7 @@ body {
   display: flex; align-items: center;
   margin-bottom: var(--card-gap);
   font-weight: 600; text-transform: uppercase; letter-spacing: -0.01em;
-  font-size: clamp(12px, 1.15vw, 15px);
+  font-size: clamp(10px, .9vw, 12px);
 }
 .vclip-head span {
   display: inline-block; padding: 6px 14px;
@@ -282,7 +282,7 @@ body {
 }
 
 /* ---------- MOBILE COMPATTO (iframe Readymag) ---------- */
-@media (max-width: 560px) {
+@media (max-width: 620px) {
   :root { --gap: 10px; --radius: 14px; --card-gap: 5px; }
   .section {
     margin: 8px auto 0;
@@ -295,14 +295,21 @@ body {
     margin-bottom: 10px;
     gap: 8px;
   }
-  .section__title { font-size: 15px; letter-spacing: 0; }
+  .section__title { font-size: 13px; letter-spacing: 0; }
   .section__dots i { width: 8px; height: 8px; }
-  .card__name { font-size: 11px; }
-  .card__idx { font-size: 10px; }
+  .card__name { font-size: 10px; }
+  .card__idx { font-size: 9px; }
   .titlebox { padding: 6px 10px; }
   .flip-btn, .video-btn { width: 30px; height: 30px; }
   .card__tools { top: 6px; right: 6px; gap: 5px; }
   .card { transform: none; opacity: 1; }
+}
+@media (max-width: 460px) {
+  .card__name { font-size: 12px; }
+  .card__idx { font-size: 10px; }
+  .flip-btn, .video-btn { width: 36px; height: 36px; }
+  .card__tools { top: 8px; right: 8px; gap: 6px; }
+  .titlebox { padding: 8px 14px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
