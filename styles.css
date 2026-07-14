@@ -90,7 +90,6 @@ body {
 @media (max-width: 1100px) { .grid { grid-template-columns: repeat(4, 1fr); } }
 @media (max-width: 820px)  { .grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 620px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 460px)  { .grid { grid-template-columns: 1fr; } }
 
 /* ---------- card / flip ---------- */
 .card { perspective: 1800px; }
@@ -281,47 +280,47 @@ body {
   .vclip-row .vc-video { height: auto; width: 100%; }
 }
 
-/* ---------- MOBILE COMPATTO (iframe Readymag) ---------- */
+/* ---------- MOBILE COMPATTO (iframe Readymag) ----------
+   Obiettivo: minima altezza complessiva → 2 colonne + spaziature strette,
+   pill overlay sull'immagine (niente coda). */
 @media (max-width: 620px) {
-  :root { --gap: 10px; --radius: 14px; --card-gap: 5px; }
+  :root { --gap: 6px; --radius: 12px; --card-gap: 0px; --pad: 10px; }
   .section {
-    margin: 8px auto 0;
-    padding: 10px;
+    margin: 4px auto 0;
+    padding: 6px;
   }
-  .section:first-of-type { margin-top: 8px; }
-  .section:last-of-type { margin-bottom: 8px; }
+  .section:first-of-type { margin-top: 4px; }
+  .section:last-of-type { margin-bottom: 4px; }
   .section__head {
-    padding: 0 4px 8px;
-    margin-bottom: 10px;
-    gap: 8px;
+    padding: 0 4px 6px;
+    margin-bottom: 6px;
+    gap: 6px;
   }
-  .section__title { font-size: 13px; letter-spacing: 0; }
-  .section__dots i { width: 8px; height: 8px; }
-  .card__name { font-size: 10px; }
-  .card__idx { font-size: 9px; }
-  .titlebox { padding: 6px 10px; }
-  .flip-btn, .video-btn { width: 30px; height: 30px; }
-  .card__tools { top: 6px; right: 6px; gap: 5px; }
+  .section__title { font-size: 12px; letter-spacing: 0; }
+  .section__dots i { width: 7px; height: 7px; }
   .card { transform: none; opacity: 1; }
-}
-@media (max-width: 460px) {
-  .card__name { font-size: 12px; }
-  .card__idx { font-size: 10px; }
-  .flip-btn, .video-btn { width: 36px; height: 36px; }
-  .card__tools { top: 10px; right: 10px; gap: 6px; }
-  /* titlebox in overlay sull'immagine, ancorato in basso a filo dei margini */
+
+  /* pill overlay sull'immagine */
   .card__front { gap: 0; }
   .titlebox {
     position: absolute;
-    left: 12px; right: 12px; bottom: 12px;
-    padding: 8px 14px;
+    left: 6px; right: 6px; bottom: 6px;
+    padding: 4px 8px;
     background: rgba(255,255,255,.92);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     z-index: 2;
+    gap: 6px;
+    min-height: 0;
   }
-  .card__name { font-size: 11px; }
-  .card__idx { font-size: 9px; }
+  .card__name { font-size: 9px; line-height: 1; }
+  .card__idx { font-size: 8px; }
+  .flip-btn, .video-btn { width: 26px; height: 26px; }
+  .card__tools { top: 5px; right: 5px; gap: 4px; }
+
+  /* videoclip / website ancora più stretti */
+  .vclip-list { gap: 8px; }
+  .grid--3 { gap: var(--gap); }
 }
 
 @media (prefers-reduced-motion: reduce) {
