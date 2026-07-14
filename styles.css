@@ -308,8 +308,20 @@ body {
   .card__name { font-size: 12px; }
   .card__idx { font-size: 10px; }
   .flip-btn, .video-btn { width: 36px; height: 36px; }
-  .card__tools { top: 8px; right: 8px; gap: 6px; }
-  .titlebox { padding: 8px 14px; }
+  .card__tools { top: 10px; right: 10px; gap: 6px; }
+  /* titlebox in overlay sull'immagine, ancorato in basso a filo dei margini */
+  .card__front { gap: 0; }
+  .titlebox {
+    position: absolute;
+    left: 12px; right: 12px; bottom: 12px;
+    padding: 8px 14px;
+    background: rgba(255,255,255,.92);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 2;
+  }
+  .card__name { font-size: 11px; }
+  .card__idx { font-size: 9px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
