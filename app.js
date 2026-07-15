@@ -4,8 +4,12 @@
   const sectionsEl = document.getElementById("sections");
   const tpl = document.getElementById("card-tpl");
   /* touch detection via CAPACITÀ del dispositivo, non larghezza viewport:
-     dentro un iframe Readymag stretto su desktop, l'utente ha comunque il mouse -> hover */
-  const isTouch = matchMedia("(hover: none) and (pointer: coarse)").matches;
+     dentro un iframe Readymag stretto su desktop, l'utente ha comunque il mouse -> hover.
+     Override via ?touch=1 (forza scrub) o ?touch=0 (forza hover) per debug. */
+  const _forceTouch = new URLSearchParams(location.search).get("touch");
+  const isTouch = _forceTouch === "1" ? true
+    : _forceTouch === "0" ? false
+    : matchMedia("(hover: none) and (pointer: coarse)").matches;
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   let VIDEOS = {};
@@ -431,14 +435,16 @@
 
   /* ---------- MOBILE: scrub allo scroll, sincrono col gesto utente ----------
      Nessun autoplay/fallback: se non c'è scroll, le card restano ferme.
-     Dentro un iframe (Readymag) il parent ci comunica scrollY + iframeTop + vh
-     via postMessage, così calcoliamo la posizione REALE della card nel viewport
-     del parent (non dell'iframe, che essendo scrolling="no" è alto tutto il contenuto). */
+     Dentro un iframe il parent ci manda periodicamente {iframeTop, vh}
+     (top dell'iframe RELATIVO al viewport parent, e viewport height del parent),
+     così calcoliamo dove sta ogni card nel viewport parent:
+       topInParentViewport = r.top (card in iframe) + iframeTop */
   function startScrub(cards) {
     cards.forEach((c) => c.el.classList.add("is-scrub"));
     let ticking = false;
-    let parentOffset = 0;  // scrollY parent - iframeTop, usato per riportare r.top nel viewport parent
-    let parentVh = 0;      // viewport height del parent (0 = fallback a window.innerHeight)
+    let iframeTop = 0;   // top dell'iframe nel viewport parent; 0 se standalone
+    let parentVh = 0;    // 0 = standalone → usa window.innerHeight
+    let embedded = false; // true appena il parent ci parla
 
     function update() {
       ticking = false;
@@ -447,10 +453,12 @@
       cards.forEach((c) => {
         if (!c.loaded) return;
         const r = c.el.getBoundingClientRect();
-        const top = r.top - parentOffset; // top della card nel viewport parent
-        // fuori viewport (con buffer): niente aggiornamento
+        // standalone: r.top è già relativo al viewport visibile (window scrolla).
+        // embed: r.top è relativo al viewport dell'iframe (che è fermo, scrolling=no);
+        //   il parent scrolla, e ci dà iframeTop = dove sta l'iframe nel suo viewport.
+        //   Quindi la posizione della card nel viewport parent è r.top + iframeTop.
+        const top = embedded ? (r.top + iframeTop) : r.top;
         if (top + r.height < -50 || top > vh + 50) return;
-        // prog = 0 quando la card entra dal basso, 1 quando esce dall'alto
         const prog = (vh - top) / (vh + r.height);
         const clamped = Math.min(1, Math.max(0, prog));
         const i = Math.round(clamped * (c.frames.length - 1));
@@ -464,11 +472,15 @@
     // scroll standalone (aprendo il sito direttamente su mobile)
     window.addEventListener("scroll", req, { passive: true });
 
-    // scroll parent (embed Readymag): riceviamo scrollY, iframeTop assoluto, vh
+    // parent Readymag ci comunica la posizione live dell'iframe nel suo viewport
     window.addEventListener("message", (e) => {
       if (!e.data || e.data.type !== "surreo:parent-scroll") return;
-      if (typeof e.data.y === "number") {
-        parentOffset = e.data.y - (e.data.iframeTop || 0);
+      embedded = true;
+      // nuovo formato: iframeTop = top viewport-relativo (getBoundingClientRect().top del parent)
+      if (typeof e.data.iframeTop === "number") iframeTop = e.data.iframeTop;
+      // backwards-compat: se arriva anche y (vecchio embed), iframeTop era assoluto
+      if (typeof e.data.y === "number" && typeof e.data.iframeTopAbs === "number") {
+        iframeTop = e.data.iframeTopAbs - e.data.y;
       }
       if (typeof e.data.vh === "number" && e.data.vh > 0) parentVh = e.data.vh;
       req();
