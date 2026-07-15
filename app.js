@@ -429,22 +429,28 @@
     });
   }
 
-  /* ---------- MOBILE: scrub allo scroll ---------- */
+  /* ---------- MOBILE: scrub allo scroll, sincrono col gesto utente ----------
+     Nessun autoplay/fallback: se non c'è scroll, le card restano ferme.
+     Dentro un iframe (Readymag) il parent ci comunica scrollY + iframeTop + vh
+     via postMessage, così calcoliamo la posizione REALE della card nel viewport
+     del parent (non dell'iframe, che essendo scrolling="no" è alto tutto il contenuto). */
   function startScrub(cards) {
     cards.forEach((c) => c.el.classList.add("is-scrub"));
     let ticking = false;
-    let parentScrollY = 0;   // se il parent ce lo comunica via postMessage
-    let scrollDetected = false;
+    let parentOffset = 0;  // scrollY parent - iframeTop, usato per riportare r.top nel viewport parent
+    let parentVh = 0;      // viewport height del parent (0 = fallback a window.innerHeight)
 
     function update() {
       ticking = false;
-      const vh = window.innerHeight;
+      const vh = parentVh || window.innerHeight;
+      if (vh <= 0) return;
       cards.forEach((c) => {
         if (!c.loaded) return;
         const r = c.el.getBoundingClientRect();
-        // se il parent ci ha detto la sua scrollY, la sottraiamo per compensare
-        const top = r.top - parentScrollY;
-        if (r.bottom < -100 || top > vh + 100) return; // molto fuori: salta
+        const top = r.top - parentOffset; // top della card nel viewport parent
+        // fuori viewport (con buffer): niente aggiornamento
+        if (top + r.height < -50 || top > vh + 50) return;
+        // prog = 0 quando la card entra dal basso, 1 quando esce dall'alto
         const prog = (vh - top) / (vh + r.height);
         const clamped = Math.min(1, Math.max(0, prog));
         const i = Math.round(clamped * (c.frames.length - 1));
@@ -455,38 +461,20 @@
       if (!ticking) { requestAnimationFrame(update); ticking = true; }
     };
 
-    // 1) scroll interno dell'iframe (o standalone)
-    window.addEventListener("scroll", () => { scrollDetected = true; req(); }, { passive: true });
+    // scroll standalone (aprendo il sito direttamente su mobile)
+    window.addEventListener("scroll", req, { passive: true });
 
-    // 2) parent che scrolla su Readymag ci manda l'offset via postMessage
+    // scroll parent (embed Readymag): riceviamo scrollY, iframeTop assoluto, vh
     window.addEventListener("message", (e) => {
-      if (e.data && e.data.type === "surreo:parent-scroll" && typeof e.data.y === "number") {
-        parentScrollY = e.data.y - (e.data.iframeTop || 0);
-        scrollDetected = true;
-        req();
+      if (!e.data || e.data.type !== "surreo:parent-scroll") return;
+      if (typeof e.data.y === "number") {
+        parentOffset = e.data.y - (e.data.iframeTop || 0);
       }
+      if (typeof e.data.vh === "number" && e.data.vh > 0) parentVh = e.data.vh;
+      req();
     });
-
-    // 3) IntersectionObserver di riserva: si attiva a piu' soglie e forza update
-    const thresholds = Array.from({length: 21}, (_, i) => i / 20);
-    const io = new IntersectionObserver(() => req(), { threshold: thresholds });
-    cards.forEach((c) => io.observe(c.el));
 
     window.addEventListener("resize", req, { passive: true });
     setTimeout(update, 300);
-
-    // 4) FALLBACK: se dopo 2s nessuno scroll e' stato rilevato (iframe embed dove
-    //    il parent non collabora), attivo autoplay lento su ogni card
-    setTimeout(() => {
-      if (scrollDetected) return;
-      const STEP = 1100;
-      cards.forEach((c) => {
-        setTimeout(() => {
-          setInterval(() => {
-            if (c.loaded && !c.el.classList.contains("is-flipped")) c.paint(c.idx + 1);
-          }, STEP);
-        }, Math.random() * STEP);
-      });
-    }, 2000);
   }
 })();
