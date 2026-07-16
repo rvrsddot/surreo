@@ -433,60 +433,58 @@
     });
   }
 
-  /* ---------- MOBILE: scrub allo scroll, sincrono col gesto utente ----------
-     Nessun autoplay/fallback: se non c'è scroll, le card restano ferme.
-     Dentro un iframe il parent ci manda periodicamente {iframeTop, vh}
-     (top dell'iframe RELATIVO al viewport parent, e viewport height del parent),
-     così calcoliamo dove sta ogni card nel viewport parent:
-       topInParentViewport = r.top (card in iframe) + iframeTop */
+  /* ---------- MOBILE: autoplay veloce quando la card è in vista ----------
+     IntersectionObserver + timer locale. Se IntersectionObserver non funziona
+     (ambiente limitato), fallback: activation manuale su card visibili. */
   function startScrub(cards) {
     cards.forEach((c) => c.el.classList.add("is-scrub"));
-    let ticking = false;
-    let iframeTop = 0;   // top dell'iframe nel viewport parent; 0 se standalone
-    let parentVh = 0;    // 0 = standalone → usa window.innerHeight
-    let embedded = false; // true appena il parent ci parla
 
-    function update() {
-      ticking = false;
-      const vh = parentVh || window.innerHeight;
-      if (vh <= 0) return;
-      cards.forEach((c) => {
-        if (!c.loaded) return;
-        const r = c.el.getBoundingClientRect();
-        // standalone: r.top è già relativo al viewport visibile (window scrolla).
-        // embed: r.top è relativo al viewport dell'iframe (che è fermo, scrolling=no);
-        //   il parent scrolla, e ci dà iframeTop = dove sta l'iframe nel suo viewport.
-        //   Quindi la posizione della card nel viewport parent è r.top + iframeTop.
-        const top = embedded ? (r.top + iframeTop) : r.top;
-        if (top + r.height < -50 || top > vh + 50) return;
-        const prog = (vh - top) / (vh + r.height);
-        const clamped = Math.min(1, Math.max(0, prog));
-        const i = Math.round(clamped * (c.frames.length - 1));
-        if (i !== c.idx) c.paint(i);
-      });
-    }
-    const req = () => {
-      if (!ticking) { requestAnimationFrame(update); ticking = true; }
-    };
+    const STEP = 180; // ms tra frame, loop veloce
+    let ioWorking = false;
 
-    // scroll standalone (aprendo il sito direttamente su mobile)
-    window.addEventListener("scroll", req, { passive: true });
+    // IntersectionObserver: ideale per browser/embed veri
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          ioWorking = true;
+          const c = en.target.__card;
+          if (!c) return;
+          if (en.isIntersecting) {
+            if (!c.loaded) c.load();
+            if (!c.timer && !c.el.classList.contains("is-flipped")) {
+              c.timer = setInterval(() => {
+                if (c.loaded && !c.el.classList.contains("is-flipped")) {
+                  c.paint(c.idx + 1);
+                }
+              }, STEP);
+            }
+          } else {
+            if (c.timer) { clearInterval(c.timer); c.timer = null; }
+          }
+        });
+      },
+      { threshold: 0.01, rootMargin: "100px 0px" }
+    );
+    cards.forEach((c) => io.observe(c.el));
 
-    // parent Readymag ci comunica la posizione live dell'iframe nel suo viewport
-    window.addEventListener("message", (e) => {
-      if (!e.data || e.data.type !== "surreo:parent-scroll") return;
-      embedded = true;
-      // nuovo formato: iframeTop = top viewport-relativo (getBoundingClientRect().top del parent)
-      if (typeof e.data.iframeTop === "number") iframeTop = e.data.iframeTop;
-      // backwards-compat: se arriva anche y (vecchio embed), iframeTop era assoluto
-      if (typeof e.data.y === "number" && typeof e.data.iframeTopAbs === "number") {
-        iframeTop = e.data.iframeTopAbs - e.data.y;
+    // Fallback: se IntersectionObserver non funziona dopo 600ms,
+    // attiva manualmente il timer su card visibili
+    setTimeout(() => {
+      if (!ioWorking) {
+        cards.forEach((c) => {
+          if (!c.loaded) c.load();
+          if (!c.timer && !c.el.classList.contains("is-flipped")) {
+            const r = c.el.getBoundingClientRect();
+            if (r.top < window.innerHeight && r.bottom > 0) {
+              c.timer = setInterval(() => {
+                if (c.loaded && !c.el.classList.contains("is-flipped")) {
+                  c.paint(c.idx + 1);
+                }
+              }, STEP);
+            }
+          }
+        });
       }
-      if (typeof e.data.vh === "number" && e.data.vh > 0) parentVh = e.data.vh;
-      req();
-    });
-
-    window.addEventListener("resize", req, { passive: true });
-    setTimeout(update, 300);
+    }, 600);
   }
 })();
