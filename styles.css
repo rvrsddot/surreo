@@ -19,9 +19,9 @@
   --font: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
 }
 
-html { -webkit-text-size-adjust: 100%; background: #ffffff; }
+html { -webkit-text-size-adjust: 100%; background: transparent; }
 body {
-  background: #ffffff;
+  background: transparent;
   color: var(--ink);
   font-family: var(--font);
   line-height: 1.35;
