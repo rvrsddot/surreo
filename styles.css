@@ -319,8 +319,27 @@ body {
   .card__tools { top: 5px; right: 5px; gap: 4px; }
 
   /* videoclip / website ancora più stretti */
-  .vclip-list { gap: 8px; }
   .grid--3 { gap: var(--gap); }
+
+  /* videoclip mobile: no miniatura, video attaccati, titolo full-width sopra */
+  .section--vclip .vclip-media { display: none; }
+  .section--vclip .vclip-list { gap: 14px; }           /* tra progetti diversi */
+  .section--vclip .vclip-row {
+    flex-direction: column;
+    gap: 4px;                                          /* tra video dello stesso progetto */
+  }
+  .section--vclip .vclip-row .vc-video { width: 100%; height: auto; }
+  .section--vclip .vclip-head {
+    font-size: 15px;                                   /* piu grande */
+    margin-bottom: 4px;
+  }
+  .section--vclip .vclip-head span {
+    display: block;                                    /* full-width, allineato al video sotto */
+    width: 100%;
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 8px;                                /* meno pill, piu barra */
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
