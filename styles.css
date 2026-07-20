@@ -120,12 +120,17 @@ body {
 .card.is-scrub .stage__img { transition: none; }
 
 .titlebox {
+  position: absolute; z-index: 2;
+  left: clamp(10px, 1vw, 14px); bottom: clamp(10px, 1vw, 14px);
   border: var(--bd); background: #fff;
-  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  display: inline-flex; align-items: center; gap: 10px;
   padding: clamp(8px, .9vw, 11px) clamp(12px, 1.4vw, 18px);
   min-height: 0;
   border-radius: 999px;   /* pill piena */
+  opacity: 0; transform: translateY(6px); pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease;
 }
+.card:hover .titlebox { opacity: 1; transform: none; }
 .card__name {
   font-size: clamp(10px, .8vw, 12px); font-weight: 500; letter-spacing: -0.01em;
   text-transform: uppercase; line-height: 1.1;
@@ -136,7 +141,9 @@ body {
 .card__tools {
   position: absolute; top: clamp(10px, 1vw, 14px); right: clamp(10px, 1vw, 14px); z-index: 3;
   display: flex; flex-direction: column; gap: clamp(7px, .8vw, 10px);
+  opacity: 0; transition: opacity .25s ease;
 }
+.card:hover .card__tools { opacity: 1; }
 .flip-btn, .video-btn {
   width: clamp(38px, 3.2vw, 48px); height: clamp(38px, 3.2vw, 48px);
   padding: 0; border: 0; background: none; cursor: pointer;
@@ -300,11 +307,12 @@ body {
   .section__dots i { width: 7px; height: 7px; }
   .card { transform: none; opacity: 1; }
 
-  /* pill overlay sull'immagine */
+  /* pill overlay sull'immagine — su mobile sempre visibile (niente hover) */
   .card__front { gap: 0; }
   .titlebox {
     position: absolute;
     left: 6px; right: 6px; bottom: 6px;
+    display: flex; justify-content: space-between;
     padding: 4px 8px;
     background: rgba(255,255,255,.92);
     backdrop-filter: blur(6px);
@@ -312,11 +320,12 @@ body {
     z-index: 2;
     gap: 6px;
     min-height: 0;
+    opacity: 1; transform: none; pointer-events: auto;
   }
   .card__name { font-size: 9px; line-height: 1; }
   .card__idx { font-size: 8px; }
   .flip-btn, .video-btn { width: 26px; height: 26px; }
-  .card__tools { top: 5px; right: 5px; gap: 4px; }
+  .card__tools { top: 5px; right: 5px; gap: 4px; opacity: 1; }
 
   /* videoclip / website ancora più stretti */
   .grid--3 { gap: var(--gap); }
