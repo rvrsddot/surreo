@@ -70,14 +70,22 @@ body {
 
 /* testa fuori dal box: titolo a sinistra, linea di divisione a tutta larghezza del box */
 .section__head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
   padding: 0 0 clamp(10px, 1.2vw, 16px);
   margin-bottom: clamp(10px, 1.2vw, 16px);
   border-bottom: var(--bd);
 }
 .section__title {
-  font-weight: 600; letter-spacing: -0.02em; line-height: 1;
+  font-family: "Montserrat", var(--font);
+  font-weight: 700; letter-spacing: -0.01em; line-height: 1;
   font-size: clamp(15px, 2vw, 24px); text-transform: uppercase;
-  text-align: left; padding-left: clamp(12px, 1.4vw, 22px);
+  text-align: left; padding-left: 0;   /* flush con l'inizio della linea */
+}
+.section__meta {
+  font-family: "Montserrat", var(--font);
+  font-weight: 600; font-size: clamp(11px, 1.2vw, 15px);
+  text-transform: uppercase; letter-spacing: .02em;
+  flex: none; white-space: nowrap;     /* giustificata a dx, fine della linea */
 }
 
 .grid {
@@ -311,7 +319,8 @@ body {
     padding: 0 0 6px;
     margin-bottom: 6px;
   }
-  .section__title { font-size: 12px; letter-spacing: 0; padding-left: 4px; }
+  .section__title { font-size: 12px; letter-spacing: 0; padding-left: 0; }
+  .section__meta { font-size: 10px; }
   .card { transform: none; opacity: 1; }
 
   /* pill overlay sull'immagine — su mobile sempre visibile (niente hover) */

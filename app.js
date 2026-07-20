@@ -173,7 +173,9 @@
   function makeHead(title) {
     const head = document.createElement("div");
     head.className = "section__head";
-    head.innerHTML = '<h2 class="section__title">' + title + "</h2>";
+    head.innerHTML =
+      '<h2 class="section__title">' + title + "</h2>" +
+      '<span class="section__meta">XXX</span>';
     return head;
   }
 
