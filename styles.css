@@ -258,18 +258,20 @@ body {
 .vclip-list {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: clamp(6px, .7vw, 10px);
 }
+.vclip-item { position: relative; }
 .vclip-item--double { grid-column: 1 / -1; }
-/* intestazione per progetto: pill col nome (stile dawn.la) */
+/* intestazione per progetto: pill col nome, overlay in alto a sx, appare all'hover */
 .vclip-head {
+  position: absolute; top: clamp(8px, .8vw, 12px); left: clamp(8px, .8vw, 12px); z-index: 3;
   display: flex; align-items: center;
-  margin-bottom: var(--card-gap);
   font-weight: 600; text-transform: uppercase; letter-spacing: -0.01em;
   font-size: clamp(10px, .9vw, 12px);
-  opacity: 0; transition: opacity .25s ease;
+  opacity: 0; transform: translateY(6px); pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease;
 }
-.vclip-item:hover .vclip-head { opacity: 1; }
+.vclip-item:hover .vclip-head { opacity: 1; transform: none; }
 .vclip-head span {
   display: inline-block; padding: 6px 14px;
   border: var(--bd); border-radius: 999px; background: #fff;
@@ -351,6 +353,8 @@ body {
   }
   .section--vclip .vclip-row .vc-video { width: 100%; height: auto; }
   .section--vclip .vclip-head {
+    position: static;                                  /* torna nel flusso: barra sopra */
+    transform: none;
     font-size: 15px;                                   /* piu grande */
     margin-bottom: 4px;
   }
@@ -363,7 +367,7 @@ body {
   }
 
   /* mobile: niente hover → titoli, VISIT e play sempre visibili */
-  .vclip-head { opacity: 1; }
+  .vclip-head { opacity: 1; transform: none; }
   .vc-title { opacity: 1; transform: none; }
   .vc-visit { opacity: 1; pointer-events: auto; }
   .vc-play { opacity: 1; }
