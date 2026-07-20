@@ -258,13 +258,13 @@ body {
 .vclip-row { display: flex; gap: 4px; align-items: flex-start; }
 .vclip-item--double .vclip-media { width: var(--vclip-h); }
 .vclip-item--single .vclip-media { width: var(--vclip-h1); }
-.vclip-media { flex: 0 0 auto; }
+.vclip-media { display: none; }
 .vclip-sq { position: relative; aspect-ratio: 1 / 1; border: var(--bd); overflow: hidden; background: #ffffff; border-radius: 0; }
 .vclip-sq img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .vclip-noimg { position: absolute; inset: 0; background: #16130f; }
 .vclip-item--double .vc-video { height: var(--vclip-h); }
 .vclip-item--single .vc-video { height: var(--vclip-h1); }
-.vclip-row .vc-video { width: auto; flex: 0 0 auto; }
+.vclip-row .vc-video { width: 100%; flex: 1; }
 
 /* ---------- sezione SITI/WEBSITE (3 colonne, solo video) ---------- */
 .grid--3 { grid-template-columns: repeat(3, 1fr); }
