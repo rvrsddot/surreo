@@ -173,17 +173,23 @@
   function makeHead(title) {
     const head = document.createElement("div");
     head.className = "section__head";
-    head.innerHTML =
-      '<h2 class="section__title">' + title + "</h2>" +
-      '<span class="section__dots" aria-hidden="true"><i></i><i></i><i></i></span>';
+    head.innerHTML = '<h2 class="section__title">' + title + "</h2>";
     return head;
+  }
+
+  /* --- avvolge testa (fuori) + riquadro in un wrapper di sezione --- */
+  function makeSectionWrap(title, boxEl) {
+    const wrap = document.createElement("div");
+    wrap.className = "section-wrap";
+    wrap.appendChild(makeHead(title));
+    wrap.appendChild(boxEl);
+    return wrap;
   }
 
   /* --- sezione VIDEOCLIP: per progetto -> intestazione (nome+linea) + riga immagine + video --- */
   function appendVideoclip(items, title, projById) {
     const sec = document.createElement("section");
     sec.className = "section section--vclip";
-    sec.appendChild(makeHead(title));
     const list = document.createElement("div");
     list.className = "vclip-list";
     items.forEach((it) => {
@@ -214,14 +220,13 @@
       list.appendChild(item);
     });
     sec.appendChild(list);
-    sectionsEl.appendChild(sec);
+    sectionsEl.appendChild(makeSectionWrap(title, sec));
   }
 
   /* --- sezione SITI/WEBSITE: solo video, 3 colonne --- */
   function appendWebsite(items, title) {
     const sec = document.createElement("section");
     sec.className = "section section--sites";
-    sec.appendChild(makeHead(title));
     const grid = document.createElement("div");
     grid.className = "grid grid--3";
     items.forEach((it) => {
@@ -231,7 +236,7 @@
       grid.appendChild(card);
     });
     sec.appendChild(grid);
-    sectionsEl.appendChild(sec);
+    sectionsEl.appendChild(makeSectionWrap(title, sec));
   }
 
   /* --- calcola le due altezze: righe a 2 video (piena) e a 1 video (mezza) --- */
@@ -285,7 +290,6 @@
 
       const secEl = document.createElement("section");
       secEl.className = "section";
-      const head = makeHead(sec.title);
       const grid = document.createElement("div");
       grid.className = "grid";
 
@@ -303,9 +307,8 @@
         });
       }
 
-      secEl.appendChild(head);
       secEl.appendChild(grid);
-      sectionsEl.appendChild(secEl);
+      sectionsEl.appendChild(makeSectionWrap(sec.title, secEl));
     });
 
     // sezioni video dedicate (dopo le sezioni immagini)

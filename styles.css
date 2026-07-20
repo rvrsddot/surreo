@@ -52,36 +52,33 @@ body {
 .sub { margin: 14px 0 0; color: var(--ink-soft); font-size: clamp(11px, 1.1vw, 13px); max-width: 44ch; display: flex; align-items: center; gap: .5ch; flex-wrap: wrap; }
 .sub .arrow-mini { width: 20px; height: 20px; vertical-align: middle; }
 
-/* ---------- sections: "cartella pill" stile dawn.la ---------- */
-.section {
+/* ---------- sections: titolo + linea FUORI dal box; box arrotondato = solo contenuti ---------- */
+.section-wrap {
   max-width: var(--maxw);
-  margin: clamp(10px, 1.2vw, 18px) auto 0;
+  margin: clamp(22px, 2.6vw, 40px) auto 0;
+}
+.section-wrap:first-of-type { margin-top: clamp(20px, 2.4vw, 30px); }
+.section-wrap:last-of-type { margin-bottom: clamp(20px, 2.4vw, 30px); }
+
+/* il riquadro contiene solo i progetti/video */
+.section {
   padding: clamp(12px, 1.4vw, 22px);
   border: var(--bd);
   border-radius: var(--radius);
   background: var(--card);
 }
-.section:first-of-type { margin-top: clamp(20px, 2.4vw, 30px); }
-.section:last-of-type { margin-bottom: clamp(20px, 2.4vw, 30px); }
+
+/* testa fuori dal box: titolo a sinistra, linea di divisione a tutta larghezza del box */
 .section__head {
-  display: flex; align-items: center; gap: 16px;
-  padding: 0 clamp(6px, .8vw, 10px) clamp(12px, 1.4vw, 18px);
-  margin-bottom: var(--gap);
+  padding: 0 0 clamp(10px, 1.2vw, 16px);
+  margin-bottom: clamp(10px, 1.2vw, 16px);
   border-bottom: var(--bd);
 }
 .section__title {
   font-weight: 600; letter-spacing: -0.02em; line-height: 1;
-  font-size: clamp(15px, 2vw, 24px); flex: 1; text-transform: uppercase;
+  font-size: clamp(15px, 2vw, 24px); text-transform: uppercase;
+  text-align: left; padding-left: clamp(12px, 1.4vw, 22px);
 }
-/* semaforo stile Apple / dawn.la: rosso, giallo, grigio */
-.section__dots { display: flex; align-items: center; gap: clamp(6px, .7vw, 10px); flex: none; }
-.section__dots i {
-  display: block; width: clamp(11px, 1.1vw, 15px); height: clamp(11px, 1.1vw, 15px);
-  border-radius: 999px; border: 1px solid rgba(0,0,0,.15);
-}
-.section__dots i:nth-child(1) { background: var(--dot-red); }
-.section__dots i:nth-child(2) { background: var(--dot-yellow); }
-.section__dots i:nth-child(3) { background: var(--dot-gray); }
 
 .grid {
   display: grid; gap: var(--gap);
@@ -306,19 +303,15 @@ body {
    pill overlay sull'immagine (niente coda). */
 @media (max-width: 620px) {
   :root { --gap: 6px; --radius: 12px; --card-gap: 0px; --pad: 10px; }
-  .section {
-    margin: 4px auto 0;
-    padding: 6px;
-  }
-  .section:first-of-type { margin-top: 4px; }
-  .section:last-of-type { margin-bottom: 4px; }
+  .section-wrap { margin: 10px auto 0; }
+  .section-wrap:first-of-type { margin-top: 6px; }
+  .section-wrap:last-of-type { margin-bottom: 6px; }
+  .section { padding: 6px; }
   .section__head {
-    padding: 0 4px 6px;
+    padding: 0 0 6px;
     margin-bottom: 6px;
-    gap: 6px;
   }
-  .section__title { font-size: 12px; letter-spacing: 0; }
-  .section__dots i { width: 7px; height: 7px; }
+  .section__title { font-size: 12px; letter-spacing: 0; padding-left: 4px; }
   .card { transform: none; opacity: 1; }
 
   /* pill overlay sull'immagine — su mobile sempre visibile (niente hover) */
