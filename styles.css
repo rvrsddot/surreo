@@ -220,23 +220,33 @@ body {
 .vmodal__close:hover { background: #f4f2ec; color: #16130f; }
 
 /* ---------- facciata video inline (videoclip + siti) ---------- */
-.vc-video { position: relative; aspect-ratio: 16 / 9; border: var(--bd); overflow: hidden; background: #000; border-radius: 0; }
+.vc-video { position: relative; aspect-ratio: 16 / 9; border: var(--bd); overflow: hidden; background: #000; border-radius: 0; cursor: pointer; }
 .vc-thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* titolo website: pill bianca in basso a sinistra, appare all'hover (come le card) */
 .vc-title {
-  position: absolute; top: 10px; left: 12px; right: 12px; z-index: 2;
-  color: #fff; font-weight: 600; font-size: 11px; letter-spacing: -0.01em;
-  text-shadow: 0 1px 4px rgba(0,0,0,.7);
+  position: absolute; left: clamp(10px, 1vw, 14px); bottom: clamp(10px, 1vw, 14px); z-index: 3;
+  max-width: calc(100% - 28px);
+  background: #fff; color: #000; border: var(--bd); border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 600; font-size: 11px; letter-spacing: -0.01em; line-height: 1.1;
+  opacity: 0; transform: translateY(6px); pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease;
 }
+.vc-video:hover .vc-title { opacity: 1; transform: none; }
 .vc-visit {
-  position: absolute; bottom: 10px; right: 12px; z-index: 2;
+  position: absolute; bottom: 10px; right: 12px; z-index: 3;
   color: #fff; font-size: 9px; font-weight: 600; letter-spacing: .03em; text-decoration: none;
   background: rgba(0,0,0,.55); padding: 4px 9px; border: 1px solid rgba(255,255,255,.5);
+  opacity: 0; pointer-events: none; transition: opacity .25s ease;
 }
+.vc-video:hover .vc-visit { opacity: 1; pointer-events: auto; }
 .vc-visit:hover { background: #fff; color: #000; }
 .vc-play {
   position: absolute; inset: 0; margin: auto; width: 68px; height: 48px;
-  border: 0; background: none; cursor: pointer; padding: 0; display: none;
+  border: 0; background: none; padding: 0; display: grid; place-items: center;
+  opacity: 0; pointer-events: none; transition: opacity .25s ease;
 }
+.vc-video:hover .vc-play { opacity: 1; }
 .vc-play-bg { fill: #212121; opacity: .82; transition: fill .2s, opacity .2s; }
 .vc-video:hover .vc-play-bg { fill: #f00; opacity: 1; }
 .vc-iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
@@ -257,7 +267,9 @@ body {
   margin-bottom: var(--card-gap);
   font-weight: 600; text-transform: uppercase; letter-spacing: -0.01em;
   font-size: clamp(10px, .9vw, 12px);
+  opacity: 0; transition: opacity .25s ease;
 }
+.vclip-item:hover .vclip-head { opacity: 1; }
 .vclip-head span {
   display: inline-block; padding: 6px 14px;
   border: var(--bd); border-radius: 999px; background: #fff;
@@ -349,6 +361,12 @@ body {
     padding: 8px 12px;
     border-radius: 8px;                                /* meno pill, piu barra */
   }
+
+  /* mobile: niente hover → titoli, VISIT e play sempre visibili */
+  .vclip-head { opacity: 1; }
+  .vc-title { opacity: 1; transform: none; }
+  .vc-visit { opacity: 1; pointer-events: auto; }
+  .vc-play { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {

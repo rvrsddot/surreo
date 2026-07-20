@@ -65,7 +65,7 @@
       '<button class="vc-play" type="button" aria-label="Play"><svg viewBox="0 0 68 48">' +
       '<path class="vc-play-bg" d="M66.5 7.7c-.8-2.9-2.5-5.2-5.4-6C55.8.5 34 .5 34 .5S12.2.5 6.9 1.6C4 2.4 2.3 4.8 1.5 7.7.4 13 .4 24 .4 24s0 11 1.1 16.3c.8 2.9 2.5 5.2 5.4 6C12.2 47.5 34 47.5 34 47.5s21.8 0 27.1-1.1c2.9-.8 4.6-3.1 5.4-6C67.6 35 67.6 24 67.6 24s0-11-1.1-16.3z"/>' +
       '<path d="M27 34l18-10L27 14v20z" fill="#fff"/></svg></button>';
-    v.querySelector(".vc-play").addEventListener("click", () => {
+    function play() {
       const f = document.createElement("iframe");
       f.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0";
       f.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
@@ -73,6 +73,11 @@
       f.className = "vc-iframe";
       v.innerHTML = "";
       v.appendChild(f);
+    }
+    // click su tutto il video → play (ma il tasto VISIT apre il link)
+    v.addEventListener("click", (e) => {
+      if (e.target.closest(".vc-visit")) return;
+      play();
     });
     return v;
   }
