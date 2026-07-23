@@ -142,7 +142,9 @@ body.has-open{overflow:hidden}
 .sec-head{max-width:1440px;margin:0 auto;padding:0 clamp(16px,3.5vw,44px) 12px;
   display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-bottom:1.5px solid var(--ink);margin-bottom:clamp(16px,2.5vw,28px)}
 .sec-head h2{font-weight:800;font-size:clamp(15px,2.4vw,26px);letter-spacing:-.01em;text-transform:uppercase}
-.sec-head__arrow,.sec-head__note{font:600 11px/1 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.sec-head__arrow,.sec-head__note{font:600 11px/1 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);flex:none}
+/* collateral: frecce a destra */
+.collateral .sec-head::after{content:'↓ ↓ ↓';font-weight:600;font-size:clamp(14px,2vw,18px);color:var(--muted);letter-spacing:1px}
 
 /* sezioni con respiro */
 .collateral,.projects,.about{padding-top:clamp(34px,6vw,72px)}
