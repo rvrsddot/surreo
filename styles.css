@@ -9,7 +9,7 @@ body{background:var(--paper);color:var(--ink);font-family:Helvetica,Arial,sans-s
 body.has-open{overflow:hidden}
 .mono{font-family:ui-monospace,'Courier New',monospace}
 
-#app{padding:clamp(16px,3.5vw,44px)}
+#app{max-width:1440px;margin:0 auto;padding:0 clamp(16px,3.5vw,44px)}
 
 /* ---- lista categorie ---- */
 .cat{background:var(--paper);border:1.5px solid var(--ink);border-radius:3px;overflow:hidden;
@@ -105,3 +105,75 @@ body.has-open{overflow:hidden}
   .cat,.cat.is-fixed,.cat__open,.backdrop,.pcard,.pcard__inner,.thumb{transition:none!important}
   .pcard__play i{animation:none!important}
 }
+
+/* ============================================================
+   PAGINA COMPLETA — chrome (marquee, header, hero, collateral,
+   about, contatti). Stessa palette paper/ink dei progetti.
+   ============================================================ */
+.wrap{max-width:1440px;margin:0 auto;padding:0 clamp(16px,3.5vw,44px)}
+
+/* marquee servizi */
+.marquee{border-bottom:1.5px solid var(--ink);overflow:hidden;background:var(--paper)}
+.marquee__t{display:inline-flex;gap:0;white-space:nowrap;padding:8px 0;animation:marq 42s linear infinite}
+.marquee__t span{font:700 11px/1 ui-monospace,'Courier New',monospace;letter-spacing:.06em;text-transform:uppercase;padding:0 18px;border-right:1px solid var(--line)}
+@keyframes marq{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.marquee__t{animation:none}}
+
+/* header */
+.site{max-width:1440px;margin:0 auto;padding:14px clamp(16px,3.5vw,44px);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:clamp(13px,1.5vw,16px);letter-spacing:-.01em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+.brand em{font-style:normal;font-weight:400;opacity:.55}
+.brand__mark{font-size:.8em}
+.site__nav{display:flex;gap:clamp(10px,1.6vw,22px);flex-wrap:wrap}
+.site__nav a{font:700 11px/1 ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);text-decoration:none;padding-bottom:2px;border-bottom:1.5px solid transparent}
+.site__nav a:hover{border-bottom-color:var(--ink)}
+
+/* hero */
+.hero{max-width:1440px;margin:0 auto;padding:clamp(30px,7vw,90px) clamp(16px,3.5vw,44px) clamp(20px,4vw,48px);text-align:center}
+.hero__kicker{font-weight:700;font-size:clamp(13px,2vw,22px);letter-spacing:.12em;text-transform:uppercase}
+.hero__title{font-family:"Bagel Fat One",system-ui,sans-serif;font-weight:400;
+  font-size:clamp(52px,15vw,190px);line-height:.9;letter-spacing:-.01em;text-transform:uppercase;margin:.06em 0 0;color:var(--ink)}
+.hero__row{margin-top:clamp(20px,4vw,44px);padding-top:14px;border-top:1.5px solid var(--ink);
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  font:600 11px/1 ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* intestazione sezione generica */
+.sec-head{max-width:1440px;margin:0 auto;padding:0 clamp(16px,3.5vw,44px) 12px;
+  display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-bottom:1.5px solid var(--ink);margin-bottom:clamp(16px,2.5vw,28px)}
+.sec-head h2{font-weight:800;font-size:clamp(15px,2.4vw,26px);letter-spacing:-.01em;text-transform:uppercase}
+.sec-head__arrow,.sec-head__note{font:600 11px/1 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* sezioni con respiro */
+.collateral,.projects,.about{padding-top:clamp(34px,6vw,72px)}
+.collateral .sec-head,.projects .sec-head,.about .sec-head{margin-left:0;margin-right:0}
+
+/* collateral */
+.coll__grid{max-width:1440px;margin:0 auto;padding:0 clamp(16px,3.5vw,44px);
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,26px)}
+@media(max-width:720px){.coll__grid{grid-template-columns:1fr}}
+.coll__item{text-decoration:none;color:var(--ink);border:1.5px solid var(--ink);border-radius:3px;overflow:hidden;background:var(--paper);
+  transition:transform .16s var(--ease),box-shadow .16s var(--ease)}
+.coll__item:hover{transform:translateY(-3px);box-shadow:6px 7px 0 var(--ink)}
+.coll__thumb{aspect-ratio:16/10;display:grid;place-items:center;text-align:center;font-weight:800;text-transform:uppercase;letter-spacing:.02em;line-height:1.05;border-bottom:1.5px solid var(--ink)}
+.coll__thumb--saad{background:#141414;color:#fff;font-size:clamp(16px,2.4vw,26px)}
+.coll__thumb--workshok{background:#e7e4da;color:#1a49ff;font-size:clamp(20px,3vw,34px);font-style:italic}
+.coll__thumb--sub{background:#141414;color:#e23b2e;font-size:clamp(16px,2.4vw,26px)}
+.coll__meta{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px}
+.coll__meta span{font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:-.01em}
+.coll__meta em{font-style:normal;font-size:9.5px;color:var(--muted);text-transform:uppercase;text-align:right}
+
+/* about */
+.about__body{max-width:1000px;margin:0 auto;padding:0 clamp(16px,3.5vw,44px);
+  display:flex;flex-direction:column;gap:16px;font-size:clamp(15px,1.9vw,20px);line-height:1.5}
+.about__claim{font-weight:800;text-transform:uppercase;letter-spacing:-.01em;font-size:clamp(17px,2.4vw,26px);line-height:1.15}
+
+/* contatti */
+.contact{max-width:1440px;margin:clamp(40px,7vw,90px) auto 0;padding:clamp(30px,5vw,60px) clamp(16px,3.5vw,44px) clamp(28px,4vw,48px);
+  border-top:1.5px solid var(--ink)}
+.contact__title{font-family:"Bagel Fat One",system-ui,sans-serif;font-weight:400;font-size:clamp(40px,10vw,120px);line-height:.9;text-transform:uppercase;margin-bottom:clamp(16px,3vw,32px)}
+.contact__links{display:flex;flex-direction:column;gap:8px;margin-bottom:clamp(24px,4vw,44px)}
+.contact__links a{font-weight:700;font-size:clamp(16px,2.6vw,30px);letter-spacing:-.01em;color:var(--ink);text-decoration:none;width:max-content;max-width:100%;border-bottom:2px solid transparent}
+.contact__links a:hover{border-bottom-color:var(--ink)}
+.contact__foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--line);
+  font:600 10px/1 ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}

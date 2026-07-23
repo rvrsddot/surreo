@@ -3,12 +3,94 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Surreo Studio — Progetti</title>
-  <meta name="description" content="Selezione di progetti — Surreo Studio." />
-  <link rel="stylesheet" href="styles.css?v=100" />
+  <title>Surreo Studio — Multidisciplinary Design Studio</title>
+  <meta name="description" content="Surreo — hub indipendente di design multidisciplinare. Deutschland–Italy." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" />
+  <link rel="stylesheet" href="styles.css?v=101" />
 </head>
 <body>
-  <main id="app" aria-live="polite"></main>
-  <script src="app.js?v=100"></script>
+
+  <!-- marquee servizi -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__t">
+      <span>Social Media</span><span>Branding · Design Graphic</span><span>Photo / Video</span><span>3D Model · Render</span><span>Interior Design</span><span>Advertising</span><span>Metaverse</span><span>Videomapping</span><span>Visual</span><span>Exhibit</span><span>Animation</span><span>Website</span><span>Spot</span><span>350° Tour</span>
+      <span>Social Media</span><span>Branding · Design Graphic</span><span>Photo / Video</span><span>3D Model · Render</span><span>Interior Design</span><span>Advertising</span><span>Metaverse</span><span>Videomapping</span><span>Visual</span><span>Exhibit</span><span>Animation</span><span>Website</span><span>Spot</span><span>350° Tour</span>
+    </div>
+  </div>
+
+  <!-- header -->
+  <header class="site">
+    <a class="brand" href="#top"><span class="brand__mark">◆</span> Surreo <em>Studio</em></a>
+    <nav class="site__nav">
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+      <a href="mailto:surreocreative@gmail.com">Mail me!</a>
+      <a href="https://wa.me/393313510091" target="_blank" rel="noopener">WhatsApp</a>
+    </nav>
+  </header>
+
+  <!-- hero -->
+  <section class="hero" id="top">
+    <p class="hero__kicker">Multidisciplinary</p>
+    <h1 class="hero__title">Design Studio</h1>
+    <div class="hero__row">
+      <span>Unbased #Design Studio</span>
+      <span>Deutschland — Italy</span>
+      <span>Surreo</span>
+    </div>
+  </section>
+
+  <!-- collateral -->
+  <section class="collateral" id="collateral">
+    <div class="sec-head"><h2>Collateral Projects</h2><span class="sec-head__arrow">↓ ↓ ↓</span></div>
+    <div class="coll__grid">
+      <a class="coll__item" href="#" data-role="Co-founder">
+        <div class="coll__thumb coll__thumb--saad">SAAD<br>WORKSHOP<br>WEEK</div>
+        <div class="coll__meta"><span>SAAD Workshop Week</span><em>Co-founder</em></div>
+      </a>
+      <a class="coll__item" href="#" data-role="Co-founder · Creative Direction">
+        <div class="coll__thumb coll__thumb--workshok">workshok!</div>
+        <div class="coll__meta"><span>Workshok</span><em>Co-founder · Creative Direction</em></div>
+      </a>
+      <a class="coll__item" href="#" data-role="Co-founder · Creative Direction">
+        <div class="coll__thumb coll__thumb--sub">SUBURBIÆ<br>MUSIC FEST</div>
+        <div class="coll__meta"><span>Suburbiæ Music Fest</span><em>Co-founder · Creative Direction</em></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- projects (sezione categorie/carosello) -->
+  <section class="projects" id="projects">
+    <div class="sec-head"><h2>Projects — Showcase</h2><span class="sec-head__note">Clicca una miniatura</span></div>
+    <main id="app" aria-live="polite"></main>
+  </section>
+
+  <!-- about -->
+  <section class="about" id="about">
+    <div class="sec-head"><h2>About Surreo</h2></div>
+    <div class="about__body">
+      <p>Siamo un hub indipendente, basato sulle idee e guidato dai progetti. Ci muoviamo con agilità, costruendo team e competenze attorno a ogni visione.</p>
+      <p>Dall'intuizione alla realizzazione, governiamo ogni fase con metodo e precisione. Trasformiamo complessità in sistemi coerenti, funzionali e memorabili.</p>
+      <p class="about__claim">Creiamo valore concreto, misurabile, destinato a durare.</p>
+    </div>
+  </section>
+
+  <!-- contatti -->
+  <footer class="contact" id="contact">
+    <h2 class="contact__title">Contact us!</h2>
+    <div class="contact__links">
+      <a href="mailto:surreocreative@gmail.com">surreocreative@gmail.com</a>
+      <a href="https://wa.me/393313510091" target="_blank" rel="noopener">WhatsApp +39 331 351 0091</a>
+    </div>
+    <div class="contact__foot">
+      <span>Surreo Studio</span>
+      <span>Unbased #Design Studio · Deutschland–Italy</span>
+      <span>© 2026</span>
+    </div>
+  </footer>
+
+  <script src="app.js?v=101"></script>
 </body>
 </html>
