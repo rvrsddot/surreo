@@ -1,500 +1,237 @@
 (() => {
   "use strict";
 
-  const sectionsEl = document.getElementById("sections");
-  const tpl = document.getElementById("card-tpl");
-  /* touch detection via CAPACITÀ del dispositivo, non larghezza viewport:
-     dentro un iframe Readymag stretto su desktop, l'utente ha comunque il mouse -> hover.
-     Override via ?touch=1 (forza scrub) o ?touch=0 (forza hover) per debug. */
-  const _forceTouch = new URLSearchParams(location.search).get("touch");
-  const isTouch = _forceTouch === "1" ? true
-    : _forceTouch === "0" ? false
-    : matchMedia("(hover: none) and (pointer: coarse)").matches;
+  const app = document.getElementById("app");
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  let VIDEOS = {};
+  // backdrop condiviso
+  const backdrop = document.createElement("div");
+  backdrop.className = "backdrop";
+  document.body.appendChild(backdrop);
 
-  /* --- se siamo dentro un iframe, comunica la nostra altezza al parent ---
-     Il parent (es. widget HTML su Readymag) resta in ascolto e ridimensiona
-     l'iframe automaticamente. Emette al load e ad ogni cambio di layout. */
+  let openEl = null, ph = null;
+
+  /* --- altezza per l'embed Readymag: comunica al parent l'altezza reale --- */
   if (window.parent !== window) {
     let lastH = 0;
     const sendHeight = () => {
-      const h = Math.max(
-        document.documentElement.scrollHeight,
-        document.body ? document.body.scrollHeight : 0
-      );
-      if (h !== lastH) {
-        lastH = h;
-        try { window.parent.postMessage({ type: "surreo:height", height: h }, "*"); } catch (e) {}
-      }
+      const h = Math.max(document.documentElement.scrollHeight, document.body ? document.body.scrollHeight : 0);
+      if (h !== lastH) { lastH = h; try { window.parent.postMessage({ type: "surreo:height", height: h }, "*"); } catch (e) {} }
     };
     window.addEventListener("load", sendHeight);
     window.addEventListener("resize", sendHeight, { passive: true });
-    // segnala altezza anche mentre le immagini si caricano progressivamente
-    const ro = new ResizeObserver(sendHeight);
-    ro.observe(document.documentElement);
+    new ResizeObserver(sendHeight).observe(document.documentElement);
   }
 
+  /* --- dati --- */
   Promise.all([
     fetch("projects.json", { cache: "no-store" }).then((r) => r.json()),
     fetch("videos.json", { cache: "no-store" }).then((r) => r.json()).catch(() => ({})),
   ])
-    .then(([data, vids]) => { VIDEOS = vids || {}; init(data.sections || []); })
-    .catch((e) => {
-      sectionsEl.innerHTML = '<p style="color:#b00">Impossibile caricare i progetti (' + e + ")</p>";
-    });
+    .then(([data, vids]) => build(data.sections || [], vids || {}))
+    .catch((e) => { app.innerHTML = '<p style="color:#b00;padding:20px">Impossibile caricare i progetti (' + e + ")</p>"; });
 
-  /* --- mappa slug-progetto -> [{id,title}] per il PULSANTE-video (solo 'beside') --- */
-  function buildVideoMap(vids) {
-    const map = {};
-    Object.entries((vids.beside || {})).forEach(([slug, ids]) => {
-      if (Array.isArray(ids)) map[slug] = ids.map((id) => ({ id: id, title: "" }));
-    });
-    return map;
-  }
+  const YT_THUMB = (id) => "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
+  const YT_EMBED = (id) => "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&mute=1&rel=0&playsinline=1&loop=1&playlist=" + id;
+  const pretty = (s) => (s || "").replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
-  /* --- facciata video inline (thumbnail + play rosso), al click carica l'iframe --- */
-  function makeFacade(id, title, url) {
-    const v = document.createElement("div");
-    v.className = "vc-video";
-    v.innerHTML =
-      '<img class="vc-thumb" loading="lazy" alt="" src="https://i.ytimg.com/vi/' + id + '/hqdefault.jpg" />' +
-      (title ? '<span class="vc-title">' + title + "</span>" : "") +
-      (url ? '<a class="vc-visit" href="' + url + '" target="_blank" rel="noopener">VISIT ↗</a>' : "") +
-      '<button class="vc-play" type="button" aria-label="Play"><svg viewBox="0 0 68 48">' +
-      '<path class="vc-play-bg" d="M66.5 7.7c-.8-2.9-2.5-5.2-5.4-6C55.8.5 34 .5 34 .5S12.2.5 6.9 1.6C4 2.4 2.3 4.8 1.5 7.7.4 13 .4 24 .4 24s0 11 1.1 16.3c.8 2.9 2.5 5.2 5.4 6C12.2 47.5 34 47.5 34 47.5s21.8 0 27.1-1.1c2.9-.8 4.6-3.1 5.4-6C67.6 35 67.6 24 67.6 24s0-11-1.1-16.3z"/>' +
-      '<path d="M27 34l18-10L27 14v20z" fill="#fff"/></svg></button>';
-    function play() {
-      const f = document.createElement("iframe");
-      f.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0";
-      f.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-      f.allowFullscreen = true;
-      f.className = "vc-iframe";
-      v.innerHTML = "";
-      v.appendChild(f);
+  /* --- costruzione categorie --- */
+  function build(sections, vids) {
+    const CATS = [];
+    sections.forEach((s) => {
+      const items = (s.projects || []).map((p) => ({ kind: "proj", name: p.name, frames: p.frames || [] }));
+      if (s.id === "exhibit" && vids.exhibitCards && vids.exhibitCards.items) {
+        vids.exhibitCards.items.forEach((it) => items.push({ kind: "video", name: it.title, vid: it.id }));
+      }
+      CATS.push({ name: s.title, items });
+    });
+    if (vids.visual && vids.visual.items) {
+      const items = [];
+      vids.visual.items.forEach((it) => (it.videos || []).forEach((v) => items.push({ kind: "video", name: it.id ? pretty(it.id) : "Videoclip", vid: v })));
+      CATS.push({ name: "Videoclip & Motion", items });
     }
-    // click su tutto il video → play (ma il tasto VISIT apre il link)
-    v.addEventListener("click", (e) => {
-      if (e.target.closest(".vc-visit")) return;
-      play();
+    if (vids.website && vids.website.items) {
+      CATS.push({ name: "Website", items: vids.website.items.map((it) => ({ kind: "site", name: it.title, vid: it.id, url: it.url })) });
+    }
+    CATS.forEach(renderCategory);
+  }
+
+  const thumbURL = (it) => (it.kind === "proj" ? (it.frames[0] || "") : YT_THUMB(it.vid));
+
+  function renderCategory(cat) {
+    const el = document.createElement("section");
+    el.className = "cat";
+
+    // --- chiuso ---
+    const closed = document.createElement("div");
+    closed.className = "cat__closed";
+    closed.innerHTML =
+      '<div class="cat__top"><span class="cat__name">' + cat.name + "</span>" +
+      '<span class="cat__count">' + String(cat.items.length).padStart(2, "0") + " progetti &raquo;</span></div>" +
+      '<div class="cat__line"></div>';
+    const strip = document.createElement("div");
+    strip.className = "strip";
+    cat.items.forEach((it, i) => {
+      const b = document.createElement("button");
+      b.className = "thumb"; b.type = "button"; b.setAttribute("aria-label", "Apri " + it.name);
+      b.innerHTML = '<img loading="lazy" alt="" src="' + thumbURL(it) + '">';
+      b.addEventListener("click", (e) => { e.stopPropagation(); open(el, i); });
+      strip.appendChild(b);
     });
-    return v;
+    closed.appendChild(strip);
+    el.appendChild(closed);
+
+    // --- aperto ---
+    const openW = document.createElement("div");
+    openW.className = "cat__open"; openW.setAttribute("aria-hidden", "true");
+    openW.innerHTML =
+      '<div class="open__bar"><span class="open__name">' + cat.name + "</span>" +
+      '<button class="close" type="button" aria-label="Chiudi sezione">&times;</button></div>';
+    const car = document.createElement("div");
+    car.className = "carousel";
+    cat.items.forEach((it, i) => car.appendChild(makeCard(it, cat)));
+    openW.appendChild(car);
+    const foot = document.createElement("div");
+    foot.className = "open__foot";
+    foot.innerHTML = "<span>Scorri &rarr; · click card = info</span>" +
+      '<span class="mono g-pos">01 / ' + String(cat.items.length).padStart(2, "0") + "</span>";
+    openW.appendChild(foot);
+    el.appendChild(openW);
+
+    openW.querySelector(".close").addEventListener("click", (e) => { e.stopPropagation(); close(); });
+
+    // --- animazione scroll: card centrata = attiva (gif/video) + contatore ---
+    const pos = foot.querySelector(".g-pos"), tot = cat.items.length;
+    const animate = () => {
+      const cx = car.getBoundingClientRect().left + car.clientWidth / 2;
+      let best = 1e9, idx = 0, list = car.querySelectorAll(".pcard");
+      list.forEach((c, i) => { const r = c.getBoundingClientRect(); const dc = (r.left + r.width / 2) - cx; if (Math.abs(dc) < best) { best = Math.abs(dc); idx = i; } });
+      list.forEach((c, i) => setActive(c, i === idx));
+      pos.textContent = String(idx + 1).padStart(2, "0") + " / " + String(tot).padStart(2, "0");
+    };
+    let raf = null;
+    car.addEventListener("scroll", () => { if (raf) return; raf = requestAnimationFrame(() => { animate(); raf = null; }); }, { passive: true });
+    el._animate = animate; el._car = car;
+
+    app.appendChild(el);
   }
 
-  /* --- pulsante-video (stesso stile della freccia: cerchio bianco, bordo nero) --- */
-  function makeVideoBtn(videos, name) {
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = "video-btn";
-    b.setAttribute("aria-label", "Guarda i video del progetto");
-    b.innerHTML =
-      '<svg viewBox="0 0 143.61 143.61" aria-hidden="true">' +
-      '<rect class="vb-bg" x="1.42" y="1.42" width="140.78" height="140.78" rx="70.39" ry="70.39" fill="#fff" stroke="#000" stroke-width="2.83"/>' +
-      '<path class="vb-play" d="M58 46 L58 98 L102 72 Z" fill="#000"/></svg>';
-    b.addEventListener("click", (e) => { e.stopPropagation(); openModal(videos, name); });
-    return b;
-  }
+  /* --- singola card progetto/video --- */
+  function makeCard(it, cat) {
+    const card = document.createElement("div");
+    card.className = "pcard";
+    card._kind = it.kind; card._frames = it.kind === "proj" ? it.frames : null; card._vid = it.vid;
 
-  /* --- card-video singola: thumbnail YouTube + pulsante-video, senza flip --- */
-  function makeVideoCard(id, title) {
-    const art = document.createElement("article");
-    art.className = "card card--video";
-    art.innerHTML =
-      '<div class="card__inner"><div class="card__face card__front">' +
-      '<div class="stage">' +
-      '<img class="stage__img is-active" alt="" loading="lazy" src="https://i.ytimg.com/vi/' + id + '/hqdefault.jpg" />' +
-      '<div class="card__tools"></div>' +
-      "</div>" +
-      '<div class="titlebox"><span class="card__name">' + title + "</span></div>" +
-      "</div></div>";
-    art.querySelector(".card__tools").appendChild(makeVideoBtn([{ id: id, title: title }], title));
-    art.classList.add("is-in"); // niente animazione d'ingresso: appare subito
-    return art;
-  }
+    const media =
+      it.kind === "proj"
+        ? '<div class="pcard__media"><img class="slide-img" loading="lazy" alt="' + it.name + '" src="' + (it.frames[0] || "") + '"></div>' +
+          '<div class="pcard__play"><i></i> gif</div>'
+        : '<div class="pcard__media"><img class="v-thumb" loading="lazy" alt="' + it.name + '" src="' + YT_THUMB(it.vid) + '"></div>' +
+          '<div class="pcard__play"><i></i> video</div>';
 
-  /* --- overlay video condiviso --- */
-  let modal;
-  function ensureModal() {
-    if (modal) return modal;
-    modal = document.createElement("div");
-    modal.className = "vmodal";
-    modal.innerHTML =
-      '<button class="vmodal__close" type="button" aria-label="Chiudi">✕</button>' +
-      '<div class="vmodal__box">' +
-      '  <div class="vmodal__stage"></div>' +
-      '  <div class="vmodal__bar"><span class="vmodal__title"></span><div class="vmodal__tabs"></div></div>' +
+    const visit = it.url ? '<a class="visit" href="' + it.url + '" target="_blank" rel="noopener">VISIT &#8599;</a>' : "<span>&larr; chiudi info</span>";
+
+    card.innerHTML =
+      '<div class="pcard__inner">' +
+        '<div class="pcard__face pcard__front">' + media +
+          '<div class="pcard__label"><span>' + it.name + "</span><em>info +</em></div>" +
+        "</div>" +
+        '<div class="pcard__face pcard__back">' +
+          "<h4>" + it.name + "</h4><p class=\"m\">" + cat.name + "</p><p>Descrizione in arrivo.</p>" +
+          '<div class="row"><span>Surreo Studio</span>' + visit + "</div>" +
+        "</div>" +
       "</div>";
-    document.body.appendChild(modal);
-    const close = () => {
-      modal.classList.remove("is-open");
-      modal.querySelector(".vmodal__stage").innerHTML = "";
-      document.body.style.overflow = "";
-    };
-    modal.querySelector(".vmodal__close").addEventListener("click", close);
-    modal.addEventListener("click", (e) => { if (e.target === modal) close(); });
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
-    return modal;
+
+    card.addEventListener("click", (e) => {
+      if (e.target.closest("a")) return;      // il link VISIT non gira la card
+      e.stopPropagation();
+      card.classList.toggle("is-flipped");
+    });
+    return card;
   }
-  function playInModal(id) {
+
+  /* --- attiva/disattiva media della card centrata --- */
+  function setActive(card, on) {
+    if (card._active === on) return;
+    card._active = on;
+    card.classList.toggle("is-active", on);
+    if (card._kind === "proj") { on ? startGif(card) : stopGif(card); }
+    else { on ? playVideo(card) : stopVideo(card); }
+  }
+  function startGif(card) {
+    const f = card._frames;
+    if (!f || f.length < 2 || reduce) return;
+    const img = card.querySelector(".slide-img");
+    f.forEach((src) => { const im = new Image(); im.src = src; });   // preload
+    let i = 0;
+    card._timer = setInterval(() => { i = (i + 1) % f.length; img.src = f[i]; }, 200);
+  }
+  function stopGif(card) {
+    if (card._timer) { clearInterval(card._timer); card._timer = null; }
+    const img = card.querySelector(".slide-img");
+    if (img && card._frames) img.src = card._frames[0];
+  }
+  function playVideo(card) {
+    if (card.querySelector("iframe")) return;
     const f = document.createElement("iframe");
-    f.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0";
-    f.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-    f.allowFullscreen = true;
-    const stage = modal.querySelector(".vmodal__stage");
-    stage.innerHTML = "";
-    stage.appendChild(f);
+    f.src = YT_EMBED(card._vid);
+    f.allow = "autoplay; encrypted-media; picture-in-picture";
+    f.setAttribute("allowfullscreen", "");
+    card.querySelector(".pcard__media").appendChild(f);
   }
-  function openModal(videos, name) {
-    ensureModal();
-    modal.querySelector(".vmodal__title").textContent = name || "";
-    const tabs = modal.querySelector(".vmodal__tabs");
-    tabs.innerHTML = "";
-    if (videos.length > 1) {
-      videos.forEach((v, i) => {
-        const t = document.createElement("button");
-        t.className = "vmodal__tab" + (i === 0 ? " is-active" : "");
-        t.textContent = v.title || "Video " + (i + 1);
-        t.addEventListener("click", () => {
-          tabs.querySelectorAll(".vmodal__tab").forEach((x) => x.classList.remove("is-active"));
-          t.classList.add("is-active");
-          playInModal(v.id);
-        });
-        tabs.appendChild(t);
-      });
-    }
-    playInModal(videos[0].id);
-    modal.classList.add("is-open");
-    document.body.style.overflow = "hidden";
+  function stopVideo(card) { const f = card.querySelector("iframe"); if (f) f.remove(); }
+
+  /* --- apertura/chiusura categoria (animazione FLIP) --- */
+  function targetRect() {
+    const m = window.innerWidth < 640 ? 12 : 28;
+    const w = Math.min(1180, window.innerWidth - m * 2), h = window.innerHeight - m * 2;
+    return { top: m, left: (window.innerWidth - w) / 2, width: w, height: h };
+  }
+  function setRect(el, r) { el.style.top = r.top + "px"; el.style.left = r.left + "px"; el.style.width = r.width + "px"; el.style.height = r.height + "px"; }
+  function centerCard(car, idx, behavior) {
+    const c = car.querySelectorAll(".pcard")[idx];
+    if (!c) return;
+    car.scrollTo({ left: c.offsetLeft - (car.clientWidth - c.offsetWidth) / 2, behavior: behavior });
   }
 
-  let VIDEO_MAP = {};
-
-  function makeHead(title) {
-    const head = document.createElement("div");
-    head.className = "section__head";
-    head.innerHTML =
-      '<h2 class="section__title">' + title + "</h2>" +
-      '<span class="section__meta">XXX</span>';
-    return head;
+  function open(el, idx) {
+    if (openEl) return;
+    openEl = el; idx = idx || 0;
+    const r = el.getBoundingClientRect();
+    ph = document.createElement("div"); ph.style.height = r.height + "px"; el.after(ph);
+    el.classList.add("is-fixed"); setRect(el, { top: r.top, left: r.left, width: r.width, height: r.height });
+    el.getBoundingClientRect();
+    document.body.classList.add("has-open"); backdrop.classList.add("is-on"); el.classList.add("is-open");
+    el.querySelector(".cat__open").setAttribute("aria-hidden", "false");
+    requestAnimationFrame(() => setRect(el, targetRect()));
+    el.querySelector(".close").focus({ preventScroll: true });
+    // parti da sinistra, poi slitta fino al progetto cliccato -> gif/video parte
+    el._car.scrollLeft = 0;
+    setTimeout(() => { if (openEl === el) { centerCard(el._car, idx, reduce ? "auto" : "smooth"); el._animate(); } }, 240);
+    [440, 640].forEach((t) => setTimeout(() => { if (openEl === el) el._animate(); }, t));
   }
 
-  /* --- avvolge testa (fuori) + riquadro in un wrapper di sezione --- */
-  function makeSectionWrap(title, boxEl) {
-    const wrap = document.createElement("div");
-    wrap.className = "section-wrap";
-    wrap.appendChild(makeHead(title));
-    wrap.appendChild(boxEl);
-    return wrap;
-  }
-
-  /* --- sezione VIDEOCLIP: per progetto -> intestazione (nome+linea) + riga immagine + video --- */
-  function appendVideoclip(items, title, projById) {
-    const sec = document.createElement("section");
-    sec.className = "section section--vclip";
-    const list = document.createElement("div");
-    list.className = "vclip-list";
-    items.forEach((it) => {
-      const slug = it.id || it.slug;
-      const p = projById[slug];
-      const name = (p && p.name) || it.title || slug;
-
-      const item = document.createElement("div");
-      const single = (it.videos || []).length <= 1;
-      item.className = "vclip-item " + (single ? "vclip-item--single" : "vclip-item--double");
-      const head = document.createElement("div");
-      head.className = "vclip-head";
-      head.innerHTML = "<span>" + name + "</span>";
-      const row = document.createElement("div");
-      row.className = "vclip-row";
-      const media = document.createElement("div");
-      media.className = "vclip-media";
-      media.innerHTML =
-        '<div class="vclip-sq">' +
-        (p && p.frames && p.frames[0]
-          ? '<img loading="lazy" alt="" src="' + p.frames[0] + '" />'
-          : '<span class="vclip-noimg"></span>') +
-        "</div>";
-      row.appendChild(media);
-      (it.videos || []).forEach((id) => row.appendChild(makeFacade(id, "", "")));
-      item.appendChild(head);
-      item.appendChild(row);
-      list.appendChild(item);
-    });
-    sec.appendChild(list);
-    sectionsEl.appendChild(makeSectionWrap(title, sec));
-  }
-
-  /* --- sezione SITI/WEBSITE: solo video, 3 colonne --- */
-  function appendWebsite(items, title) {
-    const sec = document.createElement("section");
-    sec.className = "section section--sites";
-    const grid = document.createElement("div");
-    grid.className = "grid grid--3";
-    items.forEach((it) => {
-      const card = document.createElement("div");
-      card.className = "site-card";
-      card.appendChild(makeFacade(it.id, it.title, it.url));
-      grid.appendChild(card);
-    });
-    sec.appendChild(grid);
-    sectionsEl.appendChild(makeSectionWrap(title, sec));
-  }
-
-  /* --- calcola le due altezze: righe a 2 video (piena) e a 1 video (mezza) --- */
-  function fitVclip() {
-    const list = document.querySelector(".vclip-list");
-    if (!list) return;
-    const row = list.querySelector(".vclip-row");
-    if (!row) return;
-    const innerGap = parseFloat(getComputedStyle(row).columnGap) || 9;
-    const colGap = parseFloat(getComputedStyle(list).columnGap) || 20;
-    const W = list.clientWidth;
-    // double: q + 2*(16/9)q + 2*innerGap = W  ->  q = (W - 2*innerGap) / 4.5556
-    const hD = (W - 2 * innerGap) / 4.5556;
-    // single (2 per riga): larghezza cella = (W - colGap) / 2; q + (16/9)q + innerGap = cella
-    const halfCol = (W - colGap) / 2;
-    const hS = (halfCol - innerGap) / 2.7778;
-    document.documentElement.style.setProperty("--vclip-h", Math.floor(hD) + "px");
-    document.documentElement.style.setProperty("--vclip-h1", Math.floor(hS) + "px");
-  }
-
-  /* --- linea nome: con grid la larghezza e' gia' quella della cella, niente da fare --- */
-  function alignVclipHeads() { /* noop: gestito da CSS grid */ }
-
-  /* --- ordine desiderato per le prime file di ogni sezione --- */
-  const PRIORITY = {
-    graphic: [
-      "caffe-meletti", "donna-mayla", "mybestlazio", "castelmania", "shine-soap",
-      "appicciafuoco", "palandrani-technical", "gizzi-fisioterapista", "handmade",
-    ],
-  };
-  function reorderProjects(sec) {
-    const pri = PRIORITY[sec.id];
-    if (!pri || !sec.projects) return;
-    const byId = Object.fromEntries(sec.projects.map((p) => [p.id, p]));
-    const head = pri.map((id) => byId[id]).filter(Boolean);
-    const usedIds = new Set(head.map((p) => p.id));
-    const tail = sec.projects.filter((p) => !usedIds.has(p.id));
-    sec.projects = head.concat(tail);
-  }
-
-  function init(sections) {
-    VIDEO_MAP = buildVideoMap(VIDEOS);
-    sections.forEach(reorderProjects);
-    const projById = {};
-    const cards = [];
-    let total = 0;
-
-    sections.forEach((sec, si) => {
-      if (!sec.projects || !sec.projects.length) return;
-      total += sec.projects.length;
-
-      const secEl = document.createElement("section");
-      secEl.className = "section";
-      const grid = document.createElement("div");
-      grid.className = "grid";
-
-      sec.projects.forEach((p) => {
-        projById[p.id] = p;
-        const c = build(p);
-        cards.push(c);
-        grid.appendChild(c.el);
-      });
-
-      // card-video singole nella sezione Exhibit
-      if (sec.id === "exhibit" && VIDEOS.exhibitCards && VIDEOS.exhibitCards.items) {
-        VIDEOS.exhibitCards.items.forEach((it) => {
-          grid.appendChild(makeVideoCard(it.id, it.title));
-        });
-      }
-
-      secEl.appendChild(grid);
-      sectionsEl.appendChild(makeSectionWrap(sec.title, secEl));
-    });
-
-    // sezioni video dedicate (dopo le sezioni immagini)
-    if (VIDEOS.visual && VIDEOS.visual.items) appendVideoclip(VIDEOS.visual.items, "Videoclip & Motion", projById);
-    if (VIDEOS.website && VIDEOS.website.items) appendWebsite(VIDEOS.website.items, "Website");
-    const layoutVclip = () => {
-      fitVclip();
-      // secondo frame: il reflow di --vclip-h e' completato, ora misuro le righe
-      requestAnimationFrame(alignVclipHeads);
+  function close() {
+    if (!openEl) return;
+    const el = openEl;
+    el.querySelectorAll(".pcard").forEach((c) => setActive(c, false));   // stop media
+    const r = ph.getBoundingClientRect();
+    backdrop.classList.remove("is-on"); el.classList.remove("is-open");
+    el.querySelector(".cat__open").setAttribute("aria-hidden", "true");
+    el.querySelectorAll(".pcard.is-flipped").forEach((c) => c.classList.remove("is-flipped"));
+    setRect(el, { top: r.top, left: r.left, width: r.width, height: r.height });
+    const done = () => {
+      el.classList.remove("is-fixed"); el.style.cssText = "";
+      if (ph) { ph.remove(); ph = null; }
+      document.body.classList.remove("has-open");
+      el.removeEventListener("transitionend", done);
+      openEl = null;
     };
-    layoutVclip();
-    requestAnimationFrame(layoutVclip);
-    window.addEventListener("load", layoutVclip);
-    window.addEventListener("resize", layoutVclip, { passive: true });
-
-    // entrata + lazy activation
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((en) => {
-          const c = en.target.__card;
-          if (!c) return;
-          if (en.isIntersecting) {
-            en.target.classList.add("is-in");
-            c.load();
-            c.active = true;
-          } else {
-            c.active = false;
-          }
-        });
-      },
-      { rootMargin: "200px 0px", threshold: 0.01 }
-    );
-    cards.forEach((c) => io.observe(c.el));
-
-    if (isTouch && !reduce) startScrub(cards);
-    else if (!reduce) startAutoplay(cards);
+    el.addEventListener("transitionend", done);
+    setTimeout(() => { if (openEl === el) done(); }, 650);
   }
 
-  function build(p) {
-    const node = tpl.content.firstElementChild.cloneNode(true);
-    const stage = node.querySelector(".stage");
-    const tools = node.querySelector(".card__front .card__tools");
-    const nameEls = node.querySelectorAll(".card__name, .back__name");
-    const tot = node.querySelector(".tot");
-    const cur = node.querySelector(".cur");
-    const backN = node.querySelector(".back__n");
-
-    nameEls.forEach((n) => (n.textContent = p.name));
-    tot.textContent = p.frames.length;
-    backN.textContent = "01 — " + String(p.frames.length).padStart(2, "0");
-
-    const state = {
-      el: node,
-      frames: p.frames,
-      layers: [],        // un <img> per frame, impilati e precaricati
-      idx: 0,
-      active: false,
-      loaded: false,
-    };
-
-    // tutti i frame come layer sovrapposti: il crossfade tocca solo l'opacita'
-    // (nessun cambio di src -> nessun flash bianco)
-    p.frames.forEach((src, i) => {
-      const im = document.createElement("img");
-      im.className = "stage__img";
-      im.alt = "";
-      im.decoding = "async";
-      im.dataset.src = src;
-      if (i === 0) im.classList.add("is-active");
-      stage.insertBefore(im, tools);
-      state.layers[i] = im;
-    });
-
-    function paint(i) {
-      i = ((i % p.frames.length) + p.frames.length) % p.frames.length;
-      if (i === state.idx && state.layers[i].classList.contains("is-active")) return;
-      state.layers[state.idx].classList.remove("is-active");
-      state.layers[i].classList.add("is-active");
-      cur.textContent = i + 1;
-      backN.textContent =
-        String(i + 1).padStart(2, "0") + " — " + String(p.frames.length).padStart(2, "0");
-      state.idx = i;
-    }
-
-    state.load = function () {
-      if (state.loaded) return;
-      state.loaded = true;
-      state.layers.forEach((im) => { im.src = im.dataset.src; });
-    };
-    state.paint = paint;
-
-    // flip
-    node.querySelectorAll(".flip-btn").forEach((btn) =>
-      btn.addEventListener("click", () => {
-        node.classList.toggle("is-flipped");
-        const flipped = node.classList.contains("is-flipped");
-        node.querySelector(".flip-btn").setAttribute(
-          "aria-label",
-          flipped ? "Torna al progetto" : "Mostra info progetto"
-        );
-      })
-    );
-
-    // pulsante-video sotto la freccia (la card resta quadrata)
-    const vids = VIDEO_MAP[p.id];
-    if (vids && vids.length) {
-      node.classList.add("has-video");
-      node.querySelector(".card__tools").appendChild(makeVideoBtn(vids, p.name));
-    }
-
-    node.__card = state;
-    return state;
-  }
-
-  /* ---------- DESKTOP: loop SOLO al passaggio mouse (niente movimento a riposo) ---------- */
-  function startAutoplay(cards) {
-    const STEP = 220; // scorrimento veloce al passaggio del mouse
-    cards.forEach((c) => {
-      let timer = null;
-      const start = () => {
-        if (timer || c.el.classList.contains("is-flipped")) return;
-        if (c.loaded) c.paint(c.idx + 1);
-        timer = setInterval(() => {
-          if (!c.el.classList.contains("is-flipped")) c.paint(c.idx + 1);
-        }, STEP);
-      };
-      const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
-      c.el.addEventListener("mouseenter", start);
-      c.el.addEventListener("mouseleave", stop);
-    });
-  }
-
-  /* ---------- MOBILE: autoplay veloce quando la card è in vista ----------
-     IntersectionObserver + timer locale. Se IntersectionObserver non funziona
-     (ambiente limitato), fallback: activation manuale su card visibili. */
-  function startScrub(cards) {
-    cards.forEach((c) => c.el.classList.add("is-scrub"));
-
-    const STEP = 180; // ms tra frame, loop veloce
-    let ioWorking = false;
-
-    // IntersectionObserver: ideale per browser/embed veri
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((en) => {
-          ioWorking = true;
-          const c = en.target.__card;
-          if (!c) return;
-          if (en.isIntersecting) {
-            if (!c.loaded) c.load();
-            if (!c.timer && !c.el.classList.contains("is-flipped")) {
-              c.timer = setInterval(() => {
-                if (c.loaded && !c.el.classList.contains("is-flipped")) {
-                  c.paint(c.idx + 1);
-                }
-              }, STEP);
-            }
-          } else {
-            if (c.timer) { clearInterval(c.timer); c.timer = null; }
-          }
-        });
-      },
-      { threshold: 0.01, rootMargin: "100px 0px" }
-    );
-    cards.forEach((c) => io.observe(c.el));
-
-    // Fallback: se IntersectionObserver non funziona dopo 600ms,
-    // attiva manualmente il timer su card visibili
-    setTimeout(() => {
-      if (!ioWorking) {
-        cards.forEach((c) => {
-          if (!c.loaded) c.load();
-          if (!c.timer && !c.el.classList.contains("is-flipped")) {
-            const r = c.el.getBoundingClientRect();
-            if (r.top < window.innerHeight && r.bottom > 0) {
-              c.timer = setInterval(() => {
-                if (c.loaded && !c.el.classList.contains("is-flipped")) {
-                  c.paint(c.idx + 1);
-                }
-              }, STEP);
-            }
-          }
-        });
-      }
-    }, 600);
-  }
+  backdrop.addEventListener("click", close);
+  window.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+  window.addEventListener("resize", () => { if (openEl) { setRect(openEl, targetRect()); openEl._animate(); } });
 })();
