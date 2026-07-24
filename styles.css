@@ -135,8 +135,9 @@ body.has-open{overflow:hidden}
 .hero__title{font-family:"Bagel Fat One",system-ui,sans-serif;font-weight:400;
   font-size:clamp(52px,15vw,190px);line-height:.9;letter-spacing:-.01em;text-transform:uppercase;margin:.06em 0 0;color:var(--ink)}
 .hero__row{margin-top:clamp(20px,4vw,44px);padding-top:14px;border-top:1.5px solid var(--ink);
-  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
-  font:600 11px/1 ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  display:flex;justify-content:space-between;gap:clamp(6px,2vw,12px);flex-wrap:nowrap;
+  font:600 clamp(7px,2vw,11px)/1 ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.hero__row span{white-space:nowrap}
 
 /* intestazione sezione generica */
 .sec-head{max-width:1440px;margin:0 auto;padding:0 clamp(16px,3.5vw,44px) 12px;
@@ -172,7 +173,8 @@ body.has-open{overflow:hidden}
   .coll__head h2{white-space:normal}
   .coll__items{justify-content:space-between;gap:clamp(8px,2.5vw,16px);width:100%}
   .coll__box{flex-direction:column;align-items:center;gap:8px;flex:1 1 0;min-width:0}
-  .coll__tag{text-align:center;max-width:none;padding-top:0;font-size:7px}
+  .coll__tag{text-align:center;max-width:none;padding-top:0;font-size:7px;line-height:1.25;
+    min-height:2.5em;display:flex;align-items:flex-end;justify-content:center}
   .coll__item{width:100%}
 }
 
@@ -188,5 +190,6 @@ body.has-open{overflow:hidden}
 .contact__links{display:flex;flex-direction:column;gap:8px;margin-bottom:clamp(24px,4vw,44px)}
 .contact__links a{font-weight:700;font-size:clamp(16px,2.6vw,30px);letter-spacing:-.01em;color:var(--ink);text-decoration:none;width:max-content;max-width:100%;border-bottom:2px solid transparent}
 .contact__links a:hover{border-bottom-color:var(--ink)}
-.contact__foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--line);
-  font:600 10px/1 ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.contact__foot{display:flex;justify-content:space-between;gap:clamp(6px,2vw,12px);flex-wrap:nowrap;padding-top:16px;border-top:1px solid var(--line);
+  font:600 clamp(6.5px,1.9vw,10px)/1 ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.contact__foot span{white-space:nowrap}
