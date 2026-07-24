@@ -166,14 +166,14 @@ body.has-open{overflow:hidden}
 .coll__thumb--workshok{background:#e7e4da;color:#1a49ff;font-style:italic;font-size:clamp(9px,2vw,13px)}
 .coll__thumb--sub{background:#141414;color:#e23b2e}
 
-/* collateral — mobile: titolo sopra, box in colonna */
+/* collateral — mobile: titolo sopra, 3 box in riga */
 @media(max-width:768px){
   .coll__head{flex-direction:column;gap:clamp(20px,5vw,32px);padding-bottom:clamp(24px,5vw,40px)}
   .coll__head h2{white-space:normal}
-  .coll__items{flex-direction:column;justify-content:flex-start;align-items:flex-start;gap:clamp(22px,6vw,32px);width:100%}
-  .coll__box{flex-direction:column;align-items:flex-start;gap:8px}
-  .coll__tag{text-align:left;max-width:none}
-  .coll__item{width:clamp(110px,32vw,140px)}
+  .coll__items{justify-content:space-between;gap:clamp(8px,2.5vw,16px);width:100%}
+  .coll__box{flex-direction:column;align-items:center;gap:8px;flex:1 1 0;min-width:0}
+  .coll__tag{text-align:center;max-width:none;padding-top:0;font-size:7px}
+  .coll__item{width:100%}
 }
 
 /* about */
