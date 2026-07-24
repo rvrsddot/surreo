@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "surreo",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "5178"],
+      "port": 5178,
+      "cwd": "/Users/riverside/Desktop/GITHUB/SURREO"
+    }
+  ]
+}
