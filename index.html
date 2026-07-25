@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" />
-  <link rel="stylesheet" href="styles.css?v=114" />
+  <link rel="stylesheet" href="styles.css?v=115" />
 </head>
 <body>
 
@@ -38,6 +38,9 @@
       <a href="mailto:surreocreative@gmail.com">Mail me!</a>
       <a href="https://wa.me/393313510091" target="_blank" rel="noopener">WhatsApp</a>
     </nav>
+    <button class="burger" type="button" aria-label="Apri menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
   </header>
 
   <!-- hero -->
@@ -109,6 +112,34 @@
       <span>© 2026</span>
     </div>
   </footer>
+
+  <!-- menu mobile (overlay) -->
+  <div class="menu-overlay" id="mobile-menu" aria-hidden="true">
+    <nav class="menu-overlay__nav">
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+      <a href="mailto:surreocreative@gmail.com">Mail me!</a>
+      <a href="https://wa.me/393313510091" target="_blank" rel="noopener">WhatsApp</a>
+    </nav>
+  </div>
+
+  <script>
+  (function(){
+    var burger=document.querySelector('.burger');
+    var overlay=document.getElementById('mobile-menu');
+    if(!burger||!overlay) return;
+    function setOpen(open){
+      burger.classList.toggle('is-active',open);
+      overlay.classList.toggle('is-open',open);
+      burger.setAttribute('aria-expanded',open);
+      overlay.setAttribute('aria-hidden',!open);
+      document.body.classList.toggle('has-open',open);
+    }
+    burger.addEventListener('click',function(){setOpen(!overlay.classList.contains('is-open'));});
+    overlay.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setOpen(false);});});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false);});
+  })();
+  </script>
 
   <script src="app.js?v=105"></script>
 </body>
