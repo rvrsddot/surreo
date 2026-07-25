@@ -8,10 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" />
-  <link rel="stylesheet" href="styles.css?v=112" />
+  <link rel="stylesheet" href="styles.css?v=114" />
 </head>
 <body>
 
+  <div class="landing">
   <!-- marquee servizi -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee__t">
@@ -22,7 +23,15 @@
 
   <!-- header -->
   <header class="site">
-    <a class="brand" href="#top"><span class="brand__mark">◆</span> Surreo <em>Studio</em></a>
+    <a class="brand" href="#top">
+      <svg class="brand__logo" viewBox="0 0 551.76 551.76" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle class="ring" cx="275.88" cy="275.88" r="273.53" fill="none" stroke="currentColor" stroke-dasharray="28.64 28.64" stroke-miterlimit="10" stroke-width="14"/>
+        <path d="M264.31,275.78h-57.09v-1.47s25.39-32.96,25.39-32.96v-88.2s-53.77,0-53.77,0c-21.42,0-30.67,7.56-30.67,19.33,0,16.8,18.69,20.37,45.79,20.37h30.32s-3.64,6.51-3.64,6.51h-18.06s-21.21,235.79-21.21,235.79h-60.7v-1.47s74.78-234.32,74.78-234.32c-39.49-.21-63.01-13.02-63.01-41.59,0-19.32,14.07-41.17,63.43-41.17h70.16v1.68s-26.89,51.88-26.89,51.88v70.97s25.18,33.17,25.18,33.17v1.47Z" fill="currentColor"/>
+        <path d="M287.46,274.31l25.18-33.17v-70.97l-26.89-51.88v-1.68h70.16c49.36,0,63.43,21.85,63.43,41.17,0,28.57-23.53,41.38-63.01,41.59l74.78,234.32v1.47h-60.7l-21.21-235.79h-18.06l-3.63-6.47,30.31-.04c27.1,0,45.79-3.57,45.79-20.37,0-11.76-9.24-19.33-30.67-19.33h-53.77v88.2l25.39,32.96v1.47h-57.09v-1.47Z" fill="currentColor"/>
+        <path d="M207.22,369.56c0-39.14,27.67-65.78,68.38-65.78s68.97,26.46,68.97,65.42-27.86,65.96-68.97,65.96-68.38-26.64-68.38-65.6ZM275.59,401.36c38.34,0,62.84-14.68,62.84-32.44s-24.5-32.62-62.84-32.62-62.25,14.68-62.25,32.62,24.11,32.44,62.25,32.44Z" fill="currentColor"/>
+      </svg>
+      <span class="brand__txt">Surreo <em>Studio</em></span>
+    </a>
     <nav class="site__nav">
       <a href="#projects">Projects</a>
       <a href="#about">About</a>
@@ -33,14 +42,16 @@
 
   <!-- hero -->
   <section class="hero" id="top">
-    <p class="hero__kicker">Multidisciplinary</p>
-    <h1 class="hero__title">Design Studio</h1>
+    <div class="hero__main">
+      <h1 class="hero__h1"><img class="hero__title-svg" src="svg/herotitolo.svg" alt="Multidisciplinary — Design Studio" /></h1>
+    </div>
     <div class="hero__row">
       <span>Unbased #Design Studio</span>
       <span>Deutschland — Italy</span>
       <span>Surreo</span>
     </div>
   </section>
+  </div><!-- /landing -->
 
   <!-- collateral -->
   <section class="collateral" id="collateral">
