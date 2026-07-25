@@ -147,6 +147,13 @@ body.has-open{overflow:hidden}
   .burger.is-active span:nth-child(2){opacity:0}
   .burger.is-active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
+  /* titolo "Design Studio" a tutta larghezza: le lettere toccano i
+     bordi come la linea. L'SVG ha ~10.6% di margine per lato: scalo
+     l'immagine (100% -> lettere ai bordi). clip-x evita scroll orizz. */
+  .hero{overflow-x:clip}
+  .hero__main .hero__title-svg{flex:none;max-width:none;transform:none;
+    width:calc((100vw - 2*clamp(16px,3.5vw,44px)) * 1.268)}
+
   /* overlay: stessa estetica lo-fi del sito (paper + ink, monospace, box bordati) */
   .menu-overlay{display:flex;position:fixed;inset:0;z-index:100;background:var(--paper);
     flex-direction:column;justify-content:center;padding:clamp(28px,9vw,60px);
