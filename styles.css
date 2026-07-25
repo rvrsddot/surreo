@@ -31,6 +31,8 @@ body.has-open{overflow:hidden}
   padding:0;background:var(--paper);cursor:pointer;overflow:hidden;position:relative;
   transition:transform .15s var(--ease),box-shadow .15s var(--ease)}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+/* categorie video/website: miniature e card 16:9 (niente barre nere) */
+.cat--wide .thumb{aspect-ratio:16/9;width:clamp(150px,22vw,260px)}
 .thumb:hover{transform:translateY(-3px);box-shadow:4px 5px 0 var(--ink);z-index:2}
 .thumb:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 
@@ -56,6 +58,7 @@ body.has-open{overflow:hidden}
 
 .pcard{flex:0 0 auto;height:min(82%,520px);aspect-ratio:1/1;width:auto;scroll-snap-align:center;
   perspective:1300px;cursor:pointer;opacity:.48;transition:opacity .3s var(--ease)}
+.cat--wide .pcard{height:min(64%,420px);width:auto;aspect-ratio:16/9}
 .pcard.is-active{opacity:1}
 .pcard__inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .6s var(--ease)}
 .pcard.is-flipped .pcard__inner{transform:rotateY(180deg)}
@@ -98,6 +101,8 @@ body.has-open{overflow:hidden}
 
 @media(max-width:560px){
   .pcard{width:82%;height:auto;aspect-ratio:1/1}
+  .cat--wide .pcard{width:88%;height:auto;aspect-ratio:16/9}
+  .cat--wide .thumb{width:150px}
   .carousel{padding-left:9%;padding-right:9%}
   .thumb{width:64px}
 }

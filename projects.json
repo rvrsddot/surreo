@@ -494,6 +494,7 @@
           "id": "mirrorx",
           "name": "MIRRORX",
           "frames": [
+            "assets/projects/mirrorx/B_MIRRORX_103.jpg",
             "assets/projects/mirrorx/01.jpg",
             "assets/projects/mirrorx/02.jpg",
             "assets/projects/mirrorx/03.jpg",

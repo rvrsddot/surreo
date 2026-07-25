@@ -61,6 +61,7 @@
   function renderCategory(cat) {
     const el = document.createElement("section");
     el.className = "cat";
+    if (/videoclip|website/i.test(cat.name)) el.classList.add("cat--wide");
 
     // --- chiuso ---
     const closed = document.createElement("div");
