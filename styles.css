@@ -27,7 +27,7 @@ body.has-open{overflow:hidden}
 .strip{display:flex;gap:clamp(8px,1vw,12px);overflow-x:auto;overflow-y:hidden;padding-bottom:4px;scrollbar-width:thin}
 .strip::-webkit-scrollbar{height:6px}
 .strip::-webkit-scrollbar-thumb{background:var(--ink)}
-.thumb{flex:0 0 auto;width:clamp(90px,12vw,150px);aspect-ratio:1/1;border:1.5px solid var(--ink);
+.thumb{flex:0 0 auto;width:clamp(90px,12vw,150px);aspect-ratio:1/1;border:0;
   padding:0;background:var(--paper);cursor:pointer;overflow:hidden;position:relative;
   transition:transform .15s var(--ease),box-shadow .15s var(--ease)}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
