@@ -209,16 +209,15 @@ body.has-open{overflow:hidden}
 
 /* sezioni con respiro */
 .collateral,.projects,.about{padding-top:clamp(34px,6vw,72px)}
-.collateral .sec-head,.projects .sec-head,.about .sec-head{margin-left:0;margin-right:0}
 
 /* collateral */
 .collateral{padding-top:clamp(34px,6vw,72px)}
 .coll__head{max-width:1440px;margin:0 auto;padding:0 clamp(16px,3.5vw,44px);
   display:flex;align-items:flex-start;gap:clamp(60px,12vw,140px);border-bottom:1.5px solid var(--ink);padding-bottom:clamp(28px,4vw,48px)}
 .coll__head h2{font-weight:800;font-size:clamp(15px,2.4vw,26px);letter-spacing:-.01em;text-transform:uppercase;flex:0 0 auto;white-space:nowrap}
-.coll__items{display:flex;gap:clamp(14px,1.8vw,32px);justify-content:flex-end;flex:1}
-.coll__box{display:flex;align-items:flex-start;gap:clamp(5px,0.8vw,9px)}
-.coll__tag{font:600 8px/1.25 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);max-width:90px;flex:0 0 auto;text-align:right;padding-top:2px}
+.coll__items{display:flex;gap:clamp(6px,0.8vw,14px);justify-content:flex-start;flex:1}
+.coll__box{display:flex;align-items:flex-start;gap:clamp(4px,0.5vw,7px)}
+.coll__tag{font:600 8px/1.25 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);max-width:72px;flex:0 0 auto;text-align:right;padding-top:2px}
 .coll__item{text-decoration:none;color:var(--ink);border:1.5px solid var(--ink);border-radius:0;overflow:hidden;background:var(--paper);
   width:clamp(70px,18vw,100px);aspect-ratio:1/1;display:block;flex:0 0 auto;transition:transform .12s var(--ease)}
 .coll__item:hover{transform:translateY(-2px)}
