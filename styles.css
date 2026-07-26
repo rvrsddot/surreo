@@ -237,10 +237,40 @@ body.has-open{overflow:hidden}
   .coll__item{width:100%}
 }
 
-/* about */
-.about__body{max-width:1000px;margin:0 auto;padding:0 clamp(16px,3.5vw,44px);
-  display:flex;flex-direction:column;gap:16px;font-size:clamp(15px,1.9vw,20px);line-height:1.5}
-.about__claim{font-weight:800;text-transform:uppercase;letter-spacing:-.01em;font-size:clamp(17px,2.4vw,26px);line-height:1.15}
+/* about (redesign) */
+.about__inner{max-width:1440px;margin:0 auto;padding:0 clamp(16px,3.5vw,44px)}
+.about__head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  border-bottom:1.5px solid var(--ink);padding-bottom:clamp(8px,1.5vw,14px);margin-bottom:clamp(18px,2.5vw,28px)}
+.about__title{font-family:"Space Grotesk",system-ui,sans-serif;font-weight:700;
+  font-size:clamp(34px,7vw,84px);line-height:.9;letter-spacing:-.03em;text-transform:uppercase;margin:0;color:var(--ink)}
+.about__note{font:700 12px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.about__grid{display:grid;grid-template-columns:2.6fr .7fr;gap:clamp(18px,3.5vw,44px);align-items:center}
+.about__copy{font-family:"Archivo Narrow",Helvetica,Arial,sans-serif;display:flex;flex-direction:column;gap:clamp(5px,.7vw,9px)}
+.about__copy p{margin:0;font-size:clamp(16px,1.9vw,21px);line-height:1.26;letter-spacing:.005em}
+.about__hl{font-weight:700;font-size:clamp(19px,2.4vw,27px)!important;line-height:1.08!important;letter-spacing:0;text-transform:uppercase;margin:4px 0!important}
+.about__side{display:flex;justify-content:flex-end}
+.about__smiley{width:clamp(130px,20vw,190px);height:auto;display:block;color:var(--ink)}
+.about__smiley .spin{transform-box:fill-box;transform-origin:50% 50%;animation:about-spin 10s linear infinite}
+@keyframes about-spin{to{transform:rotate(360deg)}}
+.about__cta{display:flex;gap:clamp(12px,2vw,18px);flex-wrap:wrap;border-top:1.5px solid var(--ink);
+  margin-top:clamp(24px,3.5vw,40px);padding-top:clamp(20px,3vw,32px)}
+.about__btn{flex:1 1 260px;display:flex;align-items:center;justify-content:space-between;gap:14px;text-decoration:none;
+  color:var(--ink);background:var(--paper);border:1.5px solid var(--ink);border-radius:3px;
+  padding:clamp(16px,2.2vw,22px) clamp(16px,2.4vw,24px);
+  transition:background .18s var(--ease),color .18s var(--ease),transform .12s var(--ease)}
+.about__btn:hover{background:var(--ink);color:var(--paper);transform:translateY(-2px)}
+.about__btn:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.about__btn .lbl{display:flex;flex-direction:column;gap:6px}
+.about__btn .lbl b{font-weight:800;text-transform:uppercase;letter-spacing:-.01em;font-size:clamp(20px,3vw,30px);line-height:1}
+.about__btn .lbl small{font:600 11px/1 ui-monospace,monospace;letter-spacing:.1em;color:var(--muted)}
+.about__btn:hover .lbl small{color:var(--paper)}
+.about__btn svg{width:26px;height:26px;flex:none;stroke:currentColor}
+.about__marq{margin-top:clamp(22px,3.5vw,34px);border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);overflow:hidden}
+.about__marq .t{display:inline-flex;white-space:nowrap;padding:8px 0;animation:about-marq 26s linear infinite}
+.about__marq .t span{font:700 11px/1 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;padding:0 16px;border-right:1px solid var(--line);color:var(--ink)}
+@keyframes about-marq{to{transform:translateX(-50%)}}
+@media(max-width:640px){.about__grid{grid-template-columns:1fr}.about__side{justify-content:center;margin-top:10px}}
+@media(prefers-reduced-motion:reduce){.about__smiley .spin,.about__marq .t{animation:none}}
 
 /* contatti */
 .contact{max-width:1440px;margin:clamp(40px,7vw,90px) auto 0;padding:clamp(30px,5vw,60px) clamp(16px,3.5vw,44px) clamp(28px,4vw,48px);
