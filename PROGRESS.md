@@ -1,74 +1,96 @@
-# Surreo — Creative Studio — Stato Progetto
+# Surreo — Creative Studio · Stato Progetto
 
-**Data**: 2026-07-25
-**Branch**: main
-**Live**: https://surreostudio.com — **HTTPS attivo** (Enforce HTTPS ON, HTTP → 301 su HTTPS)
+**Ultimo aggiornamento**: 2026-07-28
+**Branch**: main · **Live**: https://surreostudio.com (HTTPS attivo, HTTP → 301)
+**Ultimo commit**: `b584916` (About: testo Space Grotesk Light)
 
-## ✅ Completato
+---
 
-### Hosting & dominio
-- [x] Pagina unica su GitHub Pages, dominio custom `surreostudio.com`
-- [x] DNS ok (4 record A GitHub + www CNAME), nessun CAA bloccante
-- [x] **HTTPS risolto**: il certificato era bloccato lato GitHub anche dopo 24h →
-  sbloccato rimuovendo e ri-aggiungendo il CNAME (commit temporanei), poi
-  "Enforce HTTPS" attivato via API
+## ▶ Come riprendere (avvio rapido)
+```bash
+cd /Users/riverside/Desktop/GITHUB/SURREO
+python3 -m http.server 8888        # dev locale → http://localhost:8888
+```
+- Modifichi CSS/JS? **Incrementa il cache buster** in `index.html`:
+  `styles.css?v=127` e `app.js?v=121` (bump ad ogni modifica).
+- Pubblicare: `git add -A && git commit -m "..." && git push origin main`
+  → GitHub Pages ricostruisce in ~1 min.
 
-### SEO (italiano) — LIVE
-- [x] `<title>` **Surreo — Creative Studio**, description accattivante
-  (design a 360°, forte su branding e creatività, componente AI progettuale)
-- [x] Open Graph + Twitter card
-- [x] **og-image.jpg** 1200×630 (wordmark "Design Studio" su beige + logo SS in basso)
-  — generata da asset esistenti via Chrome headless, non un disegno nuovo
-- [x] **favicon.svg** (logo SS)
-- [x] **robots.txt** + **sitemap.xml**
-- [x] JSON-LD `ProfessionalService`: geo Abruzzo/Marche/Teramo/Ascoli Piceno,
-  Instagram (`surreo_studio`), knowsAbout con AI/Branding/Creatività
-- Nota: le anteprime social vecchie restano in cache su WhatsApp/FB/LinkedIn →
-  forzare con FB Sharing Debugger / LinkedIn Post Inspector
+---
 
-### Hero & layout
-- [x] Titolo hero = SVG `svg/herotitolo.svg` (MULTIDISCIPLINARY + Design Studio),
-  su mobile a tutta larghezza come la linea (scala calcolata per i margini SVG)
-- [x] Logo SS a sx con anello tratteggiato in rotazione continua
-- [x] Wrapper `.landing` (100dvh flex) → riga UNBASED/ITALY/SURREO sempre a fondo
-  schermata; Collateral/Projects/About sotto la piega
-- [x] Desktop: logo sx / nav dx. Mobile: burger a sx, brand a dx
-- [x] **Menu mobile**: overlay estetica lo-fi (fondo paper, box bordati ink,
-  monospace, numerazione 01–04), burger→X
+## ✅ Fatto (tutto LIVE)
+
+### Hosting / SEO
+- HTTPS risolto (certificato era bloccato lato GitHub → sbloccato con
+  rimozione/ri-aggiunta CNAME + "Enforce HTTPS").
+- SEO italiano completo: title **"Surreo — Creative Studio"**, description,
+  Open Graph + Twitter, `og-image.jpg` (wordmark + logo SS), `favicon.svg`,
+  `robots.txt`, `sitemap.xml`, JSON-LD ProfessionalService (geo Abruzzo/
+  Marche/Teramo/Ascoli, Instagram `surreo_studio`, AI).
+
+### Hero
+- Titolo = SVG `svg/herotitolo.svg`; su mobile a tutta larghezza (calc vw).
+- Logo SS a sx con anello tratteggiato in rotazione.
+- Wrapper `.landing` (100dvh) → riga UNBASED/ITALY/SURREO sempre a fondo
+  schermata; sezioni sotto la piega.
+- Desktop: logo sx / nav dx. Mobile: **menu burger** a sx, brand a dx;
+  overlay lo-fi (paper, box bordati, monospace, numerazione 01–04).
 
 ### Collateral & Projects
-- [x] Collateral: 3 box compatti a destra, responsive (colonna→riga mobile)
-- [x] Projects (home): niente rettangoli, miniature allineate alla griglia,
-  titoli vicini alla linea, categorie compatte
-- [x] Click miniatura → apre categoria e scorre al progetto (desktop + mobile)
-- [x] **MIRRORX**: anteprima `assets/projects/mirrorx/B_MIRRORX_103.jpg` (ottim. 1400px/226K)
-- [x] **Videoclip & Motion + Website**: card e miniature **16:9** (no barre nere)
-  via classe `.cat--wide` (dimensionamento per altezza: il `padding:50%` del
-  carosello azzera le larghezze in %)
+- Collateral: box a sinistra, vicini (gap ridotto, tag max-width 72px).
+- Projects (home): niente rettangoli, **niente outline** miniature,
+  allineate alla griglia; titolo "PROJECTS — SHOWCASE" centrato/allineato
+  alle categorie anche su schermi larghi (fix `.sec-head`).
+- **MIRRORX**: anteprima `assets/projects/mirrorx/B_MIRRORX_103.jpg`.
+- **Videoclip & Motion + Website**: card e miniature **16:9** (no barre
+  nere) via classe `.cat--wide` (dimensionate per altezza).
+- Click miniatura → apre categoria e scorre al progetto (desktop + mobile).
 
-## ⏳ In Sospeso
-- [ ] **Descrizioni progetti**: ora "Descrizione in arrivo" per tutti
-- [ ] **Link reali Collateral**: SAAD, Workshok, Suburbiæ (ora `href="#"`)
-- [ ] (opzionale) descrizioni = vero salto SEO
+### About (redesign — ultimo lavoro)
+- Titolo **"ABOUT"** in **Space Grotesk Bold**, note **"Unbased"**.
+- Testo nuovo (hub creativo multidisciplinare) in **Space Grotesk Light
+  (300)**, largo, spaziatura ridotta, riga chiave evidenziata (`.about__hl`).
+- **Smiley** ornamentale inline (da `ORNAMENTI/SVG/SMYLE.svg`), outline ink,
+  in rotazione, giustificato a destra della griglia.
+- Bottoni **CHIAMA** (tel) e **MAIL ME** (mailto) — niente contatti in chiaro.
+- Marquee servizi in fondo.
+- Footer: rimosso "Contact us!" e i contatti in chiaro; resta solo la riga
+  di chiusura (Surreo Studio · Unbased · © 2026).
+
+---
+
+## ⏳ Da fare (backlog)
+- [ ] **Descrizioni progetti**: ancora "Descrizione in arrivo" per tutti
+      → è il vero salto SEO/contenuto.
+- [ ] **Link reali Collateral**: SAAD, Workshok, Suburbiæ (ora `href="#"`).
+- [ ] Eventuale coerenza copy hero ("Multidisciplinary Design Studio") vs
+      brand nuovo ("Creative Studio").
+
+---
 
 ## 🔧 File principali
 ```
-index.html      (pagina + <head> SEO)
-styles.css      (?v=122)
-app.js          (?v=121 — categorie/carosello, .cat--wide, menu handled inline in index.html)
-projects.json   (dati progetti)   videos.json (video/website)
+index.html      pagina + <head> SEO + font (Bagel, Space Grotesk 300;700)
+styles.css      ?v=127   (lo-fi: paper/ink; sezione About redesign in fondo)
+app.js          ?v=121   (categorie/carosello, .cat--wide; menu burger inline in index.html)
+projects.json · videos.json
 og-image.jpg · favicon.svg · robots.txt · sitemap.xml · CNAME
 svg/herotitolo.svg · svg/logo a.svg · svg/logo b.svg
-assets/projects/... (miniature)   PROJECTS/ (sorgenti B_MIRRORX ecc.)
+ORNAMENTI/SVG/SMYLE.svg   (smiley About; inline in index.html, cartella NON tracciata da git)
+assets/projects/...       (miniature)   PROJECTS/ (sorgenti B_MIRRORX)
 ```
 
 ## 📝 Note tecniche
-- Cache buster: incrementare `styles.css?v=` e `app.js?v=` a ogni modifica CSS/JS
-- Dev locale: `python3 -m http.server 8888` da /SURREO
-- Rigenerare og-image: `scratchpad/og-image.html` + Chrome headless --screenshot → PIL jpg
-- Categorie 16:9 = key su nome ("videoclip"/"website") in `renderCategory`
+- Palette: `--paper:#eceae1 --ink:#16140f --line:#c9c4b6 --muted:#8a8578`.
+- Categorie 16:9 = match su nome ("videoclip"/"website") in `renderCategory` (app.js).
+- Rigenerare og-image: `scratchpad/og-image.html` + Chrome headless
+  `--screenshot` → PIL jpg (usa herotitolo.svg + logo b).
+- Font incorporati nell'artifact di concept via `text=` subset + base64
+  (per il SITO invece si caricano da Google Fonts nel <head>).
+- Anteprime social in cache su WhatsApp/FB/LinkedIn → forzare con
+  FB Sharing Debugger / LinkedIn Post Inspector.
 
-## Contatti
-- Email: surreocreative@gmail.com · WhatsApp: +39 331 351 0091
+## Contatti / dati
+- Email: surreocreative@gmail.com · WhatsApp/Tel: +39 331 351 0091
 - Instagram: https://www.instagram.com/surreo_studio/
 - Zona: Teramo, Ascoli Piceno — Abruzzo, Marche e tutta Italia
