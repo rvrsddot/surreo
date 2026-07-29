@@ -57,7 +57,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Space+Grotesk:wght@300;700&display=swap" />
-  <link rel="stylesheet" href="styles.css?v=127" />
+  <link rel="stylesheet" href="styles.css?v=129" />
 </head>
 <body>
 
@@ -95,7 +95,7 @@
   <!-- hero -->
   <section class="hero" id="top">
     <div class="hero__main">
-      <h1 class="hero__h1"><img class="hero__title-svg" src="svg/herotitolo.svg" alt="Multidisciplinary — Design Studio" /></h1>
+      <h1 class="hero__h1"><img class="hero__title-svg" src="svg/herotitolo.svg" alt="Multidisciplinary — Design Studio" draggable="false" /></h1>
     </div>
     <div class="hero__row">
       <span>Unbased #Design Studio</span>
@@ -138,37 +138,81 @@
     <main id="app" aria-live="polite"></main>
   </section>
 
-  <!-- about -->
+  <!-- about (redesign v2 — kinetic manifesto) -->
   <section class="about" id="about">
     <div class="about__inner">
-      <div class="about__head">
-        <h2 class="about__title">About</h2>
-        <span class="about__note">Unbased</span>
+
+      <div class="about__topbar">
+        <div class="about__topbar-g"><b>Surreo</b> / About · <span>Ed. 2026</span></div>
+        <div class="about__topbar-g"><span class="about__live">Live · Studio</span><span>N. 002 / 002</span></div>
       </div>
 
-      <div class="about__grid">
-        <div class="about__copy">
-          <p>Surreo è un hub creativo indipendente e multidisciplinare.</p>
-          <p>Ci muoviamo liberamente tra branding, grafica, comunicazione, fotografia, video, motion, web design, sviluppo di siti, prodotto, interior, allestimenti, contenuti ed esperienze visive.</p>
-          <p class="about__hl">Non partiamo da una disciplina, ma da un’idea.</p>
-          <p>Ogni progetto può diventare un’identità, uno spazio, un oggetto, un’immagine, un sito, una campagna o un’esperienza completa.</p>
-          <p>Il nostro approccio è creativo, surreale e strategico: uniamo immaginazione, ricerca, estetica e concretezza per costruire progetti riconoscibili, coerenti e capaci di sorprendere.</p>
-          <p>Seguiamo tutto, dal concept alla realizzazione, mettendo insieme competenze diverse in un’unica visione.</p>
+      <div class="about__hero">
+        <h2 class="about__letters" aria-label="About">
+          <span class="l">A</span><span class="l">B</span><span class="l">O</span><span class="l">U</span><span class="l">T</span>
+        </h2>
+        <div class="about__anchor" aria-hidden="true">
+          <svg viewBox="0 0 551.76 551.76" xmlns="http://www.w3.org/2000/svg">
+            <circle class="ring" cx="275.88" cy="275.88" r="270" fill="none" stroke="currentColor" stroke-dasharray="28 22" stroke-miterlimit="10" stroke-width="12"/>
+            <circle class="ring2" cx="275.88" cy="275.88" r="238" fill="none" stroke="currentColor" stroke-dasharray="10 10" stroke-width="4"/>
+            <path d="M264.31,275.78h-57.09v-1.47s25.39-32.96,25.39-32.96v-88.2s-53.77,0-53.77,0c-21.42,0-30.67,7.56-30.67,19.33,0,16.8,18.69,20.37,45.79,20.37h30.32s-3.64,6.51-3.64,6.51h-18.06s-21.21,235.79-21.21,235.79h-60.7v-1.47s74.78-234.32,74.78-234.32c-39.49-.21-63.01-13.02-63.01-41.59,0-19.32,14.07-41.17,63.43-41.17h70.16v1.68s-26.89,51.88-26.89,51.88v70.97s25.18,33.17,25.18,33.17v1.47Z" fill="currentColor"/>
+            <path d="M287.46,274.31l25.18-33.17v-70.97l-26.89-51.88v-1.68h70.16c49.36,0,63.43,21.85,63.43,41.17,0,28.57-23.53,41.38-63.01,41.59l74.78,234.32v1.47h-60.7l-21.21-235.79h-18.06l-3.63-6.47,30.31-.04c27.1,0,45.79-3.57,45.79-20.37,0-11.76-9.24-19.33-30.67-19.33h-53.77v88.2l25.39,32.96v1.47h-57.09v-1.47Z" fill="currentColor"/>
+            <path d="M207.22,369.56c0-39.14,27.67-65.78,68.38-65.78s68.97,26.46,68.97,65.42-27.86,65.96-68.97,65.96-68.38-26.64-68.38-65.6ZM275.59,401.36c38.34,0,62.84-14.68,62.84-32.44s-24.5-32.62-62.84-32.62-62.25,14.68-62.25,32.62,24.11,32.44,62.25,32.44Z" fill="currentColor"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="about__thesis" aria-label="Manifesto">
+        <div class="about__thesis-track">
+          <span>Non partiamo da una disciplina<span class="sep"> / </span></span>
+          <span>Partiamo da <em>un’idea</em><span class="sep"> — </span></span>
+          <span>Non partiamo da una disciplina<span class="sep"> / </span></span>
+          <span>Partiamo da <em>un’idea</em><span class="sep"> — </span></span>
+          <span>Non partiamo da una disciplina<span class="sep"> / </span></span>
+          <span>Partiamo da <em>un’idea</em><span class="sep"> — </span></span>
+          <span>Non partiamo da una disciplina<span class="sep"> / </span></span>
+          <span>Partiamo da <em>un’idea</em><span class="sep"> — </span></span>
+        </div>
+      </div>
+
+      <div class="about__manifest">
+        <header class="about__mf-head">
+          <span><b>Studio</b> · Chi siamo · Come lavoriamo</span>
+          <span>Ed. 2026 · IT · DE</span>
+        </header>
+
+        <div class="about__row" data-reveal>
+          <div class="n">01</div>
+          <div class="k">Chi</div>
+          <div class="v"><b>Hub creativo indipendente e multidisciplinare.</b> Ci muoviamo liberamente tra branding, grafica, comunicazione, fotografia, video, motion, web, prodotto, interior, allestimenti, contenuti ed esperienze visive.</div>
         </div>
 
-        <div class="about__side">
-          <svg class="about__smiley" viewBox="0 0 58.77 58.77" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-            <g class="spin" fill="none" stroke="currentColor" stroke-width="1.21" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="29.38" cy="29.38" r="28.88" transform="translate(-12.06 26.4) rotate(-40.88)"/>
-              <path d="M48.83,27.43c.83,8.21-3.65,16.36-11.61,19.85-8.04,3.52-17.16,1.19-22.62-5.12"/>
-              <path d="M14.4,36.53c1.27,1.59,1.38,3.88.13,5.61-1.22,1.69-3.37,2.31-5.24,1.67"/>
-              <path d="M44.19,23.5c.3,2.01,1.91,3.65,4.03,3.9,2.07.25,3.98-.91,4.78-2.71"/>
-              <path d="M20.68,26.04c1.39,3.18,1.43,6.24.07,6.83-1.35.59-3.57-1.51-4.97-4.69-1.39-3.18-1.43-6.24-.07-6.83,1.35-.59,3.57,1.51,4.97,4.69Z" fill="currentColor" stroke="none"/>
-              <path d="M37.73,18.58c1.39,3.18,1.43,6.24.07,6.83-1.35.59-3.57-1.51-4.97-4.69-1.39-3.18-1.43-6.24-.07-6.83s3.57,1.51,4.97,4.69Z" fill="currentColor" stroke="none"/>
-              <path d="M19.3,29.56c-3.18,1.39-6.24,1.43-6.83.07-.59-1.35,1.51-3.57,4.69-4.97,3.18-1.39,6.24-1.43,6.83-.07.59,1.35-1.51,3.57-4.69,4.97Z" fill="currentColor" stroke="none"/>
-              <path d="M36.35,22.1c-3.18,1.39-6.24,1.43-6.83.07-.59-1.35,1.51-3.57,4.69-4.97,3.18-1.39,6.24-1.43,6.83-.07s-1.51,3.57-4.69,4.97Z" fill="currentColor" stroke="none"/>
-            </g>
-          </svg>
+        <div class="about__row about__row--key" data-reveal>
+          <div class="n">02</div>
+          <div class="k">Come</div>
+          <div class="v">
+            <span class="hl">Non partiamo da una disciplina, ma da <em>un’idea</em>.</span>
+            Ogni progetto può diventare un’identità, uno spazio, un oggetto, un’immagine, un sito, una campagna o un’esperienza completa.
+          </div>
+        </div>
+
+        <div class="about__row" data-reveal>
+          <div class="n">03</div>
+          <div class="k">Con cosa</div>
+          <div class="v">Uniamo immaginazione, ricerca, estetica e concretezza — e usiamo l’AI come strumento progettuale, non come scorciatoia. Dal concept alla realizzazione, sempre insieme.</div>
+        </div>
+
+        <div class="about__row" data-reveal>
+          <div class="n">04</div>
+          <div class="k">Dove</div>
+          <div class="v">Italia · Germania · Ovunque serva <em>un’idea</em>. Base tra Abruzzo e Marche, operativi in tutta Europa.</div>
+        </div>
+
+        <div class="about__stats">
+          <div class="about__stat"><span class="v v--word">Unbased</span><span class="k">Studio</span></div>
+          <div class="about__stat"><span class="v">XXX</span><span class="k">Progetti</span></div>
+          <div class="about__stat"><span class="v">2019</span><span class="k">Fondato</span></div>
+          <div class="about__stat"><span class="v">IT / DE</span><span class="k">Basi</span></div>
         </div>
       </div>
 
@@ -183,12 +227,6 @@
         </a>
       </div>
 
-      <div class="about__marq" aria-hidden="true">
-        <div class="t">
-          <span>Branding</span><span>Creatività</span><span>Video · Motion</span><span>Web · Prodotto</span><span>AI Design</span><span>Surreale · Strategico</span>
-          <span>Branding</span><span>Creatività</span><span>Video · Motion</span><span>Web · Prodotto</span><span>AI Design</span><span>Surreale · Strategico</span>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -226,6 +264,37 @@
     burger.addEventListener('click',function(){setOpen(!overlay.classList.contains('is-open'));});
     overlay.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setOpen(false);});});
     document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false);});
+  })();
+
+  /* About: cursor parallax sulle lettere ABOUT */
+  (function(){
+    var wrap=document.querySelector('.about__letters');
+    if(!wrap) return;
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var letters=wrap.querySelectorAll('.l');
+    var rx=0,ry=0,tx=0,ty=0,raf=null;
+    wrap.addEventListener('mousemove',function(e){
+      var r=wrap.getBoundingClientRect();
+      rx=((e.clientX-r.left)/r.width-.5)*2;
+      ry=((e.clientY-r.top)/r.height-.5)*2;
+      if(!raf) raf=requestAnimationFrame(apply);
+    });
+    wrap.addEventListener('mouseleave',function(){rx=ry=0;if(!raf) raf=requestAnimationFrame(apply);});
+    function apply(){
+      tx+=(rx-tx)*.12; ty+=(ry-ty)*.12;
+      letters.forEach(function(l,i){ l.style.translate=(tx*(i-2)*2)+'px '+(ty*-2)+'px'; });
+      if(Math.abs(rx-tx)>.001||Math.abs(ry-ty)>.001) raf=requestAnimationFrame(apply);
+      else raf=null;
+    }
+  })();
+
+  /* About: scroll reveal righe manifesto */
+  (function(){
+    var rows=document.querySelectorAll('.about__row[data-reveal]');
+    if(!rows.length) return;
+    if(!('IntersectionObserver' in window)){rows.forEach(function(r){r.classList.add('in')});return;}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.18,rootMargin:'0px 0px -60px 0px'});
+    rows.forEach(function(r){io.observe(r);});
   })();
   </script>
 

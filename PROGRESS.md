@@ -1,8 +1,8 @@
 # Surreo — Creative Studio · Stato Progetto
 
-**Ultimo aggiornamento**: 2026-07-28
+**Ultimo aggiornamento**: 2026-07-29
 **Branch**: main · **Live**: https://surreostudio.com (HTTPS attivo, HTTP → 301)
-**Ultimo commit**: `b584916` (About: testo Space Grotesk Light)
+**Ultimo lavoro**: About redesign v2 (kinetic manifesto) + fix hero scroll + Collateral giustificato
 
 ---
 
@@ -46,16 +46,29 @@ python3 -m http.server 8888        # dev locale → http://localhost:8888
   nere) via classe `.cat--wide` (dimensionate per altezza).
 - Click miniatura → apre categoria e scorre al progetto (desktop + mobile).
 
-### About (redesign — ultimo lavoro)
-- Titolo **"ABOUT"** in **Space Grotesk Bold**, note **"Unbased"**.
-- Testo nuovo (hub creativo multidisciplinare) in **Space Grotesk Light
-  (300)**, largo, spaziatura ridotta, riga chiave evidenziata (`.about__hl`).
-- **Smiley** ornamentale inline (da `ORNAMENTI/SVG/SMYLE.svg`), outline ink,
-  in rotazione, giustificato a destra della griglia.
-- Bottoni **CHIAMA** (tel) e **MAIL ME** (mailto) — niente contatti in chiaro.
-- Marquee servizi in fondo.
-- Footer: rimosso "Contact us!" e i contatti in chiaro; resta solo la riga
-  di chiusura (Surreo Studio · Unbased · © 2026).
+### About (redesign v2 — kinetic manifesto, ultimo lavoro)
+- **Topbar meta** monospace: `SURREO / ABOUT · ED. 2026 · LIVE · N.002/002`
+  con pallino rosso stamp pulsante.
+- **Hero cinetico**: parola `ABOUT` gigante (Space Grotesk 700,
+  clamp 88→220px) con ogni lettera in wobble ±1.2° infinito + cursor
+  parallax leggero (JS inline).
+- **SS anchor mark** a destra della stessa dimensione visiva di ABOUT
+  (usa il logo del sito, aspect 1/1, `justify-self:end`): due ring
+  tratteggiati concentrici rotanti (`ring` 12s, `ring2` 20s reverse).
+- **Thesis marquee** enorme (Space Grotesk 700 fino a 72px): ripete
+  `Non partiamo da una disciplina / Partiamo da un'idea` con
+  `un'idea` in rosso stamp.
+- **Manifest grid** 01/02/03/04 (CHI · COME · CON COSA · DOVE) con
+  quadrato ink come bullet e scroll-reveal (IntersectionObserver).
+  Row 02 è la chiave, con `.hl` in evidenza.
+- **Stats row** 4 celle: UNBASED (Studio) · XXX (Progetti) · 2019
+  (Fondato) · IT/DE (Basi). Hover invert ink/paper.
+- **CTA** CHIAMA/MAIL ME con box-shadow `6px 6px 0 ink` su hover.
+- Footer sito invariato (chiusura in `.contact__foot`).
+- **Fix collaterali stesso commit**: hero SVG title con
+  `pointer-events:none`+`draggable=false` (scroll bloccato sopra il
+  titolo su desktop); Collateral 3 box `justify-content:flex-end`
+  con gap ridotto (~4.5px).
 
 ---
 
@@ -71,7 +84,8 @@ python3 -m http.server 8888        # dev locale → http://localhost:8888
 ## 🔧 File principali
 ```
 index.html      pagina + <head> SEO + font (Bagel, Space Grotesk 300;700)
-styles.css      ?v=127   (lo-fi: paper/ink; sezione About redesign in fondo)
+                (script inline: burger + About cursor-parallax + scroll-reveal)
+styles.css      ?v=129   (lo-fi: paper/ink; sezione About redesign v2 in fondo)
 app.js          ?v=121   (categorie/carosello, .cat--wide; menu burger inline in index.html)
 projects.json · videos.json
 og-image.jpg · favicon.svg · robots.txt · sitemap.xml · CNAME
