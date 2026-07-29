@@ -144,18 +144,23 @@ body.has-open{overflow:hidden}
 }
 
 /* ============================================================
-   BURGER — fisso, sempre visibile (desktop + mobile)
+   BURGER — chip paper con border ink, fisso su ogni breakpoint.
+   Il chip stacca sempre l'icona dai testi sotto (marquee, meta bar).
    ============================================================ */
 .burger{
-  position:fixed;top:clamp(22px,3vw,44px);right:clamp(22px,3.5vw,44px);
+  position:fixed;top:clamp(18px,2.5vw,32px);right:clamp(18px,3vw,32px);
   z-index:200;
-  width:34px;height:22px;
+  width:46px;height:46px;
+  padding:12px 6px;
   display:flex;flex-direction:column;justify-content:space-between;
-  background:none;border:0;padding:0;cursor:pointer;
-  color:var(--ink);
-  transition:color .35s var(--ease);
+  background:var(--paper);border:1.5px solid var(--ink);border-radius:3px;
+  cursor:pointer;color:var(--ink);
+  transition:background .35s var(--ease),color .35s var(--ease),
+             transform .18s var(--ease),box-shadow .18s var(--ease);
 }
-body.menu-open .burger{color:var(--paper)}
+.burger:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink)}
+body.menu-open .burger{background:var(--ink);color:var(--paper)}
+body.menu-open .burger:hover{box-shadow:3px 3px 0 var(--paper)}
 .burger span{
   display:block;height:1.5px;background:currentColor;
   transform-origin:50% 50%;
@@ -164,10 +169,10 @@ body.menu-open .burger{color:var(--paper)}
 .burger span:nth-child(1){width:100%}
 .burger span:nth-child(2){width:60%;align-self:flex-end}
 .burger span:nth-child(3){width:100%}
-.burger.is-active span:nth-child(1){transform:translateY(10px) rotate(45deg)}
+.burger.is-active span:nth-child(1){transform:translateY(9px) rotate(45deg)}
 .burger.is-active span:nth-child(2){opacity:0;width:100%}
-.burger.is-active span:nth-child(3){transform:translateY(-10px) rotate(-45deg)}
-.burger:focus-visible{outline:2px solid currentColor;outline-offset:6px;border-radius:2px}
+.burger.is-active span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
+.burger:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
 
 /* ============================================================
    MENU OVERLAY — kinetic drawer (paper → ink flip) + liquid hover
