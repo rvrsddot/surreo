@@ -1,0 +1,10 @@
+# Sorgenti pesanti / materiale privato — NON pubblicare
+FOTO/
+1x/
+
+# Tooling locale
+.claude/
+
+# macOS
+.DS_Store
+**/.DS_Store

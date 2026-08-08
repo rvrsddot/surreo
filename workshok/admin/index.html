@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>WORKSHOK · SOCIAL.EXE</title>
+
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/admin.css?v=1" />
+</head>
+<body>
+  <div class="grid-bg" aria-hidden="true"></div>
+
+  <!-- ===== TOPBAR ===== -->
+  <header class="topbar">
+    <a href="../" class="topbar__brand" aria-label="Workshok — home">
+      <span class="dot"></span> WORKSHOK<i>&nbsp;/&nbsp;SOCIAL.EXE</i>
+    </a>
+    <span class="topbar__ver" id="sys-ver">v0.1</span>
+    <nav class="topbar__nav">
+      <span class="tab is-active"><i>01</i>&nbsp;CONFIGURATORE</span>
+    </nav>
+    <span class="topbar__cta" id="clock">00:00:00</span>
+  </header>
+
+  <!-- ===== MAIN 2 PANNELLI ===== -->
+  <main class="app">
+
+    <!-- SINISTRA: CONTROLLI -->
+    <aside class="win controls" aria-label="Controlli">
+      <div class="win__bar">
+        <span class="win__name">📁&nbsp;<i>01</i>&nbsp;CONTROLS.CFG</span>
+        <span class="win__status">[ READY ]</span>
+        <span class="win__ctrl"><b></b><b></b><b></b></span>
+      </div>
+      <div class="win__body">
+
+        <!-- SELETTORE TEMPLATE -->
+        <div class="sect">
+          <label class="lbl">// TEMPLATE</label>
+          <div class="tplgrid" id="tpl-picker">
+            <button data-tpl="course" class="is-active">01 · Annuncio Corso</button>
+            <button data-tpl="tutor">02 · Card Docente</button>
+            <button data-tpl="quote">03 · Countdown / Quote</button>
+            <button data-tpl="savedate">04 · Save the Date</button>
+            <button data-tpl="testimonial">05 · Testimonial</button>
+            <button data-tpl="partner">06 · Partner</button>
+            <button data-tpl="carousel">07 · Slide Carosello</button>
+            <button data-tpl="roster">08 · Meet the Tutors</button>
+          </div>
+        </div>
+
+        <!-- SELETTORE LAYOUT (varianti del template corrente) -->
+        <div class="sect">
+          <label class="lbl">// LAYOUT</label>
+          <div class="segbtn" id="layout-picker"><!-- generato da js --></div>
+        </div>
+
+        <!-- SELETTORE FORMATO -->
+        <div class="sect">
+          <label class="lbl">// FORMATO IG</label>
+          <div class="segbtn" id="fmt-picker">
+            <button data-fmt="1x1">1:1 · post</button>
+            <button data-fmt="4x5" class="is-active">4:5 · post</button>
+            <button data-fmt="9x16">9:16 · story</button>
+          </div>
+        </div>
+
+        <!-- CAMPI DINAMICI (renderizzati da js) -->
+        <div class="sect" id="fields-host"></div>
+
+        <!-- FOTO -->
+        <div class="sect">
+          <label class="lbl">// FOTO (opzionale)</label>
+          <label class="filebtn">
+            <input type="file" id="photo-input" accept="image/*" hidden />
+            <span>[ SCEGLI FOTO DAL DISCO ]</span>
+          </label>
+          <button class="ghostbtn" id="photo-clear" hidden>× rimuovi foto</button>
+        </div>
+
+        <!-- PALETTE -->
+        <div class="sect">
+          <label class="lbl">// PALETTE</label>
+          <div class="segbtn" id="pal-picker">
+            <button data-pal="dark" class="is-active">INK · fondo scuro</button>
+            <button data-pal="light">MENTA · fondo chiaro</button>
+          </div>
+        </div>
+
+        <!-- AZIONI EXPORT -->
+        <div class="sect actions">
+          <button class="btn btn--send" id="export-png">[ EXPORT PNG →&nbsp;]</button>
+          <button class="btn" id="export-mp4">[ EXPORT MP4 · 4s loop →&nbsp;]</button>
+        </div>
+
+        <!-- PRESET -->
+        <div class="sect">
+          <label class="lbl">// PRESET</label>
+          <div class="segbtn">
+            <button id="preset-save">[ SALVA .JSON ]</button>
+            <label class="segbtn__file">
+              <input type="file" id="preset-load" accept="application/json,.json" hidden />
+              <span>[ CARICA .JSON ]</span>
+            </label>
+          </div>
+        </div>
+
+        <p class="hint">
+          — Anteprima animata a destra. PNG = snapshot statico a 1080px. MP4 = registra 4 sec di anteprima animata (best su Chrome/Edge). Foto restano solo nel tuo browser.
+        </p>
+      </div>
+    </aside>
+
+    <!-- DESTRA: ANTEPRIMA -->
+    <section class="win preview" aria-label="Anteprima">
+      <div class="win__bar">
+        <span class="win__name">📁&nbsp;<i>02</i>&nbsp;PREVIEW.LIVE</span>
+        <span class="win__status" id="preview-status">[ 1080 × 1350 · 4:5 ]</span>
+        <span class="win__ctrl"><b></b><b></b><b></b></span>
+      </div>
+      <div class="win__body">
+        <div class="stage" id="stage">
+          <div class="canvas-frame" id="canvas-frame">
+            <!-- SVG del template iniettato qui -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== STATUS BAR ===== -->
+  <div class="statusbar" aria-hidden="true">
+    <span>WORKSHOK · SOCIAL.EXE</span>
+    <span id="sb-msg">READY.</span>
+    <span>ASCOLI&nbsp;·&nbsp;<i id="sb-clock">00:00:00</i></span>
+  </div>
+
+  <!-- Riuso dati sito principale -->
+  <script src="../data/courses.js"></script>
+  <script src="js/templates.js?v=1"></script>
+  <script src="js/admin.js?v=1"></script>
+</body>
+</html>
