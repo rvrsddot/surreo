@@ -10,8 +10,8 @@ window.EDITION = {
   edition: "N.08",                      // SWW8 (dal poster ufficiale)
   title: "SAAD Workshop Week",
   city: "Ascoli Piceno",
-  dates: "XXX — stiamo arrivando :)",   // placeholder: mettere la data vera
-  days: "3–6 giorni",
+  dates: "8–11 Sept",
+  days: "4 giorni · 32 ore",
   tagline: "Tre workshop. Una settimana. Rompi la griglia.",
 };
 

@@ -90,7 +90,7 @@
   <!-- Testi + titoli: Space Grotesk · readout di sistema: Space Mono -->
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/style.css?v=25" />
+  <link rel="stylesheet" href="css/style.css?v=27" />
 </head>
 <body>
   <div class="grid-bg" aria-hidden="true"></div>
@@ -203,10 +203,11 @@
         <div class="block__head">
           <h2 class="block__title neon-solid">Abbiamo collaborato con</h2>
           <span class="block__meta">// partner &amp; sponsor</span>
+          <button type="button" class="block__all" id="partners-open" aria-haspopup="dialog" aria-controls="partners-modal">[ vedi tutti&nbsp;→ ]</button>
         </div>
-        <div class="marquee" aria-label="Partner e collaborazioni">
+        <button type="button" class="marquee" id="marquee-btn" aria-label="Apri lista completa partner" aria-haspopup="dialog" aria-controls="partners-modal">
           <div class="marquee__track" id="marquee"></div>
-        </div>
+        </button>
         <div class="selected" id="selected" aria-label="Riconoscimenti"></div>
       </div>
     </section>
@@ -264,7 +265,24 @@
     <span class="statusbar__sys"><i id="sb-coords">—</i>&nbsp;·&nbsp;ASCOLI&nbsp;<i id="sb-clock">00:00:00</i></span>
   </div>
 
-  <script src="data/courses.js?v=25"></script>
-  <script src="js/main.js?v=25"></script>
+  <!-- ===================== POPUP PARTNER (lista completa) ===================== -->
+  <div class="pmodal" id="partners-modal" role="dialog" aria-modal="true" aria-labelledby="pmodal-title" hidden>
+    <div class="pmodal__panel">
+      <header class="pmodal__bar">
+        <span class="pmodal__name">📁&nbsp;<i>03</i>&nbsp;COLLAB / PARTNERS.LIST</span>
+        <button type="button" class="pmodal__close" id="partners-close" aria-label="Chiudi">[ ✕ ]</button>
+      </header>
+      <div class="pmodal__body">
+        <div class="pmodal__head">
+          <h2 id="pmodal-title" class="pmodal__title">Partner &amp; Collaborazioni</h2>
+          <span class="pmodal__meta">// <i id="pmodal-count">—</i> nomi · dal 2018</span>
+        </div>
+        <ol class="pmodal__list" id="pmodal-list" aria-label="Lista partner"></ol>
+      </div>
+    </div>
+  </div>
+
+  <script src="data/courses.js?v=27"></script>
+  <script src="js/main.js?v=27"></script>
 </body>
 </html>

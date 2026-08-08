@@ -24,7 +24,7 @@
   set("hero-edition", (ed.edition || "N.—") + (ed.year ? " · " + ed.year : ""));
   set("hero-when", ed.dates || "—");
   set("hero-where", ed.city ? ed.city + ", IT" : "—");
-  set("hero-format", (courses.length || 3) + " corsi · " + (ed.days || "3–5 giorni"));
+  set("hero-format", ed.days || "3–5 giorni");
 
   /* Wordmark: tilt 3D che segue il mouse — solo transform (leggero).
      Off su touch/reduced-motion → mobile resta la scritta base, ferma. */
@@ -160,13 +160,51 @@
     });
   });
 
-  /* ---------- COLLAB · marquee ---------- */
+  /* ---------- COLLAB · marquee + popup ---------- */
+  var partners = window.PARTNERS || [];
   var mq = $("marquee");
   if (mq) {
-    var chunk = (window.PARTNERS || []).map(function (p) {
+    var chunk = partners.map(function (p) {
       return '<span class="marquee__item">' + esc(p) + '</span>';
     }).join("");
     mq.innerHTML = chunk + chunk; // duplicato per loop -50%
+  }
+
+  var pmodal = $("partners-modal");
+  var plist = $("pmodal-list");
+  var pcount = $("pmodal-count");
+  if (pmodal && plist) {
+    plist.innerHTML = partners.map(function (p) {
+      return "<li>" + esc(p) + "</li>";
+    }).join("");
+    if (pcount) pcount.textContent = partners.length;
+
+    var lastFocus = null;
+    function openModal() {
+      lastFocus = document.activeElement;
+      pmodal.hidden = false;
+      document.documentElement.style.overflow = "hidden";
+      var closeBtn = $("partners-close");
+      if (closeBtn) closeBtn.focus();
+    }
+    function closeModal() {
+      pmodal.hidden = true;
+      document.documentElement.style.overflow = "";
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    var openTriggers = [$("marquee-btn"), $("partners-open")];
+    openTriggers.forEach(function (btn) {
+      if (btn) btn.addEventListener("click", openModal);
+    });
+    var closeBtn = $("partners-close");
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+    pmodal.addEventListener("click", function (e) {
+      if (e.target === pmodal) closeModal();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !pmodal.hidden) closeModal();
+    });
   }
 
   /* ---------- SELECTED (credenziale) ---------- */
