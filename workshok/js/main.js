@@ -9,9 +9,7 @@
   var coarse = window.matchMedia("(hover: none), (pointer: coarse)").matches;
   var ed = window.EDITION || {};
   var courses = window.COURSES || [];
-  // Corsi non ancora pubblici: le card mantengono la grafica ma sono coperte
-  // da un overlay sfocato "COMING SOON". Mettere a false quando escono i corsi veri.
-  var LOCK_ALL = true;
+  var enrollUrl = window.ENROLL_URL || "#iscrizioni";
 
   function $(id) { return document.getElementById(id); }
   function set(id, txt) { var el = $(id); if (el) el.textContent = txt; }
@@ -55,110 +53,256 @@
   })();
 
 
-  /* ---------- CORSI · card flip ---------- */
+  /* ---------- CORSI · card → popup dettaglio ---------- */
   var cards = $("cards");
   var select = $("form-corso");
 
-  courses.forEach(function (c) {
+  courses.forEach(function (c, idx) {
     var soon = c.status === "coming-soon";
-    var card = document.createElement("div");
+    var card = document.createElement("button");
+    card.type = "button";
     card.className = "card" + (soon ? " card--soon" : "");
-    card.tabIndex = 0;
-    card.setAttribute("role", "button");
-    card.setAttribute("aria-pressed", "false");
-    card.setAttribute("aria-label", (soon ? "Slot in arrivo" : "Corso " + c.title) + " — apri per i dettagli");
+    card.setAttribute("aria-haspopup", "dialog");
+    card.setAttribute("aria-controls", "course-modal");
+    card.setAttribute("aria-label",
+      (soon ? "Slot in arrivo" : "Corso " + c.number + " — " + c.title) + " · apri i dettagli");
+    card.dataset.course = String(idx);
 
-    var frontCta = soon
-      ? '<div class="card__frontcta"><span class="card__hint">gira</span></div>'
-      : '<div class="card__frontcta"><span class="card__hint">gira per info</span>' +
-        '<a class="card__enroll" href="#iscrizioni" data-enroll="' + esc(c.title) + '">Iscriviti →</a></div>';
+    /* Palette per card (accento colorato) */
+    var pal = c.palette || null;
+    if (pal) {
+      if (pal.bg) card.style.setProperty("--card-bg", pal.bg);
+      if (pal.ink) card.style.setProperty("--card-ink", pal.ink);
+      if (pal.accent) card.style.setProperty("--card-accent", pal.accent);
+      card.classList.add("card--tinted");
+    }
 
-    var front =
-      '<div class="card__face card__face--front">' +
-        '<div class="card__topline"><span>WSK/' + esc(c.number) + '</span><span>' + (soon ? "SOON" : "OPEN") + '</span></div>' +
-        '<div class="card__n">' + esc(c.number) + '</div>' +
-        '<h3 class="card__title">' + esc(c.title) + '</h3>' +
-        '<p class="card__theme">' + esc(c.theme) + '</p>' +
-        frontCta +
+    card.innerHTML =
+      '<div class="card__topline"><span>WSK/' + esc(c.number) + '</span><span>' + (soon ? "SOON" : "OPEN") + '</span></div>' +
+      '<div class="card__n">' + esc(c.number) + '</div>' +
+      '<h3 class="card__title">' + esc(c.title) + '</h3>' +
+      '<p class="card__theme">' + esc(c.theme || "") + '</p>' +
+      '<div class="card__meta">' +
+        (c.tutor ? '<span>' + esc(c.tutor) + '</span>' : '') +
+        (c.dates ? '<span>' + esc(c.dates) + '</span>' : '') +
+      '</div>' +
+      '<div class="card__frontcta">' +
+        '<span class="card__hint">apri scheda</span>' +
+        '<span class="card__enroll" aria-hidden="true">Dettagli →</span>' +
       '</div>';
 
-    var back;
-    if (soon) {
-      back =
-        '<div class="card__face card__face--back">' +
-          '<div class="card__topline"><span>WSK/' + esc(c.number) + '</span><span>SOON</span></div>' +
-          '<h3 class="card__title">In arrivo</h3>' +
-          '<p class="card__soonmsg">' + esc(c.blurb || "Il terzo corso si sblocca a breve.") + '</p>' +
-          '<a class="card__enroll" href="#iscrizioni">Avvisami →</a>' +
-        '</div>';
-    } else {
-      back =
-        '<div class="card__face card__face--back">' +
-          '<div class="card__topline"><span>WSK/' + esc(c.number) + '</span><span>' + esc(c.days || "") + '</span></div>' +
-          '<h3 class="card__title">' + esc(c.title) + '</h3>' +
-          '<p class="card__desc">' + esc(c.blurb || "") + '</p>' +
-          '<ul class="card__list">' +
-            '<li>Tema<span>' + esc(c.theme) + '</span></li>' +
-            (c.tutor ? '<li>Tutor<span>' + esc(c.tutor) + '</span></li>' : '') +
-            '<li>Durata<span>' + esc(c.days || "—") + '</span></li>' +
-          '</ul>' +
-          '<a class="card__enroll" href="#iscrizioni" data-enroll="' + esc(c.title) + '">Iscriviti →</a>' +
-        '</div>';
-    }
-
-    card.innerHTML = '<div class="card__inner">' + front + back + '</div>';
     cards.appendChild(card);
 
-    // Corso non ancora pubblico: overlay sfocato "COMING SOON", niente flip.
-    if (LOCK_ALL) {
-      var lock = document.createElement("div");
-      lock.className = "card__lock";
-      lock.innerHTML = '<span>Coming&nbsp;Soon<small>// IN ARRIVO</small></span>';
-      card.appendChild(lock);
-      card.setAttribute("aria-label", "Corso in arrivo — Coming Soon");
-      card.setAttribute("aria-disabled", "true");
-      card.removeAttribute("aria-pressed");
-      card.tabIndex = -1;
-      return; // salta flip + preselezione form
-    }
-
-    function toggle() {
-      var flip = !card.classList.contains("is-flipped");
-      card.classList.toggle("is-flipped", flip);
-      card.setAttribute("aria-pressed", String(flip));
-    }
-    // click: gira, tranne se clicco un link (Iscriviti)
-    card.addEventListener("click", function (e) {
-      if (e.target.closest("a")) return;
-      toggle();
-    });
-    // tastiera
-    card.addEventListener("keydown", function (e) {
-      if (e.target.closest("a")) return;
-      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
-    });
-
-    if (!soon && select) {
-      var opt = document.createElement("option");
-      opt.value = c.title; opt.textContent = c.number + " — " + c.title;
-      select.appendChild(opt);
+    if (!soon) {
+      card.addEventListener("click", function () { openCourse(idx); });
+      if (select) {
+        var opt = document.createElement("option");
+        opt.value = c.title; opt.textContent = c.number + " — " + c.title;
+        select.appendChild(opt);
+      }
+    } else {
+      card.disabled = true;
     }
   });
 
-  // Corsi non ancora pubblici: il form diventa lista d'attesa (un'unica voce).
-  if (LOCK_ALL && select) {
-    var wl = document.createElement("option");
-    wl.value = "Lista d'attesa"; wl.textContent = "Lista d'attesa — tutti i corsi";
-    select.appendChild(wl);
+  /* ---------- POPUP CORSO ---------- */
+  var cmodal = $("course-modal");
+  var cbody = $("cmodal-body");
+  var cslug = $("cmodal-slug");
+  var cenroll = $("cmodal-enroll");
+  var cclose = $("course-close");
+  var cLastFocus = null;
+
+  function paraHtml(v) {
+    if (!v) return "";
+    var arr = Array.isArray(v) ? v : [v];
+    return arr.map(function (p) { return "<p>" + inline(p) + "</p>"; }).join("");
   }
 
-  // link "Iscriviti" -> preseleziona il corso nel form
-  document.querySelectorAll("[data-enroll]").forEach(function (a) {
-    a.addEventListener("click", function () {
-      var v = a.getAttribute("data-enroll");
-      if (v && select) select.value = v;
+  function mediaHtml(c) {
+    var m = c.media;
+    if (!m || !m.items || !m.items.length) return "";
+    var isVideo = m.kind === "video";
+    function slide(it, i, dup) {
+      if (isVideo) {
+        // Lazy: usa data-src, il video parte solo quando è visibile nel .cmedia.
+        // Il poster viene mostrato subito come immagine → nessun caricamento pesante iniziale.
+        return '<div class="cmedia__slide" data-idx="' + i + '"' + (dup ? ' aria-hidden="true"' : '') + '>' +
+          '<video class="cmedia__video" data-src="' + esc(it.src) + '"' +
+          ' muted playsinline preload="none" loop' +
+          (it.poster ? ' poster="' + esc(it.poster) + '"' : '') +
+          ' aria-label="Anteprima video del workshop"></video></div>';
+      }
+      return '<div class="cmedia__slide" data-idx="' + i + '"' + (dup ? ' aria-hidden="true"' : '') + '>' +
+        '<img class="cmedia__img" src="' + esc(it.src) + '" alt="' + (dup ? '' : esc(it.alt || "")) + '" loading="lazy" decoding="async" />' +
+        '</div>';
+    }
+    var one = m.items.map(function (it, i) { return slide(it, i, false); }).join("");
+    var two = m.items.map(function (it, i) { return slide(it, i, true); }).join("");
+    var kindLabel = isVideo ? "// Video del corso" : "// Immagini del corso";
+    return (
+      '<section class="cmodal__section cmodal__section--media">' +
+        '<h3 class="cmodal__sec-title">' + kindLabel + '</h3>' +
+        '<div class="cmedia" data-kind="' + (isVideo ? "video" : "image") + '">' +
+          '<div class="cmedia__track">' + one + two + '</div>' +
+        '</div>' +
+      '</section>'
+    );
+  }
+
+  /* Mini parser: **bold** dentro le stringhe di prose */
+  function inline(txt) {
+    return esc(txt).replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  }
+
+  function renderCourse(c) {
+    var spec = [
+      ["Docente", c.tutor],
+      ["Tool", c.tool],
+      ["Date", c.dates],
+      ["Durata", c.days || c.hours],
+      ["Posti", c.seats],
+      ["Dove", c.location],
+      ["CFU", c.cfu],
+      ["Aperto a", c.audience],
+    ].filter(function (r) { return r[1]; })
+     .map(function (r) {
+       return '<li><b>' + esc(r[0]) + '</b><span>' + esc(r[1]) + '</span></li>';
+     }).join("");
+
+    return (
+      '<article class="cmodal__head">' +
+        '<span class="cmodal__eyebrow">WSK/' + esc(c.number) + ' · ' + esc(c.dates || "") + '</span>' +
+        '<h2 id="cmodal-title" class="cmodal__title">' + esc(c.title) + '</h2>' +
+        '<p class="cmodal__theme">' + esc(c.theme || "") + '</p>' +
+        (c.tutor ? '<p class="cmodal__by">con <b>' + esc(c.tutor) + '</b>' +
+          (c.tutorRole ? ' — <em>' + esc(c.tutorRole) + '</em>' : '') + '</p>' : '') +
+      '</article>' +
+
+      mediaHtml(c) +
+
+      '<section class="cmodal__section cmodal__section--spec">' +
+        '<h3 class="cmodal__sec-title">// Info workshop</h3>' +
+        '<ul class="cmodal__spec">' + spec + '</ul>' +
+        (c.recommended ? '<p class="cmodal__reco"><b>Consigliato a:</b> ' + esc(c.recommended) + '</p>' : '') +
+      '</section>' +
+
+      '<section class="cmodal__section">' +
+        '<h3 class="cmodal__sec-title">// Obiettivo workshop</h3>' +
+        '<div class="cmodal__prose">' + paraHtml(c.description) + '</div>' +
+      '</section>' +
+
+      (c.result ? (
+        '<section class="cmodal__section">' +
+          '<h3 class="cmodal__sec-title">// W# Result</h3>' +
+          '<div class="cmodal__prose">' + paraHtml(c.result) + '</div>' +
+        '</section>'
+      ) : '') +
+
+      (c.tutorBio ? (
+        '<section class="cmodal__section cmodal__section--tutor">' +
+          '<h3 class="cmodal__sec-title">// Il docente</h3>' +
+          '<div class="cmodal__prose">' +
+            '<p class="cmodal__tutorname">' + esc(c.tutor) +
+              (c.tutorRole ? '<span> — ' + esc(c.tutorRole) + '</span>' : '') + '</p>' +
+            paraHtml(c.tutorBio) +
+          '</div>' +
+        '</section>'
+      ) : '') +
+
+      (c.note ? '<p class="cmodal__note">' + esc(c.note) + '</p>' : '')
+    );
+  }
+
+  function activateMediaAutoplay(root) {
+    // Lazy load: swap data-src → src + play SOLO quando il video è visibile
+    // dentro il .cmedia (viewport della finestra scroll). Fuori, pausa.
+    var wrap = root.querySelector(".cmedia");
+    if (!wrap) return;
+    var vids = wrap.querySelectorAll(".cmedia__video");
+    if (!vids.length) return;
+    if (!("IntersectionObserver" in window)) {
+      // Fallback: attiva tutto (browser vecchi)
+      vids.forEach(function (v) {
+        if (!v.src && v.dataset.src) v.src = v.dataset.src;
+        var p = v.play(); if (p && p.catch) p.catch(function () {});
+      });
+      return;
+    }
+    var io = new IntersectionObserver(function (ents) {
+      ents.forEach(function (en) {
+        var v = en.target;
+        if (en.isIntersecting) {
+          if (!v.src && v.dataset.src) v.src = v.dataset.src;
+          var p = v.play(); if (p && p.catch) p.catch(function () {});
+        } else {
+          try { v.pause(); } catch (e) {}
+        }
+      });
+    }, { root: wrap, threshold: 0.35 });
+    vids.forEach(function (v) { io.observe(v); });
+    // salva reference per disconnect in closeCourse
+    wrap._mediaIO = io;
+  }
+
+  function openCourse(idx) {
+    var c = courses[idx];
+    if (!cmodal || !c) return;
+    cLastFocus = document.activeElement;
+    /* palette sul modal */
+    var pal = c.palette || {};
+    if (pal.bg) cmodal.style.setProperty("--cm-bg", pal.bg); else cmodal.style.removeProperty("--cm-bg");
+    if (pal.ink) cmodal.style.setProperty("--cm-ink", pal.ink); else cmodal.style.removeProperty("--cm-ink");
+    if (pal.accent) cmodal.style.setProperty("--cm-accent", pal.accent); else cmodal.style.removeProperty("--cm-accent");
+    cmodal.classList.toggle("cmodal--tinted", !!(pal.bg || pal.ink));
+    if (cslug) cslug.textContent = c.number || "—";
+    if (cenroll) {
+      cenroll.href = enrollUrl;
+      cenroll.setAttribute("data-enroll", c.title);
+      // apre in nuova scheda solo se link esterno
+      if (/^https?:/i.test(enrollUrl)) {
+        cenroll.target = "_blank";
+        cenroll.rel = "noopener noreferrer";
+      } else {
+        cenroll.target = "_self";
+        cenroll.rel = "";
+      }
+    }
+    if (cbody) cbody.innerHTML = renderCourse(c);
+    cmodal.hidden = false;
+    document.documentElement.style.overflow = "hidden";
+    if (cclose) cclose.focus();
+    // scroll interno al top
+    var panel = cmodal.querySelector(".cmodal__body");
+    if (panel) panel.scrollTop = 0;
+    activateMediaAutoplay(cmodal);
+  }
+
+  function closeCourse() {
+    if (!cmodal) return;
+    var wrap = cmodal.querySelector(".cmedia");
+    if (wrap && wrap._mediaIO) { try { wrap._mediaIO.disconnect(); } catch (e) {} wrap._mediaIO = null; }
+    cmodal.querySelectorAll(".cmedia__video").forEach(function (v) { try { v.pause(); } catch (e) {} });
+    cmodal.hidden = true;
+    document.documentElement.style.overflow = "";
+    if (cLastFocus && cLastFocus.focus) cLastFocus.focus();
+  }
+
+  if (cmodal) {
+    if (cclose) cclose.addEventListener("click", closeCourse);
+    cmodal.addEventListener("click", function (e) { if (e.target === cmodal) closeCourse(); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !cmodal.hidden) closeCourse();
     });
-  });
+    if (cenroll) {
+      cenroll.addEventListener("click", function () {
+        var v = cenroll.getAttribute("data-enroll");
+        if (v && select) select.value = v;
+        // se è un'ancora interna, chiudi il popup così vede lo scroll
+        if (!/^https?:/i.test(cenroll.getAttribute("href") || "")) closeCourse();
+      });
+    }
+  }
 
   /* ---------- COLLAB · marquee + popup ---------- */
   var partners = window.PARTNERS || [];
