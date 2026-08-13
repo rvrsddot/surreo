@@ -236,6 +236,7 @@
         '</section>'
       ) : '') +
 
+      (c.cfu ? '<p class="cmodal__cfu">' + esc(c.cfu) + '</p>' : '') +
       (c.note ? '<p class="cmodal__note">' + esc(c.note) + '</p>' : '')
     );
   }
