@@ -80,6 +80,8 @@ window.COURSES = [
     tool: "FloraFauna AI",
     /* Palette presa dalla card IG (crema + rosa) */
     palette: { bg: "#EDE8CF", ink: "#14130A", accent: "#F5B4D0", label: "AI · FloraFauna" },
+    /* Blur temporaneo sulle immagini della card — corso non ancora annunciato */
+    cardBlur: true,
     /* Media a scorrimento — sample immagini dal corso Morelli */
     media: {
       kind: "image",

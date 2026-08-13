@@ -89,7 +89,7 @@
           ' muted loop playsinline autoplay preload="metadata"></video>' +
       '</div>';
     } else if (mediaThumbs.length && !soon) {
-      mediaHtml = '<div class="card__media" aria-hidden="true">' +
+      mediaHtml = '<div class="card__media' + (c.cardBlur ? ' card__media--blur' : '') + '" aria-hidden="true">' +
         mediaThumbs.map(function (src) {
           return '<img src="' + esc(src) + '" alt="" loading="lazy" decoding="async" />';
         }).join("") +
