@@ -14,8 +14,8 @@ window.EDITION = {
   tagline: "Due workshop. Una settimana. Rompi la griglia.",
 };
 
-/* Link Iscriviti — placeholder. Sostituire quando disponibile il link ufficiale. */
-window.ENROLL_URL = "#iscrizioni";
+/* Link Iscriviti — Google Form ufficiale (uguale per entrambi i corsi). */
+window.ENROLL_URL = "https://forms.gle/rXmL8mes7hfhnATh8";
 
 /* Elenco corsi dell'edizione corrente. */
 window.COURSES = [
