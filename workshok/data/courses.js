@@ -23,9 +23,9 @@ window.COURSES = [
     status: "open",
     number: "01",
     title: "AI, Fammi 'Sto Fatto",
-    theme: "AI per web, app e visual interattivi",
+    theme: "Fare siti web e applicazioni con l'intelligenza artificiale (in modo avanzato ma che in realtà è semplicissimo)",
     tutor: "Giovanni Abbatepaolo",
-    tutorRole: "Progettista multidisciplinare, docente sviluppatore",
+    tutorRole: "Docente, sviluppatore, architetto dell'informazione, progettista poliedrico",
     tool: "Ollama",
     /* Palette presa dalla card IG (rosa + blu elettrico) */
     palette: { bg: "#F5B4D0", ink: "#2F2BEE", label: "AI · Ollama" },
@@ -54,27 +54,28 @@ window.COURSES = [
     audience: "Aperto a tutti — studenti (tutti gli atenei) & professionisti",
     recommended: "Studenti design, architettura, creativi",
     blurb:
-      "Progettare siti, app e visual interattivi con l'AI, senza scrivere una riga di codice.",
+      "Fare siti web e applicazioni con l'intelligenza artificiale — in modo avanzato ma semplicissimo.",
     description: [
-      "Un workshop **intensivo** dedicato all'uso dell'**intelligenza artificiale** per progettare **siti web, applicazioni e visual interattivi** — **senza programmazione**.",
-      "Oggi l'AI permette a designer e creativi di realizzare in pochissimo tempo prototipi e progetti complessi che fino a poco tempo fa richiedevano **programmatori, budget e tempi** molto più grandi.",
-      "Il workshop è **fortemente orientato alla pratica**: attraverso esercizi, sperimentazione e lavoro diretto sui progetti, imparerai a usare strumenti e metodologie **più adatte del semplice ChatGPT** per costruire prodotti digitali completi.",
-      "L'obiettivo è acquisire una **vera autonomia progettuale**, superare i limiti tecnici e trasformare le proprie idee in progetti funzionanti. **Percorso seguito passo passo**, con supporto individuale e senza lasciare indietro nessuno.",
+      "Nell'ultimo anno, l'IA è diventata precisissima nel realizzare siti web e applicazioni: oggi un designer può realizzare da solo progetti complessi che in passato richiedevano un programmatore esperto, tantissimo tempo e soldi. **In cinque minuti fai un prototipo; in mezz'ora fai un progetto completo.**",
+      "Guardate questo sito web: https://bbtgnn.github.io/warmup-workshop-results/. All'interno ci sono decine di applicazioni e visual interattivi che sono state realizzate da studenti in mezza giornata. E nessuno di questi aveva conoscenze pregresse di programmazione.",
+      "Tutti conosciamo ChatGPT, ma non è la cosa più adatta per realizzare queste cose. L'obiettivo del corso sarà insegnare le tecnologie e le metodologie necessarie per avere una padronanza del settore e sostanzialmente poter fare il cazzo che si vuole (ovvero realizzare progetti senza limiti tecnici).",
+      "La mia metodologia di insegnamento: **tanta pratica, poca teoria** (che distribuisco mentre facciamo gli esercizi, così non resta in astratto). E poi seguo le persone 1 a 1, senza lasciare nessuno indietro: proseguo nella spiegazione solo quando tutte e tutti hanno capito.",
     ],
     tutorBio: [
-      "Docente, sviluppatore e progettista multidisciplinare. Si laurea nel **2020 in Progettazione grafica e comunicazione visiva all'ISIA di Urbino**.",
-      "**Dal 2018** tiene workshop di grafica, tipografia, programmazione e organizzazione dell'informazione in diverse accademie e università italiane. **Dal 2022** lavora come sviluppatore web per **Dyne.org** e **Forkbomb B.V.** e **dal 2024** insegna **Creative Coding all'Accademia di Belle Arti di Perugia**, con particolare attenzione all'uso consapevole di strumenti avanzati di intelligenza artificiale.",
+      "Docente, sviluppatore, architetto dell'informazione, progettista poliedrico, ma soprattutto: una persona molto alta (non spaventatevi quando lo vedrete).",
+      "Si laurea nel **2020 in Progettazione Grafica e Comunicazione Visiva presso l'ISIA di Urbino** con una tesi dal titolo \"Il filo del discorso\", in cui discute la progettazione di un'applicazione (attualmente in sviluppo) in grado di assistere studenti e docenti nel visualizzare la struttura del ragionamento di un qualsiasi testo argomentativo.",
+      "**Dal 2018** si occupa di didattica: ha tenuto workshop di progettazione grafica, tipografia, programmazione e organizzazione delle informazioni presso diverse istituzioni, tra cui: **Accademie di Belle Arti di Roma, Frosinone e Macerata, UNIRSM San Marino, UNICAM Ascoli, ABADIR Catania.**",
+      "Ricopre il ruolo di **sviluppatore web presso Dyne.org e Forkbomb B.V. dal 2022**.",
+      "**Dal 2024** è **professore di Creative Coding presso l'Accademia di Belle Arti di Perugia**, dove insegna come utilizzare strumenti avanzati di intelligenza artificiale (in modo consapevole).",
     ],
-    result:
-      "Al termine del workshop avrai sviluppato un **progetto originale** basato sull'uso dell'AI, sperimentando la creazione di **app, tool digitali e sistemi di grafica generativa**. Un **output concreto e funzionante**, applicabile al tuo ambito creativo o professionale. I progetti finali saranno **raccolti, presentati e proiettati** al termine del workshop.",
-    note: "**Se provieni da un altro ateneo, contatta la tua segreteria di riferimento per verificare l'eventuale riconoscimento di crediti formativi.",
+    note: "Attestato di partecipazione valido per la convalida di CFU. È consigliato informarsi presso la propria segreteria studenti per verificare l'accettazione.",
   },
   {
     status: "open",
     number: "02",
     title: "AI & Creativity",
-    theme: "AI come strumento creativo per branding e design",
-    tutor: "Emanuele Morelli",
+    theme: "Esplorare nuovi processi creativi attraverso l'Intelligenza Artificiale",
+    tutor: "Emanuele Jane Morelli",
     tutorRole: "Creative Director, AI Media Designer e docente",
     tool: "FloraFauna AI",
     /* Palette presa dalla card IG (crema + rosa) */
@@ -100,20 +101,19 @@ window.COURSES = [
     audience: "Aperto a tutti — studenti (tutti gli atenei) & professionisti",
     recommended: "Studenti design, architettura, creativi",
     blurb:
-      "L'AI come strumento creativo per branding, design e comunicazione. Dal brief al concept.",
+      "Esplorare nuovi processi creativi attraverso l'Intelligenza Artificiale.",
     description: [
-      "Un workshop **intensivo** dedicato all'**intelligenza artificiale come strumento creativo** per **branding, design e comunicazione**.",
-      "Durante le quattro giornate acquisirai un **metodo pratico** per integrare l'AI nel processo creativo e sviluppare **concept, immagini e direzioni visive** a partire da brief e identità di brand.",
-      "**Fortemente orientato alla pratica**: attraverso **casi studio, sperimentazione con FloraFauna AI, revisioni e mentoring**, lavorerai direttamente alla costruzione dei tuoi concept.",
-      "L'obiettivo è esplorare come l'AI possa **ampliare le possibilità progettuali** e **supportare il pensiero creativo**.",
+      "Un workshop intensivo dedicato **all'esplorazione dell'Intelligenza Artificiale come strumento creativo per il design, la comunicazione e l'innovazione.**",
+      "Durante quattro giornate di lavoro, i partecipanti acquisiranno un metodo pratico per integrare l'AI nel proprio processo creativo, imparando a sviluppare idee, immagini e concept attraverso un approccio sperimentale e progettuale.",
+      "Il workshop sarà fortemente orientato alla pratica: dopo una breve introduzione teorica e la presentazione di casi studio, i partecipanti lavoreranno direttamente ai propri progetti utilizzando principalmente **FloraFauna AI**, affiancati da momenti di confronto, revisione e mentoring.",
+      "L'obiettivo è comprendere come l'AI possa diventare un alleato della creatività, ampliando le possibilità progettuali senza sostituire il pensiero del designer.",
     ],
     tutorBio: [
-      "Emanuele Morelli è **Creative Director, AI Media Designer e docente** specializzato nell'applicazione dell'intelligenza artificiale ai **processi creativi**.",
-      "Collabora con aziende, istituzioni e scuole di design, tenendo **workshop e conferenze internazionali** dedicati all'integrazione dell'AI nel mondo del progetto. La sua ricerca si concentra sul **rapporto tra creatività umana, innovazione e tecnologie generative**, promuovendo un approccio **pratico e consapevole** all'uso dell'AI nel design.",
+      "**Emanuele Morelli** è Creative Director, AI Media Designer e docente specializzato nell'applicazione dell'Intelligenza Artificiale ai processi creativi. Collabora con aziende, istituzioni e scuole di design, tenendo workshop e conferenze internazionali dedicati all'integrazione dell'AI nel mondo del progetto. La sua ricerca si concentra sul rapporto tra creatività umana, innovazione e tecnologie generative, promuovendo un approccio pratico e consapevole all'uso dell'AI nel design.",
     ],
     result:
-      "Al termine del workshop avrai sviluppato un **progetto originale** usando l'AI come supporto al processo creativo, con un **metodo di lavoro immediatamente applicabile** al tuo ambito professionale e maggiore consapevolezza delle potenzialità delle **tecnologie generative**. Il lavoro andrà **impaginato e presentato**.",
-    note: "**Se provieni da un altro ateneo, contatta la tua segreteria di riferimento per verificare l'eventuale riconoscimento di crediti formativi.",
+      "Al termine del workshop ogni partecipante avrà sviluppato un progetto originale utilizzando l'Intelligenza Artificiale come supporto al processo creativo, acquisendo un metodo di lavoro immediatamente applicabile al proprio ambito professionale e una maggiore consapevolezza delle potenzialità offerte dalle nuove tecnologie generative. **Il lavoro in questione andrà impaginato e presentato.**",
+    note: "Attestato di partecipazione valido per la convalida di CFU. È consigliato informarsi presso la propria segreteria studenti per verificare l'accettazione.",
   },
 ];
 

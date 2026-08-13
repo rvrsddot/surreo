@@ -172,7 +172,13 @@
 
   /* Mini parser: **bold** dentro le stringhe di prose */
   function inline(txt) {
-    return esc(txt).replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    return esc(txt)
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+      .replace(/(https?:\/\/[^\s<>()]+)/g, function (m) {
+        var url = m.replace(/[.,;:!?)\]"']+$/, "");
+        var trail = m.slice(url.length);
+        return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + "</a>" + trail;
+      });
   }
 
   function renderCourse(c) {
