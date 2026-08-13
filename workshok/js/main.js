@@ -77,9 +77,23 @@
       card.classList.add("card--tinted");
     }
 
+    var mediaItems = (c.media && Array.isArray(c.media.items)) ? c.media.items : [];
+    var mediaThumbs = mediaItems.slice(0, 4).map(function (m) {
+      return m.poster || m.src || "";
+    }).filter(Boolean);
+    var mediaHtml = "";
+    if (mediaThumbs.length && !soon) {
+      mediaHtml = '<div class="card__media" aria-hidden="true">' +
+        mediaThumbs.map(function (src) {
+          return '<img src="' + esc(src) + '" alt="" loading="lazy" decoding="async" />';
+        }).join("") +
+      '</div>';
+    }
+
     card.innerHTML =
       '<div class="card__topline"><span>WSK/' + esc(c.number) + '</span><span>' + (soon ? "SOON" : "OPEN") + '</span></div>' +
       '<div class="card__n">' + esc(c.number) + '</div>' +
+      mediaHtml +
       '<h3 class="card__title">' + esc(c.title) + '</h3>' +
       '<p class="card__theme">' + esc(c.theme || "") + '</p>' +
       '<div class="card__meta">' +
