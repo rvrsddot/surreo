@@ -61,7 +61,7 @@
     var soon = c.status === "coming-soon";
     var card = document.createElement("button");
     card.type = "button";
-    card.className = "card" + (soon ? " card--soon" : "");
+    card.className = "card" + (soon ? " card--soon" : "") + (c.cardBlur ? " card--blur" : "");
     card.setAttribute("aria-haspopup", "dialog");
     card.setAttribute("aria-controls", "course-modal");
     card.setAttribute("aria-label",

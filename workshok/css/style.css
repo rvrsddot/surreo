@@ -269,6 +269,8 @@ a { color: inherit; text-decoration: none; }
   display: block;
 }
 .card__media--blur img { filter: blur(22px) saturate(1.1); transform: scale(1.15); }
+.card--blur > * { filter: blur(14px) saturate(1.05); transform: scale(1.02); pointer-events: none; user-select: none; }
+.card--blur { pointer-events: none; }
 
 /* ---------- CORSI · lock "COMING SOON" (corsi non ancora pubblici) ---------- */
 .card__lock {
