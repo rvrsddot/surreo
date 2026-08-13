@@ -245,9 +245,25 @@
         <span class="win__ctrl" aria-hidden="true"><b></b><b></b><b></b></span>
       </div>
       <div class="win__body">
-        <div class="block__head">
+        <div class="block__head block__head--corsi">
           <h2 class="block__title neon-solid">I&nbsp;Corsi</h2>
-          <span class="block__meta">// 2 workshop · clicca la card per aprirla</span>
+          <div class="block__aside">
+            <span class="block__meta">// 2 workshop · clicca la card per aprirla</span>
+            <div class="corsi-strip" aria-hidden="true">
+            <div class="corsi-strip__track">
+              <img src="assets/corsi/abbatepaolo/video-01.jpg" alt="" loading="lazy" width="88" height="88" />
+              <img src="assets/corsi/morelli/A.webp" alt="" loading="lazy" width="88" height="88" />
+              <img src="assets/corsi/abbatepaolo/video-04.jpg" alt="" loading="lazy" width="88" height="88" />
+              <img src="assets/corsi/morelli/C.webp" alt="" loading="lazy" width="88" height="88" />
+              <img src="assets/corsi/morelli/E.webp" alt="" loading="lazy" width="88" height="88" />
+              <img src="assets/corsi/abbatepaolo/video-01.jpg" alt="" loading="lazy" width="88" height="88" aria-hidden="true" />
+              <img src="assets/corsi/morelli/A.webp" alt="" loading="lazy" width="88" height="88" aria-hidden="true" />
+              <img src="assets/corsi/abbatepaolo/video-04.jpg" alt="" loading="lazy" width="88" height="88" aria-hidden="true" />
+              <img src="assets/corsi/morelli/C.webp" alt="" loading="lazy" width="88" height="88" aria-hidden="true" />
+              <img src="assets/corsi/morelli/E.webp" alt="" loading="lazy" width="88" height="88" aria-hidden="true" />
+            </div>
+          </div>
+          </div>
         </div>
         <div class="cards" id="cards"><!-- card generate da js/main.js --></div>
       </div>
@@ -302,35 +318,30 @@
       </div>
     </section>
 
-    <!-- ===================== 04 · ISCRIZIONI ===================== -->
+    <!-- ===================== 04 · INFO & CONTATTI ===================== -->
     <section class="win" id="iscrizioni">
       <div class="win__bar">
-        <span class="win__name">📁&nbsp;<i>04</i>&nbsp;ISCRIZIONI.FORM</span>
+        <span class="win__name">📁&nbsp;<i>04</i>&nbsp;CONTATTI.FORM</span>
         <span class="win__status">[ OPEN ]</span>
         <span class="win__ctrl" aria-hidden="true"><b></b><b></b><b></b></span>
       </div>
       <div class="win__body">
         <div class="block__head">
-          <h2 class="block__title neon-solid">Iscri&shy;viti</h2>
-          <span class="block__meta">// posti limitati · no backend</span>
+          <h2 class="block__title neon-solid">Info &amp; Contatti</h2>
+          <span class="block__meta">// per iscriverti usa il Google Form nel popup corso</span>
         </div>
 
-        <!-- Formspree: sostituire FORM_ID con l'endpoint reale -->
-        <form class="form" action="https://formspree.io/f/FORM_ID" method="POST">
+        <form class="form" action="https://formspree.io/f/mnpavrod" method="POST">
           <div class="form__row">
             <label class="field"><span>01 / NOME</span>
               <input type="text" name="nome" required autocomplete="name" placeholder="chi sei" /></label>
             <label class="field"><span>02 / EMAIL</span>
               <input type="email" name="email" required autocomplete="email" placeholder="tu@mail.it" /></label>
           </div>
-          <label class="field"><span>03 / CORSO</span>
-            <select name="corso" id="form-corso" required>
-              <option value="" disabled selected>— seleziona un workshop —</option>
-            </select></label>
-          <label class="field"><span>04 / MESSAGGIO (OPZIONALE)</span>
-            <textarea name="messaggio" rows="3" placeholder="due righe su di te"></textarea></label>
+          <label class="field"><span>03 / MESSAGGIO</span>
+            <textarea name="messaggio" rows="4" required placeholder="scrivici la tua richiesta"></textarea></label>
           <button type="submit" class="btn btn--send">[&nbsp;MANDA LA RICHIESTA →&nbsp;]</button>
-          <p class="form__note">— nessun backend, nessuno spam. Solo una mail a noi.</p>
+          <p class="form__note">— solo una mail a noi. Per iscriverti a un corso, apri la scheda e clicca ISCRIVITI QUI.</p>
         </form>
       </div>
     </section>
