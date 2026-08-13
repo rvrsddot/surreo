@@ -374,7 +374,7 @@ a { color: inherit; text-decoration: none; }
   .cmodal__spec span { font-size: 14.5px; }
 }
 
-.cmodal__prose p { font-size: 15px; line-height: 1.55; margin: 0 0 .7em; max-width: 68ch; text-wrap: pretty; }
+.cmodal__prose p { font-size: 15px; line-height: 1.3; margin: 0 0 .7em; max-width: 68ch; text-wrap: pretty; }
 .cmodal__prose p:last-child { margin-bottom: 0; }
 .cmodal__prose strong { font-weight: 700; color: var(--cm-ink, var(--ink)); }
 .cmodal__tutorname { font-family: var(--title); font-weight: 700; text-transform: uppercase; letter-spacing: .02em; font-size: 18px; margin: 0 0 .8em !important; }
