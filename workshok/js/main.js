@@ -82,7 +82,13 @@
       return m.poster || m.src || "";
     }).filter(Boolean);
     var mediaHtml = "";
-    if (mediaThumbs.length && !soon) {
+    if (c.cardLoop && c.cardLoop.src && !soon) {
+      mediaHtml = '<div class="card__media card__media--video" aria-hidden="true">' +
+        '<video src="' + esc(c.cardLoop.src) + '"' +
+          (c.cardLoop.poster ? ' poster="' + esc(c.cardLoop.poster) + '"' : '') +
+          ' muted loop playsinline autoplay preload="metadata"></video>' +
+      '</div>';
+    } else if (mediaThumbs.length && !soon) {
       mediaHtml = '<div class="card__media" aria-hidden="true">' +
         mediaThumbs.map(function (src) {
           return '<img src="' + esc(src) + '" alt="" loading="lazy" decoding="async" />';

@@ -29,6 +29,8 @@ window.COURSES = [
     tool: "Ollama",
     /* Palette presa dalla card IG (rosa + blu elettrico) */
     palette: { bg: "#F5B4D0", ink: "#2F2BEE", label: "AI · Ollama" },
+    /* Loop video sulla card (autoplay muted) — sostituisce il crossfade di immagini */
+    cardLoop: { src: "assets/corsi/abbatepaolo/loop.mp4", poster: "assets/corsi/abbatepaolo/loop-poster.jpg" },
     /* Media a scorrimento — video del corso Abbatepaolo (con poster JPG per fallback iniziale) */
     media: {
       kind: "video",

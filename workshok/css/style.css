@@ -299,6 +299,12 @@ a { color: inherit; text-decoration: none; }
   .card__media img { animation: none; opacity: 0; }
   .card__media img:first-child { opacity: 1; }
 }
+.card__media--video video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
 /* ---------- CORSI · lock "COMING SOON" (corsi non ancora pubblici) ---------- */
 .card__lock {
@@ -543,6 +549,16 @@ a { color: inherit; text-decoration: none; }
     scroll-snap-align: start;
     opacity: 1;
     animation: none;
+  }
+  .card__media--video {
+    display: block; overflow: hidden;
+    scroll-snap-type: none;
+    position: relative;
+  }
+  .card__media--video video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
   }
   .about__cols { grid-template-columns: 1fr; }
   .form__row { grid-template-columns: 1fr; }
