@@ -302,14 +302,42 @@ body.has-open,body.menu-open{overflow:hidden}
 /* hero */
 .landing{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
 .hero{flex:1 0 auto;max-width:1440px;width:100%;margin:0 auto;padding:clamp(20px,4vw,40px) clamp(16px,3.5vw,44px) clamp(14px,2vw,24px);text-align:center;
-  display:flex;flex-direction:column}
-.hero__main{margin:auto 0;display:flex;justify-content:center;align-items:center;width:100%}
+  display:flex;flex-direction:column;position:relative;isolation:isolate}
+
+/* lava-lamp psichedelica: blob sfocati che driftano, mask top/bottom nel paper */
+.hero__lava{
+  position:absolute;left:0;right:0;top:0;bottom:60px;   /* si ferma sopra la riga info */
+  z-index:0;pointer-events:none;overflow:hidden;
+  filter:blur(60px) saturate(1.35);opacity:.55;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 18%,#000 78%,transparent 100%);
+          mask-image:linear-gradient(180deg,transparent 0,#000 18%,#000 78%,transparent 100%);
+}
+.hero__lava > i{position:absolute;display:block;width:52vmin;height:52vmin;border-radius:50%;
+  will-change:transform;mix-blend-mode:multiply}
+.hero__lava > i:nth-child(1){background:radial-gradient(closest-side,#ff3ea5,transparent 70%);
+  top:-8%;left:-6%;animation:lavaA 22s ease-in-out infinite alternate}
+.hero__lava > i:nth-child(2){background:radial-gradient(closest-side,#3ec3ff,transparent 70%);
+  bottom:-12%;right:-8%;animation:lavaB 26s ease-in-out infinite alternate}
+.hero__lava > i:nth-child(3){background:radial-gradient(closest-side,#ffdb3e,transparent 70%);
+  top:24%;left:38%;animation:lavaC 30s ease-in-out infinite alternate}
+.hero__lava > i:nth-child(4){background:radial-gradient(closest-side,#a34dff,transparent 70%);
+  top:18%;left:8%;animation:lavaD 34s ease-in-out infinite alternate}
+@keyframes lavaA{from{transform:translate(0,0) scale(1)}to{transform:translate(38vw,26vh) scale(1.2)}}
+@keyframes lavaB{from{transform:translate(0,0) scale(1)}to{transform:translate(-34vw,-22vh) scale(1.15)}}
+@keyframes lavaC{from{transform:translate(0,0) scale(1)}to{transform:translate(-28vw,18vh) scale(1.25)}}
+@keyframes lavaD{from{transform:translate(0,0) scale(1)}to{transform:translate(24vw,-18vh) scale(1.1)}}
+@media (prefers-reduced-motion:reduce){
+  .hero__lava > i{animation:none}
+}
+
+.hero__main{margin:auto 0;display:flex;justify-content:center;align-items:center;width:100%;position:relative;z-index:1}
 .hero__h1{margin:0;line-height:0;pointer-events:none}
 .hero__title-svg{width:clamp(300px,90vw,1500px);height:auto;display:block;
   user-select:none;-webkit-user-select:none;-webkit-user-drag:none;pointer-events:none}
 .hero__row{padding-top:14px;border-top:1.5px solid var(--ink);
   display:flex;justify-content:space-between;gap:clamp(6px,2vw,12px);flex-wrap:nowrap;
-  font:600 clamp(7px,2vw,11px)/1 ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+  font:600 clamp(7px,2vw,11px)/1 ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);
+  position:relative;z-index:1;background:var(--paper)}
 .hero__row span{white-space:nowrap}
 
 /* intestazione sezione generica */
