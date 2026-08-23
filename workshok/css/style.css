@@ -7,10 +7,10 @@
 :root {
   --bg: #f1f5e0;          /* menta pallido (campionato dal poster SWW8) */
   --paper: #f6f9ea;       /* pannelli, un filo più chiaro */
-  --ink: #14130a;         /* nero caldo */
-  --dim: rgba(20,19,10,0.55);
-  --line: rgba(20,19,10,0.24);
-  --accent-ink: #f1f5e0;  /* testo su fondo nero (invertito) */
+  --ink: #0c00ff;         /* blu SURREO (ex nero caldo) */
+  --dim: rgba(12,0,255,0.55);
+  --line: rgba(12,0,255,0.24);
+  --accent-ink: #f1f5e0;  /* testo su fondo blu (invertito) */
 
   --sans: "Space Grotesk", system-ui, sans-serif;
   --mono: "Space Mono", ui-monospace, "SFMono-Regular", monospace;
@@ -70,7 +70,7 @@ a { color: inherit; text-decoration: none; }
   border-bottom: 1.5px solid var(--ink); font-size: 12px; letter-spacing: .05em;
 }
 .topbar__brand { display: flex; align-items: center; height: 100%; }
-.topbar__logo { height: 15px; width: auto; filter: brightness(0); }   /* logo nero su menta */
+.topbar__logo { height: 22px; width: auto; }   /* logo SVG blu su menta */
 .topbar__ver { font-family: var(--mono); color: var(--ink); font-size: 11px; letter-spacing: .1em; opacity: .6; }
 .topbar__nav { display: flex; gap: clamp(.6rem, 2vw, 2rem); margin-left: 1rem; }
 .tab { color: var(--dim); text-transform: uppercase; white-space: nowrap; transition: color .1s steps(2); }
@@ -129,7 +129,7 @@ a { color: inherit; text-decoration: none; }
   font-weight: 700; text-transform: uppercase; letter-spacing: .14em;
   color: var(--bg); background: var(--ink);
   border: 1.5px solid var(--ink); border-radius: 0;
-  box-shadow: 4px 4px 0 rgba(20,19,10,.18);
+  box-shadow: 4px 4px 0 rgba(12,0,255,.18);
   transition: transform .18s cubic-bezier(.2,.8,.2,1), background .18s ease, color .18s ease, box-shadow .18s ease;
 }
 .hero__cta::after { content: "↓"; font-size: 1.1em; line-height: 1; }
@@ -298,7 +298,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ---------- COLLAB · marquee + SELECTED ---------- */
 .marquee { display: block; width: 100%; overflow: hidden; border: 0; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); padding: 1rem 0; background: transparent; color: inherit; text-align: left; cursor: pointer; font: inherit; }
-.marquee:hover { background: rgba(0,0,0,.02); }
+.marquee:hover { background: rgba(12,0,255,.02); }
 .marquee:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 .marquee__track { display: flex; gap: 2.6rem; width: max-content; animation: scroll 42s linear infinite; will-change: transform; }
 .marquee:hover .marquee__track { animation-play-state: paused; }
@@ -311,7 +311,7 @@ a { color: inherit; text-decoration: none; }
 .block__all:hover, .block__all:focus-visible { background: var(--ink); color: var(--paper); outline: none; }
 
 /* ---------- POPUP PARTNER ---------- */
-.pmodal { position: fixed; inset: 0; z-index: 900; display: flex; align-items: stretch; justify-content: center; background: rgba(20,18,12,.5); padding: clamp(12px, 3vw, 40px); overflow-y: auto; }
+.pmodal { position: fixed; inset: 0; z-index: 900; display: flex; align-items: stretch; justify-content: center; background: rgba(12,0,255,.5); padding: clamp(12px, 3vw, 40px); overflow-y: auto; }
 .pmodal[hidden] { display: none; }
 .pmodal__panel { background: #fff; color: var(--ink); width: 100%; max-width: 980px; margin: auto; border: 1.5px solid var(--ink); box-shadow: 8px 10px 0 rgba(0,0,0,.28); display: flex; flex-direction: column; animation: pmodalIn .28s cubic-bezier(.2,.8,.2,1); max-height: calc(100vh - 40px); }
 @keyframes pmodalIn { from { transform: translateY(12px); opacity: 0; } to { transform: none; opacity: 1; } }
@@ -325,10 +325,10 @@ a { color: inherit; text-decoration: none; }
 .pmodal__meta { font-family: var(--mono); font-size: 12px; color: var(--dim); letter-spacing: .1em; text-transform: uppercase; }
 .pmodal__meta i { font-style: normal; color: var(--ink); font-weight: 700; }
 .pmodal__list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0; counter-reset: pnum; }
-.pmodal__list li { counter-increment: pnum; display: flex; align-items: baseline; gap: .8rem; padding: .9rem .2rem; border-bottom: 1px solid rgba(0,0,0,.12); font-family: var(--title); font-weight: 600; font-size: clamp(1rem, 1.6vw, 1.3rem); letter-spacing: -.01em; }
+.pmodal__list li { counter-increment: pnum; display: flex; align-items: baseline; gap: .8rem; padding: .9rem .2rem; border-bottom: 1px solid rgba(12,0,255,.12); font-family: var(--title); font-weight: 600; font-size: clamp(1rem, 1.6vw, 1.3rem); letter-spacing: -.01em; }
 .pmodal__list li::before { content: counter(pnum, decimal-leading-zero); font-family: var(--mono); font-size: 11px; font-weight: 400; color: var(--dim); letter-spacing: .08em; flex: none; }
 /* ---------- POPUP CORSO (dettaglio workshop) ---------- */
-.cmodal { position: fixed; inset: 0; z-index: 950; display: flex; align-items: stretch; justify-content: center; background: rgba(20,18,12,.55); padding: clamp(12px, 3vw, 40px); overflow-y: auto; }
+.cmodal { position: fixed; inset: 0; z-index: 950; display: flex; align-items: stretch; justify-content: center; background: rgba(12,0,255,.55); padding: clamp(12px, 3vw, 40px); overflow-y: auto; }
 .cmodal[hidden] { display: none; }
 .cmodal__panel { background: var(--paper); color: var(--ink); width: 100%; max-width: 1000px; margin: auto; border: 1.5px solid var(--ink); box-shadow: 8px 10px 0 rgba(0,0,0,.28); display: flex; flex-direction: column; animation: pmodalIn .28s cubic-bezier(.2,.8,.2,1); max-height: calc(100vh - 40px); }
 .cmodal__bar { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: .7rem 1rem; background: var(--paper); border-bottom: 1.5px solid var(--ink); font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; flex-wrap: wrap; }
@@ -428,7 +428,7 @@ a { color: inherit; text-decoration: none; }
   overflow: hidden; position: relative;
 }
 .cmedia__img, .cmedia__video { width: 100%; height: 100%; object-fit: cover; display: block; }
-.cmedia__video { background: #000; }
+.cmedia__video { background: #0c00ff; }
 @media (max-width: 640px) {
   .cmedia__slide { width: 62vw; }
   .cmedia__track { animation-duration: 34s; }

@@ -79,7 +79,7 @@ window.COURSES = [
     tutorRole: "Creative Director, AI Media Designer e docente",
     tool: "FloraFauna AI",
     /* Palette presa dalla card IG (crema + rosa) */
-    palette: { bg: "#EDE8CF", ink: "#14130A", accent: "#F5B4D0", label: "AI · FloraFauna" },
+    palette: { bg: "#EDE8CF", ink: "#0c00ff", accent: "#F5B4D0", label: "AI · FloraFauna" },
     /* Blur temporaneo sulle immagini della card — corso non ancora annunciato */
     cardBlur: false,
     /* Media a scorrimento — sample immagini dal corso Morelli */
