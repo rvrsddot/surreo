@@ -57,7 +57,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Space+Grotesk:wght@300;700&display=swap" />
-  <link rel="stylesheet" href="styles.css?v=138" />
+  <link rel="stylesheet" href="styles.css?v=140" />
 </head>
 <body>
 
@@ -86,9 +86,20 @@
     </button>
   </header>
 
+  <!-- SVG filter: wave psichedelico sul titolo -->
+  <svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="heroWave" x="-15%" y="-15%" width="130%" height="130%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.008 0.014" numOctaves="2" seed="7" result="noise">
+          <animate attributeName="baseFrequency" dur="14s" values="0.008 0.014;0.016 0.022;0.010 0.017;0.008 0.014" repeatCount="indefinite"/>
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="16" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+
   <!-- hero -->
   <section class="hero" id="top">
-    <div class="hero__lava" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <div class="hero__main">
       <h1 class="hero__h1"><img class="hero__title-svg" src="svg/herotitolo.svg" alt="Multidisciplinary — Design Studio" draggable="false" /></h1>
     </div>
@@ -330,6 +341,6 @@
   })();
   </script>
 
-  <script src="app.js?v=121"></script>
+  <script src="app.js?v=125"></script>
 </body>
 </html>
