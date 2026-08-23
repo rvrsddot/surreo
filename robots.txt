@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /workshok/admin/
 
 Sitemap: https://surreostudio.com/sitemap.xml
+Sitemap: https://surreostudio.com/workshok/sitemap.xml

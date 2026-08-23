@@ -1,9 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://surreostudio.com/</loc>
-    <lastmod>2026-07-25</lastmod>
+    <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://surreostudio.com/og-image.jpg</image:loc>
+      <image:title>Surreo Studio — Creative Studio</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://surreostudio.com/workshok/</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://surreostudio.com/workshok/assets/sww8-poster.png</image:loc>
+      <image:title>Workshok — SAAD Workshop Week 2026 · Ascoli Piceno</image:title>
+      <image:caption>Workshop AI, Design, Grafica e Architettura · UNICAM SAAD</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://surreostudio.com/workshok/assets/corsi/morelli/A.webp</image:loc>
+      <image:title>Workshop AI &amp; Creativity — Emanuele Morelli · FloraFauna AI</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://surreostudio.com/workshok/assets/corsi/abbatepaolo/video-01.jpg</image:loc>
+      <image:title>Workshop AI, Fammi 'Sto Fatto — Giovanni Abbatepaolo · Ollama</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://surreostudio.com/workshok/#corsi</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
