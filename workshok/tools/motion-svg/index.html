@@ -1,0 +1,1981 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Motion SVG · Workshok Tool</title>
+<style>
+  :root{
+    --paper:#f4efe6;
+    --ink:#111;
+    --accent:#0300ff;
+    --line:#111;
+    --muted:#6b6357;
+    --panel:#ebe4d6;
+    --mono:'JetBrains Mono','SF Mono',ui-monospace,monospace;
+    --serif:'Times New Roman',serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--paper);color:var(--ink);font-family:var(--mono);font-size:12px}
+  body{display:grid;grid-template-columns:320px 1fr 320px;grid-template-rows:44px 1fr 120px;height:100vh;overflow:hidden}
+  header{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid var(--line);background:var(--paper)}
+  header h1{margin:0;font-family:var(--serif);font-style:italic;font-weight:400;font-size:18px;letter-spacing:.02em}
+  header .meta{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
+  .col{border-right:1px solid var(--line);overflow-y:auto;padding:14px 14px 60px}
+  .col.right{border-right:none;border-left:1px solid var(--line)}
+  .stage{position:relative;background:repeating-linear-gradient(45deg,#eee7d6 0 8px,#e8e0cd 8px 16px);overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .stage-inner{position:relative;box-shadow:0 12px 40px rgba(0,0,0,.15);background:var(--paper);overflow:hidden}
+  .stage-inner svg.canvas{width:100%;height:100%;display:block}
+  footer{grid-column:1/-1;border-top:1px solid var(--line);padding:10px 16px;display:flex;flex-direction:column;gap:8px;background:var(--paper)}
+  .timeline{display:flex;align-items:center;gap:12px}
+  .timeline input[type=range]{flex:1}
+  .transport{display:flex;gap:6px}
+  button,select,input[type=text],input[type=number]{font-family:var(--mono);font-size:11px;background:var(--paper);color:var(--ink);border:1px solid var(--ink);padding:6px 10px;cursor:pointer;border-radius:0}
+  button:hover{background:var(--ink);color:var(--paper)}
+  button.primary{background:var(--ink);color:var(--paper)}
+  button.primary:hover{background:var(--accent);border-color:var(--accent)}
+  button.ghost{border-style:dashed}
+  input[type=color]{width:38px;height:28px;border:1px solid var(--ink);padding:0;background:transparent;cursor:pointer}
+  input[type=range]{-webkit-appearance:none;height:2px;background:var(--ink);outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--accent);border:1px solid var(--ink);cursor:pointer;border-radius:0}
+  .field{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
+  .field label{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+  .row{display:flex;gap:8px;align-items:center}
+  .row > *{flex:1}
+  .section{border:1px solid var(--ink);padding:10px;margin-bottom:14px;background:var(--panel)}
+  .section h3{margin:0 0 10px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:14px}
+  .drop{border:1px dashed var(--ink);padding:22px 12px;text-align:center;cursor:pointer;background:var(--panel)}
+  .drop.hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .drop small{display:block;margin-top:6px;color:var(--muted)}
+  .drop.hover small{color:#fff}
+  .presets{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .presets button{padding:8px 4px;font-size:10px}
+  .presets button.on{background:var(--ink);color:var(--paper)}
+  .effects{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .effects button{padding:8px 6px;font-size:10px;text-align:left}
+  .effects button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .num{display:flex;align-items:center;gap:6px}
+  .num span{font-variant-numeric:tabular-nums;min-width:38px;text-align:right;color:var(--muted)}
+  .log{font-size:10px;color:var(--muted);border-top:1px dashed var(--ink);padding-top:8px;margin-top:8px;max-height:80px;overflow:auto;white-space:pre-wrap}
+  .kbd{display:inline-block;border:1px solid var(--ink);padding:1px 5px;font-size:9px;background:var(--paper)}
+  .badge{display:inline-block;padding:1px 6px;border:1px solid var(--ink);font-size:9px;text-transform:uppercase;letter-spacing:.1em}
+  .rec-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#c33;margin-right:4px;vertical-align:middle}
+  .rec .rec-dot{animation:pulse 1s infinite}
+  @keyframes pulse{50%{opacity:.2}}
+  .stage-guides{position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:0}
+  .stage.guides .stage-guides{opacity:.15}
+  .stage-guides::before,.stage-guides::after{content:"";position:absolute;background:#000}
+  .stage-guides::before{left:50%;top:0;bottom:0;width:1px}
+  .stage-guides::after{top:50%;left:0;right:0;height:1px}
+  @media (max-width:1000px){body{grid-template-columns:1fr;grid-template-rows:44px auto 60vh auto 120px}.col.right{border-left:none;border-top:1px solid var(--line)}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Motion <em>SVG</em> — <span style="font-family:var(--mono);font-style:normal;font-size:12px;letter-spacing:.15em">WORKSHOK · TOOL</span></h1>
+  <div class="meta"><span class="badge" id="fmtBadge">1080×1920</span> · <span class="badge" id="fxBadge">Ink Bleed</span></div>
+</header>
+
+<!-- LEFT: SOURCE + FORMAT -->
+<aside class="col left">
+  <div class="section">
+    <h3>1 · Sorgente SVG</h3>
+    <div class="drop" id="drop">
+      <div><strong>Trascina qui</strong> o clicca</div>
+      <small>SVG con path (fill/stroke). Il logo SURREO è precaricato.</small>
+      <input type="file" id="file" accept=".svg,image/svg+xml" hidden>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <button id="btnReload" class="ghost">Ricarica default</button>
+      <button id="btnGuides" class="ghost">Guide</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>2 · Formato</h3>
+    <div class="presets" id="formats">
+      <button data-w="1080" data-h="1080">1:1<br><small>Post</small></button>
+      <button data-w="1080" data-h="1350">4:5<br><small>Feed</small></button>
+      <button data-w="1080" data-h="1920" class="on">9:16<br><small>Reel</small></button>
+      <button data-w="1920" data-h="1080">16:9<br><small>YT</small></button>
+      <button data-w="1200" data-h="630">1.9:1<br><small>OG</small></button>
+      <button data-w="1080" data-h="566">1.91:1<br><small>Wide</small></button>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <div class="field" style="margin:0"><label>W</label><input type="number" id="cw" value="1080"></div>
+      <div class="field" style="margin:0"><label>H</label><input type="number" id="ch" value="1920"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>3 · Colori</h3>
+    <div class="row">
+      <div class="field" style="margin:0"><label>Carta</label><input type="color" id="cPaper" value="#f4efe6"></div>
+      <div class="field" style="margin:0"><label>Inchiostro</label><input type="color" id="cInk" value="#0300ff"></div>
+      <div class="field" style="margin:0"><label>Accent</label><input type="color" id="cAcc" value="#ff3b1f"></div>
+    </div>
+    <div class="field" style="margin-top:8px">
+      <label>Sfondo</label>
+      <select id="bgMode">
+        <option value="solid">Solido</option>
+        <option value="grid">Griglia editoriale</option>
+        <option value="dot">Halftone dots</option>
+        <option value="stripe">Righe diagonali</option>
+        <option value="transparent">Trasparente</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Scala logo</label>
+      <div class="num"><input type="range" id="logoScale" min="20" max="140" value="70"><span id="logoScaleV">70%</span></div>
+    </div>
+  </div>
+</aside>
+
+<!-- STAGE -->
+<div class="stage" id="stage">
+  <div class="stage-inner" id="stageInner">
+    <svg class="canvas" id="canvas" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div class="stage-guides"></div>
+  </div>
+</div>
+
+<!-- RIGHT: EFFECTS + EXPORT -->
+<aside class="col right">
+  <div class="section">
+    <h3>4 · Effetto</h3>
+    <div class="effects" id="effects"></div>
+  </div>
+
+  <div class="section">
+    <h3>5 · Parametri</h3>
+    <div class="field">
+      <label>Durata (s)</label>
+      <div class="num"><input type="range" id="dur" min="1" max="12" step="0.5" value="4"><span id="durV">4.0s</span></div>
+    </div>
+    <div class="field">
+      <label>Intensità</label>
+      <div class="num"><input type="range" id="intensity" min="0" max="100" value="60"><span id="intensityV">60</span></div>
+    </div>
+    <div class="field">
+      <label>Spread / Espansione</label>
+      <div class="num"><input type="range" id="spread" min="30" max="220" value="100"><span id="spreadV">100</span></div>
+    </div>
+    <div class="field">
+      <label>Ease</label>
+      <select id="ease">
+        <option value="linear">linear</option>
+        <option value="easeOut" selected>easeOut</option>
+        <option value="easeIn">easeIn</option>
+        <option value="easeInOut">easeInOut</option>
+        <option value="back">overshoot</option>
+        <option value="elastic">elastic</option>
+        <option value="bounce">bounce</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Loop</label>
+      <select id="loop">
+        <option value="pingpong" selected>ping-pong</option>
+        <option value="restart">restart</option>
+        <option value="once">once</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>6 · Export</h3>
+    <div class="row">
+      <div class="field" style="margin:0"><label>FPS</label>
+        <select id="fps"><option>24</option><option selected>30</option><option>60</option></select>
+      </div>
+      <div class="field" style="margin:0"><label>Formato</label>
+        <select id="expFmt"><option value="webm">WebM</option><option value="png">PNG (frame)</option></select>
+      </div>
+    </div>
+    <button id="btnExport" class="primary" style="width:100%;margin-top:8px">▶  Registra & Scarica</button>
+    <button id="btnPng" class="ghost" style="width:100%;margin-top:6px">Scarica PNG corrente</button>
+    <div class="log" id="log">pronto.</div>
+  </div>
+</aside>
+
+<!-- FOOTER TIMELINE -->
+<footer>
+  <div class="transport">
+    <button id="btnPlay">▶ Play</button>
+    <button id="btnPause">⏸ Pausa</button>
+    <button id="btnRestart">⏮ Restart</button>
+    <span style="flex:1"></span>
+    <span class="meta" id="statusMeta">t 0.00s / 4.00s · 30fps</span>
+  </div>
+  <div class="timeline">
+    <span class="meta" id="tCur" style="min-width:44px">0.00s</span>
+    <input type="range" id="scrub" min="0" max="1000" value="0" step="1">
+    <span class="meta" id="tDur" style="min-width:44px">4.00s</span>
+  </div>
+</footer>
+
+<script>
+/* ---------- DEFAULT SVG (SURREO logo) ---------- */
+const DEFAULT_SVG = `<svg id="Livello_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540.93 625.53"><g id="Livello_1-2"><path d="M0,283.57V8.86h33.52v255.83l33.52,18.49V8.86h33.52v255.83l33.52,18.88V8.86h33.52v256.21l-67.04,38.14-33.13-19.26-33.13,19.26L0,283.57Z" fill="#0300ff"/><path d="M262.37,75.9l33.52,19.26v169.14l-67.04,38.91-33.52-19.65V114.43l67.04-38.53ZM228.85,263.92l33.52,18.88V114.81l-33.52-18.49v167.6Z" fill="#0300ff"/><path d="M418.8,94.01v85.92h-33.52v-65.88l-28.13-16.95v206.13h-33.52V81.68h33.52v15.41l33.52-19.26,28.13,16.18Z" fill="#0300ff"/><path d="M540.93,81.68v53.55l-32.75,19.26,32.75,18.88v129.84h-33.52v-110.58l-33.52-19.26v129.84h-33.52V0h33.52v172.99l33.52-19.26v-72.05h33.52Z" fill="#0300ff"/><path d="M100.56,346.58v64.34l-33.52,4.24v-51.24l-33.52-16.57v76.29l67.04,38.14v125.22l-67.04,38.53L0,606.26v-104.8l33.52-6.16v91.31l33.52,19.26v-124.06L0,442.9v-77.06l67.04-38.53,33.52,19.26Z" fill="#0300ff"/><path d="M228.09,419.4v206.13h-33.52v-186.09l-33.52-20.03v206.13h-33.52v-303.22h33.52v97.09l33.52-19.26,33.52,19.26Z" fill="#0300ff"/><path d="M321.32,398.21l33.52,19.26v169.14l-67.04,38.91-33.52-19.65v-169.14l67.04-38.53ZM287.8,586.23l33.52,18.88v-167.98l-33.52-18.49v167.6Z" fill="#0300ff"/><path d="M483.14,403.99v53.55l-32.75,19.26,32.75,18.88v129.84h-33.52v-110.58l-33.52-19.26v129.84h-33.52v-303.22h33.52v172.99l33.52-19.26v-72.05h33.52Z" fill="#0300ff"/><path d="M540.93,575.7h-33.52v-227.7h33.52v227.7ZM507.41,625.02v-35.83h33.52v35.83h-33.52Z" fill="#0300ff"/></g></svg>`;
+
+/* ---------- EASING ---------- */
+const EASE = {
+  linear: t=>t,
+  easeIn: t=>t*t*t,
+  easeOut: t=>1-Math.pow(1-t,3),
+  easeInOut: t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2,
+  back: t=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2)},
+  elastic: t=>t===0?0:t===1?1:-Math.pow(2,-10*t)*Math.sin((t*10-.75)*(2*Math.PI/3))+1,
+  bounce: t=>{const n=7.5625,d=2.75;return t<1/d?n*t*t:t<2/d?n*(t-=1.5/d)*t+.75:t<2.5/d?n*(t-=2.25/d)*t+.9375:n*(t-=2.625/d)*t+.984375}
+};
+
+/* ---------- STATE ---------- */
+const state = {
+  svgSource: DEFAULT_SVG,
+  vw: 540.93, vh: 625.53,
+  cw: 1080, ch: 1920,
+  paper: '#f4efe6', ink: '#0300ff', accent: '#ff3b1f',
+  bgMode: 'solid',
+  logoScale: 70,
+  effect: 'construct',
+  duration: 3,
+  intensity: 65,
+  ease: 'easeInOut',
+  loop: 'restart',
+  spread: 100,
+  fps: 30,
+  expFmt: 'webm',
+  playing: true,
+  t0: performance.now(),
+  currentT: 0,
+  pausedAt: 0,
+};
+
+/* ---------- EFFECTS REGISTRY ---------- */
+const EFFECTS = {};
+function registerEffect(id, meta){ EFFECTS[id] = meta; }
+
+/* Utility: seeded random */
+function seedRand(seed){let s=seed;return()=>((s=(s*9301+49297)%233280)/233280)}
+
+/* Build the SVG scene: returns {svg, defs, bg, wrapper, logoGroup, paths[]} */
+function buildScene(){
+  const {cw, ch, paper, ink, bgMode, logoScale, vw, vh} = state;
+  const svg = document.getElementById('canvas');
+  svg.setAttribute('viewBox', `0 0 ${cw} ${ch}`);
+  svg.setAttribute('preserveAspectRatio','xMidYMid meet');
+  svg.innerHTML = '';
+
+  const NS='http://www.w3.org/2000/svg';
+  const defs = document.createElementNS(NS,'defs');
+  svg.appendChild(defs);
+
+  // Background
+  const bg = document.createElementNS(NS,'rect');
+  bg.setAttribute('x',0);bg.setAttribute('y',0);bg.setAttribute('width',cw);bg.setAttribute('height',ch);
+  if(bgMode==='transparent'){bg.setAttribute('fill','none')}
+  else if(bgMode==='solid'){bg.setAttribute('fill',paper)}
+  else if(bgMode==='grid'){
+    bg.setAttribute('fill',paper);
+    const pid='p_grid';
+    const p=document.createElementNS(NS,'pattern');
+    p.setAttribute('id',pid);p.setAttribute('width',60);p.setAttribute('height',60);p.setAttribute('patternUnits','userSpaceOnUse');
+    p.innerHTML=`<path d="M 60 0 L 0 0 0 60" fill="none" stroke="${ink}" stroke-opacity=".08" stroke-width="1"/>`;
+    defs.appendChild(p);
+    svg.appendChild(bg);
+    const gridRect=document.createElementNS(NS,'rect');
+    gridRect.setAttribute('x',0);gridRect.setAttribute('y',0);gridRect.setAttribute('width',cw);gridRect.setAttribute('height',ch);
+    gridRect.setAttribute('fill',`url(#${pid})`);
+    svg.appendChild(gridRect);
+  } else if(bgMode==='dot'){
+    bg.setAttribute('fill',paper);
+    const pid='p_dot';
+    const p=document.createElementNS(NS,'pattern');
+    p.setAttribute('id',pid);p.setAttribute('width',20);p.setAttribute('height',20);p.setAttribute('patternUnits','userSpaceOnUse');
+    p.innerHTML=`<circle cx="10" cy="10" r="1.4" fill="${ink}" fill-opacity=".18"/>`;
+    defs.appendChild(p);
+    svg.appendChild(bg);
+    const r=document.createElementNS(NS,'rect');
+    r.setAttribute('x',0);r.setAttribute('y',0);r.setAttribute('width',cw);r.setAttribute('height',ch);
+    r.setAttribute('fill',`url(#${pid})`);
+    svg.appendChild(r);
+  } else if(bgMode==='stripe'){
+    bg.setAttribute('fill',paper);
+    const pid='p_str';
+    const p=document.createElementNS(NS,'pattern');
+    p.setAttribute('id',pid);p.setAttribute('width',18);p.setAttribute('height',18);p.setAttribute('patternUnits','userSpaceOnUse');p.setAttribute('patternTransform','rotate(45)');
+    p.innerHTML=`<rect width="9" height="18" fill="${ink}" fill-opacity=".08"/>`;
+    defs.appendChild(p);
+    svg.appendChild(bg);
+    const r=document.createElementNS(NS,'rect');
+    r.setAttribute('x',0);r.setAttribute('y',0);r.setAttribute('width',cw);r.setAttribute('height',ch);
+    r.setAttribute('fill',`url(#${pid})`);
+    svg.appendChild(r);
+  } else {
+    svg.appendChild(bg);
+  }
+  if(bgMode==='solid'||bgMode==='transparent') { /* already appended */ }
+
+  // Compute logo transform: fit into canvas with scale%
+  const targetW = cw * (logoScale/100);
+  const scale = targetW / vw;
+  const drawnW = vw*scale, drawnH = vh*scale;
+  const tx = (cw - drawnW)/2, ty = (ch - drawnH)/2;
+
+  const wrapper = document.createElementNS(NS,'g');
+  wrapper.setAttribute('id','logoWrap');
+  wrapper.setAttribute('transform',`translate(${tx} ${ty}) scale(${scale})`);
+  svg.appendChild(wrapper);
+
+  // Parse source SVG, extract paths
+  const tmp = document.createElement('div');
+  tmp.innerHTML = state.svgSource.trim();
+  const srcSvg = tmp.querySelector('svg');
+  if(!srcSvg) return {svg,defs,wrapper,paths:[]};
+  const vb = srcSvg.getAttribute('viewBox');
+  if(vb){const p=vb.split(/[ ,]+/).map(Number); state.vw=p[2]; state.vh=p[3];}
+
+  const logoGroup = document.createElementNS(NS,'g');
+  logoGroup.setAttribute('id','logo');
+  wrapper.appendChild(logoGroup);
+
+  const paths = [];
+  srcSvg.querySelectorAll('path,polygon,rect,circle,ellipse,line').forEach(el=>{
+    const cloned = el.cloneNode(true);
+    if(cloned.hasAttribute('fill') && cloned.getAttribute('fill')!=='none') cloned.setAttribute('fill', ink);
+    if(cloned.hasAttribute('stroke') && cloned.getAttribute('stroke')!=='none') cloned.setAttribute('stroke', ink);
+    logoGroup.appendChild(cloned);
+    paths.push(cloned);
+  });
+
+  // Create a reusable <symbol> for fast replication via <use>
+  const sym = document.createElementNS(NS,'symbol');
+  sym.setAttribute('id','logo_sym');
+  sym.setAttribute('viewBox',`0 0 ${state.vw} ${state.vh}`);
+  sym.setAttribute('overflow','visible');
+  paths.forEach(pp=>{
+    const cp = pp.cloneNode(true);
+    cp.removeAttribute('fill');
+    cp.removeAttribute('stroke');
+    sym.appendChild(cp);
+  });
+  defs.appendChild(sym);
+
+  // Cache bbox for each path (avoid getBBox in animation loop)
+  paths.forEach(pp=>{
+    let bb; try{bb=pp.getBBox();}catch(_){bb={x:0,y:0,width:1,height:1}}
+    pp._bb = bb;
+    pp._cx = bb.x + bb.width/2;
+    pp._cy = bb.y + bb.height/2;
+  });
+
+  return {svg, defs, wrapper, logoGroup, paths, tx, ty, scale, drawnW, drawnH};
+}
+
+let scene = null;
+function rebuild(){ scene = buildScene(); if(EFFECTS[state.effect]?.setup) EFFECTS[state.effect].setup(scene); apply(state.currentT/state.duration); }
+
+/* ---------- EFFECTS ---------- */
+/* Each effect: setup(scene) prepares defs/attrs; apply(scene, t01, params) mutates. */
+
+/* ---------- COLOR UTILS ---------- */
+function hexToRGB(h){h=h.replace('#','');if(h.length===3)h=h.split('').map(c=>c+c).join('');return{r:parseInt(h.slice(0,2),16),g:parseInt(h.slice(2,4),16),b:parseInt(h.slice(4,6),16)}}
+function mixHex(a,b,k){const A=hexToRGB(a),B=hexToRGB(b);const r=Math.round(A.r+(B.r-A.r)*k),g=Math.round(A.g+(B.g-A.g)*k),bl=Math.round(A.b+(B.b-A.b)*k);return '#'+[r,g,bl].map(x=>x.toString(16).padStart(2,'0')).join('')}
+function useLogo(sc,{color=null,x=0,y=0}={}){const NS='http://www.w3.org/2000/svg';const u=document.createElementNS(NS,'use');u.setAttribute('href','#logo_sym');u.setAttributeNS('http://www.w3.org/1999/xlink','href','#logo_sym');u.setAttribute('width',state.vw);u.setAttribute('height',state.vh);u.setAttribute('x',x);u.setAttribute('y',y);if(color){u.setAttribute('fill',color);u.setAttribute('style','fill:'+color)}sc.wrapper.appendChild(u);return u}
+
+/* ==================== SIGNATURE EFFECTS ==================== */
+/* Progettati per un mark tipografico modulare, non "effettini". */
+
+/* 1. CONSTRUCT — build coreografato path-by-path, hold, exit */
+registerEffect('construct',{
+  label:'01 · Construct',
+  setup(sc){
+    const N = sc.paths.length;
+    // Assign flight direction from each path's own bbox
+    sc._c = sc.paths.map((p,i)=>{
+      const dxSign = p._cx < state.vw/2 ? -1 : 1;
+      const dySign = p._cy < state.vh/2 ? -1 : 1;
+      // Order: entrata sinistra→destra, uscita destra→sinistra
+      const orderIn = p._cx / state.vw;
+      const orderOut = 1 - orderIn;
+      return {p,cx:p._cx,cy:p._cy,dxSign,dySign,orderIn,orderOut, seed:(i*37)%7};
+    });
+  },
+  apply(sc,t,pr){
+    const amt = pr.intensity/100;
+    sc._c.forEach(({p,cx,cy,dxSign,dySign,orderIn,orderOut,seed})=>{
+      let a;
+      const inWin = 0.45, holdEnd = 0.72, outWin = 0.25;
+      if(t < inWin + 0.05){
+        const local = Math.max(0, Math.min(1, (t - orderIn*(inWin-0.15))/0.28));
+        a = EASE.back(local);
+      } else if(t < holdEnd){
+        a = 1;
+      } else {
+        const local = Math.max(0, Math.min(1, (t - holdEnd - orderOut*(outWin-0.1))/0.15));
+        a = 1 - EASE.easeIn(local);
+      }
+      a = Math.max(0, Math.min(1.02, a));
+      const dist = (1-a) * Math.max(state.vw,state.vh) * (0.65 + amt*0.35) * (pr.spread/100);
+      const dx = dxSign * dist * (0.5 + (seed%3)*0.18);
+      const dy = dySign * dist * (0.35 + (seed%2)*0.28);
+      const rot = (1-a) * 60 * (seed%2?1:-1) * (0.5+amt);
+      const s = a;
+      p.setAttribute('transform',
+        `translate(${dx} ${dy}) translate(${cx} ${cy}) rotate(${rot}) scale(${s}) translate(${-cx} ${-cy})`);
+      p.setAttribute('opacity', Math.max(0, Math.min(1, a*1.4)).toFixed(3));
+    });
+  }
+});
+
+/* 2. ROTOR — ogni path ruota 360° sul proprio baricentro, staggerato */
+registerEffect('rotor',{
+  label:'02 · Rotor',
+  setup(sc){
+    sc._r = sc.paths.map((p,i)=>({p, cx:p._cx, cy:p._cy, order:i/sc.paths.length}));
+  },
+  apply(sc,t,pr){
+    const window = 0.42;
+    sc._r.forEach(({p,cx,cy,order},i)=>{
+      const start = order*(1-window);
+      const local = Math.max(0, Math.min(1, (t - start)/window));
+      const rot = EASE.easeInOut(local) * 360 * (i%2?1:-1);
+      // subtle scale dip mid-rotation for character
+      const dip = 1 - Math.sin(local*Math.PI)*0.25;
+      p.setAttribute('transform',
+        `translate(${cx} ${cy}) rotate(${rot}) scale(${dip}) translate(${-cx} ${-cy})`);
+    });
+  }
+});
+
+/* 3. SPLIT-FLAP — griglia tabellone Solari, apertura a onda diagonale */
+registerEffect('split_flap',{
+  label:'03 · Split-Flap',
+  setup(sc){
+    const NS='http://www.w3.org/2000/svg';
+    sc.logoGroup.setAttribute('display','none');
+    const asp = state.cw/state.ch;
+    const cols = asp<1 ? 5 : 8;
+    const rows = asp<1 ? 9 : 5;
+    const cellW = state.vw/cols, cellH = state.vh/rows;
+    sc._f = [];
+    // Background layer of ink
+    const bg = document.createElementNS(NS,'rect');
+    bg.setAttribute('x',0);bg.setAttribute('y',0);
+    bg.setAttribute('width',state.vw);bg.setAttribute('height',state.vh);
+    bg.setAttribute('fill',state.ink);
+    sc.wrapper.appendChild(bg);
+    // Logo layer on top (paper color = "punched" from ink bg)
+    const uAll = useLogo(sc,{color:state.paper});
+    sc._flapMask = uAll;
+    // For each cell, a rect that will collapse to reveal what's under.
+    // Actually easier: draw N ink cells over everything; each cell shrinks vertically to reveal.
+    for(let r=0;r<rows;r++){
+      for(let c=0;c<cols;c++){
+        const rct = document.createElementNS(NS,'rect');
+        const x = c*cellW, y = r*cellH;
+        rct.setAttribute('x',x); rct.setAttribute('y',y);
+        rct.setAttribute('width',cellW+0.5); rct.setAttribute('height',cellH+0.5);
+        // alternate cell colors
+        rct.setAttribute('fill', (r+c)%2===0 ? state.ink : state.accent);
+        sc.wrapper.appendChild(rct);
+        const diag = (r/rows*0.55 + c/cols*0.45);
+        sc._f.push({rct, cx:x+cellW/2, cy:y+cellH/2, diag, cellW, cellH});
+      }
+    }
+  },
+  apply(sc,t,pr){
+    // Reveal wave: cells "flip" (scaleY 1→0), stagger by diag; hold; then close back
+    sc._f.forEach(({rct,cx,cy,diag})=>{
+      let a; // 1 = closed (covers), 0 = open (reveals)
+      const openStart = diag*0.55;
+      const openEnd = openStart + 0.18;
+      const closeStart = 0.78 + diag*0.15;
+      const closeEnd = closeStart + 0.12;
+      if(t < openStart) a = 1;
+      else if(t < openEnd) a = 1 - EASE.easeInOut((t-openStart)/0.18);
+      else if(t < closeStart) a = 0;
+      else if(t < closeEnd) a = EASE.easeInOut((t-closeStart)/0.12);
+      else a = 1;
+      const sy = Math.max(0.001, a);
+      rct.setAttribute('transform', `translate(${cx} ${cy}) scale(1 ${sy}) translate(${-cx} ${-cy})`);
+    });
+  }
+});
+
+/* 4. EQUALIZER — barre verticali ink dentro maschera-logo, altezze pulsanti */
+registerEffect('equalizer',{
+  label:'04 · Equalizer',
+  setup(sc){
+    const NS='http://www.w3.org/2000/svg';
+    sc.logoGroup.setAttribute('display','none');
+    // Mask = logo (white = visible)
+    const mid = 'm_eq';
+    const mask = document.createElementNS(NS,'mask');
+    mask.setAttribute('id', mid);
+    mask.setAttribute('maskUnits','userSpaceOnUse');
+    mask.setAttribute('x',0);mask.setAttribute('y',0);
+    mask.setAttribute('width',state.vw);mask.setAttribute('height',state.vh);
+    const bgBlack = document.createElementNS(NS,'rect');
+    bgBlack.setAttribute('x',0);bgBlack.setAttribute('y',0);
+    bgBlack.setAttribute('width',state.vw);bgBlack.setAttribute('height',state.vh);
+    bgBlack.setAttribute('fill','black');
+    mask.appendChild(bgBlack);
+    const uWhite = document.createElementNS(NS,'use');
+    uWhite.setAttribute('href','#logo_sym');
+    uWhite.setAttributeNS('http://www.w3.org/1999/xlink','href','#logo_sym');
+    uWhite.setAttribute('width',state.vw); uWhite.setAttribute('height',state.vh);
+    uWhite.setAttribute('fill','white');
+    uWhite.setAttribute('style','fill:white');
+    mask.appendChild(uWhite);
+    sc.defs.appendChild(mask);
+    // Container with mask
+    const g = document.createElementNS(NS,'g');
+    g.setAttribute('mask', `url(#${mid})`);
+    sc.wrapper.appendChild(g);
+    // Bars
+    const N = 40;
+    const w = state.vw/N;
+    sc._eq = [];
+    for(let i=0;i<N;i++){
+      const bar = document.createElementNS(NS,'rect');
+      bar.setAttribute('x', i*w);
+      bar.setAttribute('width', w+0.6);
+      bar.setAttribute('fill', i%3===0 ? state.accent : state.ink);
+      g.appendChild(bar);
+      sc._eq.push({bar,i,N});
+    }
+    // Faint logo outline for reference (paper-tone very light)
+    const uGhost = useLogo(sc,{color:mixHex(state.paper,state.ink,0.08)});
+    // Draw ghost behind bars: insert before g
+    sc.wrapper.insertBefore(uGhost, g);
+  },
+  apply(sc,t,pr){
+    const amt = pr.intensity/100;
+    // Global gate: 0 → peak → 0 across cycle
+    const gate = Math.sin(t*Math.PI); // 0→1→0
+    sc._eq.forEach(({bar,i,N})=>{
+      const phase = t*Math.PI*3 + i*0.55;
+      const local = 0.5 + 0.5*Math.sin(phase);
+      const h = state.vh * local * gate * (0.9 + amt*0.6);
+      bar.setAttribute('y', state.vh - h);
+      bar.setAttribute('height', Math.max(0.1, h));
+    });
+  }
+});
+
+/* 5. HALFTONE PRINT — dot cloud che converge sulla forma del logo */
+registerEffect('halftone_print',{
+  label:'05 · Halftone Print',
+  setup(sc){
+    const NS='http://www.w3.org/2000/svg';
+    sc.logoGroup.setAttribute('display','none');
+    // Rasterize logo to pick "inside" sample points
+    const dim = 240;
+    const cv = document.createElement('canvas');
+    cv.width = dim; cv.height = Math.round(dim*state.vh/state.vw);
+    const ctx = cv.getContext('2d');
+    ctx.fillStyle='white'; ctx.fillRect(0,0,cv.width,cv.height);
+    ctx.fillStyle='black';
+    ctx.save();
+    ctx.scale(cv.width/state.vw, cv.height/state.vh);
+    sc.paths.forEach(pp=>{
+      const d = pp.getAttribute('d');
+      if(!d) return;
+      try{ const p2 = new Path2D(d); ctx.fill(p2, 'evenodd'); }catch(_){}
+    });
+    ctx.restore();
+    const img = ctx.getImageData(0,0,cv.width,cv.height).data;
+    const inside = [];
+    for(let y=0;y<cv.height;y+=2){
+      for(let x=0;x<cv.width;x+=2){
+        const idx = (y*cv.width + x)*4;
+        if(img[idx] < 128) inside.push({x:x/cv.width*state.vw, y:y/cv.height*state.vh});
+      }
+    }
+    const N = 320;
+    const rand = seedRand(41);
+    sc._dots = [];
+    for(let i=0;i<N;i++){
+      const tgt = inside.length ? inside[Math.floor(rand()*inside.length)] : {x:state.vw/2,y:state.vh/2};
+      const ang = rand()*Math.PI*2;
+      const rad = state.vw*(0.7 + rand()*0.6) * (state.spread/100);
+      const sx = state.vw/2 + Math.cos(ang)*rad;
+      const sy = state.vh/2 + Math.sin(ang)*rad;
+      const d = document.createElementNS(NS,'circle');
+      d.setAttribute('r', 3 + rand()*4.5);
+      d.setAttribute('fill', rand()<0.15 ? state.accent : state.ink);
+      sc.wrapper.appendChild(d);
+      sc._dots.push({d,sx,sy,tx:tgt.x,ty:tgt.y,delay:rand()*0.35});
+    }
+  },
+  apply(sc,t,pr){
+    sc._dots.forEach(({d,sx,sy,tx,ty,delay})=>{
+      const local = Math.max(0, Math.min(1, (t - delay)/(1-0.35)));
+      // 0..0.45 arrive, 0.45..0.7 hold, 0.7..1 disperse
+      let a;
+      if(local < 0.45) a = EASE.easeOut(local/0.45);
+      else if(local < 0.7) a = 1;
+      else a = 1 - EASE.easeIn((local-0.7)/0.3);
+      const x = sx + (tx-sx)*a;
+      const y = sy + (ty-sy)*a;
+      d.setAttribute('cx', x.toFixed(2));
+      d.setAttribute('cy', y.toFixed(2));
+      d.setAttribute('opacity', (0.15 + a*0.85).toFixed(2));
+    });
+  }
+});
+
+/* 6. STACK 3D — layer isometrico che ondeggia */
+registerEffect('stack_3d',{
+  label:'06 · Stack 3D',
+  setup(sc){
+    sc.logoGroup.setAttribute('display','none');
+    const N = 10;
+    sc._st = [];
+    for(let i=N-1;i>=0;i--){
+      const k = i/(N-1);
+      const shade = mixHex(state.paper, state.ink, 0.15 + k*0.85);
+      const u = useLogo(sc, {color: shade});
+      sc._st.push({u, k, idx:N-1-i});
+    }
+  },
+  apply(sc,t,pr){
+    const amt = pr.intensity/100;
+    const w = Math.sin(t*Math.PI*2);
+    const w2 = Math.cos(t*Math.PI*2);
+    const spr = pr.spread/100;
+    const ampX = 55 * amt * spr;
+    const ampY = 45 * amt * spr;
+    const rotAmt = 6 * amt;
+    sc._st.forEach(({u,idx})=>{
+      const dx = w * ampX * (idx/9);
+      const dy = w2 * ampY * (idx/9);
+      const rot = w * rotAmt * (idx/9);
+      u.setAttribute('x', dx.toFixed(1));
+      u.setAttribute('y', dy.toFixed(1));
+      u.setAttribute('transform', `rotate(${rot.toFixed(2)} ${state.vw/2} ${state.vh/2})`);
+    });
+  }
+});
+
+/* 7. POSTER SHUFFLE — matrice editoriale che flippa */
+registerEffect('poster_shuffle',{
+  label:'07 · Poster Shuffle',
+  setup(sc){
+    const NS='http://www.w3.org/2000/svg';
+    sc.logoGroup.setAttribute('display','none');
+    const asp = state.cw/state.ch;
+    const cols = asp>1 ? 3 : 2;
+    const rows = asp>1 ? 2 : 3;
+    const cellW = state.vw/cols, cellH = state.vh/rows;
+    // Variants: [scale%, rotate, colorMode ('normal'|'invert'), align]
+    const variants = [
+      {s:0.85, r:0, inv:false, ax:0.5, ay:0.5},
+      {s:0.55, r:0, inv:true,  ax:0.5, ay:0.5},
+      {s:0.7,  r:-90, inv:false, ax:0.5, ay:0.5},
+      {s:1.05, r:0, inv:false, ax:0.15, ay:0.85},
+      {s:0.7,  r:90, inv:true,  ax:0.5, ay:0.5},
+      {s:0.75, r:0, inv:true, ax:0.85, ay:0.15},
+    ];
+    sc._p = [];
+    let idx=0;
+    for(let r=0;r<rows;r++){
+      for(let c=0;c<cols;c++){
+        const cid = `pc_${r}_${c}`;
+        const cp = document.createElementNS(NS,'clipPath');
+        cp.setAttribute('id', cid);
+        cp.innerHTML = `<rect x="${c*cellW}" y="${r*cellH}" width="${cellW+0.5}" height="${cellH+0.5}"/>`;
+        sc.defs.appendChild(cp);
+        const g = document.createElementNS(NS,'g');
+        g.setAttribute('clip-path', `url(#${cid})`);
+        const v1 = variants[idx % variants.length];
+        const v2 = variants[(idx+3) % variants.length];
+        idx++;
+        // Background rect
+        const bg = document.createElementNS(NS,'rect');
+        bg.setAttribute('x', c*cellW); bg.setAttribute('y', r*cellH);
+        bg.setAttribute('width', cellW+0.5); bg.setAttribute('height', cellH+0.5);
+        g.appendChild(bg);
+        // Logo use (inner group holds transform)
+        const inner = document.createElementNS(NS,'g');
+        const u = document.createElementNS(NS,'use');
+        u.setAttribute('href','#logo_sym');
+        u.setAttributeNS('http://www.w3.org/1999/xlink','href','#logo_sym');
+        u.setAttribute('width', state.vw);
+        u.setAttribute('height', state.vh);
+        inner.appendChild(u);
+        g.appendChild(inner);
+        sc.wrapper.appendChild(g);
+        sc._p.push({g,bg,inner,u,v1,v2,c,r,cellW,cellH,order:(r+c)/(rows+cols-2)});
+      }
+    }
+    sc._cellW=cellW; sc._cellH=cellH;
+  },
+  apply(sc,t,pr){
+    sc._p.forEach(({bg,inner,u,v1,v2,c,r,cellW,cellH,order})=>{
+      const phase = ((t + order*0.18) % 1 + 1) % 1;
+      // scaleX cos(phase*2π) → flip 2 volte
+      const flipC = Math.cos(phase*Math.PI*2);
+      const showV1 = flipC >= 0;
+      const v = showV1 ? v1 : v2;
+      const sx = Math.abs(flipC);
+      // Apply flip on inner (around cell center)
+      const ccx = c*cellW + cellW/2, ccy = r*cellH + cellH/2;
+      // Fit logo inside cell with variant scale
+      const fit = Math.min(cellW/state.vw, cellH/state.vh) * v.s;
+      const anchorX = c*cellW + cellW*v.ax;
+      const anchorY = r*cellH + cellH*v.ay;
+      inner.setAttribute('transform',
+        `translate(${ccx} ${ccy}) scale(${Math.max(0.001,sx)} 1) translate(${-ccx} ${-ccy}) translate(${anchorX} ${anchorY}) rotate(${v.r}) scale(${fit}) translate(${-state.vw/2} ${-state.vh/2})`);
+      bg.setAttribute('fill', v.inv ? state.ink : state.paper);
+      u.setAttribute('fill', v.inv ? state.paper : state.ink);
+      u.setAttribute('style','fill:'+(v.inv ? state.paper : state.ink));
+    });
+  }
+});
+
+/* ==================== 08–27  ADVANCED EFFECTS ==================== */
+
+/* 08 · PRINT REGISTRATION — 4 canali CMYK con misregistrazione ritmica */
+registerEffect('print_registration',{
+  label:'08 · Print Registration',
+  setup(sc){
+    sc.logoGroup.setAttribute('display','none');
+    const channels = [
+      {c:'#00ffff', name:'C'}, {c:'#ff00ff', name:'M'},
+      {c:'#ffee00', name:'Y'}, {c:state.ink, name:'K'}
+    ];
+    sc._pr = channels.map(({c})=>{
+      const u = useLogo(sc,{color:c});
+      u.setAttribute('style','fill:'+c+';mix-blend-mode:multiply');
+      return {u,c};
+    });
+    sc._cx=state.vw/2; sc._cy=state.vh/2;
+  },
+  apply(sc,t,pr){
+    const spr = pr.spread/100, amt = pr.intensity/100;
+    const rnd = seedRand(Math.floor(t*24));
+    sc._pr.forEach(({u},i)=>{
+      const phase = t*Math.PI*2 + i*1.7;
+      const jitter = Math.sin(t*40 + i*3) * (i<3?1:0);
+      const dx = (Math.cos(phase) + jitter*rnd()) * 30 * amt * spr;
+      const dy = (Math.sin(phase*1.3) + jitter*rnd()) * 30 * amt * spr;
+      const rot = Math.sin(phase*0.5) * 2 * amt;
+      u.setAttribute('x', dx.toFixed(1));
+      u.setAttribute('y', dy.toFixed(1));
+      u.setAttribute('transform', `rotate(${rot} ${sc._cx} ${sc._cy})`);
+    });
+  }
+});
+
+/* 09 · KINETIC STRIPES — bande cinematographic con logo scorrente */
+registerEffect('kinetic_stripes',{
+  label:'09 · Kinetic Stripes',
+  setup(sc){
+    const NS='http://www.w3.org/2000/svg';
+    sc.logoGroup.setAttribute('display','none');
+    const N = 5;
+    const bandH = state.vh/N;
+    sc._ks=[];
+    for(let i=0;i<N;i++){
+      const cid='ks_'+i;
+      const cp=document.createElementNS(NS,'clipPath');
+      cp.setAttribute('id',cid);
+      cp.innerHTML=`<rect x="0" y="${i*bandH}" width="${state.vw}" height="${bandH+1}"/>`;
+      sc.defs.appendChild(cp);
+      // Background bar
+      const bg=document.createElementNS(NS,'rect');
+      bg.setAttribute('x',0);bg.setAttribute('y',i*bandH);
+      bg.setAttribute('width',state.vw);bg.setAttribute('height',bandH+1);
+      bg.setAttribute('fill', i%2===0 ? state.ink : state.paper);
+      sc.wrapper.appendChild(bg);
+      // Content group with logo copies scrolling
+      const g=document.createElementNS(NS,'g');
+      g.setAttribute('clip-path',`url(#${cid})`);
+      const mover=document.createElementNS(NS,'g');
+      const fit = bandH/state.vh * 0.9;
+      const logoW = state.vw*fit;
+      const copies = Math.ceil(state.vw/logoW) + 2;
+      for(let k=-1;k<copies;k++){
+        const u=useLogo(sc,{color: i%2===0 ? state.paper : state.ink});
+        u.remove(); // useLogo attached to wrapper, remove and re-attach here
+        u.setAttribute('style','fill:'+(i%2===0?state.paper:state.ink));
+        u.setAttribute('transform',`translate(${k*logoW} ${i*bandH + bandH*0.05}) scale(${fit})`);
+        mover.appendChild(u);
+      }
+      g.appendChild(mover);
+      sc.wrapper.appendChild(g);
+      sc._ks.push({mover,speed:(i%2===0?1:-1)*(0.6+i*0.15), logoW, i});
+    }
+  },
+  apply(sc,t,pr){
+    const spr = pr.spread/100;
+    sc._ks.forEach(({mover,speed,logoW,i})=>{
+      const dx = -(t*speed*state.vw*spr) % logoW;
+      const cur = mover.getAttribute('transform') || 'translate(0 0)';
+      mover.setAttribute('transform',`translate(${dx.toFixed(1)} 0)`);
+    });
+  }
+});
+
+/* 10 · MODULAR EXPLODE — path esplodono radialmente a strati concentrici */
+registerEffect('modular_explode',{
+  label:'10 · Modular Explode',
+  setup(sc){
+    sc._me = sc.paths.map((p,i)=>{
+      const dx = p._cx - state.vw/2;
+      const dy = p._cy - state.vh/2;
+      const dist = Math.hypot(dx,dy) || 1;
+      return {p, cx:p._cx, cy:p._cy, dirX:dx/dist, dirY:dy/dist, order:i%3};
+    });
+  },
+  apply(sc,t,pr){
+    const spr = pr.spread/100;
+    sc._me.forEach(({p,cx,cy,dirX,dirY,order})=>{
+      const phase = ((t + order*0.12) % 1 + 1) % 1;
+      // out-hold-in
+      let a;
+      if(phase<0.4) a = EASE.easeOut(phase/0.4);
+      else if(phase<0.6) a = 1;
+      else a = 1 - EASE.easeIn((phase-0.6)/0.4);
+      const dist = a * Math.max(state.vw,state.vh) * 0.5 * spr;
+      const rot = a * 45 * (order%2?1:-1);
+      const s = 1 + a*0.3*spr;
+      p.setAttribute('transform',
+        `translate(${dirX*dist} ${dirY*dist}) translate(${cx} ${cy}) rotate(${rot}) scale(${s}) translate(${-cx} ${-cy})`);
+    });
+  }
+});
+
+/* 11 · EDITORIAL CASCADE — copie in cascata diagonale stile poster stack */
+registerEffect('editorial_cascade',{
+  label:'11 · Editorial Cascade',
+  setup(sc){
+    sc.logoGroup.setAttribute('display','none');
+    const N = 8;
+    sc._ec = [];
+    for(let i=0;i<N;i++){
+      const k = i/(N-1);
+      const shade = i===N-1 ? state.ink : (i%2===0 ? state.accent : mixHex(state.paper,state.ink,0.4+k*0.5));
+      const u = useLogo(sc,{color:shade});
+      sc._ec.push({u,i,k,N});
+    }
+  },
+  apply(sc,t,pr){
+    const spr = pr.spread/100;
+    const amt = pr.intensity/100;
+    sc._ec.forEach(({u,i,k,N})=>{
+      const phase = ((t + i/N*0.4) % 1 + 1) % 1;
+      const ease = EASE.easeInOut(phase);
+      // Diagonal cascade offset
+      const off = (1-ease) * state.vw * 0.6 * spr;
+      const dx = off * (i%2?1:-1);
+      const dy = off * 0.7;
+      const rot = (1-ease) * 25 * (i%2?1:-1) * amt;
+      const s = 0.85 + ease*0.15;
+      u.setAttribute('x', dx.toFixed(1));
+      u.setAttribute('y', dy.toFixed(1));
+      u.setAttribute('transform', `translate(${state.vw/2} ${state.vh/2}) rotate(${rot}) scale(${s}) translate(${-state.vw/2} ${-state.vh/2})`);
+      u.setAttribute('opacity', (0.15 + ease*0.85).toFixed(2));
+    });
+  }
+});
+
+/* 12 · MARQUEE DIAGONAL — bande diagonali gigantesche di logo scorrenti */
+registerEffect('marquee_diagonal',{
+  label:'12 · Marquee Diagonal',
+  setup(sc){
+    const NS='http://www.w3.org/2000/svg';
+    sc.logoGroup.setAttribute('display','none');
+    const g=document.createElementNS(NS,'g');
+    g.setAttribute('transform',`translate(${state.vw/2} ${state.vh/2}) rotate(-18) translate(${-state.vw/2} ${-state.vh/2})`);
+    sc.wrapper.appendChild(g);
+    sc._md=[];
+    const N = 4;
+    const bandH = state.vh/N * 1.6;
+    for(let i=-1;i<N+1;i++){
+      const mover=document.createElementNS(NS,'g');
+      const fit = bandH/state.vh * 0.85;
+      const logoW = state.vw*fit*1.1;
+      const copies = Math.ceil(state.vw*1.5/logoW)+2;
+      for(let k=-1;k<copies;k++){
+        const u=useLogo(sc,{color: i%2===0 ? state.ink : state.accent});
+        u.remove();
+        u.setAttribute('style','fill:'+(i%2===0?state.ink:state.accent));
+        u.setAttribute('transform',`translate(${k*logoW - state.vw*0.2} ${i*bandH}) scale(${fit})`);
+        mover.appendChild(u);
+      }
+      g.appendChild(mover);
+      sc._md.push({mover,speed:(i%2===0?1:-1)*(0.7+Math.abs(i)*0.2), logoW});
+    }
+  },
+  apply(sc,t,pr){
+    const spr = pr.spread/100;
+    sc._md.forEach(({mover,speed,logoW})=>{
+      const dx = -(t*speed*state.vw*spr*1.2) % logoW;
+      mover.setAttribute('transform',`translate(${dx.toFixed(1)} 0)`);
+    });
+  }
+});
+
+/* 13 · BAR CHART REVEAL — istogramma verticale che diventa logo */
+registerEffect('bar_chart_reveal',{
+  label:'13 · Bar Chart',
+  setup(sc){
+    const NS='http://www.w3.org/2000/svg';
+    sc.logoGroup.setAttribute('display','none');
+    // Rasterize logo to sample column heights
+    const cols = 24;
+    const cv=document.createElement('canvas');
+    cv.width=cols; cv.height=Math.round(cols*state.vh/state.vw);
+    const ctx=cv.getContext('2d');
+    ctx.fillStyle='white';ctx.fillRect(0,0,cv.width,cv.height);
+    ctx.fillStyle='black';
+    ctx.save();ctx.scale(cv.width/state.vw, cv.height/state.vh);
+    sc.paths.forEach(pp=>{try{const p2=new Path2D(pp.getAttribute('d'));ctx.fill(p2,'evenodd')}catch(_){}});
+    ctx.restore();
+    const data = ctx.getImageData(0,0,cv.width,cv.height).data;
+    // For each column, find topmost inside pixel and bottom → height
+    const barH = new Array(cols).fill(0);
+    const barY = new Array(cols).fill(state.vh);
+    for(let x=0;x<cols;x++){
+      let top=cv.height, bot=0, found=false;
+      for(let y=0;y<cv.height;y++){
+        const idx=(y*cv.width+x)*4;
+        if(data[idx]<128){ if(y<top)top=y; if(y>bot)bot=y; found=true; }
+      }
+      if(found){
+        barY[x] = top/cv.height*state.vh;
+        barH[x] = (bot-top)/cv.height*state.vh;
+      }
+    }
+    const w = state.vw/cols;
+    sc._bc = [];
+    for(let x=0;x<cols;x++){
+      const bar=document.createElementNS(NS,'rect');
+      bar.setAttribute('x', x*w);
+      bar.setAttribute('width', w-1);
+      bar.setAttribute('fill', x%4===0 ? state.accent : state.ink);
+      sc.wrapper.appendChild(bar);
+      sc._bc.push({bar, targetY:barY[x], targetH:barH[x], col:x, cols});
+    }
+  },
+  apply(sc,t,pr){
+    const spr = pr.spread/100;
+    sc._bc.forEach(({bar,targetY,targetH,col,cols})=>{
+      // Phase 1 (0..0.4): bars grow from bottom to full canvas height
+      // Phase 2 (0.4..0.6): morph to logo shape
+      // Phase 3 (0.6..0.85): hold logo
+      // Phase 4 (0.85..1): collapse to bottom
+      let h, y;
+      const stagger = col/cols*0.15;
+      if(t < 0.35+stagger){
+        const local = Math.max(0, Math.min(1, (t-stagger)/(0.35)));
+        h = state.vh * EASE.easeOut(local) * spr;
+        y = state.vh - h;
+      } else if(t < 0.55){
+        const local = (t-0.35-stagger)/(0.2);
+        const clamped = Math.max(0, Math.min(1, local));
+        // interpolate from full-height to target
+        const fh = state.vh, fy = 0;
+        const eased = EASE.easeInOut(clamped);
+        h = fh + (targetH-fh)*eased;
+        y = fy + (targetY-fy)*eased;
+      } else if(t < 0.85){
+        h = targetH; y = targetY;
+      } else {
+        const local = (t-0.85)/0.15;
+        const eased = EASE.easeIn(Math.max(0,Math.min(1,local)));
+        h = targetH*(1-eased);
+        y = targetY + targetH*eased;
+      }
+      bar.setAttribute('y', y);
+      bar.setAttribute('height', Math.max(0.1, h));
+    });
+  }
+});
+
+/* 14 · COLUMN STACK — colonne verticali che escono e rientrano */
+registerEffect('column_stack',{
+  label:'14 · Column Stack',
+  setup(sc){
+    const NS='http://www.w3.org/2000/svg';
+    const N = 12;
+    const w = state.vw/N;
+    sc.logoGroup.setAttribute('display','none');
+    sc._cs=[];
+    for(let i=0;i<N;i++){
+      const cid = 'cs_'+i;
+      const cp = document.createElementNS(NS,'clipPath');
+      cp.setAttribute('id',cid);
+      cp.innerHTML = `<rect x="${i*w}" y="0" width="${w+0.5}" height="${state.vh}"/>`;
+      sc.defs.appendChild(cp);
+      const g = document.createElementNS(NS,'g');
+      g.setAttribute('clip-path',`url(#${cid})`);
+      const inner = document.createElementNS(NS,'g');
+      const u = useLogo(sc,{color:state.ink});
+      u.remove(); inner.appendChild(u);
+      g.appendChild(inner);
+      sc.wrapper.appendChild(g);
+      sc._cs.push({inner, i, N, dir: i%2===0 ? -1 : 1});
+    }
+  },
+  apply(sc,t,pr){
+    const spr = pr.spread/100;
+    sc._cs.forEach(({inner,i,N,dir})=>{
+      const stagger = i/N * 0.4;
+      const phase = ((t + stagger) % 1 + 1) % 1;
+      // 0..0.4 in, 0.4..0.6 hold, 0.6..1 out
+      let a;
+      if(phase<0.4) a = EASE.easeOut(phase/0.4);
+      else if(phase<0.6) a = 1;
+      else a = 1 - EASE.easeIn((phase-0.6)/0.4);
+      const dy = (1-a) * state.vh * dir * spr;
+      inner.setAttribute('transform',`translate(0 ${dy.toFixed(1)})`);
+    });
+  }
+});
+
+/* 15 · ISO EXTRUDE — estrusione isometrica multi-layer che pulsa */
+registerEffect('iso_extrude',{
+  label:'15 · Iso Extrude',
+  setup(sc){
+    sc.logoGroup.setAttribute('display','none');
+    const N = 20;
+    sc._ie=[];
+    for(let i=N-1;i>=0;i--){
+      const k = i/(N-1);
+      const shade = mixHex(state.paper, state.ink, 0.1 + k*0.9);
+      const u = useLogo(sc, {color: shade});
+      sc._ie.push({u,i,N});
+    }
+  },
+  apply(sc,t,pr){
+    const spr = pr.spread/100;
+    const pulse = 0.5 + 0.5*Math.sin(t*Math.PI*2);
+    const step = 8 * spr * (0.4 + pulse*1.2);
+    sc._ie.forEach(({u,i,N})=>{
+      const k = (N-1-i); // 0 top, N-1 bottom
+      const dx = -k * step * 0.7;
+      const dy = -k * step * 0.7;
+      u.setAttribute('x', dx.toFixed(1));
+      u.setAttribute('y', dy.toFixed(1));
+    });
+  }
+});
+
+/* 16 · WIREFRAME BUILD — stroke che si disegna → fill che si versa */
+registerEffect('wireframe_build',{
+  label:'16 · Wireframe Build',
+  setup(sc){
+    // Convert paths to stroke variant, then reveal fill via mask
+    const NS='http://www.w3.org/2000/svg';
+    sc._wf = sc.paths.map(p=>{
+      const total = (()=>{try{return p.getTotalLength()}catch(_){return 1000}})();
+      p.setAttribute('stroke', state.ink);
+      p.setAttribute('stroke-width', 4);
+      p.setAttribute('fill', 'none');
+      p.setAttribute('stroke-dasharray', total);
+      p.setAttribute('stroke-dashoffset', total);
+      return {p, total};
+    });
+    // Overlay a fill layer that fades in on top
+    sc._wfFill = useLogo(sc,{color:state.ink});
+    sc._wfFill.setAttribute('opacity','0');
+  },
+  apply(sc,t,pr){
+    // 0..0.4 draw stroke, 0.4..0.55 fill in, 0.55..0.8 hold, 0.8..1 fade out
+    sc._wf.forEach(({p,total},i)=>{
+      const stagger = (i/sc._wf.length)*0.25;
+      const local = Math.max(0,Math.min(1, (t-stagger)/(0.4)));
+      const off = total * (1 - EASE.easeInOut(local));
+      p.setAttribute('stroke-dashoffset', off);
+    });
+    // fill opacity
+    let fillOp;
+    if(t < 0.4) fillOp = 0;
+    else if(t < 0.55) fillOp = EASE.easeInOut((t-0.4)/0.15);
+    else if(t < 0.8) fillOp = 1;
+    else fillOp = 1 - EASE.easeIn((t-0.8)/0.2);
+    sc._wfFill.setAttribute('opacity', fillOp.toFixed(2));
+    // stroke opacity fade after fill
+    const strokeOp = t < 0.55 ? 1 : Math.max(0, 1 - (t-0.55)/0.15);
+    sc._wf.forEach(({p})=>p.setAttribute('stroke-opacity', strokeOp.toFixed(2)));
+  }
+});
+
+/* 17 · SPLIT REVEAL — logo tagliato orizzontalmente, metà separate */
+registerEffect('split_reveal',{
+  label:'17 · Split Reveal',
+  setup(sc){
+    const NS='http://www.w3.org/2000/svg';
+    sc.logoGroup.setAttribute('display','none');
+    // Two halves via clipPath
+    const cpTop=document.createElementNS(NS,'clipPath');cpTop.setAttribute('id','sr_top');
+    cpTop.innerHTML=`<rect x="-50" y="-50" width="${state.vw+100}" height="${state.vh/2+50}"/>`;
+    sc.defs.appendChild(cpTop);
+    const cpBot=document.createElementNS(NS,'clipPath');cpBot.setAttribute('id','sr_bot');
+    cpBot.innerHTML=`<rect x="-50" y="${state.vh/2}" width="${state.vw+100}" height="${state.vh/2+50}"/>`;
+    sc.defs.appendChild(cpBot);
+    // Two use elements
+    const gT=document.createElementNS(NS,'g');
+    gT.setAttribute('clip-path','url(#sr_top)');
+    const uT=useLogo(sc,{color:state.ink});
+    uT.remove();gT.appendChild(uT);
+    sc.wrapper.appendChild(gT);
+    const gB=document.createElementNS(NS,'g');
+    gB.setAttribute('clip-path','url(#sr_bot)');
+    const uB=useLogo(sc,{color:state.ink});
+    uB.remove();gB.appendChild(uB);
+    sc.wrapper.appendChild(gB);
+    // Accent shadow behind
+    const uS=useLogo(sc,{color:state.accent});
+    uS.remove();
+    sc.wrapper.insertBefore(uS, gT);
+    sc._sr = {uT, uB, uS};
+  },
+  apply(sc,t,pr){
+    const spr = pr.spread/100;
+    // half-cycle pattern: split-hold-close-hold
+    const w = Math.sin(t*Math.PI); // 0→1→0
+    const gap = w * state.vh * 0.15 * spr;
+    sc._sr.uT.setAttribute('y', (-gap).toFixed(1));
+    sc._sr.uB.setAttribute('y', ( gap).toFixed(1));
+    sc._sr.uS.setAttribute('x', (w*20*spr).toFixed(1));
+    sc._sr.uS.setAttribute('y', (w*20*spr).toFixed(1));
+  }
+});
+
+/* 18 · SONAR WAVE — onde concentriche che partono dal logo */
+registerEffect('sonar_wave',{
+  label:'18 · Sonar Wave',
+  setup(sc){
+    const NS='http://www.w3.org/2000/svg';
+    sc.logoGroup.setAttribute('display','none');
+    const N = 6;
+    sc._sw = [];
+    // static logo underneath
+    const uL = useLogo(sc,{color:state.ink});
+    sc._sw.push({u:uL, static:true});
+    // waves = expanding logos with only stroke
+    for(let i=0;i<N;i++){
+      const u = useLogo(sc,{color:'none'});
+      u.setAttribute('style','fill:none;stroke:'+state.ink+';stroke-width:3');
+      u.setAttribute('stroke', state.ink);
+      // But use inherits fill via style — for stroke we need a wrapper approach.
+      // Simpler: use logo with fill via mask... skip stroke, use scale+opacity fade
+      u.setAttribute('style','fill:'+(i%2?state.accent:state.ink)+';opacity:0.5');
+      sc._sw.push({u,i,N});
+    }
+    sc._cx=state.vw/2; sc._cy=state.vh/2;
+  },
+  apply(sc,t,pr){
+    const spr = pr.spread/100;
+    sc._sw.forEach(w=>{
+      if(w.static) return;
+      const {u,i,N} = w;
+      const phase = ((t + i/N) % 1 + 1) % 1;
+      const scl = 1 + phase * (2.5 * spr);
+      const op = Math.pow(1 - phase, 1.4) * 0.55;
+      u.setAttribute('transform', `translate(${sc._cx} ${sc._cy}) scale(${scl}) translate(${-sc._cx} ${-sc._cy})`);
+      u.setAttribute('style', `fill:${i%2?state.accent:state.ink};opacity:${op.toFixed(2)}`);
+    });
+  }
+});
+
+/* 19 · RADIAL SPLIT — spicchi che ruotano attorno al centro */
+registerEffect('radial_split',{
+  label:'19 · Radial Split',
+  setup(sc){
+    const NS='http://www.w3.org/2000/svg';
+    sc.logoGroup.setAttribute('display','none');
+    const N = 8;
+    sc._rs = [];
+    const cx=state.vw/2, cy=state.vh/2;
+    const R = Math.hypot(state.vw,state.vh);
+    for(let i=0;i<N;i++){
+      const a0 = (i/N)*Math.PI*2;
+      const a1 = ((i+1)/N)*Math.PI*2;
+      const cid='rs_'+i;
+      const cp=document.createElementNS(NS,'clipPath');
+      cp.setAttribute('id',cid);
+      // Build a wedge polygon
+      const p0 = `${cx},${cy}`;
+      const p1 = `${cx+Math.cos(a0)*R},${cy+Math.sin(a0)*R}`;
+      const p2 = `${cx+Math.cos((a0+a1)/2)*R*1.1},${cy+Math.sin((a0+a1)/2)*R*1.1}`;
+      const p3 = `${cx+Math.cos(a1)*R},${cy+Math.sin(a1)*R}`;
+      cp.innerHTML=`<polygon points="${p0} ${p1} ${p2} ${p3}"/>`;
+      sc.defs.appendChild(cp);
+      const g=document.createElementNS(NS,'g');
+      g.setAttribute('clip-path',`url(#${cid})`);
+      const inner=document.createElementNS(NS,'g');
+      const u=useLogo(sc,{color: i%2===0?state.ink:state.accent});
+      u.remove(); inner.appendChild(u);
+      g.appendChild(inner);
+      sc.wrapper.appendChild(g);
+      const angMid=(a0+a1)/2;
+      sc._rs.push({inner,dx:Math.cos(angMid),dy:Math.sin(angMid),angMid,i});
+    }
+    sc._cx=cx; sc._cy=cy;
+  },
+  apply(sc,t,pr){
+    const spr = pr.spread/100;
+    const w = Math.sin(t*Math.PI); // 0→1→0
+    const dist = w * Math.max(state.vw,state.vh) * 0.35 * spr;
+    const rot = w * 30;
+    sc._rs.forEach(({inner,dx,dy,i})=>{
+      const ox = dx*dist, oy = dy*dist;
+      inner.setAttribute('transform',`translate(${ox.toFixed(1)} ${oy.toFixed(1)}) rotate(${(rot*(i%2?1:-1)).toFixed(1)} ${sc._cx} ${sc._cy})`);
+    });
+  }
+});
+
+/* 20 · BARCODE REVEAL — barre verticali fitte che rivelano */
+registerEffect('barcode_reveal',{
+  label:'20 · Barcode Reveal',
+  setup(sc){
+    const NS='http://www.w3.org/2000/svg';
+    sc.logoGroup.setAttribute('display','none');
+    // Logo behind
+    const uBg = useLogo(sc,{color:state.ink});
+    // Barcode bars ABOVE, animate scaleX to reveal
+    const N = 60;
+    const rand = seedRand(93);
+    sc._br = [];
+    let x = 0;
+    for(let i=0;i<N;i++){
+      const w = 2 + rand()*22;
+      const gap = 1 + rand()*6;
+      const bar = document.createElementNS(NS,'rect');
+      bar.setAttribute('x', x);
+      bar.setAttribute('y', 0);
+      bar.setAttribute('width', w);
+      bar.setAttribute('height', state.vh);
+      bar.setAttribute('fill', state.paper);
+      sc.wrapper.appendChild(bar);
+      sc._br.push({bar, x, w, order:i/N});
+      x += w + gap;
+      if(x > state.vw) break;
+    }
+  },
+  apply(sc,t,pr){
+    // in: bars scaleY 1→0 to reveal, staggered LTR; out: reverse
+    sc._br.forEach(({bar,x,w,order})=>{
+      let a; // 1=cover, 0=reveal
+      if(t < 0.45){
+        const local = Math.max(0,Math.min(1,(t - order*0.35)/0.15));
+        a = 1 - EASE.easeInOut(local);
+      } else if(t < 0.7){
+        a = 0;
+      } else {
+        const local = Math.max(0,Math.min(1,(t - 0.7 - (1-order)*0.2)/0.1));
+        a = EASE.easeInOut(local);
+      }
+      const sy = Math.max(0.001,a);
+      bar.setAttribute('transform',`translate(0 ${state.vh/2}) scale(1 ${sy}) translate(0 ${-state.vh/2})`);
+    });
+  }
+});
+
+/* 21 · SHAPE MORPH GRID — griglia di quadrati che diventano logo */
+registerEffect('shape_morph_grid',{
+  label:'21 · Shape Grid',
+  setup(sc){
+    const NS='http://www.w3.org/2000/svg';
+    sc.logoGroup.setAttribute('display','none');
+    // Rasterize logo to build density map
+    const asp = state.cw/state.ch;
+    const cols = asp>=1 ? 12 : 8;
+    const rows = Math.round(cols*state.vh/state.vw);
+    const cv=document.createElement('canvas');
+    cv.width=cols;cv.height=rows;
+    const ctx=cv.getContext('2d');
+    ctx.fillStyle='white';ctx.fillRect(0,0,cv.width,cv.height);
+    ctx.fillStyle='black';
+    ctx.save();ctx.scale(cv.width/state.vw, cv.height/state.vh);
+    sc.paths.forEach(pp=>{try{const p2=new Path2D(pp.getAttribute('d'));ctx.fill(p2,'evenodd')}catch(_){}});
+    ctx.restore();
+    const data=ctx.getImageData(0,0,cv.width,cv.height).data;
+    const cellW = state.vw/cols, cellH = state.vh/rows;
+    sc._sg = [];
+    for(let r=0;r<rows;r++){
+      for(let c=0;c<cols;c++){
+        const inside = data[(r*cols+c)*4] < 128;
+        const rect = document.createElementNS(NS,'rect');
+        const pad = 2;
+        rect.setAttribute('x', c*cellW+pad);
+        rect.setAttribute('y', r*cellH+pad);
+        rect.setAttribute('width', cellW-pad*2);
+        rect.setAttribute('height', cellH-pad*2);
+        rect.setAttribute('fill', inside ? state.ink : mixHex(state.paper,state.ink,0.08));
+        sc.wrapper.appendChild(rect);
+        sc._sg.push({rect, inside, cx:c*cellW+cellW/2, cy:r*cellH+cellH/2, order:(c+r)/(cols+rows-2)});
+      }
+    }
+  },
+  apply(sc,t,pr){
+    const spr = pr.spread/100;
+    sc._sg.forEach(({rect,inside,cx,cy,order})=>{
+      const phase = ((t + order*0.15) % 1 + 1) % 1;
+      const w = Math.sin(phase*Math.PI*2);
+      let s;
+      if(inside){
+        s = 1 + w*0.06*spr;
+      } else {
+        s = 0.3 + Math.abs(w)*0.4*spr;
+      }
+      const rot = w * 8;
+      rect.setAttribute('transform',`translate(${cx} ${cy}) rotate(${rot.toFixed(1)}) scale(${s.toFixed(2)}) translate(${-cx} ${-cy})`);
+    });
+  }
+});
+
+/* 22 · CINEMA CURTAIN — sipario che apre/chiude */
+registerEffect('cinema_curtain',{
+  label:'22 · Cinema Curtain',
+  setup(sc){
+    const NS='http://www.w3.org/2000/svg';
+    // Logo already visible from base scene, but keep it
+    // Two curtain rects on left and right
+    const cL=document.createElementNS(NS,'rect');
+    cL.setAttribute('x',0);cL.setAttribute('y',0);
+    cL.setAttribute('width',state.vw/2);cL.setAttribute('height',state.vh);
+    cL.setAttribute('fill',state.ink);
+    const cR=document.createElementNS(NS,'rect');
+    cR.setAttribute('x',state.vw/2);cR.setAttribute('y',0);
+    cR.setAttribute('width',state.vw/2);cR.setAttribute('height',state.vh);
+    cR.setAttribute('fill',state.ink);
+    sc.wrapper.appendChild(cL);
+    sc.wrapper.appendChild(cR);
+    sc._cc = {cL, cR};
+  },
+  apply(sc,t,pr){
+    const spr = pr.spread/100;
+    // 0..0.35 open, 0.35..0.75 hold, 0.75..1 close
+    let a;
+    if(t<0.35) a = EASE.easeInOut(t/0.35);
+    else if(t<0.75) a = 1;
+    else a = 1 - EASE.easeInOut((t-0.75)/0.25);
+    const shift = a * state.vw * 0.55 * spr;
+    sc._cc.cL.setAttribute('transform',`translate(${(-shift).toFixed(1)} 0)`);
+    sc._cc.cR.setAttribute('transform',`translate(${( shift).toFixed(1)} 0)`);
+  }
+});
+
+/* 23 · ZEBRA WIPE — strisce diagonali colorate spazzano */
+registerEffect('zebra_wipe',{
+  label:'23 · Zebra Wipe',
+  setup(sc){
+    const NS='http://www.w3.org/2000/svg';
+    sc.logoGroup.setAttribute('display','none');
+    // Background paper
+    // Layer 1: ink logo
+    const uInk = useLogo(sc,{color:state.ink});
+    // Layer 2: accent logo, revealed by moving diagonal band
+    const cid='zw_clip';
+    const cp=document.createElementNS(NS,'clipPath');
+    cp.setAttribute('id',cid);
+    const rect=document.createElementNS(NS,'rect');
+    rect.setAttribute('x',0);rect.setAttribute('y',0);
+    rect.setAttribute('width',state.vw*0.35);
+    rect.setAttribute('height',state.vh*2);
+    rect.setAttribute('id','zw_rect');
+    cp.appendChild(rect);
+    sc.defs.appendChild(cp);
+    const gAcc=document.createElementNS(NS,'g');
+    gAcc.setAttribute('clip-path',`url(#${cid})`);
+    const uAcc=useLogo(sc,{color:state.accent});
+    uAcc.remove();
+    gAcc.appendChild(uAcc);
+    sc.wrapper.appendChild(gAcc);
+    // Solid diagonal band on top (visible)
+    const bandG=document.createElementNS(NS,'g');
+    const bandRect=document.createElementNS(NS,'rect');
+    bandRect.setAttribute('x',0);bandRect.setAttribute('y',0);
+    bandRect.setAttribute('width',state.vw*0.35);
+    bandRect.setAttribute('height',state.vh*2);
+    bandRect.setAttribute('fill',state.accent);
+    bandRect.setAttribute('opacity','0.15');
+    bandG.appendChild(bandRect);
+    sc.wrapper.appendChild(bandG);
+    sc._zw = {clipRect:rect, bandG, bandRect};
+  },
+  apply(sc,t,pr){
+    const spr = pr.spread/100;
+    // Move clip and band together, rotated -20°
+    const x = -state.vw*0.4 + t*state.vw*1.8*spr;
+    const rot = -20;
+    const tr = `translate(${x.toFixed(1)} ${(-state.vh*0.3).toFixed(0)}) rotate(${rot})`;
+    sc._zw.clipRect.setAttribute('transform', tr);
+    sc._zw.bandG.setAttribute('transform', tr);
+  }
+});
+
+/* 24 · COMET TRAIL — copie che seguono su curva */
+registerEffect('comet_trail',{
+  label:'24 · Comet Trail',
+  setup(sc){
+    sc.logoGroup.setAttribute('display','none');
+    const N=14;
+    sc._ct=[];
+    for(let i=0;i<N;i++){
+      const k = i/(N-1);
+      const shade = mixHex(state.accent, state.ink, k);
+      const u = useLogo(sc,{color:shade});
+      sc._ct.push({u,k,i,N});
+    }
+  },
+  apply(sc,t,pr){
+    const spr = pr.spread/100;
+    // Head follows a lissajous curve
+    const head = t;
+    sc._ct.forEach(({u,k,i,N})=>{
+      const local = ((head - k*0.08) % 1 + 1) % 1;
+      const ang = local*Math.PI*2;
+      const rx = state.vw*0.28*spr;
+      const ry = state.vh*0.28*spr;
+      const x = Math.sin(ang*1)*rx;
+      const y = Math.sin(ang*2)*ry;
+      const s = 0.4 + k*0.6;
+      u.setAttribute('x', x.toFixed(1));
+      u.setAttribute('y', y.toFixed(1));
+      u.setAttribute('transform',`translate(${state.vw/2} ${state.vh/2}) scale(${s}) translate(${-state.vw/2} ${-state.vh/2})`);
+      u.setAttribute('opacity', (k*0.9+0.05).toFixed(2));
+    });
+  }
+});
+
+/* 25 · PERSPECTIVE FLY — fake 3D rotation su Y */
+registerEffect('perspective_fly',{
+  label:'25 · Perspective Fly',
+  setup(sc){
+    sc._cx = state.vw/2;
+    sc._cy = state.vh/2;
+  },
+  apply(sc,t,pr){
+    const spr = pr.spread/100;
+    // Simulate 3D Y-axis rotation via scaleX = cos(angle), skewY for depth
+    const ang = t*Math.PI*2;
+    const sx = Math.cos(ang);
+    const skewX = Math.sin(ang)*15;
+    const sxAbs = Math.max(0.05, Math.abs(sx));
+    const s = 0.9 + Math.abs(sx)*0.15*spr;
+    sc.logoGroup.setAttribute('transform',
+      `translate(${sc._cx} ${sc._cy}) scale(${(s*Math.sign(sx||1)).toFixed(3)} ${s.toFixed(3)}) skewY(${skewX.toFixed(1)}) translate(${-sc._cx} ${-sc._cy})`);
+  }
+});
+
+/* 26 · KINETIC TYPE GRID — riorganizza posizioni su griglia editoriale */
+registerEffect('kinetic_type_grid',{
+  label:'26 · Kinetic Type Grid',
+  setup(sc){
+    // Pre-compute alt positions on a grid for each path
+    const N = sc.paths.length;
+    const asp = state.cw/state.ch;
+    const cols = asp<1 ? 3 : 4;
+    const rows = Math.ceil(N/cols);
+    const cellW = state.vw/cols, cellH = state.vh/rows;
+    sc._ktg = sc.paths.map((p,i)=>{
+      const r = Math.floor(i/cols), c = i%cols;
+      const gx = cellW*(c+0.5) - p._cx;
+      const gy = cellH*(r+0.5) - p._cy;
+      const gs = Math.min(cellW/(p._bb.width||1), cellH/(p._bb.height||1))*0.85;
+      return {p, gx, gy, gs, orig:{cx:p._cx,cy:p._cy}};
+    });
+  },
+  apply(sc,t,pr){
+    const spr = pr.spread/100;
+    // 0..0.4 morph to grid, 0.4..0.6 hold, 0.6..1 back
+    let a;
+    if(t<0.4) a = EASE.easeInOut(t/0.4);
+    else if(t<0.6) a = 1;
+    else a = 1 - EASE.easeInOut((t-0.6)/0.4);
+    sc._ktg.forEach(({p,gx,gy,gs,orig},i)=>{
+      const stagger = (i/sc._ktg.length)*0.2;
+      const local = Math.max(0,Math.min(1, a));
+      const dx = gx*local*spr;
+      const dy = gy*local*spr;
+      const s = 1 + (gs-1)*local;
+      const rot = Math.sin(local*Math.PI)*(i%2?15:-15);
+      p.setAttribute('transform',
+        `translate(${dx.toFixed(1)} ${dy.toFixed(1)}) translate(${orig.cx} ${orig.cy}) rotate(${rot.toFixed(1)}) scale(${s.toFixed(2)}) translate(${-orig.cx} ${-orig.cy})`);
+    });
+  }
+});
+
+/* 27 · INK SPLASH — gooey metaball dei path che si fondono */
+registerEffect('ink_splash',{
+  label:'27 · Ink Splash',
+  setup(sc){
+    const NS='http://www.w3.org/2000/svg';
+    const f=document.createElementNS(NS,'filter');
+    f.setAttribute('id','f_splash');f.setAttribute('x','-40%');f.setAttribute('y','-40%');f.setAttribute('width','180%');f.setAttribute('height','180%');
+    f.innerHTML=`<feGaussianBlur in="SourceGraphic" stdDeviation="14" result="b"/>
+      <feColorMatrix in="b" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10" result="g"/>
+      <feComposite in="SourceGraphic" in2="g" operator="atop"/>`;
+    sc.defs.appendChild(f);
+    sc.logoGroup.setAttribute('filter','url(#f_splash)');
+    // Cache per-path origin center
+    sc._is = sc.paths.map((p,i)=>({p,cx:p._cx,cy:p._cy,i}));
+  },
+  apply(sc,t,pr){
+    const spr = pr.spread/100;
+    const amt = pr.intensity/100;
+    // paths breathe outward radially from logo center then back
+    const w = Math.sin(t*Math.PI*2);
+    const cx0 = state.vw/2, cy0 = state.vh/2;
+    sc._is.forEach(({p,cx,cy,i})=>{
+      const dx = (cx - cx0);
+      const dy = (cy - cy0);
+      const len = Math.hypot(dx,dy)||1;
+      const ux = dx/len, uy = dy/len;
+      const phase = t*Math.PI*2 + i*0.7;
+      const localW = Math.sin(phase);
+      const push = localW * 60 * amt * spr;
+      const s = 1 + Math.sin(phase*2)*0.15*amt;
+      p.setAttribute('transform',
+        `translate(${(ux*push).toFixed(1)} ${(uy*push).toFixed(1)}) translate(${cx} ${cy}) scale(${s.toFixed(2)}) translate(${-cx} ${-cy})`);
+    });
+  }
+});
+
+
+/* 28 · BALLOON — ogni path si gonfia in sincrono dal proprio centro (sgonfio → gonfia → respira → sgonfia) */
+registerEffect('balloon',{
+  label:'28 · Balloon',
+  setup(sc){
+    // Pulisce eventuale transform sul logoGroup lasciato da altri effetti
+    if(sc.logoGroup) sc.logoGroup.removeAttribute('transform');
+  },
+  apply(sc,t,pr){
+    if(!sc.paths || !sc.paths.length) return;
+    const amt = pr.intensity/100;                              // squash/wobble/rot
+    const spr = Math.max(0, Math.min(1, pr.spread/100));
+    const minS = 0.04 + (1 - spr) * 0.10;                      // ~0.04..0.14 (quanto è sgonfio)
+
+    // Curva condivisa da tutte le lettere → gonfiano/sgonfiano INSIEME
+    // 0.00–0.08 sgonfio (tremolio); 0.08–0.48 inflate (back-ease); 0.48–0.70 respiro; 0.70–1.00 deflate + svolazzo
+    let s = minS, wob = 0, rotBase = 0, phase = 0;
+    if(t < 0.08){
+      s = minS;
+      wob = Math.sin(t*Math.PI*24) * 0.03 * amt;
+      rotBase = Math.sin(t*Math.PI*18) * 2.5 * amt;
+      phase = 0;
+    } else if(t < 0.48){
+      const local = (t - 0.08) / 0.40;
+      s = minS + (1 - minS) * EASE.back(local);
+      wob = Math.sin(local*Math.PI*2.2) * 0.12 * amt;
+      phase = 1;
+    } else if(t < 0.70){
+      const local = (t - 0.48) / 0.22;
+      s = 1;
+      wob = Math.sin(local*Math.PI*4) * 0.045 * amt;
+      phase = 2;
+    } else {
+      const local = (t - 0.70) / 0.30;
+      s = minS + (1 - minS) * (1 - EASE.easeIn(local));
+      const decay = 1 - local*0.55;
+      wob = Math.sin(local*Math.PI*8) * 0.16 * amt * decay;
+      rotBase = Math.sin(local*Math.PI*5) * 14 * amt * decay;
+      phase = 3;
+    }
+
+    const sx = s * (1 + wob);
+    const sy = s * (1 - wob);
+
+    // Cade leggermente verso il basso quando è sgonfio (effetto "gravità")
+    const dropY = (1 - s) * state.vh * 0.14;
+
+    // Applica lo stesso momento della curva ad OGNI lettera, ma dal suo centro.
+    // Piccola desincronizzazione della rotazione svolazzo per non sembrare rigidi.
+    sc.paths.forEach((p, i)=>{
+      const cx = p._cx, cy = p._cy;
+      const rot = rotBase * (i % 2 ? 1 : -1) * (0.85 + ((i*13)%7)/20);
+      p.setAttribute('transform',
+        `translate(${cx.toFixed(2)} ${(cy+dropY).toFixed(2)}) rotate(${rot.toFixed(2)}) scale(${sx.toFixed(3)} ${sy.toFixed(3)}) translate(${(-cx).toFixed(2)} ${(-cy).toFixed(2)})`);
+    });
+  }
+});
+
+
+/* 29 · BALLOON POP — gonfia oltre limite → scoppia in frammenti che volano via */
+registerEffect('balloon_pop',{
+  label:'29 · Balloon Pop',
+  setup(sc){
+    if(sc.logoGroup) sc.logoGroup.removeAttribute('transform');
+    // direzione di fuga di ogni "frammento" dal centro del logo, + spin randomico
+    const cx0 = state.vw/2, cy0 = state.vh/2;
+    sc._pop = sc.paths.map((p,i)=>{
+      const dx = (p._cx - cx0);
+      const dy = (p._cy - cy0);
+      const len = Math.hypot(dx,dy) || 1;
+      // se una lettera è sul centro esatto, sparala comunque in una direzione
+      const jitter = (i*97 % 360) * Math.PI/180;
+      const ux = (len<1 ? Math.cos(jitter) : dx/len);
+      const uy = (len<1 ? Math.sin(jitter) : dy/len);
+      const spin = ((i*53 % 200) - 100) / 100;   // -1..1
+      return { p, ux, uy, spin, cx:p._cx, cy:p._cy };
+    });
+  },
+  apply(sc,t,pr){
+    if(!sc._pop || !sc._pop.length) return;
+    const amt = pr.intensity/100;
+    const spr = Math.max(0, Math.min(1, pr.spread/100));
+    const minS = 0.04 + (1 - spr) * 0.10;
+
+    // Fasi: 0-08 sgonfio, 08-45 inflate, 45-65 respira, 65-72 overinflate (tremore),
+    // 72 → POP, 72-100 frammenti volano via + fade
+    let s = minS, wob = 0, rotBase = 0, popPhase = -1;
+
+    if(t < 0.08){
+      s = minS;
+      wob = Math.sin(t*Math.PI*24) * 0.03 * amt;
+    } else if(t < 0.45){
+      const local = (t - 0.08) / 0.37;
+      s = minS + (1 - minS) * EASE.back(local);
+      wob = Math.sin(local*Math.PI*2.2) * 0.12 * amt;
+    } else if(t < 0.65){
+      const local = (t - 0.45) / 0.20;
+      s = 1;
+      wob = Math.sin(local*Math.PI*4) * 0.04 * amt;
+    } else if(t < 0.72){
+      // overinflate: crescita finale + tremore intenso (paura di esplodere)
+      const local = (t - 0.65) / 0.07;
+      s = 1 + 0.18 * local * amt;
+      wob = Math.sin(local*Math.PI*22) * 0.10 * amt;
+      rotBase = Math.sin(local*Math.PI*18) * 3 * amt;
+    } else {
+      // POP + frammenti
+      popPhase = (t - 0.72) / 0.28;   // 0..1 dopo lo scoppio
+    }
+
+    if(popPhase < 0){
+      const sx = s * (1 + wob), sy = s * (1 - wob);
+      const dropY = (1 - Math.min(1,s)) * state.vh * 0.14;
+      sc._pop.forEach(({p, cx, cy}, i)=>{
+        const rot = rotBase * (i%2?1:-1);
+        p.setAttribute('transform',
+          `translate(${cx.toFixed(2)} ${(cy+dropY).toFixed(2)}) rotate(${rot.toFixed(2)}) scale(${sx.toFixed(3)} ${sy.toFixed(3)}) translate(${(-cx).toFixed(2)} ${(-cy).toFixed(2)})`);
+        p.style.opacity = 1;
+      });
+    } else {
+      // Esplosione: distanza cresce rapida poi rallenta, spin costante, fade
+      const dist = EASE.easeOut(popPhase) * state.vw * 0.9 * (0.6 + amt);
+      const gravity = popPhase*popPhase * state.vh * 0.25;      // caduta finale
+      const fade = Math.max(0, 1 - popPhase*1.05);
+      sc._pop.forEach(({p, cx, cy, ux, uy, spin})=>{
+        const tx = ux * dist;
+        const ty = uy * dist + gravity;
+        const rot = spin * 720 * popPhase;                       // fino a 2 giri
+        p.setAttribute('transform',
+          `translate(${(cx+tx).toFixed(2)} ${(cy+ty).toFixed(2)}) rotate(${rot.toFixed(2)}) translate(${(-cx).toFixed(2)} ${(-cy).toFixed(2)})`);
+        p.style.opacity = fade.toFixed(3);
+      });
+    }
+  }
+});
+
+
+/* 30 · BALLOON BOUNCE — gonfia → si sgonfia cadendo → rimbalza al suolo (con squash all'impatto) */
+registerEffect('balloon_bounce',{
+  label:'30 · Balloon Bounce',
+  setup(sc){
+    if(sc.logoGroup) sc.logoGroup.removeAttribute('transform');
+    sc.paths.forEach(p=>{ p.style.opacity = 1; });
+  },
+  apply(sc,t,pr){
+    if(!sc.paths.length) return;
+    const amt = pr.intensity/100;
+    const spr = Math.max(0, Math.min(1, pr.spread/100));
+    const minS = 0.05 + (1 - spr) * 0.10;
+
+    // 0-08 sgonfio, 08-40 inflate, 40-55 respira, 55-100 sgonfia + rimbalza
+    let s = minS, wob = 0, dropY = 0, sxMod = 1, syMod = 1;
+
+    if(t < 0.08){
+      s = minS;
+      wob = Math.sin(t*Math.PI*22) * 0.03 * amt;
+      dropY = (1 - s) * state.vh * 0.16;
+    } else if(t < 0.40){
+      const local = (t - 0.08) / 0.32;
+      s = minS + (1 - minS) * EASE.back(local);
+      wob = Math.sin(local*Math.PI*2.2) * 0.12 * amt;
+      dropY = (1 - Math.min(1,s)) * state.vh * 0.14;
+    } else if(t < 0.55){
+      const local = (t - 0.40) / 0.15;
+      s = 1;
+      wob = Math.sin(local*Math.PI*4) * 0.04 * amt;
+    } else {
+      // sgonfia + rimbalzo
+      const local = (t - 0.55) / 0.45;
+      // scala: cala fino a ~0.55, poi resta lì mentre rimbalza (palloncino a terra)
+      s = local < 0.55 ? 1 - (1 - 0.55) * EASE.easeIn(local/0.55) : 0.55;
+      // posizione verticale con rimbalzo (EASE.bounce parte da 0 e finisce a 1)
+      const groundOffset = state.vh * 0.20;    // quanto scende al suolo
+      dropY = groundOffset * EASE.bounce(Math.min(1, local*1.05));
+
+      // squash all'impatto (quando la bounce curve tocca i massimi = terra)
+      // rilevo "impatto" dalla derivata approssimata di bounce → picchi = massimo drop
+      const b = EASE.bounce(Math.min(1, local*1.05));
+      const impact = Math.max(0, b - EASE.bounce(Math.max(0, Math.min(1, local*1.05 - 0.03))));
+      sxMod = 1 + impact * 4.5 * amt;         // si allarga
+      syMod = 1 - impact * 3.5 * amt;         // si schiaccia
+    }
+
+    const sx = s * (1 + wob) * sxMod;
+    const sy = s * (1 - wob) * syMod;
+
+    sc.paths.forEach((p, i)=>{
+      const cx = p._cx, cy = p._cy;
+      p.setAttribute('transform',
+        `translate(${cx.toFixed(2)} ${(cy+dropY).toFixed(2)}) scale(${sx.toFixed(3)} ${sy.toFixed(3)}) translate(${(-cx).toFixed(2)} ${(-cy).toFixed(2)})`);
+    });
+  }
+});
+
+
+/* ---------- UI WIRING ---------- */
+function buildEffectsUI(){
+  const wrap = document.getElementById('effects');
+  wrap.innerHTML='';
+  Object.entries(EFFECTS).forEach(([id,e])=>{
+    const b=document.createElement('button');
+    b.textContent=e.label; b.dataset.id=id;
+    if(id===state.effect) b.classList.add('on');
+    b.onclick=()=>{state.effect=id;[...wrap.children].forEach(c=>c.classList.remove('on'));b.classList.add('on');document.getElementById('fxBadge').textContent=e.label;rebuild();restart()};
+    wrap.appendChild(b);
+  });
+}
+
+/* apply current frame */
+function apply(t01){
+  if(!scene) return;
+  t01 = Math.max(0, Math.min(1, t01));
+  const eff = EFFECTS[state.effect];
+  if(eff?.apply) eff.apply(scene, t01, {intensity:state.intensity, spread:state.spread});
+}
+
+/* Animation loop */
+let raf=null;
+function tick(now){
+  if(state.playing){
+    const dt = (now - state.t0)/1000;
+    let t = dt / state.duration;
+    if(state.loop==='pingpong'){
+      const cycles = Math.floor(t);
+      const frac = t - cycles;
+      state.currentT = (cycles%2===0 ? frac : 1-frac) * state.duration;
+    } else if(state.loop==='restart'){
+      state.currentT = (t % 1) * state.duration;
+    } else {
+      state.currentT = Math.min(1, t) * state.duration;
+      if(t>=1) state.playing=false;
+    }
+    const p = state.currentT / state.duration;
+    apply(p);
+    document.getElementById('scrub').value = Math.round(p*1000);
+    document.getElementById('tCur').textContent = state.currentT.toFixed(2)+'s';
+    document.getElementById('statusMeta').textContent = `t ${state.currentT.toFixed(2)}s / ${state.duration.toFixed(2)}s · ${state.fps}fps`;
+  }
+  raf = requestAnimationFrame(tick);
+}
+
+function restart(){ state.t0 = performance.now(); state.playing=true; }
+function play(){ if(!state.playing){ state.t0 = performance.now() - state.currentT*1000; state.playing=true;} }
+function pause(){ state.playing=false; }
+
+/* Stage sizing: fit stage-inner to canvas aspect */
+function fitStage(){
+  const s = document.getElementById('stage');
+  const inner = document.getElementById('stageInner');
+  const pad = 24;
+  const availW = s.clientWidth - pad*2;
+  const availH = s.clientHeight - pad*2;
+  const ar = state.cw/state.ch;
+  let w = availW, h = availW/ar;
+  if(h > availH){ h = availH; w = h*ar; }
+  inner.style.width = w+'px';
+  inner.style.height = h+'px';
+}
+
+/* ---------- FILE LOADING ---------- */
+function loadSvgText(txt){
+  state.svgSource = txt;
+  rebuild();
+  restart();
+  log('SVG caricato.');
+}
+document.getElementById('drop').onclick = ()=>document.getElementById('file').click();
+document.getElementById('file').onchange = e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader(); r.onload=()=>loadSvgText(r.result); r.readAsText(f);
+};
+['dragenter','dragover'].forEach(ev=>document.getElementById('drop').addEventListener(ev,e=>{e.preventDefault();e.currentTarget.classList.add('hover')}));
+['dragleave','drop'].forEach(ev=>document.getElementById('drop').addEventListener(ev,e=>{e.preventDefault();e.currentTarget.classList.remove('hover')}));
+document.getElementById('drop').addEventListener('drop',e=>{
+  const f = e.dataTransfer.files[0]; if(!f) return;
+  const r=new FileReader(); r.onload=()=>loadSvgText(r.result); r.readAsText(f);
+});
+document.getElementById('btnReload').onclick=()=>{state.svgSource=DEFAULT_SVG;rebuild();restart();log('Default ricaricato.')};
+document.getElementById('btnGuides').onclick=()=>{document.getElementById('stage').classList.toggle('guides')};
+
+/* Formats */
+document.querySelectorAll('#formats button').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('#formats button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    state.cw=+b.dataset.w; state.ch=+b.dataset.h;
+    document.getElementById('cw').value=state.cw;
+    document.getElementById('ch').value=state.ch;
+    document.getElementById('fmtBadge').textContent=`${state.cw}×${state.ch}`;
+    fitStage(); rebuild();
+  };
+});
+document.getElementById('cw').oninput=e=>{state.cw=+e.target.value||1080;document.getElementById('fmtBadge').textContent=`${state.cw}×${state.ch}`;fitStage();rebuild()};
+document.getElementById('ch').oninput=e=>{state.ch=+e.target.value||1080;document.getElementById('fmtBadge').textContent=`${state.cw}×${state.ch}`;fitStage();rebuild()};
+
+/* Colors */
+document.getElementById('cPaper').oninput=e=>{state.paper=e.target.value;document.documentElement.style.setProperty('--paper',e.target.value);rebuild()};
+document.getElementById('cInk').oninput=e=>{state.ink=e.target.value;rebuild()};
+document.getElementById('cAcc').oninput=e=>{state.accent=e.target.value;rebuild()};
+document.getElementById('bgMode').onchange=e=>{state.bgMode=e.target.value;rebuild()};
+document.getElementById('logoScale').oninput=e=>{state.logoScale=+e.target.value;document.getElementById('logoScaleV').textContent=e.target.value+'%';rebuild()};
+
+/* Params */
+document.getElementById('dur').oninput=e=>{state.duration=+e.target.value;document.getElementById('durV').textContent=state.duration.toFixed(1)+'s';document.getElementById('tDur').textContent=state.duration.toFixed(2)+'s'};
+document.getElementById('intensity').oninput=e=>{state.intensity=+e.target.value;document.getElementById('intensityV').textContent=e.target.value};
+document.getElementById('spread').oninput=e=>{state.spread=+e.target.value;document.getElementById('spreadV').textContent=e.target.value;rebuild()};
+document.getElementById('ease').onchange=e=>{state.ease=e.target.value};
+document.getElementById('loop').onchange=e=>{state.loop=e.target.value;restart()};
+document.getElementById('fps').onchange=e=>{state.fps=+e.target.value};
+document.getElementById('expFmt').onchange=e=>{state.expFmt=e.target.value};
+
+/* Transport */
+document.getElementById('btnPlay').onclick=play;
+document.getElementById('btnPause').onclick=pause;
+document.getElementById('btnRestart').onclick=restart;
+document.getElementById('scrub').oninput=e=>{
+  state.playing=false;
+  const p=+e.target.value/1000;
+  state.currentT = p*state.duration;
+  apply(p);
+  document.getElementById('tCur').textContent = state.currentT.toFixed(2)+'s';
+};
+
+/* Log */
+function log(msg){const el=document.getElementById('log'); el.textContent = new Date().toLocaleTimeString()+' · '+msg+'\n'+el.textContent}
+
+/* ---------- EXPORT ---------- */
+async function svgToImage(svgEl){
+  const src = new XMLSerializer().serializeToString(svgEl);
+  const blob = new Blob([src],{type:'image/svg+xml;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const img = new Image();
+  img.decoding='async';
+  await new Promise((res,rej)=>{img.onload=res;img.onerror=rej;img.src=url});
+  await img.decode?.().catch(()=>{});
+  return {img, url};
+}
+
+async function renderPngCurrent(){
+  const svgEl = document.getElementById('canvas');
+  const {img,url} = await svgToImage(svgEl);
+  const cv = document.createElement('canvas');
+  cv.width=state.cw; cv.height=state.ch;
+  const cx=cv.getContext('2d');
+  cx.drawImage(img,0,0,state.cw,state.ch);
+  URL.revokeObjectURL(url);
+  cv.toBlob(b=>{
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(b);
+    a.download=`motion-svg_${state.effect}_${state.cw}x${state.ch}.png`;
+    a.click();
+  },'image/png');
+  log('PNG scaricato.');
+}
+document.getElementById('btnPng').onclick=renderPngCurrent;
+
+async function exportWebM(){
+  const btn=document.getElementById('btnExport');
+  btn.disabled=true; btn.classList.add('rec');
+  btn.innerHTML='<span class="rec-dot"></span>Registrazione…';
+  pause();
+  const fps = state.fps;
+  const total = Math.round(state.duration * fps);
+  const cv = document.createElement('canvas');
+  cv.width = state.cw; cv.height = state.ch;
+  const cx = cv.getContext('2d');
+  const stream = cv.captureStream(fps);
+  let mime = 'video/webm;codecs=vp9';
+  if(!MediaRecorder.isTypeSupported(mime)) mime='video/webm;codecs=vp8';
+  if(!MediaRecorder.isTypeSupported(mime)) mime='video/webm';
+  const rec = new MediaRecorder(stream, {mimeType:mime, videoBitsPerSecond: 12_000_000});
+  const chunks=[];
+  rec.ondataavailable = e=>{ if(e.data.size) chunks.push(e.data); };
+  const done = new Promise(res=>rec.onstop=res);
+  rec.start();
+
+  const svgEl = document.getElementById('canvas');
+  for(let f=0; f<total; f++){
+    const p = f/(total-1||1);
+    // convert linear frame p into looped/eased position (respect loop mode for consistency with preview)
+    let tPos;
+    if(state.loop==='pingpong'){ tPos = p<=.5? p*2 : (1-p)*2; }
+    else { tPos = p; }
+    apply(tPos);
+    // let layout settle (necessary for getBBox etc.), then serialize
+    await new Promise(r=>requestAnimationFrame(r));
+    const {img,url} = await svgToImage(svgEl);
+    cx.fillStyle = state.bgMode==='transparent'? 'rgba(0,0,0,0)' : state.paper;
+    if(state.bgMode!=='transparent'){cx.fillRect(0,0,cv.width,cv.height)}
+    else{cx.clearRect(0,0,cv.width,cv.height)}
+    cx.drawImage(img,0,0,cv.width,cv.height);
+    URL.revokeObjectURL(url);
+    // pace to guarantee frames get captured
+    await new Promise(r=>setTimeout(r, 1000/fps));
+    btn.innerHTML=`<span class="rec-dot"></span>Frame ${f+1}/${total}`;
+  }
+  rec.stop();
+  await done;
+  const blob = new Blob(chunks,{type:mime});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `motion-svg_${state.effect}_${state.cw}x${state.ch}_${fps}fps.webm`;
+  a.click();
+  btn.disabled=false; btn.classList.remove('rec');
+  btn.innerHTML='▶  Registra & Scarica';
+  log('Export WebM completato.');
+  play();
+}
+
+document.getElementById('btnExport').onclick=async()=>{
+  if(state.expFmt==='webm') return exportWebM();
+  return renderPngCurrent();
+};
+
+/* ---------- INIT ---------- */
+function syncUIFromState(){
+  document.getElementById('dur').value = state.duration;
+  document.getElementById('durV').textContent = state.duration.toFixed(1)+'s';
+  document.getElementById('intensity').value = state.intensity;
+  document.getElementById('intensityV').textContent = state.intensity;
+  document.getElementById('spread').value = state.spread;
+  document.getElementById('spreadV').textContent = state.spread;
+  document.getElementById('ease').value = state.ease;
+  document.getElementById('loop').value = state.loop;
+  document.getElementById('tDur').textContent = state.duration.toFixed(2)+'s';
+  const activeEff = EFFECTS[state.effect];
+  if(activeEff) document.getElementById('fxBadge').textContent = activeEff.label;
+  document.getElementById('fmtBadge').textContent = `${state.cw}×${state.ch}`;
+}
+buildEffectsUI();
+syncUIFromState();
+fitStage();
+rebuild();
+requestAnimationFrame(tick);
+window.addEventListener('resize', fitStage);
+</script>
+</body>
+</html>
