@@ -112,6 +112,8 @@
     };
     let raf = null;
     car.addEventListener("scroll", () => { if (raf) return; raf = requestAnimationFrame(() => { animate(); raf = null; }); }, { passive: true });
+    // iOS Safari: scrollend può non arrivare durante scroll-snap; ripasso periodico finché aperto
+    car.addEventListener("touchend", () => { setTimeout(animate, 120); setTimeout(animate, 360); }, { passive: true });
     el._animate = animate; el._car = car;
 
     app.appendChild(el);
@@ -161,7 +163,7 @@
   }
   function startGif(card) {
     const f = card._frames;
-    if (!f || f.length < 2 || reduce) return;
+    if (!f || f.length < 2) return;
     const img = card.querySelector(".slide-img");
     f.forEach((src) => { const im = new Image(); im.src = src; });   // preload
     let i = 0;
@@ -209,7 +211,7 @@
     // parti da sinistra, poi slitta fino al progetto cliccato -> gif/video parte
     el._car.scrollLeft = 0;
     setTimeout(() => { if (openEl === el) { centerCard(el._car, idx, reduce ? "auto" : "smooth"); el._animate(); } }, 240);
-    [440, 640].forEach((t) => setTimeout(() => { if (openEl === el) el._animate(); }, t));
+    [440, 640, 900, 1300].forEach((t) => setTimeout(() => { if (openEl === el) el._animate(); }, t));
   }
 
   function close() {
