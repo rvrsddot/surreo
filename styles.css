@@ -308,7 +308,7 @@ body.has-open,body.menu-open{overflow:hidden}
 .svg-defs{position:absolute;width:0;height:0;pointer-events:none;overflow:hidden}
 
 /* titolo che fluttua con feTurbulence + feDisplacementMap */
-.hero__title-svg{filter:url(#heroWave);will-change:filter}
+.hero__title-svg{will-change:filter}
 @media (prefers-reduced-motion:reduce){
   .hero__title-svg{filter:none}
 }
