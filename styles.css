@@ -304,15 +304,6 @@ body.has-open,body.menu-open{overflow:hidden}
 .hero{flex:1 0 auto;max-width:1440px;width:100%;margin:0 auto;padding:clamp(20px,4vw,40px) clamp(16px,3.5vw,44px) clamp(14px,2vw,24px);text-align:center;
   display:flex;flex-direction:column;position:relative;isolation:isolate}
 
-/* container SVG per i filtri (invisibile) */
-.svg-defs{position:absolute;width:0;height:0;pointer-events:none;overflow:hidden}
-
-/* titolo che fluttua con feTurbulence + feDisplacementMap */
-.hero__title-svg{will-change:filter}
-@media (prefers-reduced-motion:reduce){
-  .hero__title-svg{filter:none}
-}
-
 .hero__main{margin:auto 0;display:flex;justify-content:center;align-items:center;width:100%;position:relative;z-index:1}
 .hero__h1{margin:0;line-height:0;pointer-events:none}
 .hero__title-svg{width:clamp(300px,90vw,1500px);height:auto;display:block;
