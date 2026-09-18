@@ -585,3 +585,5 @@ body.has-open,body.menu-open{overflow:hidden}
 .contact__ig{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;white-space:nowrap;transition:color .15s var(--ease)}
 .contact__ig:hover{color:var(--ink)}
 .contact__ig svg{flex:none}
+.contact__legal{color:var(--muted);text-decoration:none;white-space:nowrap;transition:color .15s var(--ease)}
+.contact__legal:hover{color:var(--ink)}
