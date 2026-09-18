@@ -19,6 +19,16 @@
     ]
   },
 
+  "virtualCards": {
+    "_nota": "card-video SINGOLE aggiunte alla fine della sezione Virtual & VR",
+    "items": [
+      { "title": "VR 360 — Méliès Inspired",           "id": "nntJxZszvHs" },
+      { "title": "Parallels Archives",                 "id": "USaPDEHLuqc" },
+      { "title": "Parallels Archives — Interface",     "id": "Up0wljz_gOY" },
+      { "title": "A Perspective — Virtual Experience", "id": "FZEoCT-wlmM" }
+    ]
+  },
+
   "visual": {
     "_nota": "nuova sezione VISUAL / VIDEOCLIP EMOTION: immagine progetto + video affianco (layout in arrivo con la tua foto)",
     "items": [

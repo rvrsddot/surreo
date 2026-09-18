@@ -43,6 +43,9 @@
       if (s.id === "exhibit" && vids.exhibitCards && vids.exhibitCards.items) {
         vids.exhibitCards.items.forEach((it) => items.push({ kind: "video", name: it.title, vid: it.id }));
       }
+      if (s.id === "virtual" && vids.virtualCards && vids.virtualCards.items) {
+        vids.virtualCards.items.forEach((it) => items.push({ kind: "video", name: it.title, vid: it.id }));
+      }
       CATS.push({ name: s.title, items });
     });
     if (vids.visual && vids.visual.items) {
@@ -53,15 +56,22 @@
     if (vids.website && vids.website.items) {
       CATS.push({ name: "Website", items: vids.website.items.map((it) => ({ kind: "site", name: it.title, vid: it.id, url: it.url })) });
     }
+    // "Virtual & VR Experience" ha pochi items → in fondo
+    const vIdx = CATS.findIndex((c) => /virtual/i.test(c.name));
+    if (vIdx >= 0) CATS.push(CATS.splice(vIdx, 1)[0]);
     CATS.forEach(renderCategory);
   }
 
   const thumbURL = (it) => (it.kind === "proj" ? (it.frames[0] || "") : YT_THUMB(it.vid));
 
-  function renderCategory(cat) {
+  // colori accent per categoria (in ordine)
+  const CAT_ACCENTS = ["#ff2bd6", "#2be5ff", "#b5ff2b", "#ff8a2b", "#b02bff", "#ff2b7e"];
+
+  function renderCategory(cat, index) {
     const el = document.createElement("section");
     el.className = "cat";
-    if (/videoclip|website/i.test(cat.name)) el.classList.add("cat--wide");
+    el.style.setProperty("--accent", CAT_ACCENTS[index % CAT_ACCENTS.length]);
+    if (/videoclip|website|exhibit|virtual/i.test(cat.name)) el.classList.add("cat--wide");
 
     // --- chiuso ---
     const closed = document.createElement("div");
@@ -77,10 +87,78 @@
       b.className = "thumb"; b.type = "button"; b.setAttribute("aria-label", "Apri " + it.name);
       b.innerHTML = '<img loading="lazy" alt="" src="' + thumbURL(it) + '">';
       b.addEventListener("click", (e) => { e.stopPropagation(); open(el, i); });
+      if (it.kind === "proj" && it.frames && it.frames.length > 1) {
+        b._frames = it.frames;
+        attachHoverGif(b);
+      }
       strip.appendChild(b);
     });
     closed.appendChild(strip);
     el.appendChild(closed);
+
+    // marquee: doppia strategia
+    //  A) LOOP seamless (con clone) se strip originale >= viewport × 1.1
+    //  B) PING-PONG (avanti/indietro, nessun clone) se c'è spazio scorrevole ma non abbastanza per loop pulito
+    //  C) statico se non c'è nemmeno spazio scorrevole
+    if (!reduce && cat.items.length > 1) {
+      const setupMarquee = () => {
+        const originalW = strip.scrollWidth;
+        const viewW = strip.clientWidth;
+        if (!viewW) return;
+
+        let paused = false, userLock = false, userTimer = 0;
+        const release = (ms) => { clearTimeout(userTimer); userTimer = setTimeout(() => { userLock = false; }, ms); };
+        strip.addEventListener("mouseenter", () => { paused = true; });
+        strip.addEventListener("mouseleave", () => { paused = false; });
+        strip.addEventListener("wheel", () => { userLock = true; release(1400); }, { passive: true });
+        strip.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") { userLock = true; } }, { passive: true });
+        strip.addEventListener("pointerup",   (e) => { if (e.pointerType !== "mouse") { release(1800); } }, { passive: true });
+        const speed = 0.35;
+
+        // direzione: pari →, dispari ← (marquee asimmetrico)
+        const dirSign = (index % 2 === 0) ? 1 : -1;
+
+        if (originalW >= viewW * 1.1) {
+          // A) LOOP seamless con clonazione
+          const baseHalf = originalW;
+          const originals = Array.from(strip.children);
+          originals.forEach((btn, i) => {
+            const clone = btn.cloneNode(true);
+            clone.setAttribute("aria-hidden", "true");
+            clone.setAttribute("tabindex", "-1");
+            clone.addEventListener("click", (e) => { e.stopPropagation(); open(el, i); });
+            if (btn._frames) { clone._frames = btn._frames; attachHoverGif(clone); }
+            strip.appendChild(clone);
+          });
+          if (dirSign === -1) strip.scrollLeft = baseHalf;
+          const step = () => {
+            if (!paused && !userLock && !el.classList.contains("is-open")) {
+              strip.scrollLeft += speed * dirSign;
+              if (dirSign === 1 && strip.scrollLeft >= baseHalf) strip.scrollLeft -= baseHalf;
+              else if (dirSign === -1 && strip.scrollLeft <= 0) strip.scrollLeft += baseHalf;
+            }
+            requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        } else if (originalW > viewW + 20) {
+          // B) PING-PONG senza clonazione
+          let dir = dirSign;
+          if (dirSign === -1) strip.scrollLeft = strip.scrollWidth - strip.clientWidth;
+          const step = () => {
+            if (!paused && !userLock && !el.classList.contains("is-open")) {
+              const max = strip.scrollWidth - strip.clientWidth;
+              strip.scrollLeft += speed * dir;
+              if (strip.scrollLeft >= max) { strip.scrollLeft = max; dir = -1; }
+              else if (strip.scrollLeft <= 0) { strip.scrollLeft = 0; dir = 1; }
+            }
+            requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        }
+        // C) altrimenti statico (nulla da fare)
+      };
+      requestAnimationFrame(() => requestAnimationFrame(setupMarquee));
+    }
 
     // --- aperto ---
     const openW = document.createElement("div");
@@ -173,6 +251,23 @@
     if (card._timer) { clearInterval(card._timer); card._timer = null; }
     const img = card.querySelector(".slide-img");
     if (img && card._frames) img.src = card._frames[0];
+  }
+  // hover-gif per le miniature nella strip chiusa
+  function attachHoverGif(el) {
+    const img = el.querySelector("img");
+    if (!img) return;
+    let timer = null, preloaded = false;
+    el.addEventListener("mouseenter", () => {
+      const f = el._frames;
+      if (!f || f.length < 2 || timer) return;
+      if (!preloaded) { f.forEach((src) => { const im = new Image(); im.src = src; }); preloaded = true; }
+      let i = 0;
+      timer = setInterval(() => { i = (i + 1) % f.length; img.src = f[i]; }, 200);
+    });
+    el.addEventListener("mouseleave", () => {
+      if (timer) { clearInterval(timer); timer = null; }
+      if (el._frames && el._frames[0]) img.src = el._frames[0];
+    });
   }
   function playVideo(card) {
     if (card.querySelector("iframe")) return;
