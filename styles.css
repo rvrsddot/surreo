@@ -582,3 +582,6 @@ body.has-open,body.menu-open{overflow:hidden}
 .contact__foot{display:flex;justify-content:space-between;gap:clamp(6px,2vw,12px);flex-wrap:nowrap;padding-top:16px;border-top:1px solid var(--line);
   font:600 clamp(6.5px,1.9vw,10px)/1 ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 .contact__foot span{white-space:nowrap}
+.contact__ig{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;white-space:nowrap;transition:color .15s var(--ease)}
+.contact__ig:hover{color:var(--ink)}
+.contact__ig svg{flex:none}

@@ -548,6 +548,47 @@
             "assets/projects/workshok/06.jpg",
             "assets/projects/workshok/07.jpg"
           ]
+        },
+        {
+          "id": "suburbiae-3-edizione",
+          "name": "SUBURBIÆ 3ª EDIZIONE",
+          "description": "Work in progress",
+          "frames": [
+            "assets/projects/suburbiae-3-edizione/01.jpg",
+            "assets/projects/suburbiae-3-edizione/02.jpg"
+          ]
+        },
+        {
+          "id": "rumore-x-suburbiae",
+          "name": "RUMORE X SUBURBIÆ",
+          "description": "Work in progress",
+          "frames": [
+            "assets/projects/rumore-x-suburbiae/01.jpg",
+            "assets/projects/rumore-x-suburbiae/02.jpg",
+            "assets/projects/rumore-x-suburbiae/03.jpg",
+            "assets/projects/rumore-x-suburbiae/04.jpg",
+            "assets/projects/rumore-x-suburbiae/05.jpg",
+            "assets/projects/rumore-x-suburbiae/06.jpg"
+          ]
+        },
+        {
+          "id": "lagarock",
+          "name": "LAGAROCK",
+          "description": "Work in progress",
+          "frames": [
+            "assets/projects/lagarock/01.jpg",
+            "assets/projects/lagarock/02.jpg",
+            "assets/projects/lagarock/03.jpg",
+            "assets/projects/lagarock/04.jpg",
+            "assets/projects/lagarock/05.jpg",
+            "assets/projects/lagarock/06.jpg",
+            "assets/projects/lagarock/07.jpg",
+            "assets/projects/lagarock/08.jpg",
+            "assets/projects/lagarock/09.jpg",
+            "assets/projects/lagarock/10.jpg",
+            "assets/projects/lagarock/11.jpg",
+            "assets/projects/lagarock/12.jpg"
+          ]
         }
       ]
     },

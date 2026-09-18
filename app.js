@@ -88,7 +88,7 @@
     cat.items.forEach((it, i) => {
       const b = document.createElement("button");
       b.className = "thumb"; b.type = "button"; b.setAttribute("aria-label", "Apri " + it.name);
-      b.innerHTML = '<img loading="lazy" alt="" src="' + thumbURL(it) + '">';
+      b.innerHTML = '<img loading="lazy" alt="' + it.name + '" src="' + thumbURL(it) + '">';
       b.addEventListener("click", (e) => { e.stopPropagation(); open(el, i); });
       if (it.kind === "proj" && it.frames && it.frames.length > 1) {
         b._frames = it.frames;
