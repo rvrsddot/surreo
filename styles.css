@@ -372,6 +372,11 @@ body.has-open,body.menu-open{overflow:hidden}
 .cat__open .pcard__back .visit{color:#f2ede0;border-color:#f2ede0}
 .cat__open .pcard__back .visit:hover{background:#f2ede0;color:#111}
 .cat__open .open__foot{color:#8d8677;border-top-color:#3a3a3a}
+/* tag pills nel retro card */
+.pcard__back .tags{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.pcard__back .tags li{font:600 10px/1 ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase;
+  padding:5px 9px;border:1px solid #3a3a3a;border-radius:999px;color:#c8c1af;background:transparent;white-space:nowrap}
+.pcard__back p:not(.m){text-wrap:pretty}
 
 /* collateral */
 .coll__head{max-width:1440px;margin:0 auto;padding:0 clamp(16px,3.5vw,44px);

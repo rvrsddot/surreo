@@ -7,6 +7,7 @@
         {
           "id": "mybestlazio",
           "name": "MYBESTLAZIO",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/mybestlazio/01.jpg",
             "assets/projects/mybestlazio/02.jpg",
@@ -27,7 +28,14 @@
         },
         {
           "id": "caffe-meletti",
-          "name": "CAFFÉ MELETTI",
+          "name": "6° PIANO X MELETTI",
+          "type": "Project X",
+          "description": "Locandine per Meletti in stile retrò, caratterizzate da un tocco surreale che valorizza l'identità storica del brand con un design raffinato e di forte impatto visivo.",
+          "tags": [
+            "Social Media Strategy",
+            "Social Media Content",
+            "Graphic Design"
+          ],
           "frames": [
             "assets/projects/caffe-meletti/01.jpg",
             "assets/projects/caffe-meletti/02.jpg",
@@ -46,7 +54,15 @@
         },
         {
           "id": "castelmania",
-          "name": "CASTELMANIA",
+          "name": "COMUNE DI CASTELLI",
+          "type": "Project X",
+          "description": "Promozione e branding per CASTELVANIA FESTIVAL, evento organizzato da Jay27 in collaborazione con il Comune di Castelli, dedicato alla valorizzazione e promozione del territorio.",
+          "tags": [
+            "Graphic Design",
+            "Meta Ads",
+            "Social Media Strategy",
+            "Brand Identity"
+          ],
           "frames": [
             "assets/projects/castelmania/01.jpg",
             "assets/projects/castelmania/02.jpg",
@@ -64,6 +80,14 @@
         {
           "id": "persuasio",
           "name": "PERSUASIO",
+          "type": "Bachelor's Thesis",
+          "description": "Progettazione grafica di un libro basato su una ricerca approfondita sull'operazione mediatica, integrato con tecnologie di realtà aumentata per arricchire i contenuti con video ed elementi interattivi, offrendo un'esperienza immersiva e innovativa.",
+          "tags": [
+            "Augmented Reality Experience",
+            "Research Publication",
+            "Editorial Design",
+            "Research"
+          ],
           "frames": [
             "assets/projects/persuasio/01.jpg",
             "assets/projects/persuasio/02.jpg",
@@ -79,6 +103,7 @@
         {
           "id": "merletto-di-offida",
           "name": "MERLETTO DI OFFIDA",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/merletto-di-offida/01.jpg",
             "assets/projects/merletto-di-offida/02.jpg",
@@ -91,6 +116,7 @@
         {
           "id": "suburbi",
           "name": "SUBURBIÆ",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/suburbi/01.jpg",
             "assets/projects/suburbi/02.jpg",
@@ -112,6 +138,7 @@
         {
           "id": "shine-soap",
           "name": "SHINE SOAP",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/shine-soap/01.jpg",
             "assets/projects/shine-soap/02.jpg",
@@ -127,6 +154,7 @@
         {
           "id": "handmade",
           "name": "HANDMADE",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/handmade/01.jpg",
             "assets/projects/handmade/02.jpg",
@@ -146,7 +174,16 @@
         },
         {
           "id": "gizzi-fisioterapista",
-          "name": "GIZZI FISIOTERAPISTA",
+          "name": "F GIZZI FISIOTERAPIA",
+          "type": "Project",
+          "description": "Identità visiva per fisioterapista dermatofunzionale.",
+          "tags": [
+            "Brand Identity",
+            "Meta Ads",
+            "Social Media Strategy",
+            "Illustration Design",
+            "Photo & Video"
+          ],
           "frames": [
             "assets/projects/gizzi-fisioterapista/01.jpg",
             "assets/projects/gizzi-fisioterapista/02.jpg",
@@ -164,6 +201,7 @@
         {
           "id": "gizzi-illustration",
           "name": "GIZZI ILLUSTRATION",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/gizzi-illustration/01.jpg",
             "assets/projects/gizzi-illustration/02.jpg",
@@ -180,6 +218,7 @@
         {
           "id": "palandrani-technical",
           "name": "PALANDRANI TECHNICAL",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/palandrani-technical/01.jpg",
             "assets/projects/palandrani-technical/02.jpg",
@@ -200,6 +239,14 @@
         {
           "id": "spd-ing",
           "name": "SPD ING",
+          "type": "Project X",
+          "description": "Sviluppo flyer e formati social per evento.",
+          "tags": [
+            "Website",
+            "Strategic Design",
+            "Graphic Design",
+            "Brand Identity"
+          ],
           "frames": [
             "assets/projects/spd-ing/01.jpg",
             "assets/projects/spd-ing/02.jpg",
@@ -219,6 +266,16 @@
         {
           "id": "panetta-bakery",
           "name": "PANETTA BAKERY",
+          "type": "Project X",
+          "description": "Sviluppo completo dell'identità visiva, sito web, merchandising e interior design per una bakery, combinando estetica accogliente e funzionalità per un'esperienza di marca coerente e distintiva.",
+          "tags": [
+            "Website",
+            "Social Media",
+            "Brand Identity",
+            "Graphic Design",
+            "Interior Design",
+            "Packaging Design"
+          ],
           "frames": [
             "assets/projects/panetta-bakery/01.jpg",
             "assets/projects/panetta-bakery/02.jpg",
@@ -235,6 +292,16 @@
         {
           "id": "jay27-asd",
           "name": "JAY27 ASD",
+          "type": "Project X",
+          "description": "Creazione dell'identità visiva e progettazione degli allestimenti per mostre ed eventi, supportando l'associazione nella valorizzazione artistica e culturale del territorio attraverso soluzioni visive efficaci e coinvolgenti.",
+          "tags": [
+            "Design Strategy",
+            "Exhibit Design",
+            "Videomapping & Visual",
+            "Co-founding",
+            "Brand Identity",
+            "Graphic Design"
+          ],
           "frames": [
             "assets/projects/jay27-asd/01.jpg",
             "assets/projects/jay27-asd/02.jpg",
@@ -246,7 +313,16 @@
         },
         {
           "id": "zioma-fritti",
-          "name": "ZIOMÁ FRITTI",
+          "name": "ZIO MA'",
+          "type": "Project",
+          "description": "Sviluppo di branding completo, progettazione insegna e gestione dei contenuti social con foto e video, per valorizzare l'identità autentica e tradizionale della friggitoria napoletana.",
+          "tags": [
+            "Meta Ads",
+            "Photo, Video & Editing",
+            "Strategic Design",
+            "Brand Identity & Graphic Design",
+            "Social Media"
+          ],
           "frames": [
             "assets/projects/zioma-fritti/01.jpg",
             "assets/projects/zioma-fritti/02.jpg",
@@ -258,6 +334,7 @@
         {
           "id": "diemme-caffe-concorso",
           "name": "DIEMME CAFFÉ - CONCORSO",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/diemme-caffe-concorso/01.jpg",
             "assets/projects/diemme-caffe-concorso/02.jpg",
@@ -276,6 +353,12 @@
         {
           "id": "villa-ebe",
           "name": "VILLA EBE",
+          "type": "Project",
+          "description": "Shooting per luxury house.",
+          "tags": [
+            "Editing",
+            "Photo"
+          ],
           "frames": [
             "assets/projects/villa-ebe/01.jpg",
             "assets/projects/villa-ebe/02.jpg",
@@ -288,6 +371,7 @@
         {
           "id": "escaped",
           "name": "ESCAPED",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/escaped/01.jpg",
             "assets/projects/escaped/02.jpg",
@@ -307,6 +391,7 @@
         {
           "id": "donna-mayla",
           "name": "DONNA MAYLA",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/donna-mayla/01.jpg",
             "assets/projects/donna-mayla/02.jpg",
@@ -321,6 +406,7 @@
         {
           "id": "samisdat",
           "name": "SAMISDAT",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/samisdat/01.jpg",
             "assets/projects/samisdat/02.jpg",
@@ -337,6 +423,7 @@
         {
           "id": "lucrezia-perelli",
           "name": "LUCREZIA PERELLI",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/lucrezia-perelli/01.jpg",
             "assets/projects/lucrezia-perelli/02.jpg",
@@ -349,6 +436,7 @@
         {
           "id": "imuri-band",
           "name": "IMURI BAND",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/imuri-band/01.jpg",
             "assets/projects/imuri-band/02.jpg",
@@ -369,7 +457,14 @@
         },
         {
           "id": "caffe-design",
-          "name": "CAFFE DESIGN",
+          "name": "CAFFÈ DESIGN",
+          "type": "Project",
+          "description": "Shooting tematico per Caffè Design in stile surrealista.",
+          "tags": [
+            "Editing",
+            "Set Design",
+            "Photo"
+          ],
           "frames": [
             "assets/projects/caffe-design/01.jpg",
             "assets/projects/caffe-design/02.jpg",
@@ -380,6 +475,7 @@
         {
           "id": "appicciafuoco",
           "name": "APPICCIAFUOCO",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/appicciafuoco/01.jpg",
             "assets/projects/appicciafuoco/02.jpg",
@@ -398,6 +494,7 @@
         {
           "id": "gian-e-gli-spiriti",
           "name": "GIAN E GLI SPIRITI",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/gian-e-gli-spiriti/01.jpg",
             "assets/projects/gian-e-gli-spiriti/02.jpg",
@@ -409,7 +506,17 @@
         },
         {
           "id": "sww-since-2018",
-          "name": "SWW SINCE 2018",
+          "name": "SAAD WORKSHOP WEEK",
+          "type": "Project",
+          "description": "Coordinamento e partecipazione a SAAD Workshop Week, evento multidisciplinare all'interno di UNICAM SAAD Ascoli. Un'occasione di formazione intensiva e confronto creativo tra studenti, professionisti e docenti, con focus su design e innovazione.",
+          "tags": [
+            "Co-founding",
+            "Brand Identity / Photo & Video",
+            "Workshop Curation",
+            "Collab. x Università di Camerino",
+            "Social Media Content",
+            "Exhibit Design"
+          ],
           "frames": [
             "assets/projects/sww-since-2018/01.jpg",
             "assets/projects/sww-since-2018/02.jpg",
@@ -421,7 +528,17 @@
         },
         {
           "id": "workshok",
-          "name": "WORKSHOK",
+          "name": "WORKSHOK!",
+          "type": "Project",
+          "description": "Co-fondatore di WORKSHOK, hub dedicato all'organizzazione di workshop con grandi nomi del design per studenti e professionisti. Contribuisco allo sviluppo dell'identità visiva e alla gestione creativa del progetto, che promuove formazione avanzata e networking nel settore.",
+          "tags": [
+            "Co-founding",
+            "Design Strategy",
+            "Exhibit Design",
+            "Graphic Design / Photo & Video",
+            "Social Media Content",
+            "Workshop Curation"
+          ],
           "frames": [
             "assets/projects/workshok/01.jpg",
             "assets/projects/workshok/02.jpg",
@@ -441,6 +558,7 @@
         {
           "id": "saponi-di-un-tempo",
           "name": "SAPONI DI UN TEMPO",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/saponi-di-un-tempo/01.jpg",
             "assets/projects/saponi-di-un-tempo/02.jpg",
@@ -460,6 +578,7 @@
         {
           "id": "panchina-xxx",
           "name": "PANCHINA XXX",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/panchina-xxx/01.jpg",
             "assets/projects/panchina-xxx/02.jpg",
@@ -477,6 +596,7 @@
         {
           "id": "intime",
           "name": "INTIME",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/intime/01.jpg",
             "assets/projects/intime/02.jpg",
@@ -493,6 +613,7 @@
         {
           "id": "mirrorx",
           "name": "MIRRORX",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/mirrorx/B_MIRRORX_103.jpg",
             "assets/projects/mirrorx/01.jpg",
@@ -514,6 +635,7 @@
         {
           "id": "dum-md-drone",
           "name": "DUM MD DRONE",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/dum-md-drone/01.jpg",
             "assets/projects/dum-md-drone/02.jpg",
@@ -532,6 +654,7 @@
         {
           "id": "orikata",
           "name": "ORIKATA",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/orikata/01.jpg",
             "assets/projects/orikata/02.jpg",
@@ -546,7 +669,14 @@
         },
         {
           "id": "concept-industrial-design",
-          "name": "CONCEPT INDUSTRIAL DESIGN",
+          "name": "CHAIR CONCEPTING",
+          "type": "Indie Project",
+          "description": "Random concepting.",
+          "tags": [
+            "Industrial Design Concepting",
+            "Rendering",
+            "3D Model"
+          ],
           "frames": [
             "assets/projects/concept-industrial-design/01.jpg",
             "assets/projects/concept-industrial-design/02.jpg",
@@ -564,6 +694,7 @@
         {
           "id": "etni-psichedelic",
           "name": "ETNIÆ & PSICHEDELICÆ",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/etni-psichedelic/01.jpg",
             "assets/projects/etni-psichedelic/02.jpg",
@@ -585,7 +716,16 @@
       "projects": [
         {
           "id": "about-rock-exhibit",
-          "name": "ABOUT ROCK EXHIBIT",
+          "name": "ABOUT ROCK X THE SOUNDCHECK",
+          "type": "Project",
+          "description": "Allestimento articolato per una mostra fotografica dedicata alle band rock, realizzato con materiali poveri come filo e chiodi. Un progetto che unisce minimalismo e complessità, valorizzando l'essenza grezza della musica attraverso un design espressivo e coinvolgente.",
+          "tags": [
+            "Exhibit Design",
+            "Design Strategy",
+            "Graphic Design",
+            "Social Media Content",
+            "Workshop Curation"
+          ],
           "frames": [
             "assets/projects/about-rock-exhibit/01.jpg",
             "assets/projects/about-rock-exhibit/02.jpg",
@@ -603,6 +743,16 @@
         {
           "id": "a-perspective",
           "name": "A PERSPECTIVE",
+          "type": "Project",
+          "description": "Progetto di installazione immersiva in realtà aumentata dove natura e digitale si fondono in un glitch poetico, mettendo in scena un processo che evidenzia l'errore come elemento centrale dell'esperienza sensoriale.",
+          "tags": [
+            "Design",
+            "Graphic Design",
+            "Exhibit Design",
+            "Social Media Content",
+            "Photo & Video",
+            "Augmented Reality Experience"
+          ],
           "frames": [
             "assets/projects/a-perspective/01.jpg",
             "assets/projects/a-perspective/02.jpg",
@@ -621,6 +771,15 @@
         {
           "id": "unnecessary-exhibit",
           "name": "UNNECESSARY EXHIBIT",
+          "type": "Project",
+          "description": "Organizzazione e realizzazione completa di una mostra di pittura surrealista, curando dalla comunicazione pubblicitaria all'allestimento, che utilizza materiali come fili e cemento per creare un ambiente immersivo e coerente con il concept della mostra.",
+          "tags": [
+            "Exhibit Design",
+            "Design Strategy",
+            "Graphic Design",
+            "Social Media Content",
+            "Workshop Curation"
+          ],
           "frames": [
             "assets/projects/unnecessary-exhibit/01.jpg",
             "assets/projects/unnecessary-exhibit/02.jpg",
@@ -636,7 +795,14 @@
         },
         {
           "id": "butterfly-effect-exhibit",
-          "name": "BUTTERFLY EFFECT EXHIBIT",
+          "name": "BUTTERFLY EFFECTS",
+          "type": "Project",
+          "description": "Evento multisensoriale con performance live accompagnata da video glitchati in tempo reale, creando un dialogo dinamico tra musica e immagini che amplifica l'esperienza artistica.",
+          "tags": [
+            "Graphic Design",
+            "Exhibit Design",
+            "Sound Design"
+          ],
           "frames": [
             "assets/projects/butterfly-effect-exhibit/01.jpg",
             "assets/projects/butterfly-effect-exhibit/02.jpg",
@@ -653,7 +819,16 @@
       "projects": [
         {
           "id": "vr-melies",
-          "name": "VR-MELIÉS",
+          "name": "MELIÈS VIRTUAL EXP",
+          "type": "Indie Project",
+          "description": "Sviluppo di un ambiente virtuale immersivo ispirato all'universo onirico e visionario di Georges Méliès, realizzato con Unreal Engine per offrire un viaggio interattivo tra magia, cinema e fantasia.",
+          "tags": [
+            "Design Project",
+            "Experience Design",
+            "3D Model / Rendering / Texture",
+            "Unreal Engine",
+            "Virtual Reality"
+          ],
           "frames": [
             "assets/projects/vr-melies/01.jpg",
             "assets/projects/vr-melies/02.jpg",
@@ -665,6 +840,7 @@
         {
           "id": "parallels-archives",
           "name": "PARALLELS ARCHIVES",
+          "description": "Work in progress",
           "frames": [
             "assets/projects/parallels-archives/01.jpg",
             "assets/projects/parallels-archives/02.jpg",

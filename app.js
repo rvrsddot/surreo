@@ -39,7 +39,10 @@
   function build(sections, vids) {
     const CATS = [];
     sections.forEach((s) => {
-      const items = (s.projects || []).map((p) => ({ kind: "proj", name: p.name, frames: p.frames || [] }));
+      const items = (s.projects || []).map((p) => ({
+        kind: "proj", name: p.name, frames: p.frames || [],
+        type: p.type || null, description: p.description || null, tags: p.tags || []
+      }));
       if (s.id === "exhibit" && vids.exhibitCards && vids.exhibitCards.items) {
         vids.exhibitCards.items.forEach((it) => items.push({ kind: "video", name: it.title, vid: it.id }));
       }
@@ -218,7 +221,10 @@
           '<div class="pcard__label"><span>' + it.name + "</span><em>info +</em></div>" +
         "</div>" +
         '<div class="pcard__face pcard__back">' +
-          "<h4>" + it.name + "</h4><p class=\"m\">" + cat.name + "</p><p>Descrizione in arrivo.</p>" +
+          "<h4>" + it.name + "</h4>" +
+          '<p class="m">' + (it.type || cat.name) + "</p>" +
+          "<p>" + (it.description || "Work in progress") + "</p>" +
+          (it.tags && it.tags.length ? '<ul class="tags">' + it.tags.map((t) => "<li>" + t + "</li>").join("") + "</ul>" : "") +
           '<div class="row"><span>Surreo Studio</span>' + visit + "</div>" +
         "</div>" +
       "</div>";
