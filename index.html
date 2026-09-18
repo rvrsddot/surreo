@@ -91,7 +91,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&display=swap" />
-  <link rel="stylesheet" href="styles.css?v=161" />
+  <link rel="stylesheet" href="styles.css?v=162" />
 </head>
 <body>
 
@@ -326,6 +326,34 @@
       </footer>
     </div>
   </div>
+
+  <!-- Privacy banner (mostrato solo al primo visit) -->
+  <aside class="privacy-banner" id="privacyBanner" role="dialog" aria-live="polite" aria-label="Informativa privacy" hidden>
+    <div class="privacy-banner__inner">
+      <p class="privacy-banner__text">
+        <b>Cookie &amp; Privacy.</b>
+        Questo sito <b>non usa cookie di tracciamento né analytics</b>. Carica solo risorse tecniche da Google Fonts, YouTube (nocookie) e GitHub Pages — con eventuale trasferimento del tuo IP a questi provider.
+        <a href="/privacy.html">Leggi l'informativa</a>.
+      </p>
+      <button class="privacy-banner__ok" type="button" id="privacyBannerOk" aria-label="Chiudi banner privacy">Ok, ho capito</button>
+    </div>
+  </aside>
+  <script>
+  (function(){
+    var KEY='surreo.privacy.ack.v1';
+    try { if(localStorage.getItem(KEY)==='1') return; } catch(e){}
+    var el=document.getElementById('privacyBanner');
+    var ok=document.getElementById('privacyBannerOk');
+    if(!el||!ok) return;
+    el.hidden=false;
+    requestAnimationFrame(function(){ el.classList.add('is-on'); });
+    ok.addEventListener('click', function(){
+      el.classList.remove('is-on');
+      setTimeout(function(){ el.hidden=true; }, 260);
+      try { localStorage.setItem(KEY,'1'); } catch(e){}
+    });
+  })();
+  </script>
 
   <script>
   (function(){
