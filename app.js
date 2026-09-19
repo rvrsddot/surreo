@@ -99,15 +99,16 @@
     closed.appendChild(strip);
     el.appendChild(closed);
 
-    // marquee: doppia strategia
-    //  A) LOOP seamless (con clone) se strip originale >= viewport × 1.1
-    //  B) PING-PONG (avanti/indietro, nessun clone) se c'è spazio scorrevole ma non abbastanza per loop pulito
-    //  C) statico se non c'è nemmeno spazio scorrevole
+    // marquee: LOOP seamless con clonazione.
+    // Cloniamo il set originale N volte finché la larghezza totale supera 2× viewport,
+    // così anche categorie con pochi item (che riempiono la strip senza overflow)
+    // scorrono comunque. baseHalf resta = originalW: al wrap la porzione visibile
+    // è identica (clone == originale) e la giunzione non si vede.
     if (!reduce && cat.items.length > 1) {
       const setupMarquee = () => {
         const originalW = strip.scrollWidth;
         const viewW = strip.clientWidth;
-        if (!viewW) return;
+        if (!viewW || !originalW) return;
 
         let paused = false, userLock = false, userTimer = 0;
         const release = (ms) => { clearTimeout(userTimer); userTimer = setTimeout(() => { userLock = false; }, ms); };
@@ -121,10 +122,11 @@
         // direzione: pari →, dispari ← (marquee asimmetrico)
         const dirSign = (index % 2 === 0) ? 1 : -1;
 
-        if (originalW >= viewW * 1.1) {
-          // A) LOOP seamless con clonazione
-          const baseHalf = originalW;
-          const originals = Array.from(strip.children);
+        const baseHalf = originalW;
+        const originals = Array.from(strip.children);
+        const minTotal = Math.max(viewW * 2 + originalW, originalW * 2);
+        let totalW = originalW, safety = 0;
+        while (totalW < minTotal && safety < 20) {
           originals.forEach((btn, i) => {
             const clone = btn.cloneNode(true);
             clone.setAttribute("aria-hidden", "true");
@@ -133,32 +135,20 @@
             if (btn._frames) { clone._frames = btn._frames; attachHoverGif(clone); }
             strip.appendChild(clone);
           });
-          if (dirSign === -1) strip.scrollLeft = baseHalf;
-          const step = () => {
-            if (!paused && !userLock && !el.classList.contains("is-open")) {
-              strip.scrollLeft += speed * dirSign;
-              if (dirSign === 1 && strip.scrollLeft >= baseHalf) strip.scrollLeft -= baseHalf;
-              else if (dirSign === -1 && strip.scrollLeft <= 0) strip.scrollLeft += baseHalf;
-            }
-            requestAnimationFrame(step);
-          };
-          requestAnimationFrame(step);
-        } else if (originalW > viewW + 20) {
-          // B) PING-PONG senza clonazione
-          let dir = dirSign;
-          if (dirSign === -1) strip.scrollLeft = strip.scrollWidth - strip.clientWidth;
-          const step = () => {
-            if (!paused && !userLock && !el.classList.contains("is-open")) {
-              const max = strip.scrollWidth - strip.clientWidth;
-              strip.scrollLeft += speed * dir;
-              if (strip.scrollLeft >= max) { strip.scrollLeft = max; dir = -1; }
-              else if (strip.scrollLeft <= 0) { strip.scrollLeft = 0; dir = 1; }
-            }
-            requestAnimationFrame(step);
-          };
-          requestAnimationFrame(step);
+          totalW += originalW;
+          safety++;
         }
-        // C) altrimenti statico (nulla da fare)
+
+        if (dirSign === -1) strip.scrollLeft = baseHalf;
+        const step = () => {
+          if (!paused && !userLock && !el.classList.contains("is-open")) {
+            strip.scrollLeft += speed * dirSign;
+            if (dirSign === 1 && strip.scrollLeft >= baseHalf) strip.scrollLeft -= baseHalf;
+            else if (dirSign === -1 && strip.scrollLeft <= 0) strip.scrollLeft += baseHalf;
+          }
+          requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
       };
       requestAnimationFrame(() => requestAnimationFrame(setupMarquee));
     }
