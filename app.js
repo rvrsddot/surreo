@@ -241,7 +241,7 @@
     const img = card.querySelector(".slide-img");
     f.forEach((src) => { const im = new Image(); im.src = src; });   // preload
     let i = 0;
-    card._timer = setInterval(() => { i = (i + 1) % f.length; img.src = f[i]; }, 1000);
+    card._timer = setInterval(() => { i = (i + 1) % f.length; img.src = f[i]; }, 1800);
   }
   function stopGif(card) {
     if (card._timer) { clearInterval(card._timer); card._timer = null; }
@@ -258,7 +258,7 @@
       if (!f || f.length < 2 || timer) return;
       if (!preloaded) { f.forEach((src) => { const im = new Image(); im.src = src; }); preloaded = true; }
       let i = 0;
-      timer = setInterval(() => { i = (i + 1) % f.length; img.src = f[i]; }, 1000);
+      timer = setInterval(() => { i = (i + 1) % f.length; img.src = f[i]; }, 1800);
     });
     el.addEventListener("mouseleave", () => {
       if (timer) { clearInterval(timer); timer = null; }
