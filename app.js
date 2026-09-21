@@ -385,4 +385,42 @@
   backdrop.addEventListener("click", close);
   window.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
   window.addEventListener("resize", () => { if (openEl) { setRect(openEl, targetRect()); openEl._animate(); } });
+
+  /* --- hero reactive: parallax magnetico sul titolo + spotlight morbido --- */
+  (function heroReactive(){
+    if (reduce) return;
+    const hero = document.querySelector(".hero");
+    if (!hero) return;
+    const svg = hero.querySelector(".hero__title-svg");
+    let raf = 0, pending = null;
+    const apply = () => {
+      raf = 0;
+      if (!pending) return;
+      const { x, y, w, h } = pending;
+      hero.style.setProperty("--mx", (x / w * 100) + "%");
+      hero.style.setProperty("--my", (y / h * 100) + "%");
+      if (svg) {
+        const dx = (x / w - 0.5);   // -0.5 .. 0.5
+        const dy = (y / h - 0.5);
+        svg.style.setProperty("--tx", (dx * 18).toFixed(1) + "px");
+        svg.style.setProperty("--ty", (dy * 14).toFixed(1) + "px");
+        svg.style.setProperty("--rz", (dx * 1.4).toFixed(2) + "deg");
+      }
+    };
+    hero.addEventListener("pointermove", (e) => {
+      if (e.pointerType && e.pointerType !== "mouse") return;   // no touch
+      const r = hero.getBoundingClientRect();
+      pending = { x: e.clientX - r.left, y: e.clientY - r.top, w: r.width, h: r.height };
+      hero.classList.add("is-lit");
+      if (!raf) raf = requestAnimationFrame(apply);
+    }, { passive: true });
+    hero.addEventListener("pointerleave", () => {
+      hero.classList.remove("is-lit");
+      if (svg) {
+        svg.style.setProperty("--tx", "0px");
+        svg.style.setProperty("--ty", "0px");
+        svg.style.setProperty("--rz", "0deg");
+      }
+    }, { passive: true });
+  })();
 })();
