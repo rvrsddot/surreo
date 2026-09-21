@@ -77,60 +77,32 @@
     inner.className = "cat-picker__inner";
     inner.innerHTML =
       '<div class="cat-picker__head"><h2>Categorie</h2>' +
-      '<p class="cat-picker__hint">Clicca un quadrato per filtrare, oppure scorri e vedi tutto</p></div>';
+      '<p class="cat-picker__hint">Clicca un quadrato per aprire la categoria</p></div>';
     const grid = document.createElement("div");
     grid.className = "cat-picker__grid";
     grid.style.setProperty("--n", CATS.length);
     CATS.forEach((c, i) => {
-      const item = document.createElement("div");
-      item.className = "cat-picker__item";
       const btn = document.createElement("button");
       btn.className = "cat-picker__sq";
       btn.type = "button";
       btn.dataset.cat = i;
       btn.style.setProperty("--i", i);
-      btn.setAttribute("aria-label", "Filtra " + c.name);
+      btn.setAttribute("aria-label", "Apri " + c.name);
       const label = document.createElement("span");
       label.className = "cat-picker__label";
       label.textContent = c.name;
-      btn.addEventListener("click", () => filterToCategory(i));
-      item.appendChild(btn);
-      item.appendChild(label);
-      grid.appendChild(item);
+      btn.appendChild(label);
+      btn.addEventListener("click", () => openCategoryFromPicker(i));
+      grid.appendChild(btn);
     });
     inner.appendChild(grid);
     picker.appendChild(inner);
     projects.parentNode.insertBefore(picker, projects);
-
-    // Back button (nascosto finché non attivo il filtro)
-    const head = projects.querySelector(".sec-head");
-    if (head && !head.querySelector(".projects__back")) {
-      const back = document.createElement("button");
-      back.className = "projects__back";
-      back.type = "button";
-      back.innerHTML = "&larr; Tutte le categorie";
-      back.addEventListener("click", unfilterCategories);
-      head.appendChild(back);
-    }
   }
 
-  function filterToCategory(idx) {
-    const projects = document.querySelector(".projects");
-    if (!projects) return;
-    document.querySelectorAll("#app > .cat").forEach((el, i) => {
-      el.classList.toggle("is-hidden", i !== idx);
-    });
-    projects.classList.add("projects--filtered");
-    projects.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
-  function unfilterCategories() {
-    const projects = document.querySelector(".projects");
-    if (!projects) return;
-    document.querySelectorAll("#app > .cat").forEach((el) => el.classList.remove("is-hidden"));
-    projects.classList.remove("projects--filtered");
-    const picker = document.querySelector(".cat-picker");
-    if (picker) picker.scrollIntoView({ behavior: "smooth", block: "start" });
+  function openCategoryFromPicker(idx) {
+    const cat = document.querySelectorAll("#app > .cat")[idx];
+    if (cat) open(cat, 0);
   }
 
   const thumbURL = (it) => (it.kind === "proj" ? (it.frames[0] || "") : YT_THUMB(it.vid));

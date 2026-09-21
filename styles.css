@@ -630,44 +630,75 @@ body.has-open,body.menu-open{overflow:hidden}
   .privacy-banner__ok{align-self:flex-end}
 }
 
-/* ===== Cat picker: griglia grayscale sopra la sezione progetti ===== */
-.cat-picker{background:var(--paper);padding:clamp(48px,7vw,96px) 0 clamp(56px,7vw,100px)}
+/* ===== Cat picker: griglia grayscale sopra la sezione progetti =====
+   Animazioni pensate come una scena motion: ease-in weighted per la
+   rotazione (parte lento e accelera), fade opacity lento e continuo,
+   bordo che compare con un ease-out asciutto. Tutte le curve sono
+   custom cubic-bezier per un feel "designer di motion". */
+.cat-picker{
+  --picker-in:cubic-bezier(.66,0,.34,.2);        /* ease-in weighted */
+  --picker-out:cubic-bezier(.16,1,.3,1);          /* ease-out asciutto */
+  --picker-return:cubic-bezier(.4,0,.2,1);        /* rientro morbido */
+  background:var(--paper);
+  padding:clamp(48px,7vw,96px) 0 clamp(56px,7vw,100px);
+}
 .cat-picker__inner{max-width:1440px;margin:0 auto;padding:0 clamp(16px,3.5vw,44px)}
 .cat-picker__head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
   border-bottom:1.5px solid var(--ink);padding-bottom:10px;margin-bottom:clamp(24px,4vw,44px)}
 .cat-picker__head h2{font-weight:800;font-size:clamp(15px,2.4vw,26px);letter-spacing:-.01em;text-transform:uppercase;color:var(--ink)}
 .cat-picker__hint{font:600 11px/1.3 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);flex:none;text-align:right;max-width:260px}
 .cat-picker__grid{display:grid;grid-template-columns:repeat(var(--n,6),1fr);gap:clamp(14px,2.2vw,28px)}
-.cat-picker__item{display:flex;flex-direction:column;gap:12px;align-items:stretch}
-.cat-picker__sq{
-  appearance:none;border:2px solid transparent;padding:0;cursor:pointer;
-  aspect-ratio:1/1;width:100%;background:var(--tone,#888);
-  --tone:hsl(38,10%,calc(85% - var(--i,0) * 14%));
-  transition:background .35s var(--ease),border-color .35s var(--ease),opacity .35s var(--ease);
-  transform-origin:center center;will-change:transform;
-}
-.cat-picker__sq:hover,.cat-picker__sq:focus-visible{
-  background:transparent;border-color:var(--ink);opacity:.3;
-  animation:catpicker-wobble 2.4s ease-in-out;
-}
-.cat-picker__sq:focus-visible{outline:none}
-@keyframes catpicker-wobble{
-  0%   {transform:rotate(0)}
-  50%  {transform:rotate(6deg)}
-  100% {transform:rotate(0)}
-}
-.cat-picker__label{font:600 11px/1.3 ui-monospace,monospace;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--ink);text-align:center;padding:0 2px}
 
-/* filtro attivo — nasconde tutte le .cat tranne quella scelta e mostra il pulsante Indietro */
-#app > .cat.is-hidden{display:none}
-.projects__back{display:none;appearance:none;background:transparent;color:var(--sec-ink);
-  border:1px solid #333;padding:6px 12px;border-radius:999px;font-family:inherit;font-size:11px;
-  cursor:pointer;transition:color .18s var(--ease),background .18s var(--ease),border-color .18s var(--ease)}
-.projects__back:hover{color:#111;background:#f2ede0;border-color:#f2ede0}
-.projects__back:focus-visible{outline:2px solid var(--sec-ink);outline-offset:2px}
-.projects.projects--filtered .projects__back{display:inline-flex;align-items:center}
-.projects.projects--filtered .sec-head__note{display:none}
+.cat-picker__sq{
+  --tone:hsl(38,10%,calc(85% - var(--i,0) * 14%));
+  --label-color:#111;
+  appearance:none;padding:clamp(10px,1.4vw,18px);cursor:pointer;
+  aspect-ratio:1/1;width:100%;position:relative;
+  background:transparent;border:2px solid transparent;
+  transform-origin:center center;will-change:transform;
+  transition:border-color .55s var(--picker-out),transform 1.2s var(--picker-return);
+  display:flex;align-items:flex-end;
+}
+/* fill separato dal contenuto: fade lento indipendente dal testo */
+.cat-picker__sq::before{
+  content:"";position:absolute;inset:0;background:var(--tone);
+  transition:opacity 1.1s var(--picker-in),background-color 1.1s var(--picker-in);
+  z-index:0;
+}
+/* tono chiaro (0,1) → testo scuro; tono medio-scuro (2,3,4,5) → testo chiaro */
+.cat-picker__sq[data-cat="2"],
+.cat-picker__sq[data-cat="3"],
+.cat-picker__sq[data-cat="4"],
+.cat-picker__sq[data-cat="5"]{--label-color:#f2ede0}
+.cat-picker__label{
+  position:relative;z-index:1;
+  font:800 clamp(13px,1.4vw,20px)/1.15 "Bricolage Grotesque",sans-serif;
+  letter-spacing:-.005em;color:var(--label-color);
+  transition:color 1.1s var(--picker-in);
+  text-wrap:balance;
+}
+/* hover: rotazione motion (slow-in poi accelera), poi rientro morbido a 0.
+   La rotazione è nell'animation; il rientro (all'uscita hover) è nel transform-transition. */
+.cat-picker__sq:hover,
+.cat-picker__sq:focus-visible{
+  border-color:var(--ink);
+  animation:catpicker-rotate 1.9s var(--picker-in) forwards;
+}
+.cat-picker__sq:hover::before,
+.cat-picker__sq:focus-visible::before{
+  opacity:.3;background-color:transparent;
+}
+.cat-picker__sq:hover .cat-picker__label,
+.cat-picker__sq:focus-visible .cat-picker__label{color:#111}
+.cat-picker__sq:focus-visible{outline:none}
+
+@keyframes catpicker-rotate{
+  0%   {transform:rotate(0deg)}
+  40%  {transform:rotate(1.2deg)}
+  70%  {transform:rotate(9deg)}
+  85%  {transform:rotate(5deg)}
+  100% {transform:rotate(0deg)}
+}
 
 @media(max-width:900px){
   .cat-picker__grid{grid-template-columns:repeat(3,1fr)}
@@ -676,9 +707,9 @@ body.has-open,body.menu-open{overflow:hidden}
 }
 @media(max-width:500px){
   .cat-picker__grid{grid-template-columns:repeat(2,1fr)}
-  .cat-picker__label{font-size:10px}
+  .cat-picker__label{font-size:clamp(12px,3.4vw,15px)}
 }
 @media(prefers-reduced-motion:reduce){
-  .cat-picker__sq{transition:none}
+  .cat-picker__sq,.cat-picker__sq::before,.cat-picker__label{transition:none}
   .cat-picker__sq:hover,.cat-picker__sq:focus-visible{animation:none}
 }
