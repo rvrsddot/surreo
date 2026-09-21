@@ -63,6 +63,74 @@
     const vIdx = CATS.findIndex((c) => /virtual/i.test(c.name));
     if (vIdx >= 0) CATS.push(CATS.splice(vIdx, 1)[0]);
     CATS.forEach(renderCategory);
+    buildCatPicker(CATS);
+  }
+
+  /* --- selettore categorie (griglia grayscale sopra la sezione progetti) --- */
+  function buildCatPicker(CATS) {
+    const projects = document.querySelector(".projects");
+    if (!projects) return;
+    const picker = document.createElement("section");
+    picker.className = "cat-picker";
+    picker.setAttribute("aria-label", "Scegli categoria");
+    const inner = document.createElement("div");
+    inner.className = "cat-picker__inner";
+    inner.innerHTML =
+      '<div class="cat-picker__head"><h2>Categorie</h2>' +
+      '<p class="cat-picker__hint">Clicca un quadrato per filtrare, oppure scorri e vedi tutto</p></div>';
+    const grid = document.createElement("div");
+    grid.className = "cat-picker__grid";
+    grid.style.setProperty("--n", CATS.length);
+    CATS.forEach((c, i) => {
+      const item = document.createElement("div");
+      item.className = "cat-picker__item";
+      const btn = document.createElement("button");
+      btn.className = "cat-picker__sq";
+      btn.type = "button";
+      btn.dataset.cat = i;
+      btn.style.setProperty("--i", i);
+      btn.setAttribute("aria-label", "Filtra " + c.name);
+      const label = document.createElement("span");
+      label.className = "cat-picker__label";
+      label.textContent = c.name;
+      btn.addEventListener("click", () => filterToCategory(i));
+      item.appendChild(btn);
+      item.appendChild(label);
+      grid.appendChild(item);
+    });
+    inner.appendChild(grid);
+    picker.appendChild(inner);
+    projects.parentNode.insertBefore(picker, projects);
+
+    // Back button (nascosto finché non attivo il filtro)
+    const head = projects.querySelector(".sec-head");
+    if (head && !head.querySelector(".projects__back")) {
+      const back = document.createElement("button");
+      back.className = "projects__back";
+      back.type = "button";
+      back.innerHTML = "&larr; Tutte le categorie";
+      back.addEventListener("click", unfilterCategories);
+      head.appendChild(back);
+    }
+  }
+
+  function filterToCategory(idx) {
+    const projects = document.querySelector(".projects");
+    if (!projects) return;
+    document.querySelectorAll("#app > .cat").forEach((el, i) => {
+      el.classList.toggle("is-hidden", i !== idx);
+    });
+    projects.classList.add("projects--filtered");
+    projects.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function unfilterCategories() {
+    const projects = document.querySelector(".projects");
+    if (!projects) return;
+    document.querySelectorAll("#app > .cat").forEach((el) => el.classList.remove("is-hidden"));
+    projects.classList.remove("projects--filtered");
+    const picker = document.querySelector(".cat-picker");
+    if (picker) picker.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   const thumbURL = (it) => (it.kind === "proj" ? (it.frames[0] || "") : YT_THUMB(it.vid));
