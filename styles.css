@@ -656,13 +656,13 @@ body.has-open,body.menu-open{overflow:hidden}
   aspect-ratio:1/1;width:100%;position:relative;
   background:transparent;border:2px solid transparent;
   transform-origin:center center;will-change:transform;
-  transition:border-color .55s var(--picker-out),transform 1.2s var(--picker-return);
+  transition:border-color 1.2s var(--picker-out),transform 1.6s var(--picker-return);
   display:flex;align-items:flex-end;
 }
-/* fill separato dal contenuto: fade lento indipendente dal testo */
+/* fill separato dal contenuto: fade LENTISSIMO indipendente dal testo */
 .cat-picker__sq::before{
   content:"";position:absolute;inset:0;background:var(--tone);
-  transition:opacity 1.1s var(--picker-in),background-color 1.1s var(--picker-in);
+  transition:opacity 2.6s var(--picker-in),background-color 2.6s var(--picker-in);
   z-index:0;
 }
 /* tono chiaro (0,1) → testo scuro; tono medio-scuro (2,3,4,5) → testo chiaro */
@@ -674,15 +674,16 @@ body.has-open,body.menu-open{overflow:hidden}
   position:relative;z-index:1;
   font:800 clamp(13px,1.4vw,20px)/1.15 "Bricolage Grotesque",sans-serif;
   letter-spacing:-.005em;color:var(--label-color);
-  transition:color 1.1s var(--picker-in);
+  transition:color 2.6s var(--picker-in);
   text-wrap:balance;
 }
-/* hover: rotazione motion (slow-in poi accelera), poi rientro morbido a 0.
-   La rotazione è nell'animation; il rientro (all'uscita hover) è nel transform-transition. */
+/* hover: rotazione elastica fino a ~240° con più oscillazioni prima di
+   assestarsi. Il ritorno a 0 all'uscita hover usa il transform-transition
+   con curva di rientro morbido. */
 .cat-picker__sq:hover,
 .cat-picker__sq:focus-visible{
   border-color:var(--ink);
-  animation:catpicker-rotate 1.9s var(--picker-in) forwards;
+  animation:catpicker-rotate 2.4s cubic-bezier(.16,1,.3,1) forwards;
 }
 .cat-picker__sq:hover::before,
 .cat-picker__sq:focus-visible::before{
@@ -694,10 +695,12 @@ body.has-open,body.menu-open{overflow:hidden}
 
 @keyframes catpicker-rotate{
   0%   {transform:rotate(0deg)}
-  40%  {transform:rotate(1.2deg)}
-  70%  {transform:rotate(9deg)}
-  85%  {transform:rotate(5deg)}
-  100% {transform:rotate(0deg)}
+  55%  {transform:rotate(268deg)}
+  70%  {transform:rotate(226deg)}
+  82%  {transform:rotate(248deg)}
+  91%  {transform:rotate(236deg)}
+  97%  {transform:rotate(242deg)}
+  100% {transform:rotate(240deg)}
 }
 
 @media(max-width:900px){
