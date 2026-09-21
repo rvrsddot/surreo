@@ -333,8 +333,11 @@ body.has-open,body.menu-open{overflow:hidden}
 .projects .sec-head h2{color:var(--sec-ink);font-family:"Bricolage Grotesque",sans-serif;text-transform:none;letter-spacing:0}
 .projects .sec-head__note{color:var(--sec-muted);text-transform:none;letter-spacing:0}
 .projects .cat{background:transparent}
-.projects .cat__name{color:var(--sec-ink);font-family:"Bricolage Grotesque",sans-serif;text-transform:none;letter-spacing:0}
-.projects .cat__count{color:var(--sec-muted);text-transform:none;letter-spacing:0}
+.projects .cat__name{color:var(--sec-ink);font-family:"Bricolage Grotesque",sans-serif;text-transform:none;letter-spacing:0;cursor:pointer;transition:color .18s var(--ease)}
+.projects .cat__name:hover{color:#f2ede0}
+.projects .cat__count{color:var(--sec-muted);text-transform:none;letter-spacing:0;background:transparent;border:1px solid #333;padding:6px 12px;border-radius:999px;font-family:inherit;cursor:pointer;transition:color .18s var(--ease),border-color .18s var(--ease),background .18s var(--ease)}
+.projects .cat__count:hover{color:#111;background:#f2ede0;border-color:#f2ede0}
+.projects .cat__count:focus-visible{outline:2px solid var(--sec-ink);outline-offset:2px}
 .projects .cat__line{display:none}
 .projects .cat__top{padding-bottom:8px;margin-bottom:12px;border-bottom:1px solid #333}
 .projects .thumb{background:transparent}

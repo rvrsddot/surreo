@@ -81,8 +81,15 @@
     closed.className = "cat__closed";
     closed.innerHTML =
       '<div class="cat__top"><span class="cat__name">' + cat.name + "</span>" +
-      '<span class="cat__count">' + String(cat.items.length).padStart(2, "0") + " progetti &raquo;</span></div>" +
+      '<button class="cat__count" type="button" aria-label="Apri categoria ' + cat.name + '">' +
+        String(cat.items.length).padStart(2, "0") + " progetti &rarr;</button></div>" +
       '<div class="cat__line"></div>';
+    closed.querySelector(".cat__count").addEventListener("click", (e) => {
+      e.stopPropagation(); open(el, 0);
+    });
+    closed.querySelector(".cat__name").addEventListener("click", (e) => {
+      e.stopPropagation(); open(el, 0);
+    });
     const strip = document.createElement("div");
     strip.className = "strip";
     cat.items.forEach((it, i) => {
@@ -100,15 +107,17 @@
     el.appendChild(closed);
 
     // marquee: LOOP seamless con clonazione.
-    // Cloniamo il set originale N volte finché la larghezza totale supera 2× viewport,
-    // così anche categorie con pochi item (che riempiono la strip senza overflow)
-    // scorrono comunque. baseHalf resta = originalW: al wrap la porzione visibile
-    // è identica (clone == originale) e la giunzione non si vede.
+    // Cloniamo il set originale N volte finché la larghezza totale supera 2× viewport.
+    // Retry robusto: se al primo giro il layout non è pronto (scrollWidth o clientWidth = 0),
+    // riproviamo via rAF, load, ResizeObserver e timer di fallback finché non parte.
     if (!reduce && cat.items.length > 1) {
+      let setupDone = false;
       const setupMarquee = () => {
+        if (setupDone) return true;
         const originalW = strip.scrollWidth;
         const viewW = strip.clientWidth;
-        if (!viewW || !originalW) return;
+        if (!viewW || !originalW) return false;
+        setupDone = true;
 
         let paused = false, userLock = false, userTimer = 0;
         const release = (ms) => { clearTimeout(userTimer); userTimer = setTimeout(() => { userLock = false; }, ms); };
@@ -149,8 +158,16 @@
           requestAnimationFrame(step);
         };
         requestAnimationFrame(step);
+        return true;
       };
+      // tentativi multipli finché il layout è pronto
       requestAnimationFrame(() => requestAnimationFrame(setupMarquee));
+      [80, 250, 600, 1400, 3000].forEach((ms) => setTimeout(setupMarquee, ms));
+      window.addEventListener("load", setupMarquee);
+      if (typeof ResizeObserver === "function") {
+        const ro = new ResizeObserver(() => { if (setupMarquee()) ro.disconnect(); });
+        ro.observe(strip);
+      }
     }
 
     // --- aperto ---
