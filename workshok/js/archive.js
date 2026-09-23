@@ -97,7 +97,7 @@
   var ink = getComputedStyle(document.documentElement).getPropertyValue("--ink").trim() || "#0c00ff";
   var W = 0, H = 0, DPR = 1;
   function fit() {
-    DPR = Math.min(2, window.devicePixelRatio || 1);
+    DPR = 1;                            // tratteggio a pixel pieni: lo-fi e leggero
     W = cv.clientWidth; H = cv.clientHeight;
     cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
@@ -110,6 +110,16 @@
     function (x, y) { return y % 5 === 0 && x % 3 !== 0; },
     function (x, y) { return (x + 2 * y) % 7 === 0; },
   ];
+  // ogni tratteggio disegnato UNA volta su un tassello che si ripete (pattern);
+  // a ogni fotogramma cambia solo lo spostamento, niente calcoli pixel per pixel
+  var PERIOD = [9, 6, 10, 15, 7];
+  var PAT = HATCH.map(function (f, i) {
+    var n = PERIOD[i], tile = document.createElement("canvas");
+    tile.width = tile.height = n;
+    var tc = tile.getContext("2d"); tc.fillStyle = ink;
+    for (var y = 0; y < n; y++) for (var x = 0; x < n; x++) if (f(x, y)) tc.fillRect(x, y, 1, 1);
+    return ctx.createPattern(tile, "repeat");
+  });
   var years = [].slice.call(track.querySelectorAll(".arch__year"));
   var RULER = 18;                       // altezza righello sotto gli strati
 
@@ -125,8 +135,10 @@
       var x1 = i + 1 < xs.length ? xs[i + 1] : W + 40;
       var a = Math.max(0, Math.floor(x0)), b = Math.min(W, Math.ceil(x1));
       if (b <= a) return;
-      var f = HATCH[i % HATCH.length], off = Math.round(sl) + drift * (i % 2 ? -1 : 1);
-      for (var y = 3; y < gh; y += 1) for (var x = a; x < b; x += 1) if (f(x + off, y)) ctx.fillRect(x, y, 1, 1);
+      var pat = PAT[i % PAT.length], off = Math.round(sl) + drift * (i % 2 ? -1 : 1);
+      if (pat.setTransform && window.DOMMatrix) pat.setTransform(new DOMMatrix().translate(-off, 0));
+      ctx.fillStyle = pat; ctx.fillRect(a, 3, b - a, gh - 3);
+      ctx.fillStyle = ink;
       ctx.fillRect(a, 0, 1.5, gh);      // confine tra strati
       ctx.font = "10px 'Space Mono', monospace";
       ctx.fillText(String(data[i].year) + " · −" + pad(i), a + 6, gh + 13);
@@ -145,7 +157,11 @@
   }
 
   var raf = 0, visible = true;
-  function frame(t) { draw(t); raf = visible && !reduce ? requestAnimationFrame(frame) : 0; }
+  var drawn = 0;
+  function frame(t) {
+    if (t - drawn >= 32) { drawn = t; draw(t); }   // ~30 fps
+    raf = visible && !reduce ? requestAnimationFrame(frame) : 0;
+  }
   fit();
   window.addEventListener("resize", function () { fit(); draw(performance.now()); });
   track.addEventListener("scroll", function () { if (reduce) draw(0); }, { passive: true });

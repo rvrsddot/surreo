@@ -24,7 +24,33 @@
   set("hero-where", ed.city ? ed.city + ", IT" : "—");
   set("hero-format", ed.days || "3–5 giorni");
 
-  /* Wordmark: fermo. L'animazione della hero è la griglia a spirale dietro (js/method.js, canvas[data-spiral]). */
+  /* Wordmark: tilt 3D che segue il mouse — solo transform (leggero).
+     Off su touch/reduced-motion → mobile resta la scritta base, ferma. */
+  (function () {
+    var wm = document.querySelector(".hero__wordmark");
+    var hero = document.querySelector(".hero");
+    if (!wm || !hero || reduce || coarse) return;
+    var MAX = 9, trx = 0, tryv = 0, crx = 0, cry = 0, raf = null;
+    function onMove(e) {
+      var r = wm.getBoundingClientRect();
+      var nx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
+      var ny = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
+      nx = Math.max(-1.3, Math.min(1.3, nx));
+      ny = Math.max(-1.3, Math.min(1.3, ny));
+      tryv = nx * MAX;    // rotateY segue l'asse X del mouse
+      trx = -ny * MAX;    // rotateX segue l'asse Y
+      kick();
+    }
+    function frame() {
+      crx += (trx - crx) * 0.09; cry += (tryv - cry) * 0.09;
+      wm.style.transform = "perspective(900px) rotateX(" + crx.toFixed(2) + "deg) rotateY(" + cry.toFixed(2) + "deg)";
+      if (Math.abs(trx - crx) > 0.03 || Math.abs(tryv - cry) > 0.03) { raf = requestAnimationFrame(frame); }
+      else { raf = null; }
+    }
+    function kick() { if (!raf) raf = requestAnimationFrame(frame); }
+    hero.addEventListener("mousemove", onMove, { passive: true });
+    hero.addEventListener("mouseleave", function () { trx = 0; tryv = 0; kick(); });
+  })();
 
 
   /* ---------- CORSI · card → popup dettaglio ---------- */

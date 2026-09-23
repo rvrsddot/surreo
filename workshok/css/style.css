@@ -632,4 +632,3 @@ a { color: inherit; text-decoration: none; }
 /* la griglia sta sotto a tutto (z-index -1 dentro la hero isolata): non tocca il posizionamento degli altri elementi */
 .hero { position: relative; isolation: isolate; }
 .hero__spiral { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: .38; }
-.hero__wordmark { will-change: auto; }
