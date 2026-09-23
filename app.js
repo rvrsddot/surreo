@@ -11,6 +11,10 @@
 
   let openEl = null, ph = null;
 
+  // pagina progetti (progetti.html) = indice + pannello; home = vetrina che rimanda lì
+  const INDEX = document.getElementById("indice");
+  const goProjects = (cat) => { location.href = "progetti.html" + (cat && cat.id ? "?cat=" + cat.id : ""); };
+
   /* --- altezza per l'embed Readymag: comunica al parent l'altezza reale --- */
   if (window.parent !== window) {
     let lastH = 0;
@@ -32,6 +36,8 @@
     .catch((e) => { app.innerHTML = '<p style="color:#b00;padding:20px">Impossibile caricare i progetti (' + e + ")</p>"; });
 
   const YT_THUMB = (id) => "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
+  // copertina piccola 320x180, già 16:9 (senza bande nere): per miniature e righe
+  const YT_THUMB_S = (id) => "https://i.ytimg.com/vi/" + id + "/mqdefault.jpg";
   const YT_EMBED = (id) => "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&mute=1&rel=0&playsinline=1&loop=1&playlist=" + id;
   const pretty = (s) => (s || "").replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
@@ -49,21 +55,22 @@
       if (s.id === "virtual" && vids.virtualCards && vids.virtualCards.items) {
         vids.virtualCards.items.forEach((it) => items.push({ kind: "video", name: it.title, vid: it.id }));
       }
-      CATS.push({ name: s.title, items });
+      CATS.push({ id: s.id, name: s.title, items });
     });
     if (vids.visual && vids.visual.items) {
       const items = [];
       vids.visual.items.forEach((it) => (it.videos || []).forEach((v) => items.push({ kind: "video", name: it.id ? pretty(it.id) : "Videoclip", vid: v })));
-      CATS.push({ name: "Videoclip & Motion", items });
+      CATS.push({ id: "videoclip", name: "Videoclip & Motion", items });
     }
     if (vids.website && vids.website.items) {
-      CATS.push({ name: "Website", items: vids.website.items.map((it) => ({ kind: "site", name: it.title, vid: it.id, url: it.url })) });
+      CATS.push({ id: "website", name: "Website", items: vids.website.items.map((it) => ({ kind: "site", name: it.title, vid: it.id, url: it.url })) });
     }
     // "Virtual & VR Experience" ha pochi items → in fondo
     const vIdx = CATS.findIndex((c) => /virtual/i.test(c.name));
     if (vIdx >= 0) CATS.push(CATS.splice(vIdx, 1)[0]);
     CATS.forEach(renderCategory);
-    buildCatPicker(CATS);
+    if (INDEX) buildIndex(CATS);
+    else buildCatPicker(CATS);
   }
 
   /* --- selettore categorie (griglia grayscale sopra la sezione progetti) --- */
@@ -92,7 +99,7 @@
       label.className = "cat-picker__label";
       label.textContent = c.name;
       btn.appendChild(label);
-      btn.addEventListener("click", () => openCategoryFromPicker(i));
+      btn.addEventListener("click", () => goProjects(c));
       grid.appendChild(btn);
     });
     inner.appendChild(grid);
@@ -100,14 +107,10 @@
     projects.parentNode.insertBefore(picker, projects);
   }
 
-  function openCategoryFromPicker(idx) {
-    const cat = document.querySelectorAll("#app > .cat")[idx];
-    if (cat) open(cat, 0);
-  }
 
   // miniatura 256px generata da make_thumbs.py: assets/projects/<id>/NN.jpg -> .../<id>/t/NN.jpg
   const toThumb = (src) => src.replace(/\/([^/]+)$/, "/t/$1");
-  const thumbURL = (it) => (it.kind === "proj" ? (it.frames[0] ? toThumb(it.frames[0]) : "") : YT_THUMB(it.vid));
+  const thumbURL = (it) => (it.kind === "proj" ? (it.frames[0] ? toThumb(it.frames[0]) : "") : YT_THUMB_S(it.vid));
 
   // colori accent per categoria (in ordine)
   const CAT_ACCENTS = ["#ff2bd6", "#2be5ff", "#b5ff2b", "#ff8a2b", "#b02bff", "#ff2b7e"];
@@ -116,6 +119,7 @@
     const el = document.createElement("section");
     el.className = "cat";
     el.style.setProperty("--accent", CAT_ACCENTS[index % CAT_ACCENTS.length]);
+    const act = (i) => (INDEX ? open(el, i) : goProjects(cat));
     if (/videoclip|website|exhibit|virtual/i.test(cat.name)) el.classList.add("cat--wide");
 
     // --- chiuso ---
@@ -127,10 +131,10 @@
         String(cat.items.length).padStart(2, "0") + " progetti &rarr;</button></div>" +
       '<div class="cat__line"></div>';
     closed.querySelector(".cat__count").addEventListener("click", (e) => {
-      e.stopPropagation(); open(el, 0);
+      e.stopPropagation(); act(0);
     });
     closed.querySelector(".cat__name").addEventListener("click", (e) => {
-      e.stopPropagation(); open(el, 0);
+      e.stopPropagation(); act(0);
     });
     const strip = document.createElement("div");
     strip.className = "strip";
@@ -138,7 +142,7 @@
       const b = document.createElement("button");
       b.className = "thumb"; b.type = "button"; b.setAttribute("aria-label", "Apri " + it.name);
       b.innerHTML = '<img loading="lazy" alt="' + it.name + '" src="' + thumbURL(it) + '">';
-      b.addEventListener("click", (e) => { e.stopPropagation(); open(el, i); });
+      b.addEventListener("click", (e) => { e.stopPropagation(); act(i); });
       if (it.kind === "proj") b.classList.add("is-proj");
       if (it.kind === "proj" && it.frames && it.frames.length > 1) {
         b._frames = it.frames.map(toThumb);
@@ -153,7 +157,7 @@
     // Cloniamo il set originale N volte finché la larghezza totale supera 2× viewport.
     // Retry robusto: se al primo giro il layout non è pronto (scrollWidth o clientWidth = 0),
     // riproviamo via rAF, load, ResizeObserver e timer di fallback finché non parte.
-    if (!reduce && cat.items.length > 1) {
+    if (!reduce && !INDEX && cat.items.length > 1) {
       let setupDone = false;
       const setupMarquee = () => {
         if (setupDone) return true;
@@ -183,7 +187,7 @@
             const clone = btn.cloneNode(true);
             clone.setAttribute("aria-hidden", "true");
             clone.setAttribute("tabindex", "-1");
-            clone.addEventListener("click", (e) => { e.stopPropagation(); open(el, i); });
+            clone.addEventListener("click", (e) => { e.stopPropagation(); act(i); });
             if (btn._frames) { clone._frames = btn._frames; attachHoverGif(clone); }
             strip.appendChild(clone);
           });
@@ -219,7 +223,9 @@
       }
     }
 
-    // --- aperto ---
+    // --- aperto --- (solo nella pagina progetti: la home è una vetrina e non apre pannelli;
+    // costruirli lì faceva partire player YouTube e foto grandi nascosti)
+    if (!INDEX) { app.appendChild(el); return; }
     const openW = document.createElement("div");
     openW.className = "cat__open"; openW.setAttribute("aria-hidden", "true");
     openW.innerHTML =
@@ -241,6 +247,7 @@
     // --- animazione scroll: card centrata = attiva (gif/video) + contatore ---
     const pos = foot.querySelector(".g-pos"), tot = cat.items.length;
     const animate = () => {
+      if (!el.classList.contains("is-open")) return;   // pannello chiuso: niente gif/video
       const cx = car.getBoundingClientRect().left + car.clientWidth / 2;
       let best = 1e9, idx = 0, list = car.querySelectorAll(".pcard");
       list.forEach((c, i) => { const r = c.getBoundingClientRect(); const dc = (r.left + r.width / 2) - cx; if (Math.abs(dc) < best) { best = Math.abs(dc); idx = i; } });
@@ -254,6 +261,146 @@
     el._animate = animate; el._car = car;
 
     app.appendChild(el);
+  }
+
+  /* --- pagina progetti: indice (filtro per categoria) + elenco + anteprima --- */
+  const CODES = { graphic: "GR", industrial: "ID", exhibit: "EX", videoclip: "VC", website: "WB", virtual: "VR" };
+  function buildIndex(CATS) {
+    const pad = (n) => String(n).padStart(2, "0");
+    const catEls = document.querySelectorAll("#app > .cat");
+    const tot = CATS.reduce((s, c) => s + c.items.length, 0);
+    const nav = INDEX.querySelector(".ix-idx"), list = INDEX.querySelector(".ix-list");
+    let prevStop = null, prevTimer = 0;
+    const stopPrev = () => {
+      if (prevStop) { prevStop(); prevStop = null; }
+      clearTimeout(prevTimer);
+      const f = prev.querySelector("iframe"); if (f) f.remove();
+    };
+    // il riquadro prende la forma di ciò che mostra (16:9 video, quadrato/verticale progetti):
+    // largo quanto la colonna, ma mai più alto dello spazio che resta sotto l'indice
+    let prevAR = 1;
+    const sizePrev = (ar) => {
+      if (ar) prevAR = ar;
+      const wrap = prev.parentElement, cap = wrap.querySelector("figcaption");
+      const aw = wrap.clientWidth, ah = wrap.clientHeight - (cap ? cap.offsetHeight + 6 : 0);
+      if (!aw || ah <= 0) return;
+      let w = aw, h = w / prevAR;
+      if (h > ah) { h = ah; w = h * prevAR; }
+      prev.style.width = Math.floor(w) + "px"; prev.style.height = Math.floor(h) + "px";
+    };
+    addEventListener("resize", () => sizePrev());
+    const prev = INDEX.querySelector(".ix-prev__box"), prevN = INDEX.querySelector(".ix-prev__n"), prevT = INDEX.querySelector(".ix-prev__t");
+
+    const li = (id, n, name, count) =>
+      '<li><button type="button" data-cat="' + id + '"><span class="n">' + n + '</span><span class="t">' + name +
+      '</span><span class="d"></span><span class="c">' + count + "</span></button></li>";
+    nav.innerHTML = li("", "00", "Tutti", tot) + CATS.map((c, i) => li(c.id, pad(i + 1), c.name, pad(c.items.length))).join("");
+
+    CATS.forEach((c, ci) => {
+      const sec = document.createElement("section");
+      sec.className = "ix-sec"; sec.dataset.cat = c.id;
+      sec.innerHTML = '<h2 class="ix-sec__h"><span>§ ' + pad(ci + 1) + " — " + c.name + '</span><span class="ix-sec__c">' + pad(c.items.length) + " voci</span></h2>";
+      c.items.forEach((it, ii) => {
+        const row = document.createElement("button");
+        row.type = "button"; row.className = "ix-row" + (it.kind === "proj" ? "" : " is-wide");
+        const code = (CODES[c.id] || "XX") + "·" + pad(ii + 1);
+        const tags = (it.tags && it.tags.length ? it.tags : [it.kind === "site" ? "Website" : "Video"]).slice(0, 3).join(" / ");
+        row.innerHTML = '<span class="ix-row__n">' + code + '</span><span class="ix-row__th"><img loading="lazy" alt="" src="' + thumbURL(it) + '"></span>' +
+          '<span class="ix-row__nm">' + it.name + '</span><span class="ix-row__ct">' + c.name.split(/[,&]/)[0].trim() + '</span><span class="ix-row__tg">' + tags + "</span>";
+        const show = () => {
+          if (prev._it === it) return;
+          stopPrev(); prev._it = it;
+          // anteprima grande: foto intera (la miniatura 256px qui si vedrebbe sgranata)
+          prev.innerHTML = '<img alt="" src="' + (it.kind === "proj" && it.frames[0] ? it.frames[0] : thumbURL(it)) + '">'; prev.classList.toggle("is-wide", it.kind !== "proj");
+          prevN.textContent = "fig. " + code; prevT.textContent = it.name;
+          // in hover l'anteprima si anima: gif per i progetti, video muto per video/siti
+          // (il video parte dopo una breve pausa, così scorrendo veloce non si aprono decine di player)
+          const img = prev.querySelector("img");
+          if (it.kind === "proj") {
+            // forma reale del frame (quasi tutti quadrati, alcuni verticali 4:5)
+            sizePrev(1);
+            const fit = () => { if (prev._it === it && img.naturalWidth) sizePrev(img.naturalWidth / img.naturalHeight); };
+            if (img.complete) fit(); else img.addEventListener("load", fit, { once: true });
+            if (it.frames.length > 1) prevStop = cycleFrames(img, it.frames);
+          } else {
+            sizePrev(16 / 9);
+            if (it.vid) prevTimer = setTimeout(() => {
+              const f = document.createElement("iframe");
+              f.src = YT_EMBED(it.vid); f.allow = "autoplay; encrypted-media"; f.title = it.name; f.tabIndex = -1;
+              // resta invisibile (si vede la copertina) finché il player non è caricato
+              f.style.opacity = "0";
+              f.addEventListener("load", () => { f.style.opacity = "1"; }, { once: true });
+              prev.appendChild(f);
+            }, 400);
+          }
+        };
+        row.addEventListener("mouseenter", show);
+        row.addEventListener("focus", show);
+        row.addEventListener("click", () => { stopPrev(); prev._it = null; const el = catEls[ci]; el._from = row; open(el, ii); });
+        if (ci === 0 && ii === 0) show();
+        sec.appendChild(row);
+      });
+      list.appendChild(sec);
+    });
+
+    // filtro: ?cat=<id> nell'indirizzo, così ogni categoria ha il suo link
+    const setCat = (id) => {
+      nav.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.cat === id));
+      list.querySelectorAll(".ix-sec").forEach((s) => { s.hidden = !!id && s.dataset.cat !== id; });
+      const u = new URL(location.href);
+      id ? u.searchParams.set("cat", id) : u.searchParams.delete("cat");
+      history.replaceState(null, "", u);
+    };
+    nav.addEventListener("click", (e) => {
+      const b = e.target.closest("button"); if (!b) return;
+      setCat(b.dataset.cat);
+      list.scrollTo({ top: 0, behavior: "auto" });
+    });
+    // si apre sempre su "Tutti" (colpo d'occhio); se arrivi da una categoria della home
+    // la pagina scorre fino a quella sezione invece di filtrarla
+    const start = new URLSearchParams(location.search).get("cat") || "";
+    setCat("");
+    const target = start && list.querySelector('.ix-sec[data-cat="' + start + '"] .ix-row');
+
+    // la pagina è ferma: scorre solo l'elenco. Spazio sopra/sotto pari a mezzo rullo,
+    // così anche la prima e l'ultima riga possono arrivare al centro (linea rossa)
+    const pay = INDEX.querySelector(".ix-pay");
+    const fit = () => {
+      const first = list.querySelector(".ix-row");
+      const half = list.clientHeight / 2 - (first ? first.offsetHeight / 2 : 60);
+      list.style.paddingTop = list.style.paddingBottom = Math.max(0, half) + "px";
+      if (pay) pay.style.top = (list.offsetTop + list.clientHeight / 2) + "px";
+    };
+    fit();
+    addEventListener("resize", fit);
+    const centerOn = (el) => { list.scrollTop = el.offsetTop - list.offsetTop - (list.clientHeight - el.offsetHeight) / 2; };
+    if (target) requestAnimationFrame(() => centerOn(target));
+
+    // scorrimento "a rullo di slot": le righe verso il bordo alto/basso dello schermo
+    // si inclinano all'indietro e sfumano, come se il rullo ruotasse
+    if (!reduce) {
+      const rows = [...list.querySelectorAll(".ix-row, .ix-sec__h")];
+      let ticking = false;
+      const drum = () => {
+        ticking = false;
+        const box = list.getBoundingClientRect(), mid = box.top + box.height / 2, half = box.height / 2;
+        rows.forEach((r) => {
+          if (r.offsetParent === null) return;               // sezione filtrata
+          const b = r.getBoundingClientRect();
+          if (b.bottom < box.top - 40 || b.top > box.bottom + 40) return;
+          // rullo cilindrico: ogni riga ruota in proporzione alla distanza dal centro dello schermo
+          const d = Math.max(-1, Math.min(1, (b.top + b.height / 2 - mid) / half));  // -1 alto … +1 basso
+          const a = Math.abs(d);
+          r.style.transform = "perspective(1000px) rotateX(" + (-d * 68).toFixed(1) + "deg) scale(" + (1 - a * a * 0.14).toFixed(3) + ")";
+          r.style.opacity = (1 - Math.pow(a, 1.7) * 0.88).toFixed(3);
+        });
+      };
+      const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(drum); } };
+      list.addEventListener("scroll", req, { passive: true });
+      addEventListener("resize", req);
+      nav.addEventListener("click", () => setTimeout(req, 50));
+      req();
+    }
   }
 
   /* --- singola card progetto/video --- */
@@ -376,7 +523,7 @@
   function open(el, idx) {
     if (openEl) return;
     openEl = el; idx = idx || 0;
-    const r = el.getBoundingClientRect();
+    const r = (el._from || el).getBoundingClientRect();
     ph = document.createElement("div"); ph.style.height = r.height + "px"; el.after(ph);
     el.classList.add("is-fixed"); setRect(el, { top: r.top, left: r.left, width: r.width, height: r.height });
     el.getBoundingClientRect();
@@ -401,7 +548,7 @@
     if (!openEl) return;
     const el = openEl;
     el.querySelectorAll(".pcard").forEach((c) => setActive(c, false));   // stop media
-    const r = ph.getBoundingClientRect();
+    const r = (el._from || ph).getBoundingClientRect();
     backdrop.classList.remove("is-on"); el.classList.remove("is-open");
     el.querySelector(".cat__open").setAttribute("aria-hidden", "true");
     el.querySelectorAll(".pcard.is-flipped").forEach((c) => c.classList.remove("is-flipped"));
