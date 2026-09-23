@@ -17,8 +17,8 @@ window.EDITION = {
 /* Link Iscriviti — Google Form ufficiale (uguale per entrambi i corsi). */
 window.ENROLL_URL = "https://forms.gle/rXmL8mes7hfhnATh8";
 
-/* Elenco corsi dell'edizione corrente. */
-window.COURSES = [
+/* Corsi SWW8 (2026): conclusi, ora in ARCHIVIO (in fondo al file). */
+var SWW8_COURSES = [
   {
     status: "open",
     number: "01",
@@ -148,3 +148,42 @@ window.SELECTED = {
   title: "Mostra — Il mestiere di grafico, oggi",
   dates: "26 nov 2021 – 23 gen 2022",
 };
+
+/* =========================================================================
+   CORSI ATTIVI — le card della sezione 01 si generano da qui.
+   Vuoto = la sezione mostra "Nessun corso attivo" con la griglia animata.
+   Per la prossima edizione: rimettere qui i corsi (stessa struttura di SWW8_COURSES).
+   ========================================================================= */
+window.COURSES = [];
+
+/* =========================================================================
+   ARCHIVIO — timeline orizzontale (sezione 02). Un record = un anno/edizione,
+   dal più recente al più vecchio. Per aggiungere corsi passati basta un nuovo
+   record (o un corso in "courses"): timeline e strati si rigenerano.
+   Campi usati: title, tutor, tutorRole, tool, dates, hours, location,
+   summary (descrizione breve), thumb (foto miniatura), media (foto/video).
+   ========================================================================= */
+window.ARCHIVE = [
+  {
+    year: 2026,
+    edition: "SWW8",
+    title: "SAAD Workshop Week",
+    place: "Ascoli Piceno · UNICAM SAAD",
+    dates: "8–11 settembre 2026",
+    courses: SWW8_COURSES.map(function (c) {
+      var extra = {
+        "01": {
+          thumb: "assets/corsi/abbatepaolo/loop-poster.jpg",
+          summary: "Quattro giorni per imparare a costruire siti web e applicazioni con l'intelligenza artificiale, anche partendo da zero con la programmazione. Tanta pratica e poca teoria: dal prototipo in cinque minuti al progetto completo, con strumenti come Ollama e un metodo per lavorare senza limiti tecnici. Ogni partecipante seguito uno a uno.",
+        },
+        "02": {
+          thumb: "assets/corsi/morelli/A.webp",
+          summary: "Un workshop intensivo sull'intelligenza artificiale come alleata del processo creativo. Dopo casi studio e una breve introduzione, ogni partecipante ha lavorato a un progetto originale con FloraFauna AI (immagini, concept, direzione visiva) tra revisioni e mentoring, fino a impaginarlo e presentarlo.",
+        },
+      }[c.number] || {};
+      var o = {}; for (var k in c) o[k] = c[k];
+      for (var j in extra) o[j] = extra[j];
+      return o;
+    }),
+  },
+];

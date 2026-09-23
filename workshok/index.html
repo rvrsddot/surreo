@@ -181,7 +181,7 @@
   <!-- Testi + titoli: Space Grotesk · readout di sistema: Space Mono -->
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/style.css?v=33" />
+  <link rel="stylesheet" href="css/style.css?v=38" />
 </head>
 <body>
   <div class="grid-bg" aria-hidden="true"></div>
@@ -199,15 +199,18 @@
     <span class="topbar__ver" id="sys-ver">v2.6</span>
     <nav class="topbar__nav" aria-label="Sezioni">
       <a href="#corsi" class="tab" data-tab><i>01</i>&nbsp;CORSI</a>
-      <a href="#about" class="tab" data-tab><i>02</i>&nbsp;ABOUT</a>
-      <a href="#collab" class="tab" data-tab><i>03</i>&nbsp;COLLAB</a>
+      <a href="#archivio" class="tab" data-tab><i>02</i>&nbsp;ARCHIVIO</a>
+      <a href="#metodo" class="tab" data-tab><i>03</i>&nbsp;METODO</a>
+      <a href="#about" class="tab" data-tab><i>04</i>&nbsp;ABOUT</a>
+      <a href="#collab" class="tab" data-tab><i>05</i>&nbsp;COLLAB</a>
     </nav>
-    <a href="#corsi" class="topbar__cta">[&nbsp;ISCRIVITI&nbsp;]</a>
+    <a href="#archivio" class="topbar__cta">[&nbsp;ARCHIVIO&nbsp;]</a>
   </header>
 
   <main>
     <!-- ===================== HERO (poster SWW8) ===================== -->
     <section class="hero" id="hero">
+      <canvas class="hero__spiral" data-spiral aria-hidden="true"></canvas>
       <div class="hero__labels">
         <span><b>SINCE 2018</b>&nbsp;UNCONVENTIONAL HUB</span>
         <span class="r">XXX&nbsp;<i id="hero-year">2026</i></span>
@@ -219,7 +222,7 @@
           <span class="visually-hidden">Workshok — Workshop AI, Design, Grafica e Architettura ad Ascoli Piceno · SAAD Workshop Week 2026</span>
         </h1>
         <p class="hero__sub">Architecture &amp; Design Hub</p>
-        <a href="#corsi" class="hero__cta">SWW CORSI #26</a>
+        <a href="#archivio" class="hero__cta">SWW8 · ARCHIVIO</a>
       </div>
 
       <!-- banner info (abbassato) -->
@@ -249,16 +252,89 @@
       <div class="win__body">
         <div class="block__head">
           <h2 class="block__title neon-solid">I&nbsp;Corsi</h2>
-          <span class="block__meta">// 2 workshop · clicca la card per aprirla</span>
+          <span class="block__meta" id="corsi-meta">// 2 workshop · clicca la card per aprirla</span>
         </div>
         <div class="cards" id="cards"><!-- card generate da js/main.js --></div>
+        <!-- nessun corso attivo: griglia animata con messaggio (mostrata da js/archive.js se COURSES è vuoto) -->
+        <div class="nocourse" id="nocourse" hidden>
+          <canvas class="nocourse__canvas" data-field aria-hidden="true"></canvas>
+          <div class="nocourse__msg">
+            <span class="nocourse__eyebrow">// STATUS · 0 CORSI ATTIVI</span>
+            <p class="nocourse__title">Nessun corso attivo</p>
+            <span class="nocourse__sub">prossima edizione in arrivo · guarda l'archivio ↓</span>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- ===================== 02 · ABOUT ===================== -->
+    <!-- ===================== 02 · ARCHIVIO ===================== -->
+    <section class="win" id="archivio">
+      <div class="win__bar">
+        <span class="win__name">📁&nbsp;<i>02</i>&nbsp;ARCHIVIO.DB</span>
+        <span class="win__status" id="arch-status">[ INDEX ]</span>
+        <span class="win__ctrl" aria-hidden="true"><b></b><b></b><b></b></span>
+      </div>
+      <div class="win__body">
+        <div class="block__head">
+          <h2 class="block__title neon-solid">Archivio</h2>
+          <span class="block__meta" id="arch-meta">// corsi realizzati · scorri → per scendere negli anni</span>
+        </div>
+        <div class="arch">
+          <div class="arch__track" id="arch-track" tabindex="0" aria-label="Timeline dei corsi realizzati"></div>
+          <div class="arch__ground" aria-hidden="true"><canvas id="arch-strata"></canvas></div>
+          <div class="arch__foot">
+            <span id="arch-depth">SEZ. A-A · profondità 00 anni</span>
+            <span class="arch__nav"><button type="button" id="arch-prev" aria-label="Più recenti">←</button><button type="button" id="arch-next" aria-label="Più vecchi">→</button></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 03 · METODO ===================== -->
+    <section class="win" id="metodo">
+      <div class="win__bar">
+        <span class="win__name">📁&nbsp;<i>03</i>&nbsp;METODO.SYS</span>
+        <span class="win__status">[ RUNNING · 8Y ]</span>
+        <span class="win__ctrl" aria-hidden="true"><b></b><b></b><b></b></span>
+      </div>
+      <div class="win__body">
+        <div class="block__head">
+          <h2 class="block__title neon-solid">Il&nbsp;Metodo</h2>
+          <span class="block__meta">// 2018 → 2026 · 8 anni di test sul campo</span>
+        </div>
+        <div class="method">
+          <div class="method__text">
+            <p class="method__lede" data-scramble>
+              Da otto anni sperimentiamo un metodo di workshop intensivo per designer,
+              architetti e creativi. Pochi giorni, un brief reale, zero slide.
+              Funziona.
+            </p>
+            <p class="method__body">
+              Il metodo Workshok! comprime il tempo del progetto: ogni corso è guidato da uno studio
+              o da un professionista di settore di alto livello, in un rapporto tu per tu, con al massimo
+              25 partecipanti, dal tema alla resa finale. Ogni edizione è un test:
+              teniamo quello che funziona, riscriviamo il resto. Il risultato è un formato
+              che accelera l'apprendimento e lascia in mano un progetto vero.
+            </p>
+          </div>
+          <figure class="method__fig" aria-hidden="true">
+            <canvas class="method__canvas" id="method-grid"></canvas>
+            <figcaption><span>FIG. M-01 · campo di deformazione</span><span id="method-t">t 00.00</span></figcaption>
+          </figure>
+          <ol class="method__steps">
+            <li><b>01</b><h3>Brief</h3><p>Un tema reale dal primo giorno, con vincoli veri, portato da chi quel progetto lo fa per mestiere.</p></li>
+            <li><b>02</b><h3>Immersione</h3><p>Giorni intensivi, massimo 25 partecipanti, un rapporto tu per tu con lo studio o il professionista che guida il corso.</p></li>
+            <li><b>03</b><h3>Iterazione</h3><p>Si prova, si sbaglia, si ricomincia. L'errore è parte del metodo, non un incidente.</p></li>
+            <li><b>04</b><h3>Resa</h3><p>Un progetto finito, presentato e discusso: portfolio, non esercizio.</p></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 04 · ABOUT ===================== -->
     <section class="win" id="about">
       <div class="win__bar">
-        <span class="win__name">📁&nbsp;<i>02</i>&nbsp;ABOUT.TXT</span>
+        <span class="win__name">📁&nbsp;<i>04</i>&nbsp;ABOUT.TXT</span>
         <span class="win__status">[ READY ]</span>
         <span class="win__ctrl" aria-hidden="true"><b></b><b></b><b></b></span>
       </div>
@@ -287,7 +363,7 @@
     <!-- ===================== 03 · COLLAB ===================== -->
     <section class="win" id="collab">
       <div class="win__bar">
-        <span class="win__name">📁&nbsp;<i>03</i>&nbsp;COLLAB.LOG</span>
+        <span class="win__name">📁&nbsp;<i>05</i>&nbsp;COLLAB.LOG</span>
         <span class="win__status">[ READY ]</span>
         <span class="win__ctrl" aria-hidden="true"><b></b><b></b><b></b></span>
       </div>
@@ -307,7 +383,7 @@
     <!-- ===================== 04 · INFO & CONTATTI ===================== -->
     <section class="win" id="iscrizioni">
       <div class="win__bar">
-        <span class="win__name">📁&nbsp;<i>04</i>&nbsp;CONTATTI.FORM</span>
+        <span class="win__name">📁&nbsp;<i>06</i>&nbsp;CONTATTI.FORM</span>
         <span class="win__status">[ OPEN ]</span>
         <span class="win__ctrl" aria-hidden="true"><b></b><b></b><b></b></span>
       </div>
@@ -327,7 +403,7 @@
           <label class="field"><span>03 / MESSAGGIO</span>
             <textarea name="messaggio" rows="4" required placeholder="scrivici la tua richiesta"></textarea></label>
           <button type="submit" class="btn btn--send">[&nbsp;MANDA LA RICHIESTA →&nbsp;]</button>
-          <p class="form__note">— solo una mail a noi. Per iscriverti a un corso, apri la scheda e clicca ISCRIVITI QUI.</p>
+          <p class="form__note">— solo una mail a noi. Scrivici per sapere quando apre la prossima edizione.</p>
         </form>
       </div>
     </section>
@@ -368,7 +444,7 @@
   <div class="pmodal" id="partners-modal" role="dialog" aria-modal="true" aria-labelledby="pmodal-title" hidden>
     <div class="pmodal__panel">
       <header class="pmodal__bar">
-        <span class="pmodal__name">📁&nbsp;<i>03</i>&nbsp;COLLAB / PARTNERS.LIST</span>
+        <span class="pmodal__name">📁&nbsp;<i>05</i>&nbsp;COLLAB / PARTNERS.LIST</span>
         <button type="button" class="pmodal__close" id="partners-close" aria-label="Chiudi">[ ✕ ]</button>
       </header>
       <div class="pmodal__body">
@@ -381,7 +457,9 @@
     </div>
   </div>
 
-  <script src="data/courses.js?v=41"></script>
-  <script src="js/main.js?v=40"></script>
+  <script src="data/courses.js?v=42"></script>
+  <script src="js/main.js?v=42"></script>
+  <script src="js/archive.js?v=2"></script>
+  <script src="js/method.js?v=5"></script>
 </body>
 </html>
