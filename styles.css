@@ -913,3 +913,21 @@ body.page-progetti{height:100vh;height:100dvh;overflow:hidden;display:flex;flex-
   .mfc__desc{margin:0 0 4px;font-size:15px;line-height:1.5}
   .mfc__link{display:inline-block;margin-top:8px;font:12px ui-monospace,'Courier New',monospace;text-transform:uppercase;color:var(--ink)}
 }
+
+/* mobile: la sezione progetti in home diventa color carta come il resto
+   (niente blocco nero che "rimbalza" mentre si sfoglia), scorrimento contenuto nelle righe */
+@media(max-width:860px){
+  html,body{overflow-x:clip}
+  .projects{background:var(--paper);--sec-ink:var(--ink);--sec-muted:var(--muted)}
+  .projects .sec-head{border-bottom-color:var(--ink)}
+  .projects .sec-head h2{color:var(--ink)}
+  .projects .sec-head__note{color:var(--muted)}
+  .mcat{border-top:1px solid var(--ink)}
+  .mcat:first-child{border-top:0}
+  .mcat__head,.mcard{color:var(--ink)}
+  .mcat__head span,.mcard__cap span{color:var(--muted)}
+  .mcard__ph{background:#dcd8cc}
+  .mcard--more{border-color:var(--ink)}
+  .mcat__row{overscroll-behavior-x:contain;touch-action:pan-x pan-y}
+}
+@media(max-width:860px){ .mcat__row.is-auto{scroll-snap-type:none} }

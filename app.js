@@ -456,6 +456,35 @@
       }, { root: row, threshold: 0.7 });
       row.querySelectorAll(".mcard[data-i]").forEach((c) => io.observe(c));
     });
+
+    // scorrendo la pagina in giù le file si muovono di lato (direzioni alternate),
+    // così si capisce che si sfogliano. Toccata una fila, la guida l'utente.
+    if (reduce) return;
+    const rows = [...app.querySelectorAll(".mcat__row")];
+    rows.forEach((r) => {
+      r.classList.add("is-auto");                         // niente aggancio mentre si muove da sola
+      const take = () => { if (r._user) return; r._user = true; r.classList.remove("is-auto"); };
+      r.addEventListener("touchstart", take, { passive: true });
+      r.addEventListener("pointerdown", take, { passive: true });
+      r.addEventListener("wheel", take, { passive: true });
+    });
+    let ticking = false;
+    const drift = () => {
+      ticking = false;
+      const vh = innerHeight;
+      rows.forEach((r, i) => {
+        if (r._user) return;
+        const b = r.getBoundingClientRect();
+        if (b.bottom < 0 || b.top > vh) return;
+        const p = Math.min(1, Math.max(0, (vh - b.top) / (vh + b.height)));   // 0 entra dal basso … 1 esce in alto
+        const card = r.querySelector(".mcard"), span = Math.min(r.scrollWidth - r.clientWidth, (card ? card.offsetWidth : 280) * 1.4);
+        r.scrollLeft = i % 2 ? span * (1 - p) : span * p;
+      });
+    };
+    const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(drift); } };
+    addEventListener("scroll", req, { passive: true });
+    addEventListener("resize", req);
+    req();
   }
 
   function buildFeed(CATS) {
