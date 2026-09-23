@@ -299,7 +299,12 @@ a { color: inherit; text-decoration: none; }
 /* ---------- CORSI · nessun corso attivo (griglia deformata + messaggio) ---------- */
 .nocourse[hidden] { display: none; }
 .nocourse { position: relative; border: 1.5px solid var(--ink); height: clamp(260px, 34vw, 420px); overflow: hidden; background: var(--bg); }
-.nocourse__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+/* griglia ferma disegnata dal CSS: zero calcoli, zero animazioni */
+.nocourse__grid, .method__grid { background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 34px 34px; background-position: -1px -1px; }
+.nocourse__grid { position: absolute; inset: 0; }
 .nocourse__msg { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; background: var(--paper);
   border: 1.5px solid var(--ink); padding: clamp(.9rem, 2.2vw, 1.6rem) clamp(1.2rem, 3.5vw, 2.6rem); display: grid; gap: .5rem; max-width: 90%; }
 .nocourse__eyebrow, .nocourse__sub { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
@@ -361,7 +366,12 @@ a { color: inherit; text-decoration: none; }
 .method__lede { font-weight: 500; font-size: clamp(1.5rem, 3.4vw, 2.6rem); line-height: 1.08; letter-spacing: -.015em; margin: 0; text-wrap: balance; }
 .method__body { font-size: clamp(15px, 1.3vw, 17px); line-height: 1.55; margin: 0; padding-top: 1rem; border-top: 1.5px solid var(--ink); max-width: 44ch; text-wrap: pretty; }
 .method__fig { grid-column: 7 / 13; margin: 0; }
-.method__canvas { display: block; width: 100%; aspect-ratio: 4 / 3; border: 1.5px solid var(--ink); background: var(--bg); }
+.method__canvas { position: relative; display: block; width: 100%; aspect-ratio: 4 / 3; border: 1.5px solid var(--ink); background-color: var(--bg); }
+/* mirino fermo al centro della griglia */
+.method__mark { position: absolute; left: 50%; top: 50%; width: 18px; height: 18px; transform: translate(-50%, -50%); border: 1.5px solid var(--ink); }
+.method__mark::before, .method__mark::after { content: ""; position: absolute; background: var(--ink); }
+.method__mark::before { left: 50%; top: -14px; bottom: -14px; width: 1.5px; transform: translateX(-50%); }
+.method__mark::after { top: 50%; left: -14px; right: -14px; height: 1.5px; transform: translateY(-50%); }
 .method__fig figcaption { display: flex; justify-content: space-between; gap: 1rem; margin-top: .5rem; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); }
 .method__steps { grid-column: 1 / 13; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); column-gap: clamp(1rem, 2.5vw, 2rem); }
 .method__steps li { border-top: 1.5px solid var(--ink); padding-top: .9rem; }
@@ -628,7 +638,20 @@ a { color: inherit; text-decoration: none; }
 }
 @media (hover: none), (pointer: coarse) { .arch__hit, .arch__nav button { cursor: pointer; } }
 
-/* ---------- HERO · griglia a spirale dietro il wordmark ---------- */
-/* la griglia sta sotto a tutto (z-index -1 dentro la hero isolata): non tocca il posizionamento degli altri elementi */
-.hero { position: relative; isolation: isolate; }
-.hero__spiral { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: .38; }
+
+/* ---------- MOBILE · semplificazione ---------- */
+@media (max-width: 680px) {
+  /* barra di stato in basso: su telefono copre il contenuto, via */
+  .statusbar { display: none; }
+  body { padding-bottom: 0; }
+  /* finestre più asciutte: meno margini, barra più compatta */
+  .win { margin: 1.4rem .75rem; }
+  .win__body { padding: 1.2rem 1rem 1.4rem; }
+  .win__bar { gap: .6rem; font-size: 11px; }
+  .win__status { display: none; }
+  .block__meta { margin-left: 0; width: 100%; }
+  /* nessun corso attivo: messaggio a tutta larghezza, leggibile */
+  .nocourse { height: auto; min-height: 240px; display: grid; place-items: center; padding: 1.4rem .9rem; }
+  .nocourse__msg { position: relative; left: auto; top: auto; transform: none; max-width: 100%; width: 100%; }
+  .nocourse__title { font-size: 2rem; }
+}

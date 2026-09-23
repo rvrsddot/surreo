@@ -13,6 +13,11 @@
 
   // pagina progetti (progetti.html) = indice + pannello; home = vetrina che rimanda lì
   const INDEX = document.getElementById("indice");
+  // telefono / tablet stretto: layout dedicato (swipe in home, feed nella pagina progetti).
+  // Se si attraversa la soglia ridimensionando, si ricarica per ricostruire il layout giusto.
+  const MQ = matchMedia("(max-width: 860px)");
+  const MOBILE = MQ.matches;
+  MQ.addEventListener && MQ.addEventListener("change", () => location.reload());
   const goProjects = (cat) => { location.href = "progetti.html" + (cat && cat.id ? "?cat=" + cat.id : ""); };
 
   /* --- altezza per l'embed Readymag: comunica al parent l'altezza reale --- */
@@ -68,6 +73,7 @@
     // "Virtual & VR Experience" ha pochi items → in fondo
     const vIdx = CATS.findIndex((c) => /virtual/i.test(c.name));
     if (vIdx >= 0) CATS.push(CATS.splice(vIdx, 1)[0]);
+    if (MOBILE) { document.body.classList.add("is-mobile"); INDEX ? buildFeed(CATS) : buildMobileHome(CATS); return; }
     CATS.forEach(renderCategory);
     if (INDEX) buildIndex(CATS);
     else buildCatPicker(CATS);
@@ -401,6 +407,146 @@
       nav.addEventListener("click", () => setTimeout(req, 50));
       req();
     }
+  }
+
+  /* =====================================================================
+     MOBILE — home: copertine grandi a swipe per categoria · progetti: feed
+     ===================================================================== */
+  const toM = (src) => src.replace(/\/([^/]+)$/, "/m/$1");            // versione 560px
+  const coverM = (it) => (it.kind === "proj" ? (it.frames[0] ? toM(it.frames[0]) : "") : YT_THUMB_S(it.vid));
+  const pad2 = (n) => String(n).padStart(2, "0");
+
+  // gif che parte solo sulla copertina "in scena" (una alla volta), ferma le altre
+  function gifStage() {
+    let cur = null, stop = null;
+    return (el, it) => {
+      if (cur === el) return;
+      if (stop) { stop(); stop = null; }
+      if (cur) { const i = cur.querySelector("img"); if (i && cur._first) i.src = cur._first; }
+      cur = el;
+      if (el && it && it.kind === "proj" && it.frames.length > 1 && !reduce) {
+        const img = el.querySelector("img"); el._first = img.src;
+        stop = cycleFrames(img, it.frames.map(toM));
+      }
+    };
+  }
+
+  function buildMobileHome(CATS) {
+    app.classList.add("mhome");
+    CATS.forEach((cat) => {
+      const play = gifStage();                        // una gif per riga, si ferma quando la riga esce
+      const sec = document.createElement("section");
+      sec.className = "mcat";
+      const href = "progetti.html?cat=" + cat.id;
+      const cards = cat.items.slice(0, 8).map((it, i) =>
+        '<a class="mcard" href="' + href + '" data-i="' + i + '"><div class="mcard__ph' + (it.kind === "proj" ? "" : " is-wide") + '">' +
+        '<img loading="lazy" alt="' + it.name + '" src="' + coverM(it) + '"></div>' +
+        '<div class="mcard__cap"><b>' + it.name + '</b><span>' + pad2(i + 1) + "</span></div></a>").join("");
+      const more = cat.items.length > 8 ? '<a class="mcard mcard--more" href="' + href + '"><span>Tutti i ' + cat.items.length + "<br>progetti →</span></a>" : "";
+      sec.innerHTML = '<a class="mcat__head" href="' + href + '"><b>' + cat.name + "</b><span>" + pad2(cat.items.length) + " →</span></a>" +
+        '<div class="mcat__row">' + cards + more + "</div>";
+      app.appendChild(sec);
+      // copertina al centro della riga = gif in play (solo se la riga è a schermo)
+      const row = sec.querySelector(".mcat__row");
+      let rowOn = false, center = null;
+      new IntersectionObserver((es) => { rowOn = es[0].isIntersecting; play(rowOn ? center : null, rowOn && center ? cat.items[+center.dataset.i] : null); }, { threshold: 0.5 }).observe(row);
+      const io = new IntersectionObserver((es) => {
+        es.forEach((e) => { if (e.isIntersecting) center = e.target; });
+        if (rowOn && center && center.dataset.i) play(center, cat.items[+center.dataset.i]);
+      }, { root: row, threshold: 0.7 });
+      row.querySelectorAll(".mcard[data-i]").forEach((c) => io.observe(c));
+    });
+  }
+
+  function buildFeed(CATS) {
+    const feed = document.createElement("div");
+    feed.className = "mfeed";
+    const tot = CATS.reduce((s, c) => s + c.items.length, 0);
+    feed.innerHTML = '<nav class="mchips" aria-label="Categorie"><button type="button" class="on" data-cat="">Tutti <i>' + tot + "</i></button>" +
+      CATS.map((c) => '<button type="button" data-cat="' + c.id + '">' + c.name.split(/[,&]/)[0].trim() + " <i>" + pad2(c.items.length) + "</i></button>").join("") + "</nav>";
+    const play = gifStage();
+    CATS.forEach((cat, ci) => {
+      const sec = document.createElement("section");
+      sec.className = "mfeed__sec"; sec.dataset.cat = cat.id;
+      sec.innerHTML = '<h2 class="mfeed__h"><span>§ ' + pad2(ci + 1) + " — " + cat.name + "</span><span>" + pad2(cat.items.length) + "</span></h2>";
+      cat.items.forEach((it, ii) => {
+        const code = (CODES[cat.id] || "XX") + "·" + pad2(ii + 1);
+        const tags = (it.tags && it.tags.length ? it.tags : [it.kind === "site" ? "Website" : "Video"]).slice(0, 3).join(" / ");
+        const card = document.createElement("article");
+        card.className = "mfc";
+        card.innerHTML = '<button type="button" class="mfc__top" aria-expanded="false">' +
+          '<div class="mfc__ph' + (it.kind === "proj" ? "" : " is-wide") + '"><img loading="lazy" alt="' + it.name + '" src="' + coverM(it) + '"></div>' +
+          '<div class="mfc__meta"><span class="mfc__code">' + code + '</span><b>' + it.name + '</b><i aria-hidden="true">+</i></div>' +
+          '<div class="mfc__tags">' + tags + "</div></button>" +
+          '<div class="mfc__more" hidden></div>';
+        const top = card.querySelector(".mfc__top"), more = card.querySelector(".mfc__more");
+        top.addEventListener("click", () => {
+          const open = more.hidden;
+          // uno aperto alla volta
+          feed.querySelectorAll(".mfc.is-open").forEach((o) => { if (o !== card) closeCard(o); });
+          if (!open) { closeCard(card); return; }
+          play(null);
+          card.classList.add("is-open"); top.setAttribute("aria-expanded", "true"); more.hidden = false;
+          let media = "";
+          if (it.kind === "proj") {
+            media = '<div class="mfc__gal">' + it.frames.map((f) => '<div><img loading="lazy" alt="" src="' + toM(f) + '"></div>').join("") + "</div>" +
+              (it.frames.length > 1 ? '<div class="mfc__dots">' + it.frames.map((_, k) => "<i" + (k ? "" : ' class="on"') + "></i>").join("") + "</div>" : "");
+          } else {
+            media = '<div class="mfc__vid"><iframe src="' + YT_EMBED(it.vid) + '" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="' + it.name + '"></iframe></div>';
+          }
+          // foto/video sopra al nome (al posto della copertina), descrizione sotto
+          const box = document.createElement("div");
+          box.className = "mfc__media"; box.innerHTML = media;
+          card.insertBefore(box, top);
+          more.innerHTML =
+            (it.description ? '<p class="mfc__desc">' + it.description + "</p>" : "") +
+            (it.url ? '<a class="mfc__link" href="' + it.url + '" target="_blank" rel="noopener">Visita il sito ↗</a>' : "");
+          top.querySelector(".mfc__ph").hidden = true;
+          const gal = box.querySelector(".mfc__gal");
+          if (gal) gal.addEventListener("scroll", () => {
+            const k = Math.round(gal.scrollLeft / gal.clientWidth);
+            box.querySelectorAll(".mfc__dots i").forEach((d, j) => d.classList.toggle("on", j === k));
+          }, { passive: true });
+          setTimeout(() => card.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" }), 30);
+        });
+        card._it = it;
+        sec.appendChild(card);
+      });
+      feed.appendChild(sec);
+    });
+    function closeCard(c) {
+      c.classList.remove("is-open");
+      const m = c.querySelector(".mfc__more"); m.hidden = true; m.innerHTML = "";
+      const b = c.querySelector(".mfc__media"); if (b) b.remove();                 // via iframe/galleria
+      c.querySelector(".mfc__top").setAttribute("aria-expanded", "false");
+      c.querySelector(".mfc__ph").hidden = false;
+    }
+    INDEX.appendChild(feed);
+
+    // gif in play sulla scheda al centro dello schermo
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => {
+        const card = e.target.closest(".mfc");
+        if (e.isIntersecting && !card.classList.contains("is-open")) play(e.target, card._it);
+      });
+    }, { rootMargin: "-45% 0px -45% 0px" });
+    feed.querySelectorAll(".mfc__ph").forEach((p) => io.observe(p));
+
+    // filtro categorie (+ ?cat= dalla home: mostra tutto e scorre a quella sezione)
+    const chips = feed.querySelector(".mchips");
+    const setCat = (id) => {
+      chips.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.cat === id));
+      feed.querySelectorAll(".mfeed__sec").forEach((s) => { s.hidden = !!id && s.dataset.cat !== id; });
+    };
+    chips.addEventListener("click", (e) => {
+      const b = e.target.closest("button"); if (!b) return;
+      setCat(b.dataset.cat);
+      b.scrollIntoView({ inline: "center", block: "nearest" });
+      scrollTo({ top: feed.getBoundingClientRect().top + scrollY - 4 });
+    });
+    const start = new URLSearchParams(location.search).get("cat");
+    const sec = start && feed.querySelector('.mfeed__sec[data-cat="' + start + '"]');
+    if (sec) requestAnimationFrame(() => scrollTo({ top: sec.getBoundingClientRect().top + scrollY - chips.offsetHeight - 6 }));
   }
 
   /* --- singola card progetto/video --- */

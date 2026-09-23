@@ -850,3 +850,66 @@ body.page-progetti{height:100vh;height:100dvh;overflow:hidden;display:flex;flex-
 .page-progetti .ix-prev figcaption{width:100%}
 @media(max-width:860px){.page-progetti .ix-side{overflow:visible}.page-progetti .ix-prev{display:none}}
 .ix-prev__box iframe{position:absolute;inset:0;width:100%;height:100%;border:0;transition:opacity .25s}
+
+/* =====================================================================
+   MOBILE (≤ 860px) — home: copertine a swipe · progetti: feed verticale
+   ===================================================================== */
+@media(max-width:860px){
+  /* ---- home: una fila di copertine grandi per categoria ---- */
+  #app.mhome{padding:0}
+  .mcat{padding:18px 0 24px;border-top:1px solid #333}
+  .mcat__head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:0 16px 12px;color:#f2ede0;text-decoration:none}
+  .mcat__head b{font:800 22px/1 "Bricolage Grotesque",sans-serif;letter-spacing:-.01em}
+  .mcat__head span{font:11px ui-monospace,'Courier New',monospace;color:#8d8677;white-space:nowrap}
+  .mcat__row{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .mcat__row::-webkit-scrollbar{display:none}
+  .mcard{flex:0 0 78%;scroll-snap-align:center;color:#f2ede0;text-decoration:none}
+  .mcard__ph{aspect-ratio:1;background:#1c1c1c;overflow:hidden}
+  .mcard__ph.is-wide{aspect-ratio:16/10}
+  .mcard__ph img{width:100%;height:100%;object-fit:cover;display:block}
+  .mcard__cap{display:flex;justify-content:space-between;gap:10px;margin-top:8px}
+  .mcard__cap b{font:500 14px/1.15 "Bricolage Grotesque",sans-serif;text-transform:uppercase}
+  .mcard__cap span{font:10px ui-monospace,'Courier New',monospace;color:#8d8677}
+  .mcard--more{flex-basis:46%;display:grid;place-items:center;border:1px solid #444;font:500 16px/1.2 "Bricolage Grotesque",sans-serif;text-align:center}
+
+  /* ---- pagina progetti: la pagina torna a scorrere normalmente, niente rullo ---- */
+  body.page-progetti{height:auto;overflow:visible;display:block}
+  .page-progetti .ix{display:block}
+  .page-progetti .ix-scope,.page-progetti .ix-grid,.page-progetti .ix-note{display:none}
+  .page-progetti .contact{display:block}
+  .mfeed{margin:0 calc(-1 * clamp(16px,3.5vw,44px))}
+  .mchips{position:sticky;top:0;z-index:5;display:flex;gap:6px;overflow-x:auto;padding:10px 16px;background:var(--paper);border-top:1.5px solid var(--ink);border-bottom:1px solid var(--ink);scrollbar-width:none}
+  .mchips::-webkit-scrollbar{display:none}
+  .mchips button{all:unset;flex:none;border:1px solid var(--ink);padding:7px 10px;font:11px/1 ui-monospace,'Courier New',monospace;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;cursor:pointer}
+  .mchips button i{font-style:normal;color:var(--muted)}
+  .mchips button.on{background:var(--ink);color:var(--paper)}
+  .mchips button.on i{color:#b9b3a4}
+  .mfeed__sec[hidden]{display:none}
+  .mfeed__h{display:flex;justify-content:space-between;padding:22px 16px 8px;border-bottom:1.5px solid var(--ink);font:700 11px/1 ui-monospace,'Courier New',monospace;letter-spacing:.06em;text-transform:uppercase}
+  .mfc{border-bottom:1px solid var(--line);padding:16px}
+  .mfc__top{all:unset;display:block;width:100%;cursor:pointer}
+  .mfc__ph{aspect-ratio:1;background:#dcd8cc;overflow:hidden}
+  .mfc__ph.is-wide{aspect-ratio:16/9}
+  .mfc__ph[hidden]{display:none}
+  .mfc__ph img{width:100%;height:100%;object-fit:cover;display:block}
+  .mfc__meta{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:baseline;margin-top:10px}
+  .mfc__code{font:10px ui-monospace,'Courier New',monospace;color:var(--muted)}
+  .mfc__meta b{font:800 22px/1 "Bricolage Grotesque",sans-serif;text-transform:uppercase;letter-spacing:-.01em}
+  .mfc__meta i{font:normal 26px/1 "Bricolage Grotesque",sans-serif;transition:transform .25s}
+  .mfc.is-open .mfc__meta i{transform:rotate(45deg)}
+  .mfc__tags{margin-top:6px;font:10px/1.4 ui-monospace,'Courier New',monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+  .mfc__media{margin-bottom:2px}
+  .mfc__more{margin-top:10px}
+  .mfc__more[hidden]{display:none}
+  .mfc__gal{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;scrollbar-width:none}
+  .mfc__gal::-webkit-scrollbar{display:none}
+  .mfc__gal div{flex:0 0 100%;scroll-snap-align:center;background:#dcd8cc}
+  .mfc__gal img{width:100%;height:auto;display:block}
+  .mfc__dots{display:flex;justify-content:center;gap:5px;margin-top:8px}
+  .mfc__dots i{width:6px;height:6px;border:1px solid var(--ink)}
+  .mfc__dots i.on{background:var(--ink)}
+  .mfc__vid{position:relative;aspect-ratio:16/9;margin:0 -16px;background:#000}
+  .mfc__vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .mfc__desc{margin:0 0 4px;font-size:15px;line-height:1.5}
+  .mfc__link{display:inline-block;margin-top:8px;font:12px ui-monospace,'Courier New',monospace;text-transform:uppercase;color:var(--ink)}
+}

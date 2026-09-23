@@ -181,7 +181,7 @@
   <!-- Testi + titoli: Space Grotesk · readout di sistema: Space Mono -->
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/style.css?v=39" />
+  <link rel="stylesheet" href="css/style.css?v=41" />
 </head>
 <body>
   <div class="grid-bg" aria-hidden="true"></div>
@@ -210,7 +210,6 @@
   <main>
     <!-- ===================== HERO (poster SWW8) ===================== -->
     <section class="hero" id="hero">
-      <canvas class="hero__spiral" data-spiral aria-hidden="true"></canvas>
       <div class="hero__labels">
         <span><b>SINCE 2018</b>&nbsp;UNCONVENTIONAL HUB</span>
         <span class="r">XXX&nbsp;<i id="hero-year">2026</i></span>
@@ -257,7 +256,7 @@
         <div class="cards" id="cards"><!-- card generate da js/main.js --></div>
         <!-- nessun corso attivo: griglia animata con messaggio (mostrata da js/archive.js se COURSES è vuoto) -->
         <div class="nocourse" id="nocourse" hidden>
-          <canvas class="nocourse__canvas" data-field aria-hidden="true"></canvas>
+          <div class="nocourse__grid" aria-hidden="true"></div>
           <div class="nocourse__msg">
             <span class="nocourse__eyebrow">// STATUS · 0 CORSI ATTIVI</span>
             <p class="nocourse__title">Nessun corso attivo</p>
@@ -318,8 +317,8 @@
             </p>
           </div>
           <figure class="method__fig" aria-hidden="true">
-            <canvas class="method__canvas" id="method-grid"></canvas>
-            <figcaption><span>FIG. M-01 · campo di deformazione</span><span id="method-t">t 00.00</span></figcaption>
+            <div class="method__canvas method__grid" aria-hidden="true"><span class="method__mark"></span></div>
+            <figcaption><span>FIG. M-01 · griglia di progetto</span><span>8 anni · 2018 → 2026</span></figcaption>
           </figure>
           <ol class="method__steps">
             <li><b>01</b><h3>Brief</h3><p>Un tema reale dal primo giorno, con vincoli veri, portato da chi quel progetto lo fa per mestiere.</p></li>
@@ -460,6 +459,5 @@
   <script src="data/courses.js?v=42"></script>
   <script src="js/main.js?v=43"></script>
   <script src="js/archive.js?v=3"></script>
-  <script src="js/method.js?v=6"></script>
 </body>
 </html>
