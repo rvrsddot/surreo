@@ -105,7 +105,9 @@
     if (cat) open(cat, 0);
   }
 
-  const thumbURL = (it) => (it.kind === "proj" ? (it.frames[0] || "") : YT_THUMB(it.vid));
+  // miniatura 256px generata da make_thumbs.py: assets/projects/<id>/NN.jpg -> .../<id>/t/NN.jpg
+  const toThumb = (src) => src.replace(/\/([^/]+)$/, "/t/$1");
+  const thumbURL = (it) => (it.kind === "proj" ? (it.frames[0] ? toThumb(it.frames[0]) : "") : YT_THUMB(it.vid));
 
   // colori accent per categoria (in ordine)
   const CAT_ACCENTS = ["#ff2bd6", "#2be5ff", "#b5ff2b", "#ff8a2b", "#b02bff", "#ff2b7e"];
@@ -138,7 +140,7 @@
       b.innerHTML = '<img loading="lazy" alt="' + it.name + '" src="' + thumbURL(it) + '">';
       b.addEventListener("click", (e) => { e.stopPropagation(); open(el, i); });
       if (it.kind === "proj" && it.frames && it.frames.length > 1) {
-        b._frames = it.frames;
+        b._frames = it.frames.map(toThumb);
         attachHoverGif(b);
       }
       strip.appendChild(b);
@@ -189,11 +191,17 @@
         }
 
         if (dirSign === -1) strip.scrollLeft = baseHalf;
+        // posizione in float: su schermi 1× (o con zoom) il browser arrotonda scrollLeft
+        // al pixel intero, quindi "scrollLeft += 0.35" rileggerebbe sempre lo stesso valore
+        // e la riga resterebbe ferma. Si risincronizza solo se l'utente ha scrollato a mano.
+        let pos = strip.scrollLeft;
         const step = () => {
           if (!paused && !userLock && !el.classList.contains("is-open")) {
-            strip.scrollLeft += speed * dirSign;
-            if (dirSign === 1 && strip.scrollLeft >= baseHalf) strip.scrollLeft -= baseHalf;
-            else if (dirSign === -1 && strip.scrollLeft <= 0) strip.scrollLeft += baseHalf;
+            if (Math.abs(strip.scrollLeft - pos) > 2) pos = strip.scrollLeft;
+            pos += speed * dirSign;
+            if (pos >= baseHalf) pos -= baseHalf;
+            else if (pos <= 0) pos += baseHalf;
+            strip.scrollLeft = pos;
           }
           requestAnimationFrame(step);
         };
@@ -255,9 +263,9 @@
 
     const media =
       it.kind === "proj"
-        ? '<div class="pcard__media"><img class="slide-img" loading="lazy" alt="' + it.name + '" src="' + (it.frames[0] || "") + '"></div>' +
+        ? '<div class="pcard__media"><img class="slide-img" loading="lazy" alt="' + it.name + '" data-src="' + (it.frames[0] || "") + '"></div>' +
           '<div class="pcard__play"><i></i> gif</div>'
-        : '<div class="pcard__media"><img class="v-thumb" loading="lazy" alt="' + it.name + '" src="' + YT_THUMB(it.vid) + '"></div>' +
+        : '<div class="pcard__media"><img class="v-thumb" loading="lazy" alt="' + it.name + '" data-src="' + YT_THUMB(it.vid) + '"></div>' +
           '<div class="pcard__play"><i></i> video</div>';
 
     const visit = it.url ? '<a class="visit" href="' + it.url + '" target="_blank" rel="noopener">VISIT &#8599;</a>' : "<span>&larr; chiudi info</span>";
@@ -297,11 +305,13 @@
     if (!f || f.length < 2) return;
     const img = card.querySelector(".slide-img");
     f.forEach((src) => { const im = new Image(); im.src = src; });   // preload
+    // primo cambio quasi subito (prima sembrava ferma per 1.8s), poi ritmo regolare
     let i = 0;
-    card._timer = setInterval(() => { i = (i + 1) % f.length; img.src = f[i]; }, 1800);
+    const next = () => { i = (i + 1) % f.length; img.src = f[i]; };
+    card._timer = setTimeout(() => { next(); card._timer = setInterval(next, 1300); }, 500);
   }
   function stopGif(card) {
-    if (card._timer) { clearInterval(card._timer); card._timer = null; }
+    if (card._timer) { clearTimeout(card._timer); clearInterval(card._timer); card._timer = null; }
     const img = card.querySelector(".slide-img");
     if (img && card._frames) img.src = card._frames[0];
   }
@@ -354,6 +364,9 @@
     el.getBoundingClientRect();
     document.body.classList.add("has-open"); backdrop.classList.add("is-on"); el.classList.add("is-open");
     el.querySelector(".cat__open").setAttribute("aria-hidden", "false");
+    // le immagini grandi delle card si caricano solo alla prima apertura
+    // (il pannello chiuso resta nel layout, quindi loading="lazy" da solo non basta)
+    el.querySelectorAll(".cat__open img[data-src]").forEach((im) => { im.src = im.dataset.src; im.removeAttribute("data-src"); });
     requestAnimationFrame(() => setRect(el, targetRect()));
     el.querySelector(".close").focus({ preventScroll: true });
     // parti da sinistra, poi slitta fino al progetto cliccato -> gif/video parte

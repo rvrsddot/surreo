@@ -138,3 +138,7 @@ if blanks:
 
 tot = sum(len(s["projects"]) for s in out_sections)
 print(f"\nFatto: {tot} progetti in {len(out_sections)} sezioni -> {OUT_JSON}")
+
+# miniature per le righe Projects (assets/projects/<id>/t/)
+from make_thumbs import make_thumbs
+make_thumbs()
