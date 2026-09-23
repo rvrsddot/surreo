@@ -433,6 +433,8 @@
 
   function buildMobileHome(CATS) {
     app.classList.add("mhome");
+    const note = document.querySelector(".projects .sec-head__note");
+    if (note) note.textContent = "Scorri · tocca per aprire";
     CATS.forEach((cat) => {
       const play = gifStage();                        // una gif per riga, si ferma quando la riga esce
       const sec = document.createElement("section");

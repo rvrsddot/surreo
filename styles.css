@@ -426,7 +426,7 @@ body.has-open,body.menu-open{overflow:hidden}
   .coll__items{justify-content:space-between;gap:clamp(8px,2.5vw,16px);width:100%}
   .coll__box{flex-direction:column;align-items:center;gap:8px;flex:1 1 0;min-width:0}
   .coll__tag{text-align:center;max-width:none;padding-top:0;font-size:7px;line-height:1.25;
-    min-height:2.5em;display:flex;align-items:flex-end;justify-content:center}
+    min-height:3.75em;display:flex;align-items:flex-end;justify-content:center}   /* 3 righe per tutti: i riquadri partono alla stessa linea */
   .coll__item{width:100%}
 }
 
@@ -649,7 +649,8 @@ body.has-open,body.menu-open{overflow:hidden}
 .privacy-banner__ok:hover{background:transparent;color:#f2ede0;transform:translate(-2px,-2px);box-shadow:4px 4px 0 #f2ede0}
 .privacy-banner__ok:focus-visible{outline:3px solid #f2ede0;outline-offset:3px}
 @media(max-width:520px){
-  .privacy-banner__inner{flex-direction:column;align-items:stretch;text-align:left}
+  .privacy-banner__inner{flex-direction:column;align-items:stretch;text-align:left;gap:12px}
+  .privacy-banner__text{flex:none}   /* in colonna la base 340px diventava altezza: banner enorme */
   .privacy-banner__ok{align-self:flex-end}
 }
 
