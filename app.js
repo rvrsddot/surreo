@@ -139,6 +139,7 @@
       b.className = "thumb"; b.type = "button"; b.setAttribute("aria-label", "Apri " + it.name);
       b.innerHTML = '<img loading="lazy" alt="' + it.name + '" src="' + thumbURL(it) + '">';
       b.addEventListener("click", (e) => { e.stopPropagation(); open(el, i); });
+      if (it.kind === "proj") b.classList.add("is-proj");
       if (it.kind === "proj" && it.frames && it.frames.length > 1) {
         b._frames = it.frames.map(toThumb);
         attachHoverGif(b);
@@ -258,7 +259,7 @@
   /* --- singola card progetto/video --- */
   function makeCard(it, cat) {
     const card = document.createElement("div");
-    card.className = "pcard";
+    card.className = "pcard" + (it.kind === "proj" ? " is-proj" : "");
     card._kind = it.kind; card._frames = it.kind === "proj" ? it.frames : null; card._vid = it.vid;
 
     const media =
@@ -300,18 +301,33 @@
     if (card._kind === "proj") { on ? startGif(card) : stopGif(card); }
     else { on ? playVideo(card) : stopVideo(card); }
   }
+  // ciclo frame "a gif": avanza ogni GIF_MS, ma solo quando il frame successivo è già
+  // caricato (niente scatti/attese su rete lenta). Ritorna la funzione di stop.
+  const GIF_MS = 700;
+  const cache = {};
+  const preload = (src) => cache[src] || (cache[src] = new Promise((res) => {
+    const im = new Image(); im.onload = im.onerror = () => res(); im.src = src;
+  }));
+  function cycleFrames(img, f) {
+    let i = 0, alive = true, t = 0;
+    f.forEach(preload);
+    const tick = () => {
+      const n = (i + 1) % f.length, due = performance.now() + GIF_MS;
+      preload(f[n]).then(() => {
+        if (!alive) return;
+        t = setTimeout(() => { if (!alive) return; i = n; img.src = f[i]; tick(); }, Math.max(0, due - performance.now()));
+      });
+    };
+    tick();
+    return () => { alive = false; clearTimeout(t); };
+  }
   function startGif(card) {
     const f = card._frames;
     if (!f || f.length < 2) return;
-    const img = card.querySelector(".slide-img");
-    f.forEach((src) => { const im = new Image(); im.src = src; });   // preload
-    // primo cambio quasi subito (prima sembrava ferma per 1.8s), poi ritmo regolare
-    let i = 0;
-    const next = () => { i = (i + 1) % f.length; img.src = f[i]; };
-    card._timer = setTimeout(() => { next(); card._timer = setInterval(next, 1300); }, 500);
+    card._stop = cycleFrames(card.querySelector(".slide-img"), f);
   }
   function stopGif(card) {
-    if (card._timer) { clearTimeout(card._timer); clearInterval(card._timer); card._timer = null; }
+    if (card._stop) { card._stop(); card._stop = null; }
     const img = card.querySelector(".slide-img");
     if (img && card._frames) img.src = card._frames[0];
   }
@@ -319,16 +335,14 @@
   function attachHoverGif(el) {
     const img = el.querySelector("img");
     if (!img) return;
-    let timer = null, preloaded = false;
+    let stop = null;
     el.addEventListener("mouseenter", () => {
       const f = el._frames;
-      if (!f || f.length < 2 || timer) return;
-      if (!preloaded) { f.forEach((src) => { const im = new Image(); im.src = src; }); preloaded = true; }
-      let i = 0;
-      timer = setInterval(() => { i = (i + 1) % f.length; img.src = f[i]; }, 1800);
+      if (!f || f.length < 2 || stop) return;
+      stop = cycleFrames(img, f);
     });
     el.addEventListener("mouseleave", () => {
-      if (timer) { clearInterval(timer); timer = null; }
+      if (stop) { stop(); stop = null; }
       if (el._frames && el._frames[0]) img.src = el._frames[0];
     });
   }
@@ -352,7 +366,11 @@
   function centerCard(car, idx, behavior) {
     const c = car.querySelectorAll(".pcard")[idx];
     if (!c) return;
-    car.scrollTo({ left: c.offsetLeft - (car.clientWidth - c.offsetWidth) / 2, behavior: behavior });
+    const left = c.offsetLeft - (car.clientWidth - c.offsetWidth) / 2;
+    if (behavior === "auto" && Math.abs(car.scrollLeft - left) < 4) return;
+    // scroll-behavior:smooth nel CSS renderebbe animato anche "auto": lo spengo per il salto
+    if (behavior === "auto") { car.style.scrollBehavior = "auto"; car.scrollLeft = left; car.style.scrollBehavior = ""; }
+    else car.scrollTo({ left: left, behavior: behavior });
   }
 
   function open(el, idx) {
@@ -369,10 +387,14 @@
     el.querySelectorAll(".cat__open img[data-src]").forEach((im) => { im.src = im.dataset.src; im.removeAttribute("data-src"); });
     requestAnimationFrame(() => setRect(el, targetRect()));
     el.querySelector(".close").focus({ preventScroll: true });
-    // parti da sinistra, poi slitta fino al progetto cliccato -> gif/video parte
-    el._car.scrollLeft = 0;
+    // parti una card prima di quella cliccata, poi slitta solo l'ultimo tratto -> gif/video parte.
+    // (uno smooth scroll lungo migliaia di px veniva interrotto durante l'apertura e
+    // centrava il progetto sbagliato, quindi le ultime card non si attivavano mai)
+    centerCard(el._car, Math.max(0, idx - 1), "auto");
     setTimeout(() => { if (openEl === el) { centerCard(el._car, idx, reduce ? "auto" : "smooth"); el._animate(); } }, 240);
-    [440, 640, 900, 1300].forEach((t) => setTimeout(() => { if (openEl === el) el._animate(); }, t));
+    [440, 640, 900].forEach((t) => setTimeout(() => { if (openEl === el) el._animate(); }, t));
+    // verifica finale: se non è centrata (scroll interrotto), correggi senza animazione
+    setTimeout(() => { if (openEl === el) { centerCard(el._car, idx, "auto"); el._animate(); } }, 1300);
   }
 
   function close() {
