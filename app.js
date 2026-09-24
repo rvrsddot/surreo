@@ -312,7 +312,7 @@
         const code = (CODES[c.id] || "XX") + "·" + pad(ii + 1);
         const tags = (it.tags && it.tags.length ? it.tags : [it.kind === "site" ? "Website" : "Video"]).slice(0, 3).join(" / ");
         row.innerHTML = '<span class="ix-row__n">' + code + '</span><span class="ix-row__th"><img loading="lazy" alt="" src="' + thumbURL(it) + '"></span>' +
-          '<span class="ix-row__nm">' + it.name + '</span><span class="ix-row__ct">' + c.name.split(/[,&]/)[0].trim() + '</span><span class="ix-row__tg">' + tags + "</span>";
+          '<span class="ix-row__nm">' + it.name + '</span><span class="ix-row__tg">' + tags + "</span>";
         const show = () => {
           if (prev._it === it) return;
           stopPrev(); prev._it = it;
