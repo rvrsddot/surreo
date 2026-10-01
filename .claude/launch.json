@@ -2,12 +2,34 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "dropfx",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m","http.server","8765","--directory","/Users/riverside/Desktop/DROPFX"],
+      "port": 8765
+    },
+    {
       "name": "surreo",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server"],
-      "port": 5178,
-      "autoPort": true,
-      "cwd": "/Users/riverside/Desktop/GITHUB/SURREO"
+      "runtimeArgs": ["-m","http.server","8888","--directory","/Users/riverside/Desktop/GITHUB/SURREO"],
+      "port": 8888
+    },
+    {
+      "name": "gridkill",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m","http.server","8766","--directory","/Users/riverside/Desktop/TOOL/GRIDKILL"],
+      "port": 8766
+    },
+    {
+      "name": "workshok",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m","http.server","8899","--directory","/Users/riverside/Desktop/GITHUB/WORKSHOK"],
+      "port": 8899
+    },
+    {
+      "name": "calecale",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m","http.server","8900","--directory","/Users/riverside/Desktop/TOOL/CALECALE"],
+      "port": 8900
     }
   ]
 }

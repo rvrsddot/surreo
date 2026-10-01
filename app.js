@@ -349,6 +349,16 @@
       list.appendChild(sec);
     });
 
+    // titoli troppo lunghi per la colonna (una parola che non ci sta): corpo ridotto
+    // riga per riga invece di spezzare la parola
+    const fitNames = () => list.querySelectorAll(".ix-row__nm").forEach((n) => {
+      n.style.fontSize = "";
+      let fs = parseFloat(getComputedStyle(n).fontSize);
+      while (n.scrollWidth > n.clientWidth + 1 && fs > 14) { fs -= 1; n.style.fontSize = fs + "px"; }
+    });
+    (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(fitNames);
+    let fitT = 0; addEventListener("resize", () => { clearTimeout(fitT); fitT = setTimeout(fitNames, 120); });
+
     // filtro: ?cat=<id> nell'indirizzo, così ogni categoria ha il suo link
     const setCat = (id) => {
       nav.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.cat === id));
@@ -553,6 +563,12 @@
       c.querySelector(".mfc__ph").hidden = false;
     }
     INDEX.appendChild(feed);
+    const fitFeed = () => feed.querySelectorAll(".mfc__meta b").forEach((n) => {
+      n.style.fontSize = "";
+      let fs = parseFloat(getComputedStyle(n).fontSize);
+      while (n.scrollWidth > n.clientWidth + 1 && fs > 14) { fs -= 1; n.style.fontSize = fs + "px"; }
+    });
+    (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(fitFeed);
 
     // gif in play sulla scheda al centro dello schermo
     const io = new IntersectionObserver((es) => {
