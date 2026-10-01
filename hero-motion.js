@@ -46,26 +46,6 @@
       {t:"quarter", c0:6, c1:8, r0:0, r1:2, dir:"left"},
       {t:"arch",    c0:9, c1:11, r0:0, r1:2, dir:"up", fill:"stamp"} ],
   ];
-  const SCENES_M = [
-    range(6, (k) => ({ t:"rect", c0:k, c1:k, r0:0, r1:3, fh:(k + 1) / 6, dir:"up", fill:k === 5 ? "stamp" : "ink" })),
-    [ {t:"quarter", c0:0, c1:2, r0:0, r1:1, dir:"left"},
-      {t:"circle",  c0:3, c1:5, r0:0, r1:1, dir:"up", fill:"stamp"},
-      {t:"rect",    c0:0, c1:1, r0:2, r1:3, dir:"down"},
-      {t:"rect",    c0:2, c1:5, r0:3, r1:3, dir:"right"},
-      {t:"circle",  c0:4, c1:4, r0:2, r1:2, dir:"up"} ],
-    range(12, (k) => ({ t:"quarter", c0:k % 6, c1:k % 6, r0:1 + (k / 6 | 0), r1:1 + (k / 6 | 0), rot:k * 30, spin:true, dir:"up", fill:k === 11 ? "stamp" : "ink" })),
-    [ {t:"rect", c0:0, c1:5, r0:0, r1:0, fh:.28, from:"top", dir:"right"},
-      ...range(3, (k) => ({ t:"rect", c0:k * 2, c1:k * 2, r0:0, r1:0, fh:.12, from:"bottom", dir:"right" })),
-      {t:"ring", c0:0, c1:2, r0:1, r1:2, dir:"up"},
-      {t:"ring", c0:3, c1:5, r0:1, r1:2, dir:"up"},
-      {t:"rect", c0:0, c1:5, r0:3, r1:3, dir:"up", fill:"stamp"} ],
-    range(3, (k) => ({ t:"arch", c0:k * 2, c1:k * 2 + 1, r0:0, r1:3, dir:"up", fill:k === 1 ? "stamp" : "ink" })),
-    range(6, (k) => ({ t:"rect", c0:k, c1:k, r0:0, r1:3, fw:.1 + .9 * k / 5, dir:"down", fill:k === 5 ? "stamp" : "ink" })),
-    [ {t:"circle",  c0:0, c1:2, r0:0, r1:1, dir:"up"},
-      {t:"rect",    c0:3, c1:5, r0:0, r1:1, dir:"down"},
-      {t:"quarter", c0:0, c1:2, r0:2, r1:3, dir:"left"},
-      {t:"arch",    c0:3, c1:5, r0:2, r1:3, dir:"up", fill:"stamp"} ],
-  ];
   const SWEEP = [10.95, 12.35];
   const GRID_IN = 0, GRID_OUT = 12.95;
 
@@ -109,7 +89,8 @@
 
   function layout() {
     const W = hm.clientWidth, H = hm.clientHeight;
-    const cols = W < 640 ? 6 : 12, ROWS = cols < 12 ? 4 : 3;
+    const cols = W < 640 ? 6 : 12;
+    const lite = cols < 12;                              // mobile: niente forme, solo la griglia che si muove
     const gut = W < 640 ? 8 : clamp(W * 0.012, 10, 20);
     const colW = (W - gut * (cols - 1)) / cols;
     const spanW = (k) => k * colW + (k - 1) * gut;
@@ -124,10 +105,19 @@
     const bottomPad = Math.max(36, H * 0.07);
     const y2 = H - bottomPad - lineH, y1 = y2 - gap - lineH;
 
-    // area moduli: sotto i numeri di colonna, sopra la marginalia
+    // area moduli: sotto i numeri di colonna, sopra la marginalia.
+    // Su mobile le righe coprono tutto lo stage a moduli quasi quadrati, dietro al testo
     const aTop = 30, aBot = y1 - 40;
-    const rowH = (aBot - aTop - gut * (ROWS - 1)) / ROWS;
-    const rowY = (r) => aTop + r * (rowH + gut);
+    let ROWS, rowH, rowY;
+    if (lite) {
+      ROWS = Math.max(4, Math.round((H - aTop) / (colW + gut)));
+      rowH = (H - aTop) / ROWS;
+      rowY = (r) => aTop + r * rowH;
+    } else {
+      ROWS = 3;
+      rowH = (aBot - aTop - gut * (ROWS - 1)) / ROWS;
+      rowY = (r) => aTop + r * (rowH + gut);
+    }
 
     const words = LINES.map((seq) => seq.map((d) => {
       if (!d.w) return { ...d, xs: [], width: 0, wdth: 100, span: 0 };
@@ -146,15 +136,15 @@
       return { ...d, wdth, xs: m.xs, width: m.width, span: k ? spanW(k) : m.width };
     }));
 
-    // forme → pixel (12×3 su desktop, 6×4 su mobile)
-    const scenes = (cols < 12 ? SCENES_M : SCENES).map((list) => list.map((p) => {
+    // forme → pixel (solo desktop, 12×3)
+    const scenes = SCENES.map((list) => lite ? [] : list.map((p) => {
       let x = colX(p.c0), w = colX(p.c1) + colW - x, y = rowY(p.r0), h = rowY(p.r1) + rowH - y;
       if (p.fw) w = Math.max(2, w * p.fw);
       if (p.fh) { const nh = Math.max(2, h * p.fh); if (p.from !== "top") y += h - nh; h = nh; }
       return { ...p, x, y, w, h };
     }));
 
-    G = { W, H, cols, gut, colW, colX, S, lineH, pad, ys: [y1, y2], rowY, rowH, ROWS, words, scenes };
+    G = { W, H, cols, lite, gut, colW, colX, S, lineH, pad, ys: [y1, y2], rowY, rowH, ROWS, words, scenes };
     build();
   }
 
@@ -174,7 +164,7 @@
   function build() {
     hm.innerHTML = "";
     layers = [];
-    const { W, H, cols, colW, colX, S, lineH, pad, ys, rowY, rowH, ROWS, words, scenes } = G;
+    const { W, H, cols, lite, colW, colX, S, lineH, pad, ys, rowY, rowH, ROWS, words, scenes } = G;
 
     [["top","left"],["top","right"],["bottom","left"],["bottom","right"]].forEach(([v,h]) => {
       const c = document.createElement("i"); c.className = "hm__crop";
@@ -202,12 +192,14 @@
         }
         for (let r = 0; r <= ROWS; r++) {           // linee orizzontali dei moduli
           const l = document.createElement("i"); l.className = "hm__row";
-          l.style.top = (r < ROWS ? rowY(r) : rowY(ROWS - 1) + rowH) + "px";
+          l.style.top = (lite ? rowY(r) : r < ROWS ? rowY(r) : rowY(ROWS - 1) + rowH) + "px";
           L.appendChild(l); ref.rows.push(l);
         }
       }
 
       // forme
+      if (lite) ref.shapes = scenes.map(() => []);
+      else {
       const svg = document.createElementNS(NS, "svg"); svg.setAttribute("class", "hm__svg");
       svg.setAttribute("width", W); svg.setAttribute("height", H);
       ref.shapes = scenes.map((list) => list.map((p) => {
@@ -221,6 +213,7 @@
         return el;
       }));
       L.appendChild(svg);
+      }
 
       words.forEach((seq, r) => {
         const line = document.createElement("div"); line.className = "hm__line";
@@ -286,14 +279,18 @@
       c.style.transform = `scaleY(${(outExpo(a) * (1 - inOut(b))).toFixed(4)})`;
       ink.nums[i].style.opacity = (0.5 * prog(t, 0.4 + i * 0.045, 0.3) * (1 - prog(t, GRID_OUT - 0.3, 0.3))).toFixed(3);
     });
+    // mobile: a ogni cambio di parola le righe si chiudono e si riaprono a onda, dall'alto in basso
+    const seq2 = words[1];
     ink.rows.forEach((l, r) => {
-      const a = prog(t, 0.35 + r * 0.08, 0.8), b = prog(t, GRID_OUT + r * 0.06, 0.6);
-      l.style.transformOrigin = b > 0 ? "right" : "left";
-      l.style.transform = `scaleX(${(outExpo(a) * (1 - inOut(b))).toFixed(4)})`;
+      const a = prog(t, 0.35 + r * 0.06, 0.8), b = prog(t, GRID_OUT + r * 0.05, 0.6);
+      let dip = 0;
+      if (G.lite) for (let i = 1; i < seq2.length - 1; i++)
+        dip = Math.max(dip, Math.sin(Math.PI * inOut(prog(t, seq2[i].at - 0.25 + r * 0.04, 0.75))));
+      l.style.transformOrigin = b > 0 || (dip > 0 && r % 2) ? "right" : "left";
+      l.style.transform = `scaleX(${(outExpo(a) * (1 - inOut(b)) * (1 - dip)).toFixed(4)})`;
     });
 
     // forme: ogni scena vive mentre la riga 2 mostra la sua parola
-    const seq2 = words[1];
     scenes.forEach((list, si) => {
       const start = seq2[si].at, end = seq2[si + 1] ? seq2[si + 1].at : null;
       list.forEach((p, pi) => {
