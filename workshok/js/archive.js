@@ -25,7 +25,8 @@
   var data = window.ARCHIVE || [];
   if (!track || !cv || !data.length) return;
   var total = data.reduce(function (s, y) { return s + y.courses.length; }, 0);
-  var st = $("arch-status"); if (st) st.textContent = "[ " + pad(total) + " CORSI · " + pad(data.length) + (data.length > 1 ? " ANNI" : " ANNO") + " ]";
+  var nYears = data.reduce(function (s, y) { return s.indexOf(y.year) < 0 ? s.concat(y.year) : s; }, []).length;
+  var st = $("arch-status"); if (st) st.textContent = "[ " + pad(total) + " CORSI · " + pad(data.length) + " EDIZIONI · " + pad(nYears) + " ANNI ]";
 
   track.innerHTML = data.map(function (y, yi) {
     return '<div class="arch__year" data-year="' + y.year + '">' +
@@ -34,12 +35,13 @@
         var media = ((c.media && c.media.items) || []).slice(0, 4).map(function (m) {
           return '<img loading="lazy" alt="" src="' + esc(m.poster || m.src) + '">';
         }).join("");
-        var info = [["Docente", c.tutor], ["Strumento", c.tool], ["Durata", c.days || c.hours], ["Luogo", c.location]]
+        var info = [["Tema", c.theme], ["Docente", c.tutor], ["Strumento", c.tool], ["Date", c.dates], ["Durata", c.days || c.hours], ["Posti", c.seats], ["Luogo", c.location || y.place]]
           .filter(function (r) { return r[1]; })
           .map(function (r) { return "<li><b>" + r[0] + "</b><span>" + esc(r[1]) + "</span></li>"; }).join("");
         return '<article class="arch__item" data-y="' + yi + '">' +
           '<button type="button" class="arch__hit" aria-expanded="false" aria-label="Apri ' + esc(c.title) + '"></button>' +
-          '<div class="arch__ph"><img loading="lazy" alt="' + esc(c.title) + '" src="' + esc(c.thumb || "") + '"></div>' +
+          '<div class="arch__ph">' + (c.thumb ? '<img loading="lazy" alt="' + esc(c.title) + '" src="' + esc(c.thumb) + '">'
+            : '<span class="arch__noimg">' + esc(c.number || "") + "<small>" + esc(c.title) + "</small></span>") + "</div>" +
           '<div class="arch__meta"><span class="arch__code">' + esc(y.edition) + " / " + esc(c.number || pad(ci + 1)) + "</span>" +
             "<h3>" + esc(c.title) + "</h3><p>" + esc(c.tutor) + "</p></div>" +
           '<div class="arch__more">' +
@@ -141,7 +143,7 @@
       ctx.fillStyle = ink;
       ctx.fillRect(a, 0, 1.5, gh);      // confine tra strati
       ctx.font = "10px 'Space Mono', monospace";
-      ctx.fillText(String(data[i].year) + " · −" + pad(i), a + 6, gh + 13);
+      ctx.fillText(String(data[i].year) + " · " + data[i].edition, a + 6, gh + 13);
     });
     ctx.fillRect(0, 0, W, 1.5);         // linea di terra
     ctx.fillRect(0, gh, W, 1);
@@ -153,7 +155,8 @@
     ctx.fillRect(cx - 4, 0, 9, 1.5);
     // anno sotto la linea di sezione
     var cur = 0; xs.forEach(function (x, i) { if (x <= cx) cur = i; });
-    if (depth) depth.textContent = "SEZ. A-A · " + data[cur].year + " · profondità " + pad(cur) + (cur === 1 ? " anno" : " anni");
+    var dy = data[0].year - data[cur].year;
+    if (depth) depth.textContent = "SEZ. A-A · " + data[cur].year + " · " + data[cur].edition + " · profondità " + pad(dy) + (dy === 1 ? " anno" : " anni");
   }
 
   var raf = 0, visible = true;
