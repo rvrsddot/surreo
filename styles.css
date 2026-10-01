@@ -340,6 +340,28 @@ body.has-open,body.menu-open{overflow:hidden}
   .hero::before{display:none}
   .hero__title-svg{transform:none;transition:none}
 }
+/* hero motion: loop di 14″ sulla griglia (hero-motion.js). Lo stage riempie l'hero */
+.hero__sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.hero__main:has(.hm){margin:0;flex:1 1 auto;align-items:stretch}
+.hm{position:relative;flex:1 1 auto;min-height:420px;text-align:left;color:var(--ink);
+  --hair:rgba(22,20,15,.13)}
+.hm__layer{position:absolute;inset:0}
+.hm__layer--inv{color:var(--paper);clip-path:inset(0 100% 0 0)}
+.hm__col{position:absolute;top:0;bottom:0;border-left:1px solid var(--hair);border-right:1px solid var(--hair);
+  transform:scaleY(0);transform-origin:top;will-change:transform}
+.hm__row{position:absolute;left:0;right:0;border-top:1px solid var(--hair);transform:scaleX(0);transform-origin:left}
+.hm__sweep{position:absolute;top:0;bottom:0;background:var(--stamp);transform:scaleY(0)}
+.hm__num{position:absolute;top:0;font:600 10px/1 ui-monospace,monospace;letter-spacing:.14em;opacity:0}
+.hm__svg{position:absolute;left:0;top:0;overflow:visible}
+/* la riga taglia solo sopra e sotto (per far salire le lettere), mai ai lati */
+.hm__line{position:absolute;left:0;right:0;clip-path:inset(0 -100vw)}
+.hm__ch{position:absolute;top:0;font-family:"Archivo",sans-serif;line-height:1;white-space:pre;
+  will-change:transform;transform:translateY(130%)}
+.hm__rule{position:absolute;left:0;height:3px;background:var(--stamp);width:0}
+.hm__meta{position:absolute;font:600 10.5px/1.2 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
+.hm__meta b{font-weight:600;color:var(--stamp)}
+.hm__crop{position:absolute;width:12px;height:12px;border:0 solid var(--ink);opacity:.55}
+
 .hero__row{padding-top:14px;border-top:1.5px solid var(--ink);
   display:flex;justify-content:space-between;gap:clamp(6px,2vw,12px);flex-wrap:nowrap;
   font:600 clamp(7px,2vw,11px)/1 ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);
