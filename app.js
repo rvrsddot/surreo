@@ -121,138 +121,175 @@
   }
 
 
-  /* --- vetrina home "Forme": tutte le miniature in un palco; per ogni disciplina si
-     ricompongono nel suo segno (cerchio, quadrato, arco, play, finestra, anello) e a
-     destra parla la tipografia. Gira da sola; il click porta alla pagina progetti. --- */
+  /* --- vetrina home "spazio 3D": i lavori sospesi in uno spazio configurabile (canvas 2D,
+     proiezione prospettica a mano: niente librerie). Ogni disciplina si ricompone nella sua
+     figura, gli altri lavori restano come punti. Trascina = ruota, rotella = zoom, viste.
+     Leggera: miniature 256px già in grigio (pre-render una volta), gira solo a schermo. --- */
   const SHW = {
-    graphic:    ["GR", ["Brand identity", "Editoria", "Packaging", "Social"], "circle"],
-    industrial: ["ID", ["Concept", "3D", "Render", "Display"], "square"],
-    exhibit:    ["EX", ["Allestimenti", "Videomapping", "AR"], "arch"],
-    videoclip:  ["VC", ["Regia", "Montaggio", "Motion", "Spot"], "play"],
-    website:    ["WB", ["Web design", "Sviluppo", "SEO", "Tour 360°"], "window"],
-    virtual:    ["VR", ["Unreal", "VR", "Metaverso"], "ring"]
+    graphic:    ["GR", ["Brand identity", "Editoria", "Packaging", "Social"]],
+    industrial: ["ID", ["Concept", "3D", "Render", "Display"]],
+    exhibit:    ["EX", ["Allestimenti", "Videomapping", "AR"]],
+    videoclip:  ["VC", ["Regia", "Montaggio", "Motion", "Spot"]],
+    website:    ["WB", ["Web design", "Sviluppo", "SEO", "Tour 360°"]],
+    virtual:    ["VR", ["Unreal", "VR", "Metaverso"]]
   };
-  // ogni forma restituisce n centri + lato della miniatura dentro il riquadro b
-  const SHAPES = {
-    // cerchio e anello si allargano in ellisse per riempire tutto il palco
-    circle(n, b) { const rx = b.w / 2 * 0.94, ry = b.h / 2 * 0.94, s = Math.min(Math.sqrt(Math.PI * rx * ry / n) * 1.05, ry * 0.9);
-      return { s, p: [...Array(n)].map((_, i) => { const k = Math.sqrt((i + 0.5) / n), t = i * 2.39996; return [b.cx + (rx - s * 0.5) * k * Math.cos(t), b.cy + (ry - s * 0.5) * k * Math.sin(t)]; }) }; },
-    ring(n, b) { const rx = b.w / 2 * 0.62, ry = b.h / 2 * 0.72, s = Math.min(ry * 0.7, 2 * ry * Math.sin(Math.PI / n) * 1.1);
-      return { s, p: [...Array(n)].map((_, i) => { const t = i / n * 2 * Math.PI - Math.PI / 2; return [b.cx + rx * Math.cos(t), b.cy + ry * Math.sin(t)]; }) }; },
-    square(n, b) { const k = Math.ceil(n / 4) + 1, L = Math.min(b.w, b.h) * 0.8, s = L / k * 0.88, c = [];
-      for (let i = 0; i < k; i++) c.push([i, 0]); for (let i = 1; i < k; i++) c.push([k - 1, i]);
-      for (let i = k - 2; i >= 0; i--) c.push([i, k - 1]); for (let i = k - 2; i > 0; i--) c.push([0, i]);
-      return { s, p: c.slice(0, n).map(([x, y]) => [b.cx - L / 2 + (x + 0.5) * L / k, b.cy - L / 2 + (y + 0.5) * L / k]) }; },
-    arch(n, b) { const H = Math.min(b.h * 0.86, b.w), R = H * 0.36, leg = H - R, s = Math.min(H / (n * 0.55), R * 0.75), len = 2 * leg + Math.PI * R, p = [];
-      for (let i = 0; i < n; i++) { const d = (i + 0.5) / n * len; let x, y;
-        if (d < leg) { x = -R; y = H / 2 - d; }
-        else if (d < leg + Math.PI * R) { const a = Math.PI - (d - leg) / R; x = R * Math.cos(a); y = H / 2 - leg - R * Math.sin(a); }
-        else { x = R; y = H / 2 - leg + (d - leg - Math.PI * R); }
-        p.push([b.cx + x, b.cy + y + R * 0.5]); }
-      return { s, p }; },
-    play(n, b) { let cols = [], k = 1; while (cols.reduce((a, c) => a + c, 0) < n) cols.unshift(k++); cols.sort((a, c) => c - a);
-      const C = cols.length, s = Math.min(b.w / C, b.h / cols[0]) * 0.86, p = []; let left = n;
-      cols.forEach((m, ci) => { const q = Math.min(m, left); left -= q; for (let j = 0; j < q; j++) p.push([b.cx + (ci - (C - 1) / 2) * s * 1.04, b.cy + (j - (q - 1) / 2) * s * 1.04]); });
-      return { s, p }; },
-    window(n, b) { const c = Math.ceil(Math.sqrt(n * 1.6)), r = Math.ceil(n / c), s = Math.min(b.w / c, b.h / (r + 0.6)) * 0.86, p = [];
-      for (let i = 0; i < n; i++) p.push([b.cx + (i % c - (c - 1) / 2) * s * 1.06, b.cy + ((i / c | 0) - (r - 1) / 2) * s * 1.06 + s * 0.3]);
-      return { s, p }; }
+  // figure 3D: n punti nel cubo [-1,1]^3
+  const FIG = {
+    all(n) { const k = Math.ceil(Math.cbrt(n * 1.4)), L = Math.ceil(n / (k * k)) - 1 || 1;
+      return [...Array(n)].map((_, i) => [((i % k) / (k - 1) - 0.5) * 1.5, (((i / k | 0) % k) / (k - 1) - 0.5) * 1.3, ((i / (k * k) | 0) / L - 0.5) * 1.2]); },
+    graphic(n) { return [...Array(n)].map((_, i) => { const y = 1 - 2 * (i + 0.5) / n, r = Math.sqrt(1 - y * y), t = i * 2.39996; return [Math.cos(t) * r * 0.85, y * 0.85, Math.sin(t) * r * 0.85]; }); },
+    industrial(n) { const c = [[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]]; return [...Array(n)].map((_, i) => c[i % 8].map((v) => v * 0.55)); },
+    exhibit(n) { return [...Array(n)].map((_, i) => { const t = Math.PI * (i + 0.5) / n; return [-Math.cos(t) * 0.75, -Math.sin(t) * 0.85 + 0.4, ((i % 2) - 0.5) * 0.5]; }); },
+    videoclip(n) { const p = []; let c = 4, col = 0; while (p.length < n) { for (let j = 0; j < c && p.length < n; j++) p.push([-0.6 + col * 0.4, (j - (c - 1) / 2) * 0.38, ((j + col) % 2 - 0.5) * 0.3]); c--; col++; if (c < 1) { c = 4; col = 0; } } return p; },
+    website(n) { const c = Math.ceil(Math.sqrt(n * 1.5)); return [...Array(n)].map((_, i) => [((i % c) / (c - 1 || 1) - 0.5) * 1.2, ((i / c | 0) - 0.5) * 0.6, 0]); },
+    virtual(n) { return [...Array(n)].map((_, i) => { const t = i / n * 2 * Math.PI; return [Math.cos(t) * 0.8, Math.sin(i * 1.7) * 0.12, Math.sin(t) * 0.8]; }); }
   };
   function buildShowcase(CATS) {
     const sec = document.querySelector(".projects");
     sec.classList.add("projects--shw");
     const pad = (n) => String(n).padStart(2, "0");
-    const A = [];
-    CATS.forEach((c) => c.items.forEach((it, ii) => { if (thumbURL(it)) A.push({ cat: c.id, cname: c.name, name: it.name, src: thumbURL(it), href: "progetti.html?cat=" + c.id + "&p=" + (ii + 1) }); }));
-    const count = (id) => A.filter((a) => a.cat === id).length;
-    const CAT = {}; CATS.forEach((c) => (CAT[c.id] = c));
+    const code6 = (s) => { let h = 5381; for (const c of s) h = (h * 33 ^ c.charCodeAt(0)) >>> 0; return String(500000 + h % 99999); };
     const IDS = CATS.map((c) => c.id).filter((id) => SHW[id]);
+    const CAT = {}; CATS.forEach((c) => (CAT[c.id] = c));
+    const A = [];
+    CATS.forEach((c) => c.items.forEach((it, ii) => { if (thumbURL(it)) A.push({ cat: c.id, name: it.name, src: thumbURL(it), code: code6(it.name), href: "progetti.html?cat=" + c.id + "&p=" + (ii + 1) }); }));
+    const count = (id) => A.filter((a) => a.cat === id).length;
     const short = (c) => c.name.split(/[ ,]/)[0];
 
     app.innerHTML =
-      '<div class="shw"><div class="shw__bar"><div class="shw__pills"></div></div>' +
-      '<div class="shw__stage"><div class="shw__tip"></div></div>' +
-      '<div class="shw__panel"></div></div>';
-    const stage = app.querySelector(".shw__stage"), panel = app.querySelector(".shw__panel"), tip = app.querySelector(".shw__tip"), pills = app.querySelector(".shw__pills");
+      '<div class="shw"><div class="shw__bar"><span class="shw__lbl">Scene / Layer</span><div class="shw__pills"></div></div>' +
+      '<div class="shw__stage"><canvas></canvas><div class="shw__views"></div></div><div class="shw__cap"></div></div>';
+    const stage = app.querySelector(".shw__stage"), cv = stage.querySelector("canvas"), ctx = cv.getContext("2d"),
+      pills = app.querySelector(".shw__pills"), cap = app.querySelector(".shw__cap"), vb = app.querySelector(".shw__views");
     pills.innerHTML = '<a class="shw__pill" data-c="all" href="progetti.html">All<sup>' + A.length + "</sup></a>" +
       IDS.map((id) => '<a class="shw__pill" data-c="' + id + '" href="progetti.html?cat=' + id + '">' + short(CAT[id]) + "<sup>" + count(id) + "</sup></a>").join("");
 
-    // ogni miniatura: posizione/lato correnti + velocità, con molla verso il bersaglio
-    const B = 100;
-    let hot = null, mode = "all", mx = -999, my = -999;
+    // immagini: originale (hover, a colori) + copia in grigio fatta una volta sola
+    const G = 96;
     A.forEach((a) => {
-      const el = document.createElement("a");
-      el.className = "shw__th"; el.href = a.href; el.setAttribute("aria-label", a.name + " — " + a.cname);
-      el.style.backgroundImage = 'url("' + a.src + '")';
-      stage.appendChild(el);
-      Object.assign(a, { el, x: Math.random() * 1000, y: Math.random() * 500, s: 10, vx: 0, vy: 0, vs: 0, tx: 0, ty: 0, ts: 40 });
-      el.addEventListener("mouseenter", () => { hot = a; el.classList.add("is-hot"); tip.innerHTML = a.name + "<small>" + SHW[a.cat][0] + "</small>"; tip.classList.add("is-on"); });
-      el.addEventListener("mouseleave", () => { hot = null; el.classList.remove("is-hot"); tip.classList.remove("is-on"); });
+      a.img = new Image(); a.img.decoding = "async"; a.img.src = a.src;
+      a.img.onload = () => {
+        const g = document.createElement("canvas"), r = a.img.width / a.img.height;
+        g.width = r >= 1 ? G : Math.round(G * r); g.height = r >= 1 ? Math.round(G / r) : G;
+        const c = g.getContext("2d"); c.filter = "grayscale(1) contrast(1.1)"; c.drawImage(a.img, 0, 0, g.width, g.height);
+        a.gray = g; a.ar = r; a.ok = true;
+      };
+      a.p = [(Math.random() - 0.5) * 2, (Math.random() - 0.5) * 2, (Math.random() - 0.5) * 2]; a.t = a.p.slice(); a.sz = 0; a.tsz = 1; a.delay = 0;
     });
 
-    const layout = () => {
-      const W = stage.clientWidth, H = stage.clientHeight;
-      if (mode === "all") {   // griglia compatta a sinistra
-        const aw = W - 48, s = Math.floor(Math.sqrt(aw * (H - 40) / A.length) * 0.86), c = Math.floor(aw / (s * 1.08)), r = Math.ceil(A.length / c),
-          ox = 24 + (aw - c * s * 1.08) / 2, oy = (H - r * s * 1.08) / 2;
-        A.forEach((a, i) => { a.tx = ox + (i % c) * s * 1.08; a.ty = oy + (i / c | 0) * s * 1.08; a.ts = s; });
-      } else {
-        const on = A.filter((a) => a.cat === mode), off = A.filter((a) => a.cat !== mode);
-        const sh = SHAPES[SHW[mode][2]](on.length, { cx: W * 0.5, cy: (H - 26) * 0.5, w: W * 0.9, h: (H - 26) * 0.9 });
-        on.forEach((a, i) => { a.tx = sh.p[i][0] - sh.s / 2; a.ty = sh.p[i][1] - sh.s / 2; a.ts = sh.s; });
-        // gli altri lavori restano: puntini in fila sul bordo basso
-        const ds = Math.min(12, (W - 28) / off.length - 3);
-        off.forEach((a, i) => { a.tx = 14 + i * (ds + 3); a.ty = H - ds - 12; a.ts = ds; });
-      }
-    };
-    // didascalia piccola sotto il palco: codice e nome, servizi, link alla categoria
-    const setPanel = (c) => {
-      const n = c === "all" ? A.length : count(c);
-      panel.innerHTML =
-        "<span><b>" + (c === "all" ? "All" : SHW[c][0] + "·" + pad(IDS.indexOf(c) + 1)) + "</b> " + (c === "all" ? IDS.length + " discipline" : CAT[c].name) + " — " + pad(n) + " lavori</span>" +
-        "<span>" + (c === "all" ? IDS.map((k) => short(CAT[k])).join(" · ") : SHW[c][1].join(" · ")) + "</span>" +
-        '<a href="progetti.html' + (c === "all" ? "" : "?cat=" + c) + '">' + (c === "all" ? "Tutti i progetti" : "Vedi i " + n + " progetti") + " →</a>";
-    };
-    const DWELL = 3400;
-    const go = (c, auto) => {
-      mode = c; layout(); setPanel(c);
-      pills.querySelectorAll(".shw__pill").forEach((p) => { const on = p.dataset.c === c; p.classList.toggle("is-on", on); p.style.setProperty("--t", auto && on ? DWELL + "ms" : "0s"); });
-      A.forEach((a) => { a.vx += (Math.random() - 0.5) * 14; a.vy -= Math.random() * 14; });  // piccolo salto verso la forma
-    };
+    let W = 0, H = 0, DPR = 1;
+    const size = () => { DPR = Math.min(1.5, devicePixelRatio || 1); W = stage.clientWidth; H = stage.clientHeight; cv.width = W * DPR; cv.height = H * DPR; };
+    size(); let rT = 0; addEventListener("resize", () => { clearTimeout(rT); rT = setTimeout(size, 100); });
 
-    // giro automatico tra le discipline finché nessuno interagisce
+    let mode = "all", nodes = [];
+    const DWELL = 4200;
+    const go = (c, auto) => {
+      mode = c;
+      const on = c === "all" ? A : A.filter((a) => a.cat === c), pts = FIG[c](on.length), now = performance.now();
+      on.forEach((a, i) => { a.t = pts[i]; a.tsz = c === "all" ? 0.9 : 1.5; a.delay = now + i * 18; a.on = true; });
+      A.forEach((a) => { if (!on.includes(a)) { a.t = [(Math.random() - 0.5) * 1.9, (Math.random() - 0.5) * 1.9, (Math.random() - 0.5) * 1.9]; a.tsz = 0.12; a.on = false; a.delay = now; } });
+      nodes = on.slice().sort(() => Math.random() - 0.5).slice(0, Math.min(4, on.length));
+      const n = on.length;
+      cap.innerHTML = "<span><b>" + (c === "all" ? "All" : SHW[c][0] + "·" + pad(IDS.indexOf(c) + 1)) + "</b> " + (c === "all" ? IDS.length + " discipline" : CAT[c].name) + " — " + pad(n) + " lavori</span>" +
+        "<span>" + (c === "all" ? IDS.map((k) => SHW[k][0]).join(" · ") : SHW[c][1].join(" · ")) + "</span>" +
+        '<a href="progetti.html' + (c === "all" ? "" : "?cat=" + c) + '">' + (c === "all" ? "Tutti i progetti" : "Vedi i " + n + " progetti") + " →</a>";
+      pills.querySelectorAll(".shw__pill").forEach((p) => { const o = p.dataset.c === c; p.classList.toggle("is-on", o); p.style.setProperty("--t", auto && o ? DWELL + "ms" : "0s"); });
+    };
     const ORDER = ["all", ...IDS];
     let ai = 0, timer = 0, idleT = 0, visible = false;
     const auto = () => { clearTimeout(timer); if (reduce || !visible) return; timer = setTimeout(() => { ai = (ai + 1) % ORDER.length; go(ORDER[ai], true); auto(); }, DWELL); };
     const pause = () => { clearTimeout(timer); clearTimeout(idleT); idleT = setTimeout(auto, 5000); };
     pills.querySelectorAll(".shw__pill").forEach((p) => p.addEventListener("mouseenter", () => { pause(); ai = ORDER.indexOf(p.dataset.c); go(p.dataset.c, false); }));
-    stage.addEventListener("mousemove", (e) => {
-      const r = stage.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top;
-      tip.style.left = Math.min(mx + 16, r.width - 220) + "px"; tip.style.top = (my + 18) + "px";
-    });
-    stage.addEventListener("mouseleave", () => { mx = my = -999; });
-    let rT = 0; addEventListener("resize", () => { clearTimeout(rT); rT = setTimeout(layout, 100); });
 
+    // camera: trascina = ruota, rotella = zoom, viste preimpostate
+    let hover = null, yaw = 0.6, pitch = 0.38, zoom = 1, tYaw = null, tPitch = null, drag = null, spin = !reduce, moved = 0, mx = -1, my = -1;
+    cv.addEventListener("pointerdown", (e) => { drag = { x: e.clientX, y: e.clientY }; moved = 0; spin = false; tYaw = tPitch = null; cv.setPointerCapture(e.pointerId); setView(""); pause(); });
+    cv.addEventListener("pointermove", (e) => {
+      const r = cv.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top;
+      if (drag) { const dx = e.clientX - drag.x, dy = e.clientY - drag.y; moved += Math.abs(dx) + Math.abs(dy); yaw += dx * 0.008; pitch = Math.max(-0.1, Math.min(1.45, pitch + dy * 0.006)); drag = { x: e.clientX, y: e.clientY }; }
+    });
+    cv.addEventListener("pointerup", () => { drag = null; if (moved < 5 && hover) location.href = hover.href; });
+    cv.addEventListener("pointerleave", () => { mx = -1; });
+    cv.addEventListener("wheel", (e) => { e.preventDefault(); zoom = Math.max(0.6, Math.min(2.2, zoom * Math.exp(-e.deltaY * 0.001))); }, { passive: false });
+    const VIEWS = { persp: [0.6, 0.38], top: [0, 1.45], front: [0, 0.02], side: [Math.PI / 2, 0.05] };
+    vb.innerHTML = Object.keys(VIEWS).map((k) => '<button type="button" data-v="' + k + '">' + k + "</button>").join("") + '<button type="button" data-v="orbit" class="is-on">orbit</button>';
+    const setView = (k) => vb.querySelectorAll("button").forEach((b) => b.classList.toggle("is-on", b.dataset.v === k));
+    vb.addEventListener("click", (e) => {
+      const k = e.target.dataset.v; if (!k) return; setView(k);
+      if (k === "orbit") { spin = true; tYaw = tPitch = null; return; }
+      spin = false; tYaw = VIEWS[k][0] + Math.round((yaw - VIEWS[k][0]) / (2 * Math.PI)) * 2 * Math.PI; tPitch = VIEWS[k][1];
+    });
+
+    const HUD = [...Array(6)].map(() => String(Math.random() * 1e6 | 0).padStart(6, "0"));
+    const INK = (a) => "rgba(236,234,225," + a + ")", BLUE = "#2a3cff", FY = 1.1;
     let raf = 0;
-    const tick = () => {
-      A.forEach((a) => {
-        let tx = a.tx, ty = a.ty, ts = a.ts;
-        if (a === hot) { ts = Math.max(ts * 2.2, 120); tx -= (ts - a.ts) / 2; ty -= (ts - a.ts) / 2; }
-        else { const dx = a.x + a.s / 2 - mx, dy = a.y + a.s / 2 - my, dd = Math.hypot(dx, dy);   // le miniature si scansano dal mouse
-          if (dd < 130 && dd > 0) { const f = (130 - dd) / 130 * 38; tx += dx / dd * f; ty += dy / dd * f; } }
-        a.vx = (a.vx + (tx - a.x) * 0.075) * 0.8; a.vy = (a.vy + (ty - a.y) * 0.075) * 0.8; a.vs = (a.vs + (ts - a.s) * 0.09) * 0.78;
-        a.x += a.vx; a.y += a.vy; a.s += a.vs;
-        a.el.style.transform = "translate(" + a.x + "px," + a.y + "px) scale(" + Math.max(a.s, 1) / B + ")";
-        a.el.style.borderWidth = (a.s < 20 ? 0 : 3 * B / a.s) + "px";
+    const frame = (now) => {
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.clearRect(0, 0, W, H);
+      if (spin) yaw += 0.0022;
+      if (tYaw != null) { yaw += (tYaw - yaw) * 0.08; pitch += (tPitch - pitch) * 0.08; }
+      const ca = Math.cos(yaw), sa = Math.sin(yaw), cb = Math.cos(pitch), sb = Math.sin(pitch);
+      const S = Math.min(W * 0.5, H) * 0.42 * zoom, cx = W / 2, cy = H * 0.5, f = 5.5;
+      const P = (x, y, z) => { const x1 = x * ca + z * sa, z1 = -x * sa + z * ca, y1 = y * cb - z1 * sb, z2 = y * sb + z1 * cb, k = f / (f + z2); return [cx + x1 * S * k, cy + y1 * S * k, k, z2]; };
+      // pavimento a griglia + assi
+      ctx.lineWidth = 1;
+      for (let i = -3; i <= 3; i += 0.5) {
+        const al = i % 1 === 0 ? 0.16 : 0.07;
+        let p = P(i, FY, -3), q = P(i, FY, 3); ctx.strokeStyle = INK(al); ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.stroke();
+        p = P(-3, FY, i); q = P(3, FY, i); ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.stroke();
+      }
+      ctx.font = "600 9px ui-monospace,monospace";
+      [[[-3, FY, 0], [3, FY, 0], "X"], [[0, FY, -3], [0, FY, 3], "Z"], [[0, FY, 0], [0, -1.4, 0], "Y"]].forEach(([a, b, l]) => {
+        const p = P(...a), q = P(...b); ctx.strokeStyle = l === "Y" ? "rgba(42,60,255,.6)" : INK(0.4); ctx.setLineDash(l === "Y" ? [3, 4] : []);
+        ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.stroke(); ctx.setLineDash([]); ctx.fillStyle = INK(0.7); ctx.fillText(l, q[0] + 4, q[1] - 4);
       });
-      raf = visible ? requestAnimationFrame(tick) : 0;
+      // HUD
+      ctx.fillStyle = INK(0.55); HUD.forEach((h, i) => ctx.fillText(h, 18, 24 + i * 13));
+      const deg = (v) => ((v * 57.2958 % 360 + 360) % 360).toFixed(1) + "°";
+      ctx.textAlign = "right"; ctx.fillText("CAM YAW " + deg(yaw) + "  PITCH " + deg(pitch), W - 18, 24);
+      ctx.fillText("ZOOM " + zoom.toFixed(2) + "  ·  N " + (mode === "all" ? A.length : count(mode)) + "/" + A.length, W - 18, 37); ctx.textAlign = "left";
+      const gx = 40, gy = H - 40;
+      [[1, 0, 0, "X", INK(0.9)], [0, -1, 0, "Y", BLUE], [0, 0, 1, "Z", INK(0.9)]].forEach(([x, y, z, l, c]) => {
+        const x1 = x * ca + z * sa, z1 = -x * sa + z * ca, y1 = y * cb - z1 * sb;
+        ctx.strokeStyle = c; ctx.fillStyle = c; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(gx, gy); ctx.lineTo(gx + x1 * 20, gy + y1 * 20); ctx.stroke(); ctx.fillText(l, gx + x1 * 26 - 3, gy + y1 * 26 + 3);
+      });
+      ctx.lineWidth = 1;
+      // movimento verso le figure
+      A.forEach((a) => { if (now < a.delay) return; for (let k = 0; k < 3; k++) a.p[k] += (a.t[k] - a.p[k]) * 0.07; a.sz += (a.tsz - a.sz) * 0.08; });
+      const L = A.map((a) => { const q = P(a.p[0], a.p[1], a.p[2]); return { a, x: q[0], y: q[1], k: q[2], z: q[3] }; }).sort((p, q) => q.z - p.z);
+      hover = null;
+      if (mx >= 0 && !drag) for (let i = L.length - 1; i >= 0; i--) { const o = L[i]; if (!o.a.on) continue; const s = 50 * o.a.sz * o.k; if (Math.abs(mx - o.x) < s / 2 && Math.abs(my - o.y) < s / 2) { hover = o.a; break; } }
+      cv.style.cursor = drag ? "grabbing" : hover ? "pointer" : "grab";
+      // linee di quota fino al pavimento
+      ctx.setLineDash([2, 3]); ctx.strokeStyle = INK(0.16); ctx.beginPath();
+      L.forEach((o) => { if (!o.a.on) return; const fl = P(o.a.p[0], FY, o.a.p[2]); ctx.moveTo(o.x, o.y); ctx.lineTo(fl[0], fl[1]); });
+      ctx.stroke(); ctx.setLineDash([]);
+      L.forEach((o) => {
+        const a = o.a, s = 50 * a.sz * o.k;
+        if (!a.on) { const d = Math.max(1.5, s * 0.35); ctx.fillStyle = INK(0.2 + o.k * 0.25); ctx.fillRect(o.x - d / 2, o.y - d / 2, d, d); return; }
+        if (!a.ok) return;
+        const hs = a === hover ? 1.7 : 1, w = (a.ar >= 1 ? s : s * a.ar) * hs, h = (a.ar >= 1 ? s / a.ar : s) * hs;
+        ctx.globalAlpha = Math.min(1, Math.max(0.4, o.k * 0.95));
+        ctx.drawImage(a === hover ? a.img : a.gray, o.x - w / 2, o.y - h / 2, w, h);
+        ctx.strokeStyle = a === hover ? BLUE : INK(0.5); ctx.lineWidth = a === hover ? 2 : 1; ctx.strokeRect(o.x - w / 2, o.y - h / 2, w, h); ctx.lineWidth = 1;
+        ctx.globalAlpha = 1;
+      });
+      // nodi blu con numeri (+ nome sotto il mouse)
+      const show = hover && !nodes.includes(hover) ? [...nodes, hover] : nodes;
+      ctx.font = "600 10px ui-monospace,monospace";
+      show.forEach((a, i) => {
+        const q = P(a.p[0], a.p[1], a.p[2]), right = q[0] > cx, ex = q[0] + (right ? 1 : -1) * (70 + i * 14), ey = q[1] - 56 - i * 16;
+        ctx.strokeStyle = INK(0.75); ctx.beginPath(); ctx.moveTo(q[0], q[1]); ctx.lineTo(ex, ey); ctx.stroke();
+        ctx.fillStyle = BLUE; ctx.beginPath(); ctx.arc(q[0], q[1], i === 0 ? 9 : 3.5, 0, 7); ctx.fill();
+        ctx.fillStyle = INK(1); ctx.textAlign = right ? "left" : "right";
+        ctx.fillText(a === hover ? a.name.toUpperCase() + "  " + a.code : a.code, ex + (right ? 4 : -4), ey + 3); ctx.textAlign = "left";
+      });
+      raf = visible ? requestAnimationFrame(frame) : 0;
     };
     go("all", true);
-    // anima solo quando il palco è a schermo
     new IntersectionObserver((e) => {
       visible = e[0].isIntersecting;
-      if (visible) { if (!raf) raf = requestAnimationFrame(tick); auto(); } else clearTimeout(timer);
-    }, { threshold: 0.2 }).observe(stage);
+      if (visible) { if (!raf) raf = requestAnimationFrame(frame); auto(); } else clearTimeout(timer);
+    }, { threshold: 0.15 }).observe(stage);
   }
 
   // miniatura 256px generata da make_thumbs.py: assets/projects/<id>/NN.jpg -> .../<id>/t/NN.jpg
