@@ -452,16 +452,17 @@ body.has-open,body.menu-open{overflow:hidden}
 .coll__item:hover{transform:translateY(-2px)}
 .coll__thumb{width:100%;height:100%;display:grid;place-items:center;text-align:center;font-weight:800;text-transform:uppercase;letter-spacing:-.01em;line-height:1.05;
   font-size:clamp(10px,1.15vw,15px);padding:6px}
-.coll__thumb--saad{background:#141414;color:#fff}
-.coll__thumb--workshok{background:#e7e4da;color:#1a49ff;font-style:italic;font-size:clamp(11px,1.35vw,18px)}
-.coll__thumb--sub{background:#141414;color:#e23b2e}
+.coll__thumb--saad{background:#0c00ff;color:#eff3de}
+.coll__thumb--workshok{background:#0c00ff;padding:16%;overflow:hidden}
+.coll__thumb--workshok img{width:100%;height:100%;object-fit:contain;display:block;min-height:0}
+.coll__thumb--sub{background:#141414;padding:6%}
+.coll__thumb--sub img{width:100%;height:100%;object-fit:contain;display:block}
 
 /* collateral — sotto i 900px: titolo sopra, i 3 riquadri a tutta larghezza */
 @media(max-width:900px){
   .coll__head h2,.coll__items{grid-column:1/-1}
   .coll__tag{font-size:7.5px}
   .coll__thumb{font-size:clamp(10px,2.6vw,15px)}
-  .coll__thumb--workshok{font-size:clamp(11px,3vw,18px)}
 }
 
 /* ============================================================
