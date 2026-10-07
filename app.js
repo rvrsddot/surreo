@@ -32,10 +32,17 @@
     new ResizeObserver(sendHeight).observe(document.documentElement);
   }
 
+  /* --- le animazioni CSS in loop (marquee, logo, manifesto, about) si fermano fuori schermo --- */
+  if ("IntersectionObserver" in window) {
+    const offIO = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle("is-off", !e.isIntersecting)), { rootMargin: "200px 0px" });
+    document.querySelectorAll(".landing, .about, .collateral").forEach((el) => offIO.observe(el));
+    window.__offIO = offIO;
+  }
+
   /* --- dati --- */
   Promise.all([
-    fetch("projects.json", { cache: "no-store" }).then((r) => r.json()),
-    fetch("videos.json", { cache: "no-store" }).then((r) => r.json()).catch(() => ({})),
+    fetch("projects.json", { cache: "no-cache" }).then((r) => r.json()),
+    fetch("videos.json", { cache: "no-cache" }).then((r) => r.json()).catch(() => ({})),
   ])
     .then(([data, vids]) => build(data.sections || [], vids || {}))
     .catch((e) => { app.innerHTML = '<p style="color:#b00;padding:20px">Impossibile caricare i progetti (' + e + ")</p>"; });
@@ -110,6 +117,7 @@
       '<div class="mf__foot"><span><b>' + CATS.length + " discipline</b> — " + total + " lavori</span>" +
       '<a href="#contact">Non partiamo da una disciplina. Partiamo da un’idea →</a></div></nav></div>';
     projects.parentNode.insertBefore(picker, projects);
+    if (window.__offIO) window.__offIO.observe(picker);
     const mf = picker.querySelector(".mf");
     const fit = () => mf.querySelectorAll(".mf__ln").forEach((ln) => {
       ln.style.fontSize = "100px";
@@ -165,9 +173,10 @@
       IDS.map((id) => '<a class="shw__pill" data-c="' + id + '" href="progetti.html?cat=' + id + '">' + short(CAT[id]) + "<sup>" + count(id) + "</sup></a>").join("");
 
     // immagini: originale (hover, a colori) + copia in grigio fatta una volta sola
+    // si scaricano solo quando il palco sta per entrare a schermo (vedi loadImgs più sotto)
     const G = 96;
     A.forEach((a) => {
-      a.img = new Image(); a.img.decoding = "async"; a.img.src = a.src;
+      a.img = new Image(); a.img.decoding = "async";
       a.img.onload = () => {
         const g = document.createElement("canvas"), r = a.img.width / a.img.height;
         g.width = r >= 1 ? G : Math.round(G * r); g.height = r >= 1 ? Math.round(G / r) : G;
@@ -286,6 +295,9 @@
       raf = visible ? requestAnimationFrame(frame) : 0;
     };
     go("all", true);
+    new IntersectionObserver((e, o) => {
+      if (e[0].isIntersecting) { A.forEach((a) => (a.img.src = a.src)); o.disconnect(); }
+    }, { rootMargin: "800px 0px" }).observe(stage);
     new IntersectionObserver((e) => {
       visible = e[0].isIntersecting;
       if (visible) { if (!raf) raf = requestAnimationFrame(frame); auto(); } else clearTimeout(timer);

@@ -964,3 +964,6 @@ body.has-open:not(.menu-open) .burger{z-index:1}
   .ix-row__th{width:72px;height:72px}
   .ix-th span:nth-child(4),.ix-row__tg{display:none}
 }
+
+/* animazioni in pausa quando la sezione è fuori schermo (classe messa da app.js) */
+.is-off,.is-off *,.is-off *::before,.is-off *::after{animation-play-state:paused!important}
