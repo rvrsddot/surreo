@@ -116,7 +116,9 @@
       }).join("") +
       '<div class="mf__foot"><span><b>' + CATS.length + " discipline</b> — " + total + " lavori</span>" +
       '<a href="#contact">Non partiamo da una disciplina. Partiamo da un’idea →</a></div></nav></div>';
-    projects.parentNode.insertBefore(picker, projects);
+    // ordine in home: hero → What we do → Collateral projects → vetrina
+    const before = document.getElementById("collateral") || projects;
+    before.parentNode.insertBefore(picker, before);
     if (window.__offIO) window.__offIO.observe(picker);
     const mf = picker.querySelector(".mf");
     const fit = () => mf.querySelectorAll(".mf__ln").forEach((ln) => {
