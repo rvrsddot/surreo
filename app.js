@@ -98,8 +98,8 @@
     }).join("");
     const picker = document.createElement("section");
     picker.className = "cat-picker";
-    picker.setAttribute("aria-label", "Categorie");
-    picker.innerHTML = '<div class="cat-picker__inner"><nav class="mf">' +
+    picker.setAttribute("aria-label", "What we do");
+    picker.innerHTML = '<div class="cat-picker__inner"><h2 class="mf__title">What we do</h2><nav class="mf">' +
       PICKER_LINES.map((ids, li) => {
         k = 0;
         return '<div class="mf__ln">' + ids.filter((id) => byId[id]).map((id) => {
@@ -108,7 +108,7 @@
             cube(c.name, li) + "<sup>" + c.items.length + "</sup></a>";
         }).join('<span class="mf__dot" aria-hidden="true">·</span>') + "</div>";
       }).join("") +
-      '<div class="mf__foot"><span><b>Cosa facciamo</b> — ' + CATS.length + " discipline, " + total + " lavori</span>" +
+      '<div class="mf__foot"><span><b>' + CATS.length + " discipline</b> — " + total + " lavori</span>" +
       '<a href="#contact">Non partiamo da una disciplina. Partiamo da un’idea →</a></div></nav></div>';
     projects.parentNode.insertBefore(picker, projects);
     const mf = picker.querySelector(".mf");

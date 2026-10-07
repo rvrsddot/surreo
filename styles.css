@@ -694,6 +694,7 @@ body.has-open,body.menu-open{overflow:hidden}
    ruota di 90° per volta e l'onda scorre lettera per lettera. */
 .cat-picker{background:var(--paper);padding:clamp(48px,7vw,96px) 0 clamp(56px,7vw,100px)}
 .cat-picker__inner{max-width:1440px;margin:0 auto;padding:0 clamp(16px,3.5vw,44px)}
+.mf__title{font-weight:800;font-size:clamp(15px,2.4vw,26px);letter-spacing:-.01em;text-transform:uppercase;color:var(--ink);margin-bottom:10px}
 .mf{border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);padding:12px 0}
 .mf__ln{display:flex;justify-content:space-between;align-items:center;white-space:nowrap;line-height:.84;perspective:900px}
 .mf__ln + .mf__ln{border-top:1px solid var(--line);margin-top:6px;padding-top:8px}
