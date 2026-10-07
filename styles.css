@@ -688,92 +688,42 @@ body.has-open,body.menu-open{overflow:hidden}
   .privacy-banner__ok{align-self:flex-end}
 }
 
-/* ===== Cat picker: griglia grayscale sopra la sezione progetti =====
-   Animazioni pensate come una scena motion: ease-in weighted per la
-   rotazione (parte lento e accelera), fade opacity lento e continuo,
-   bordo che compare con un ease-out asciutto. Tutte le curve sono
-   custom cubic-bezier per un feel "designer di motion". */
-.cat-picker{
-  --picker-in:cubic-bezier(.66,0,.34,.2);        /* ease-in weighted */
-  --picker-out:cubic-bezier(.16,1,.3,1);          /* ease-out asciutto */
-  --picker-return:cubic-bezier(.4,0,.2,1);        /* rientro morbido */
-  background:var(--paper);
-  padding:clamp(48px,7vw,96px) 0 clamp(56px,7vw,100px);
-}
+/* ===== Cat picker: manifesto tipografico (Archivo stretto) =====
+   Righe giustificate a tutta gabbia (font-size calcolato in app.js).
+   Ogni lettera è un cubo con 4 facce: nero, rosso, contorno, nero;
+   ruota di 90° per volta e l'onda scorre lettera per lettera. */
+.cat-picker{background:var(--paper);padding:clamp(48px,7vw,96px) 0 clamp(56px,7vw,100px)}
 .cat-picker__inner{max-width:1440px;margin:0 auto;padding:0 clamp(16px,3.5vw,44px)}
-.cat-picker__head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
-  border-bottom:1.5px solid var(--ink);padding-bottom:10px;margin-bottom:clamp(24px,4vw,44px)}
-.cat-picker__head h2{font-weight:800;font-size:clamp(15px,2.4vw,26px);letter-spacing:-.01em;text-transform:uppercase;color:var(--ink)}
-.cat-picker__hint{font:600 11px/1.3 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);flex:none;text-align:right;max-width:260px}
-.cat-picker__grid{display:grid;grid-template-columns:repeat(var(--n,6),1fr);gap:clamp(14px,2.2vw,28px)}
-
-.cat-picker__sq{
-  --tone:hsl(38,10%,calc(85% - var(--i,0) * 14%));
-  --label-color:#111;
-  appearance:none;padding:clamp(10px,1.4vw,18px);cursor:pointer;
-  aspect-ratio:1/1;width:100%;position:relative;
-  background:transparent;border:2px solid transparent;
-  transform-origin:center center;will-change:transform;
-  transition:border-color 1.2s var(--picker-out),transform 1.6s var(--picker-return);
-  display:flex;align-items:flex-end;
-}
-/* fill separato dal contenuto: fade LENTISSIMO indipendente dal testo */
-.cat-picker__sq::before{
-  content:"";position:absolute;inset:0;background:var(--tone);
-  transition:opacity 2.6s var(--picker-in),background-color 2.6s var(--picker-in);
-  z-index:0;
-}
-/* tono chiaro (0,1) → testo scuro; tono medio-scuro (2,3,4,5) → testo chiaro */
-.cat-picker__sq[data-cat="2"],
-.cat-picker__sq[data-cat="3"],
-.cat-picker__sq[data-cat="4"],
-.cat-picker__sq[data-cat="5"]{--label-color:#f2ede0}
-.cat-picker__label{
-  position:relative;z-index:1;
-  font:800 clamp(13px,1.4vw,20px)/1.15 "Bricolage Grotesque",sans-serif;
-  letter-spacing:-.005em;color:var(--label-color);
-  transition:color 2.6s var(--picker-in);
-  text-wrap:balance;
-}
-/* hover: rotazione elastica fino a ~240° con più oscillazioni prima di
-   assestarsi. Il ritorno a 0 all'uscita hover usa il transform-transition
-   con curva di rientro morbido. */
-.cat-picker__sq:hover,
-.cat-picker__sq:focus-visible{
-  border-color:var(--ink);
-  animation:catpicker-rotate 2.4s cubic-bezier(.16,1,.3,1) forwards;
-}
-.cat-picker__sq:hover::before,
-.cat-picker__sq:focus-visible::before{
-  opacity:.3;background-color:transparent;
-}
-.cat-picker__sq:hover .cat-picker__label,
-.cat-picker__sq:focus-visible .cat-picker__label{color:#111}
-.cat-picker__sq:focus-visible{outline:none}
-
-@keyframes catpicker-rotate{
-  0%   {transform:rotate(0deg)}
-  55%  {transform:rotate(268deg)}
-  70%  {transform:rotate(226deg)}
-  82%  {transform:rotate(248deg)}
-  91%  {transform:rotate(236deg)}
-  97%  {transform:rotate(242deg)}
-  100% {transform:rotate(240deg)}
-}
-
-@media(max-width:900px){
-  .cat-picker__grid{grid-template-columns:repeat(3,1fr)}
-  .cat-picker__head{flex-direction:column;align-items:flex-start;gap:8px}
-  .cat-picker__hint{text-align:left;max-width:none}
-}
-@media(max-width:500px){
-  .cat-picker__grid{grid-template-columns:repeat(2,1fr)}
-  .cat-picker__label{font-size:clamp(12px,3.4vw,15px)}
-}
-@media(prefers-reduced-motion:reduce){
-  .cat-picker__sq,.cat-picker__sq::before,.cat-picker__label{transition:none}
-  .cat-picker__sq:hover,.cat-picker__sq:focus-visible{animation:none}
-}
+.mf{border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);padding:12px 0}
+.mf__ln{display:flex;justify-content:space-between;align-items:center;white-space:nowrap;line-height:.84;perspective:900px}
+.mf__ln + .mf__ln{border-top:1px solid var(--line);margin-top:6px;padding-top:8px}
+.mf__w,.mf__dot{font-family:Archivo,sans-serif;font-variation-settings:"wdth" 62,"wght" 850;text-transform:uppercase}
+.mf__w{position:relative;color:var(--ink);text-decoration:none;letter-spacing:-.005em;padding:0 .03em;
+  transform-style:preserve-3d;transition:background .25s,color .25s}
+.mf__dot{color:var(--stamp)}
+.mf .ch{position:relative;display:inline-block;transform-style:preserve-3d;transform-origin:50% 50% -.42em;
+  animation:mf-roll 7.5s cubic-bezier(.7,0,.25,1) infinite;animation-delay:calc(var(--d) * 1ms)}
+.mf .ch i{font-style:normal;display:block;backface-visibility:hidden;transform-origin:50% 50% -.42em}
+.mf .ch i + i{position:absolute;inset:0}
+.mf .ch i:nth-child(2){transform:rotateX(90deg);color:var(--stamp)}
+.mf .ch i:nth-child(3){transform:rotateX(180deg);color:transparent;-webkit-text-stroke:.025em var(--ink)}
+.mf .ch i:nth-child(4){transform:rotateX(270deg)}
+@keyframes mf-roll{
+  0%,8%{transform:rotateX(0)} 16%,26%{transform:rotateX(-90deg)} 34%,44%{transform:rotateX(-180deg)}
+  52%,60%{transform:rotateX(-270deg)} 68%,100%{transform:rotateX(-360deg)}}
+.mf__w:hover,.mf__w:focus-visible{background:var(--ink);color:var(--paper);outline:none}
+.mf__w:hover .ch i:nth-child(3),.mf__w:focus-visible .ch i:nth-child(3){-webkit-text-stroke-color:var(--paper)}
+.mf__w sup{position:absolute;top:-.1em;right:-.25em;width:2.8em;height:2.8em;z-index:2;
+  font:800 11px/1 "Bricolage Grotesque",sans-serif;border-radius:50%;background:var(--stamp);color:var(--paper);
+  display:grid;place-items:center;transform:rotate(12deg) scale(0);transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
+.mf__w:hover sup,.mf__w:focus-visible sup{transform:rotate(-8deg) scale(1)}
+.mf__foot{display:flex;justify-content:space-between;gap:16px;margin-top:10px;
+  font:600 10px/1.25 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mf__foot b{color:var(--ink)}
+.mf__foot a{color:inherit;text-decoration:none}
+.mf__foot a:hover{color:var(--stamp)}
+@media(max-width:700px){.mf__foot{flex-direction:column;gap:6px}}
+@media(prefers-reduced-motion:reduce){.mf .ch{animation:none}}
 
 /* =====================================================================
    PAGINA PROGETTI (progetti.html) — indice da catalogo, griglia 12 col

@@ -79,38 +79,46 @@
     else buildCatPicker(CATS);
   }
 
-  /* --- selettore categorie (griglia grayscale sopra la sezione progetti) --- */
+  /* --- selettore categorie: manifesto tipografico sopra la sezione progetti ---
+     Ogni riga è scalata per riempire la gabbia; ogni lettera è un cubo 3D che rotola
+     (nero → rosso → contorno → nero) e l'onda attraversa le righe in loop. */
+  const PICKER_LINES = [["graphic"], ["industrial", "exhibit"], ["videoclip", "website", "virtual"]];
   function buildCatPicker(CATS) {
     const projects = document.querySelector(".projects");
     if (!projects) return;
+    const byId = {};
+    CATS.forEach((c) => (byId[c.id] = c));
+    const total = CATS.reduce((n, c) => n + c.items.length, 0);
+    const esc = (t) => t.replace(/&/g, "&amp;");
+    let k = 0;
+    const cube = (txt, line) => [...txt].map((ch) => {
+      const d = (k++) * 45 + line * 350;
+      return ch === " " ? '<span class="ch" style="--d:' + d + '">&nbsp;</span>'
+        : '<span class="ch" style="--d:' + d + '" aria-hidden="true"><i>' + esc(ch) + "</i><i>" + esc(ch) + "</i><i>" + esc(ch) + "</i><i>" + esc(ch) + "</i></span>";
+    }).join("");
     const picker = document.createElement("section");
     picker.className = "cat-picker";
-    picker.setAttribute("aria-label", "Scegli categoria");
-    const inner = document.createElement("div");
-    inner.className = "cat-picker__inner";
-    inner.innerHTML =
-      '<div class="cat-picker__head"><h2>Categorie</h2>' +
-      '<p class="cat-picker__hint">Clicca un quadrato per aprire la categoria</p></div>';
-    const grid = document.createElement("div");
-    grid.className = "cat-picker__grid";
-    grid.style.setProperty("--n", CATS.length);
-    CATS.forEach((c, i) => {
-      const btn = document.createElement("button");
-      btn.className = "cat-picker__sq";
-      btn.type = "button";
-      btn.dataset.cat = i;
-      btn.style.setProperty("--i", i);
-      btn.setAttribute("aria-label", "Apri " + c.name);
-      const label = document.createElement("span");
-      label.className = "cat-picker__label";
-      label.textContent = c.name;
-      btn.appendChild(label);
-      btn.addEventListener("click", () => goProjects(c));
-      grid.appendChild(btn);
-    });
-    inner.appendChild(grid);
-    picker.appendChild(inner);
+    picker.setAttribute("aria-label", "Categorie");
+    picker.innerHTML = '<div class="cat-picker__inner"><nav class="mf">' +
+      PICKER_LINES.map((ids, li) => {
+        k = 0;
+        return '<div class="mf__ln">' + ids.filter((id) => byId[id]).map((id) => {
+          const c = byId[id];
+          return '<a class="mf__w" href="progetti.html?cat=' + id + '" aria-label="' + esc(c.name) + " — " + c.items.length + ' lavori">' +
+            cube(c.name, li) + "<sup>" + c.items.length + "</sup></a>";
+        }).join('<span class="mf__dot" aria-hidden="true">·</span>') + "</div>";
+      }).join("") +
+      '<div class="mf__foot"><span><b>Cosa facciamo</b> — ' + CATS.length + " discipline, " + total + " lavori</span>" +
+      '<a href="#contact">Non partiamo da una disciplina. Partiamo da un’idea →</a></div></nav></div>';
     projects.parentNode.insertBefore(picker, projects);
+    const mf = picker.querySelector(".mf");
+    const fit = () => mf.querySelectorAll(".mf__ln").forEach((ln) => {
+      ln.style.fontSize = "100px";
+      const w = [...ln.children].reduce((s, el) => s + el.getBoundingClientRect().width, 0) + (ln.children.length - 1) * 30;
+      ln.style.fontSize = Math.min(220, (100 * mf.clientWidth / w) * 0.985) + "px";
+    });
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(fit);
+    addEventListener("resize", fit);
   }
 
 
