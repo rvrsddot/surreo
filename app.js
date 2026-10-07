@@ -530,7 +530,6 @@
         row.addEventListener("mouseenter", show);
         row.addEventListener("focus", show);
         row.addEventListener("click", () => { stopPrev(); prev._it = null; const el = catEls[ci]; el._from = row; open(el, ii); });
-        if (ci === 0 && ii === 0) show();
         sec.appendChild(row);
       });
       list.appendChild(sec);
@@ -546,8 +545,29 @@
     (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(fitNames);
     let fitT = 0; addEventListener("resize", () => { clearTimeout(fitT); fitT = setTimeout(fitNames, 120); });
 
+    // riquadro a sinistra: "gif" di immagini casuali dei lavori della categoria scelta
+    // (passando su una riga mostra quel progetto; uscendo dall'elenco torna la gif)
+    let curCat = "";
+    const catGif = (id) => {
+      stopPrev(); prev._it = null;
+      const items = id ? (CATS.find((c) => c.id === id) || { items: [] }).items : CATS.flatMap((c) => c.items);
+      const pool = [];
+      items.forEach((it) => { if (it.kind === "proj") it.frames.forEach((f) => pool.push(toM(f))); else if (it.vid) pool.push(YT_THUMB_S(it.vid)); });
+      for (let i = pool.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [pool[i], pool[j]] = [pool[j], pool[i]]; }
+      const f = pool.slice(0, 16);
+      if (!f.length) return;
+      prev.classList.remove("is-wide"); sizePrev(1);
+      prev.innerHTML = '<img alt="" src="' + f[0] + '" style="object-fit:cover">';
+      const c = CATS.find((k) => k.id === id);
+      prevN.textContent = "fig. " + (id ? (CODES[id] || "XX") + "·——" : "ALL·——");
+      prevT.textContent = (c ? c.name : "Tutti i lavori") + " · random";
+      if (!reduce && f.length > 1) prevStop = cycleFrames(prev.querySelector("img"), f);
+    };
+    list.addEventListener("mouseleave", () => catGif(curCat));
+
     // filtro: ?cat=<id> nell'indirizzo, così ogni categoria ha il suo link
     const setCat = (id) => {
+      curCat = id; catGif(id);
       nav.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.cat === id));
       list.querySelectorAll(".ix-sec").forEach((s) => { s.hidden = !!id && s.dataset.cat !== id; });
       const u = new URL(location.href);
@@ -579,7 +599,7 @@
     const centerOn = (el) => { list.scrollTop = el.offsetTop - list.offsetTop - (list.clientHeight - el.offsetHeight) / 2; };
     if (target) requestAnimationFrame(() => {
       centerOn(target);
-      target.dispatchEvent(new Event("mouseenter"));   // anteprima sulla categoria scelta
+      if (startP) target.dispatchEvent(new Event("mouseenter"));   // anteprima del progetto richiesto
       // arrivando da una miniatura della home (?p=) il progetto si apre subito
       if (startP) setTimeout(() => {
         target.click();
