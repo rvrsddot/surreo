@@ -169,8 +169,8 @@
       '<div class="shw__stage"><canvas></canvas><div class="shw__views"></div></div><div class="shw__cap"></div></div>';
     const stage = app.querySelector(".shw__stage"), cv = stage.querySelector("canvas"), ctx = cv.getContext("2d"),
       pills = app.querySelector(".shw__pills"), cap = app.querySelector(".shw__cap"), vb = app.querySelector(".shw__views");
-    pills.innerHTML = '<a class="shw__pill" data-c="all" href="progetti.html">All<sup>' + A.length + "</sup></a>" +
-      IDS.map((id) => '<a class="shw__pill" data-c="' + id + '" href="progetti.html?cat=' + id + '">' + short(CAT[id]) + "<sup>" + count(id) + "</sup></a>").join("");
+    pills.innerHTML = '<button type="button" class="shw__pill" data-c="all">All<sup>' + A.length + "</sup></button>" +
+      IDS.map((id) => '<button type="button" class="shw__pill" data-c="' + id + '">' + short(CAT[id]) + "<sup>" + count(id) + "</sup></button>").join("");
 
     // immagini: originale (hover, a colori) + copia in grigio fatta una volta sola
     // si scaricano solo quando il palco sta per entrare a schermo (vedi loadImgs più sotto)
@@ -191,8 +191,7 @@
     size(); let rT = 0; addEventListener("resize", () => { clearTimeout(rT); rT = setTimeout(size, 100); });
 
     let mode = "all", nodes = [];
-    const DWELL = 4200;
-    const go = (c, auto) => {
+    const go = (c) => {
       mode = c;
       const on = c === "all" ? A : A.filter((a) => a.cat === c), pts = FIG[c](on.length), now = performance.now();
       on.forEach((a, i) => { a.t = pts[i]; a.tsz = c === "all" ? 0.9 : 1.5; a.delay = now + i * 18; a.on = true; });
@@ -202,17 +201,15 @@
       cap.innerHTML = "<span><b>" + (c === "all" ? "All" : SHW[c][0] + "·" + pad(IDS.indexOf(c) + 1)) + "</b> " + (c === "all" ? IDS.length + " discipline" : CAT[c].name) + " — " + pad(n) + " lavori</span>" +
         "<span>" + (c === "all" ? IDS.map((k) => SHW[k][0]).join(" · ") : SHW[c][1].join(" · ")) + "</span>" +
         '<a href="progetti.html' + (c === "all" ? "" : "?cat=" + c) + '">' + (c === "all" ? "Tutti i progetti" : "Vedi i " + n + " progetti") + " →</a>";
-      pills.querySelectorAll(".shw__pill").forEach((p) => { const o = p.dataset.c === c; p.classList.toggle("is-on", o); p.style.setProperty("--t", auto && o ? DWELL + "ms" : "0s"); });
+      pills.querySelectorAll(".shw__pill").forEach((p) => p.classList.toggle("is-on", p.dataset.c === c));
     };
-    const ORDER = ["all", ...IDS];
-    let ai = 0, timer = 0, idleT = 0, visible = false;
-    const auto = () => { clearTimeout(timer); if (reduce || !visible) return; timer = setTimeout(() => { ai = (ai + 1) % ORDER.length; go(ORDER[ai], true); auto(); }, DWELL); };
-    const pause = () => { clearTimeout(timer); clearTimeout(idleT); idleT = setTimeout(auto, 5000); };
-    pills.querySelectorAll(".shw__pill").forEach((p) => p.addEventListener("mouseenter", () => { pause(); ai = ORDER.indexOf(p.dataset.c); go(p.dataset.c, false); }));
+    // ferma su "All": si configura solo al click su un livello
+    let visible = false;
+    pills.addEventListener("click", (e) => { const p = e.target.closest(".shw__pill"); if (p && p.dataset.c !== mode) go(p.dataset.c); });
 
     // camera: trascina = ruota, rotella = zoom, viste preimpostate
     let hover = null, yaw = 0.6, pitch = 0.38, zoom = 1, tYaw = null, tPitch = null, drag = null, spin = !reduce, moved = 0, mx = -1, my = -1;
-    cv.addEventListener("pointerdown", (e) => { drag = { x: e.clientX, y: e.clientY }; moved = 0; spin = false; tYaw = tPitch = null; cv.setPointerCapture(e.pointerId); setView(""); pause(); });
+    cv.addEventListener("pointerdown", (e) => { drag = { x: e.clientX, y: e.clientY }; moved = 0; spin = false; tYaw = tPitch = null; cv.setPointerCapture(e.pointerId); setView(""); });
     cv.addEventListener("pointermove", (e) => {
       const r = cv.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top;
       if (drag) { const dx = e.clientX - drag.x, dy = e.clientY - drag.y; moved += Math.abs(dx) + Math.abs(dy); yaw += dx * 0.008; pitch = Math.max(-0.1, Math.min(1.45, pitch + dy * 0.006)); drag = { x: e.clientX, y: e.clientY }; }
@@ -294,13 +291,13 @@
       });
       raf = visible ? requestAnimationFrame(frame) : 0;
     };
-    go("all", true);
+    go("all");
     new IntersectionObserver((e, o) => {
       if (e[0].isIntersecting) { A.forEach((a) => (a.img.src = a.src)); o.disconnect(); }
     }, { rootMargin: "800px 0px" }).observe(stage);
     new IntersectionObserver((e) => {
       visible = e[0].isIntersecting;
-      if (visible) { if (!raf) raf = requestAnimationFrame(frame); auto(); } else clearTimeout(timer);
+      if (visible && !raf) raf = requestAnimationFrame(frame);
     }, { threshold: 0.15 }).observe(stage);
   }
 
