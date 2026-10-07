@@ -134,10 +134,11 @@
   };
   // ogni forma restituisce n centri + lato della miniatura dentro il riquadro b
   const SHAPES = {
-    circle(n, b) { const R = Math.min(b.w, b.h) / 2 * 0.92, s = R * 1.62 / Math.sqrt(n);
-      return { s, p: [...Array(n)].map((_, i) => { const r = R * Math.sqrt((i + 0.5) / n) - s * 0.15, t = i * 2.39996; return [b.cx + r * Math.cos(t), b.cy + r * Math.sin(t)]; }) }; },
-    ring(n, b) { const R = Math.min(b.w, b.h) / 2 * 0.72, s = Math.min(R * 0.7, 2 * R * Math.sin(Math.PI / n) * 0.85);
-      return { s, p: [...Array(n)].map((_, i) => { const t = i / n * 2 * Math.PI - Math.PI / 2; return [b.cx + R * Math.cos(t), b.cy + R * Math.sin(t)]; }) }; },
+    // cerchio e anello si allargano in ellisse per riempire tutto il palco
+    circle(n, b) { const rx = b.w / 2 * 0.94, ry = b.h / 2 * 0.94, s = Math.min(Math.sqrt(Math.PI * rx * ry / n) * 1.05, ry * 0.9);
+      return { s, p: [...Array(n)].map((_, i) => { const k = Math.sqrt((i + 0.5) / n), t = i * 2.39996; return [b.cx + (rx - s * 0.5) * k * Math.cos(t), b.cy + (ry - s * 0.5) * k * Math.sin(t)]; }) }; },
+    ring(n, b) { const rx = b.w / 2 * 0.62, ry = b.h / 2 * 0.72, s = Math.min(ry * 0.7, 2 * ry * Math.sin(Math.PI / n) * 1.1);
+      return { s, p: [...Array(n)].map((_, i) => { const t = i / n * 2 * Math.PI - Math.PI / 2; return [b.cx + rx * Math.cos(t), b.cy + ry * Math.sin(t)]; }) }; },
     square(n, b) { const k = Math.ceil(n / 4) + 1, L = Math.min(b.w, b.h) * 0.8, s = L / k * 0.88, c = [];
       for (let i = 0; i < k; i++) c.push([i, 0]); for (let i = 1; i < k; i++) c.push([k - 1, i]);
       for (let i = k - 2; i >= 0; i--) c.push([i, k - 1]); for (let i = k - 2; i > 0; i--) c.push([0, i]);
@@ -169,9 +170,9 @@
     const short = (c) => c.name.split(/[ ,]/)[0];
 
     app.innerHTML =
-      '<div class="shw"><div class="shw__bar"><div class="shw__logo">Projects<br>Showcase</div><div class="shw__pills"></div></div>' +
-      '<div class="shw__stage"><div class="shw__panel"></div><div class="shw__tip"></div></div>' +
-      '<div class="shw__legend"><span>● graphic · ■ industrial · ∩ exhibit · ▶ videoclip · ▦ website · ○ virtual</span><span>Clicca una miniatura per aprire il progetto</span></div></div>';
+      '<div class="shw"><div class="shw__bar"><div class="shw__pills"></div></div>' +
+      '<div class="shw__stage"><div class="shw__tip"></div></div>' +
+      '<div class="shw__panel"></div></div>';
     const stage = app.querySelector(".shw__stage"), panel = app.querySelector(".shw__panel"), tip = app.querySelector(".shw__tip"), pills = app.querySelector(".shw__pills");
     pills.innerHTML = '<a class="shw__pill" data-c="all" href="progetti.html">All<sup>' + A.length + "</sup></a>" +
       IDS.map((id) => '<a class="shw__pill" data-c="' + id + '" href="progetti.html?cat=' + id + '">' + short(CAT[id]) + "<sup>" + count(id) + "</sup></a>").join("");
@@ -192,29 +193,25 @@
     const layout = () => {
       const W = stage.clientWidth, H = stage.clientHeight;
       if (mode === "all") {   // griglia compatta a sinistra
-        const aw = W * 0.58, s = Math.floor(Math.sqrt(aw * (H - 40) / A.length) * 0.86), c = Math.floor(aw / (s * 1.08)), r = Math.ceil(A.length / c),
+        const aw = W - 48, s = Math.floor(Math.sqrt(aw * (H - 40) / A.length) * 0.86), c = Math.floor(aw / (s * 1.08)), r = Math.ceil(A.length / c),
           ox = 24 + (aw - c * s * 1.08) / 2, oy = (H - r * s * 1.08) / 2;
         A.forEach((a, i) => { a.tx = ox + (i % c) * s * 1.08; a.ty = oy + (i / c | 0) * s * 1.08; a.ts = s; });
       } else {
         const on = A.filter((a) => a.cat === mode), off = A.filter((a) => a.cat !== mode);
-        const sh = SHAPES[SHW[mode][2]](on.length, { cx: W * 0.3, cy: H * 0.5, w: W * 0.5, h: H * 0.86 });
+        const sh = SHAPES[SHW[mode][2]](on.length, { cx: W * 0.5, cy: (H - 26) * 0.5, w: W * 0.9, h: (H - 26) * 0.9 });
         on.forEach((a, i) => { a.tx = sh.p[i][0] - sh.s / 2; a.ty = sh.p[i][1] - sh.s / 2; a.ts = sh.s; });
         // gli altri lavori restano: puntini in fila sul bordo basso
-        const ds = Math.min(12, (W * 0.55) / off.length - 3);
+        const ds = Math.min(12, (W - 28) / off.length - 3);
         off.forEach((a, i) => { a.tx = 14 + i * (ds + 3); a.ty = H - ds - 12; a.ts = ds; });
       }
     };
+    // didascalia piccola sotto il palco: codice e nome, servizi, link alla categoria
     const setPanel = (c) => {
-      panel.classList.remove("is-in"); panel.classList.toggle("is-all", c === "all");
       const n = c === "all" ? A.length : count(c);
-      const words = c === "all" ? [A.length + " lavori,", IDS.length + " discipline."] : CAT[c].name.split(" ");
-      const svc = c === "all" ? IDS.map((k) => SHW[k][0]) : SHW[c][1];
       panel.innerHTML =
-        '<div class="shw__code"><span class="shw__box">' + (c === "all" ? "All<br>Surreo" : SHW[c][0] + "<br>" + pad(IDS.indexOf(c) + 1)) + '</span><span class="shw__n">' + pad(n) + "</span></div>" +
-        '<div><div class="shw__name">' + words.map((w, i) => '<span style="transition-delay:' + i * 60 + 'ms">' + w + "</span>").join(" ") + "</div>" +
-        '<div class="shw__svc">' + svc.map((t, i) => '<i style="transition-delay:' + (200 + i * 50) + 'ms">' + t + "</i>").join("") + "</div></div>" +
-        '<a class="shw__go" href="progetti.html' + (c === "all" ? "" : "?cat=" + c) + '">' + (c === "all" ? "Tutti i progetti" : "Vedi i " + n + " progetti") + " →</a>";
-      requestAnimationFrame(() => requestAnimationFrame(() => panel.classList.add("is-in")));
+        "<span><b>" + (c === "all" ? "All" : SHW[c][0] + "·" + pad(IDS.indexOf(c) + 1)) + "</b> " + (c === "all" ? IDS.length + " discipline" : CAT[c].name) + " — " + pad(n) + " lavori</span>" +
+        "<span>" + (c === "all" ? IDS.map((k) => short(CAT[k])).join(" · ") : SHW[c][1].join(" · ")) + "</span>" +
+        '<a href="progetti.html' + (c === "all" ? "" : "?cat=" + c) + '">' + (c === "all" ? "Tutti i progetti" : "Vedi i " + n + " progetti") + " →</a>";
     };
     const DWELL = 3400;
     const go = (c, auto) => {
@@ -516,10 +513,9 @@
       setCat(b.dataset.cat);
       list.scrollTo({ top: 0, behavior: "auto" });
     });
-    // si apre sempre su "Tutti" (colpo d'occhio); se arrivi da una categoria della home
-    // la pagina scorre fino a quella sezione invece di filtrarla
+    // arrivando da una categoria della home (?cat=) la pagina si apre già filtrata su quella
     const start = new URLSearchParams(location.search).get("cat") || "";
-    setCat("");
+    setCat(CATS.some((c) => c.id === start) ? start : "");
     const startP = +(new URLSearchParams(location.search).get("p") || 0);
     const target = start && list.querySelectorAll('.ix-sec[data-cat="' + start + '"] .ix-row')[startP ? startP - 1 : 0];
 
@@ -537,6 +533,7 @@
     const centerOn = (el) => { list.scrollTop = el.offsetTop - list.offsetTop - (list.clientHeight - el.offsetHeight) / 2; };
     if (target) requestAnimationFrame(() => {
       centerOn(target);
+      target.dispatchEvent(new Event("mouseenter"));   // anteprima sulla categoria scelta
       // arrivando da una miniatura della home (?p=) il progetto si apre subito
       if (startP) setTimeout(() => {
         target.click();
