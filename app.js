@@ -74,9 +74,8 @@
     const vIdx = CATS.findIndex((c) => /virtual/i.test(c.name));
     if (vIdx >= 0) CATS.push(CATS.splice(vIdx, 1)[0]);
     if (MOBILE) { document.body.classList.add("is-mobile"); INDEX ? buildFeed(CATS) : buildMobileHome(CATS); return; }
-    CATS.forEach(renderCategory);
-    if (INDEX) buildIndex(CATS);
-    else buildCatPicker(CATS);
+    if (INDEX) { CATS.forEach(renderCategory); buildIndex(CATS); }
+    else { buildCatPicker(CATS); buildShowcase(CATS); }
   }
 
   /* --- selettore categorie: manifesto tipografico sopra la sezione progetti ---
@@ -121,6 +120,143 @@
     addEventListener("resize", fit);
   }
 
+
+  /* --- vetrina home "Forme": tutte le miniature in un palco; per ogni disciplina si
+     ricompongono nel suo segno (cerchio, quadrato, arco, play, finestra, anello) e a
+     destra parla la tipografia. Gira da sola; il click porta alla pagina progetti. --- */
+  const SHW = {
+    graphic:    ["GR", ["Brand identity", "Editoria", "Packaging", "Social"], "circle"],
+    industrial: ["ID", ["Concept", "3D", "Render", "Display"], "square"],
+    exhibit:    ["EX", ["Allestimenti", "Videomapping", "AR"], "arch"],
+    videoclip:  ["VC", ["Regia", "Montaggio", "Motion", "Spot"], "play"],
+    website:    ["WB", ["Web design", "Sviluppo", "SEO", "Tour 360°"], "window"],
+    virtual:    ["VR", ["Unreal", "VR", "Metaverso"], "ring"]
+  };
+  // ogni forma restituisce n centri + lato della miniatura dentro il riquadro b
+  const SHAPES = {
+    circle(n, b) { const R = Math.min(b.w, b.h) / 2 * 0.92, s = R * 1.62 / Math.sqrt(n);
+      return { s, p: [...Array(n)].map((_, i) => { const r = R * Math.sqrt((i + 0.5) / n) - s * 0.15, t = i * 2.39996; return [b.cx + r * Math.cos(t), b.cy + r * Math.sin(t)]; }) }; },
+    ring(n, b) { const R = Math.min(b.w, b.h) / 2 * 0.72, s = Math.min(R * 0.7, 2 * R * Math.sin(Math.PI / n) * 0.85);
+      return { s, p: [...Array(n)].map((_, i) => { const t = i / n * 2 * Math.PI - Math.PI / 2; return [b.cx + R * Math.cos(t), b.cy + R * Math.sin(t)]; }) }; },
+    square(n, b) { const k = Math.ceil(n / 4) + 1, L = Math.min(b.w, b.h) * 0.8, s = L / k * 0.88, c = [];
+      for (let i = 0; i < k; i++) c.push([i, 0]); for (let i = 1; i < k; i++) c.push([k - 1, i]);
+      for (let i = k - 2; i >= 0; i--) c.push([i, k - 1]); for (let i = k - 2; i > 0; i--) c.push([0, i]);
+      return { s, p: c.slice(0, n).map(([x, y]) => [b.cx - L / 2 + (x + 0.5) * L / k, b.cy - L / 2 + (y + 0.5) * L / k]) }; },
+    arch(n, b) { const H = Math.min(b.h * 0.86, b.w), R = H * 0.36, leg = H - R, s = Math.min(H / (n * 0.55), R * 0.75), len = 2 * leg + Math.PI * R, p = [];
+      for (let i = 0; i < n; i++) { const d = (i + 0.5) / n * len; let x, y;
+        if (d < leg) { x = -R; y = H / 2 - d; }
+        else if (d < leg + Math.PI * R) { const a = Math.PI - (d - leg) / R; x = R * Math.cos(a); y = H / 2 - leg - R * Math.sin(a); }
+        else { x = R; y = H / 2 - leg + (d - leg - Math.PI * R); }
+        p.push([b.cx + x, b.cy + y + R * 0.5]); }
+      return { s, p }; },
+    play(n, b) { let cols = [], k = 1; while (cols.reduce((a, c) => a + c, 0) < n) cols.unshift(k++); cols.sort((a, c) => c - a);
+      const C = cols.length, s = Math.min(b.w / C, b.h / cols[0]) * 0.86, p = []; let left = n;
+      cols.forEach((m, ci) => { const q = Math.min(m, left); left -= q; for (let j = 0; j < q; j++) p.push([b.cx + (ci - (C - 1) / 2) * s * 1.04, b.cy + (j - (q - 1) / 2) * s * 1.04]); });
+      return { s, p }; },
+    window(n, b) { const c = Math.ceil(Math.sqrt(n * 1.6)), r = Math.ceil(n / c), s = Math.min(b.w / c, b.h / (r + 0.6)) * 0.86, p = [];
+      for (let i = 0; i < n; i++) p.push([b.cx + (i % c - (c - 1) / 2) * s * 1.06, b.cy + ((i / c | 0) - (r - 1) / 2) * s * 1.06 + s * 0.3]);
+      return { s, p }; }
+  };
+  function buildShowcase(CATS) {
+    const sec = document.querySelector(".projects");
+    sec.classList.add("projects--shw");
+    const pad = (n) => String(n).padStart(2, "0");
+    const A = [];
+    CATS.forEach((c) => c.items.forEach((it, ii) => { if (thumbURL(it)) A.push({ cat: c.id, cname: c.name, name: it.name, src: thumbURL(it), href: "progetti.html?cat=" + c.id + "&p=" + (ii + 1) }); }));
+    const count = (id) => A.filter((a) => a.cat === id).length;
+    const CAT = {}; CATS.forEach((c) => (CAT[c.id] = c));
+    const IDS = CATS.map((c) => c.id).filter((id) => SHW[id]);
+    const short = (c) => c.name.split(/[ ,]/)[0];
+
+    app.innerHTML =
+      '<div class="shw"><div class="shw__bar"><div class="shw__logo">Projects<br>Showcase</div><div class="shw__pills"></div></div>' +
+      '<div class="shw__stage"><div class="shw__panel"></div><div class="shw__tip"></div></div>' +
+      '<div class="shw__legend"><span>● graphic · ■ industrial · ∩ exhibit · ▶ videoclip · ▦ website · ○ virtual</span><span>Clicca una miniatura per aprire il progetto</span></div></div>';
+    const stage = app.querySelector(".shw__stage"), panel = app.querySelector(".shw__panel"), tip = app.querySelector(".shw__tip"), pills = app.querySelector(".shw__pills");
+    pills.innerHTML = '<a class="shw__pill" data-c="all" href="progetti.html">All<sup>' + A.length + "</sup></a>" +
+      IDS.map((id) => '<a class="shw__pill" data-c="' + id + '" href="progetti.html?cat=' + id + '">' + short(CAT[id]) + "<sup>" + count(id) + "</sup></a>").join("");
+
+    // ogni miniatura: posizione/lato correnti + velocità, con molla verso il bersaglio
+    const B = 100;
+    let hot = null, mode = "all", mx = -999, my = -999;
+    A.forEach((a) => {
+      const el = document.createElement("a");
+      el.className = "shw__th"; el.href = a.href; el.setAttribute("aria-label", a.name + " — " + a.cname);
+      el.style.backgroundImage = 'url("' + a.src + '")';
+      stage.appendChild(el);
+      Object.assign(a, { el, x: Math.random() * 1000, y: Math.random() * 500, s: 10, vx: 0, vy: 0, vs: 0, tx: 0, ty: 0, ts: 40 });
+      el.addEventListener("mouseenter", () => { hot = a; el.classList.add("is-hot"); tip.innerHTML = a.name + "<small>" + SHW[a.cat][0] + "</small>"; tip.classList.add("is-on"); });
+      el.addEventListener("mouseleave", () => { hot = null; el.classList.remove("is-hot"); tip.classList.remove("is-on"); });
+    });
+
+    const layout = () => {
+      const W = stage.clientWidth, H = stage.clientHeight;
+      if (mode === "all") {   // griglia compatta a sinistra
+        const aw = W * 0.58, s = Math.floor(Math.sqrt(aw * (H - 40) / A.length) * 0.86), c = Math.floor(aw / (s * 1.08)), r = Math.ceil(A.length / c),
+          ox = 24 + (aw - c * s * 1.08) / 2, oy = (H - r * s * 1.08) / 2;
+        A.forEach((a, i) => { a.tx = ox + (i % c) * s * 1.08; a.ty = oy + (i / c | 0) * s * 1.08; a.ts = s; });
+      } else {
+        const on = A.filter((a) => a.cat === mode), off = A.filter((a) => a.cat !== mode);
+        const sh = SHAPES[SHW[mode][2]](on.length, { cx: W * 0.3, cy: H * 0.5, w: W * 0.5, h: H * 0.86 });
+        on.forEach((a, i) => { a.tx = sh.p[i][0] - sh.s / 2; a.ty = sh.p[i][1] - sh.s / 2; a.ts = sh.s; });
+        // gli altri lavori restano: puntini in fila sul bordo basso
+        const ds = Math.min(12, (W * 0.55) / off.length - 3);
+        off.forEach((a, i) => { a.tx = 14 + i * (ds + 3); a.ty = H - ds - 12; a.ts = ds; });
+      }
+    };
+    const setPanel = (c) => {
+      panel.classList.remove("is-in"); panel.classList.toggle("is-all", c === "all");
+      const n = c === "all" ? A.length : count(c);
+      const words = c === "all" ? [A.length + " lavori,", IDS.length + " discipline."] : CAT[c].name.split(" ");
+      const svc = c === "all" ? IDS.map((k) => SHW[k][0]) : SHW[c][1];
+      panel.innerHTML =
+        '<div class="shw__code"><span class="shw__box">' + (c === "all" ? "All<br>Surreo" : SHW[c][0] + "<br>" + pad(IDS.indexOf(c) + 1)) + '</span><span class="shw__n">' + pad(n) + "</span></div>" +
+        '<div><div class="shw__name">' + words.map((w, i) => '<span style="transition-delay:' + i * 60 + 'ms">' + w + "</span>").join(" ") + "</div>" +
+        '<div class="shw__svc">' + svc.map((t, i) => '<i style="transition-delay:' + (200 + i * 50) + 'ms">' + t + "</i>").join("") + "</div></div>" +
+        '<a class="shw__go" href="progetti.html' + (c === "all" ? "" : "?cat=" + c) + '">' + (c === "all" ? "Tutti i progetti" : "Vedi i " + n + " progetti") + " →</a>";
+      requestAnimationFrame(() => requestAnimationFrame(() => panel.classList.add("is-in")));
+    };
+    const DWELL = 3400;
+    const go = (c, auto) => {
+      mode = c; layout(); setPanel(c);
+      pills.querySelectorAll(".shw__pill").forEach((p) => { const on = p.dataset.c === c; p.classList.toggle("is-on", on); p.style.setProperty("--t", auto && on ? DWELL + "ms" : "0s"); });
+      A.forEach((a) => { a.vx += (Math.random() - 0.5) * 14; a.vy -= Math.random() * 14; });  // piccolo salto verso la forma
+    };
+
+    // giro automatico tra le discipline finché nessuno interagisce
+    const ORDER = ["all", ...IDS];
+    let ai = 0, timer = 0, idleT = 0, visible = false;
+    const auto = () => { clearTimeout(timer); if (reduce || !visible) return; timer = setTimeout(() => { ai = (ai + 1) % ORDER.length; go(ORDER[ai], true); auto(); }, DWELL); };
+    const pause = () => { clearTimeout(timer); clearTimeout(idleT); idleT = setTimeout(auto, 5000); };
+    pills.querySelectorAll(".shw__pill").forEach((p) => p.addEventListener("mouseenter", () => { pause(); ai = ORDER.indexOf(p.dataset.c); go(p.dataset.c, false); }));
+    stage.addEventListener("mousemove", (e) => {
+      const r = stage.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top;
+      tip.style.left = Math.min(mx + 16, r.width - 220) + "px"; tip.style.top = (my + 18) + "px";
+    });
+    stage.addEventListener("mouseleave", () => { mx = my = -999; });
+    let rT = 0; addEventListener("resize", () => { clearTimeout(rT); rT = setTimeout(layout, 100); });
+
+    let raf = 0;
+    const tick = () => {
+      A.forEach((a) => {
+        let tx = a.tx, ty = a.ty, ts = a.ts;
+        if (a === hot) { ts = Math.max(ts * 2.2, 120); tx -= (ts - a.ts) / 2; ty -= (ts - a.ts) / 2; }
+        else { const dx = a.x + a.s / 2 - mx, dy = a.y + a.s / 2 - my, dd = Math.hypot(dx, dy);   // le miniature si scansano dal mouse
+          if (dd < 130 && dd > 0) { const f = (130 - dd) / 130 * 38; tx += dx / dd * f; ty += dy / dd * f; } }
+        a.vx = (a.vx + (tx - a.x) * 0.075) * 0.8; a.vy = (a.vy + (ty - a.y) * 0.075) * 0.8; a.vs = (a.vs + (ts - a.s) * 0.09) * 0.78;
+        a.x += a.vx; a.y += a.vy; a.s += a.vs;
+        a.el.style.transform = "translate(" + a.x + "px," + a.y + "px) scale(" + Math.max(a.s, 1) / B + ")";
+        a.el.style.borderWidth = (a.s < 20 ? 0 : 3 * B / a.s) + "px";
+      });
+      raf = visible ? requestAnimationFrame(tick) : 0;
+    };
+    go("all", true);
+    // anima solo quando il palco è a schermo
+    new IntersectionObserver((e) => {
+      visible = e[0].isIntersecting;
+      if (visible) { if (!raf) raf = requestAnimationFrame(tick); auto(); } else clearTimeout(timer);
+    }, { threshold: 0.2 }).observe(stage);
+  }
 
   // miniatura 256px generata da make_thumbs.py: assets/projects/<id>/NN.jpg -> .../<id>/t/NN.jpg
   const toThumb = (src) => src.replace(/\/([^/]+)$/, "/t/$1");
@@ -384,7 +520,8 @@
     // la pagina scorre fino a quella sezione invece di filtrarla
     const start = new URLSearchParams(location.search).get("cat") || "";
     setCat("");
-    const target = start && list.querySelector('.ix-sec[data-cat="' + start + '"] .ix-row');
+    const startP = +(new URLSearchParams(location.search).get("p") || 0);
+    const target = start && list.querySelectorAll('.ix-sec[data-cat="' + start + '"] .ix-row')[startP ? startP - 1 : 0];
 
     // la pagina è ferma: scorre solo l'elenco. Spazio sopra/sotto pari a mezzo rullo,
     // così anche la prima e l'ultima riga possono arrivare al centro (linea rossa)
@@ -398,7 +535,14 @@
     fit();
     addEventListener("resize", fit);
     const centerOn = (el) => { list.scrollTop = el.offsetTop - list.offsetTop - (list.clientHeight - el.offsetHeight) / 2; };
-    if (target) requestAnimationFrame(() => centerOn(target));
+    if (target) requestAnimationFrame(() => {
+      centerOn(target);
+      // arrivando da una miniatura della home (?p=) il progetto si apre subito
+      if (startP) setTimeout(() => {
+        target.click();
+        const u = new URL(location.href); u.searchParams.delete("p"); history.replaceState(null, "", u);
+      }, 350);
+    });
 
     // scorrimento "a rullo di slot": le righe verso il bordo alto/basso dello schermo
     // si inclinano all'indietro e sfumano, come se il rullo ruotasse
