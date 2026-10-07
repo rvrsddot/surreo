@@ -585,18 +585,21 @@
     const startP = +(new URLSearchParams(location.search).get("p") || 0);
     const target = start && list.querySelectorAll('.ix-sec[data-cat="' + start + '"] .ix-row')[startP ? startP - 1 : 0];
 
-    // la pagina è ferma: scorre solo l'elenco. Spazio sopra/sotto pari a mezzo rullo,
-    // così anche la prima e l'ultima riga possono arrivare al centro (linea rossa)
+    // la pagina è ferma: scorre solo l'elenco, che parte allineato in alto con "Tutti"
+    // dell'indice. Sotto c'è spazio perché anche l'ultima riga possa salire in cima.
+    // Le frecce rosse segnano la riga di lettura: la prima riga visibile.
     const pay = INDEX.querySelector(".ix-pay");
+    const refOff = () => { const f = list.querySelector(".ix-sec:not([hidden]) .ix-row"); return f ? f.offsetTop - list.offsetTop + f.offsetHeight / 2 : 60; };
     const fit = () => {
-      const first = list.querySelector(".ix-row");
-      const half = list.clientHeight / 2 - (first ? first.offsetHeight / 2 : 60);
-      list.style.paddingTop = list.style.paddingBottom = Math.max(0, half) + "px";
-      if (pay) pay.style.top = (list.offsetTop + list.clientHeight / 2) + "px";
+      const rows = list.querySelectorAll(".ix-sec:not([hidden]) .ix-row"), last = rows[rows.length - 1];
+      list.style.paddingTop = "0px";
+      list.style.paddingBottom = Math.max(0, list.clientHeight - refOff() - (last ? last.offsetHeight / 2 : 60)) + "px";
+      if (pay) pay.style.top = (list.offsetTop + refOff()) + "px";
     };
     fit();
     addEventListener("resize", fit);
-    const centerOn = (el) => { list.scrollTop = el.offsetTop - list.offsetTop - (list.clientHeight - el.offsetHeight) / 2; };
+    nav.addEventListener("click", () => setTimeout(fit, 0));
+    const centerOn = (el) => { list.scrollTop = el.offsetTop - list.offsetTop + el.offsetHeight / 2 - refOff(); };
     if (target) requestAnimationFrame(() => {
       centerOn(target);
       if (startP) target.dispatchEvent(new Event("mouseenter"));   // anteprima del progetto richiesto
@@ -607,26 +610,24 @@
       }, 350);
     });
 
-    // scorrimento "a rullo di slot": le righe verso il bordo alto/basso dello schermo
-    // si inclinano all'indietro e sfumano, come se il rullo ruotasse
+    // le righe restano dritte: sfumano solo quelle già passate sopra la riga di lettura
+    // e, piano, quelle verso il fondo
     if (!reduce) {
       const rows = [...list.querySelectorAll(".ix-row, .ix-sec__h")];
       let ticking = false;
-      const drum = () => {
+      const fade = () => {
         ticking = false;
-        const box = list.getBoundingClientRect(), mid = box.top + box.height / 2, half = box.height / 2;
+        const box = list.getBoundingClientRect(), ref = box.top + refOff(), below = box.bottom - ref;
         rows.forEach((r) => {
           if (r.offsetParent === null) return;               // sezione filtrata
-          const b = r.getBoundingClientRect();
+          const b = r.getBoundingClientRect(), c = b.top + b.height / 2;
           if (b.bottom < box.top - 40 || b.top > box.bottom + 40) return;
-          // rullo cilindrico: ogni riga ruota in proporzione alla distanza dal centro dello schermo
-          const d = Math.max(-1, Math.min(1, (b.top + b.height / 2 - mid) / half));  // -1 alto … +1 basso
-          const a = Math.abs(d);
-          r.style.transform = "perspective(1000px) rotateX(" + (-d * 68).toFixed(1) + "deg) scale(" + (1 - a * a * 0.14).toFixed(3) + ")";
-          r.style.opacity = (1 - Math.pow(a, 1.7) * 0.88).toFixed(3);
+          const d = c < ref - b.height / 2 ? -Math.min(1, (ref - c) / 160) : Math.max(0, Math.min(1, (c - ref) / below));
+          r.style.transform = "";
+          r.style.opacity = (d < 0 ? 1 + d * 0.85 : 1 - d * d * 0.55).toFixed(3);
         });
       };
-      const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(drum); } };
+      const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(fade); } };
       list.addEventListener("scroll", req, { passive: true });
       addEventListener("resize", req);
       nav.addEventListener("click", () => setTimeout(req, 50));
