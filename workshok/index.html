@@ -68,7 +68,7 @@
       { "@type": "Organization", "name": "Caffè Design" },
       { "@type": "Organization", "name": "Zetafonts" },
       { "@type": "Organization", "name": "FF3300" },
-      { "@type": "Organization", "name": "Detroit Studio" },
+      { "@type": "Organization", "name": "Ditroit Studio" },
       { "@type": "Organization", "name": "Ocularlab" },
       { "@type": "Organization", "name": "No-made boards" },
       { "@type": "Organization", "name": "Diorama Studio" },
@@ -181,7 +181,7 @@
   <!-- Testi + titoli: Space Grotesk · readout di sistema: Space Mono -->
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/style.css?v=43" />
+  <link rel="stylesheet" href="css/style.css?v=46" />
 </head>
 <body>
   <div class="grid-bg" aria-hidden="true"></div>
@@ -200,9 +200,10 @@
     <nav class="topbar__nav" aria-label="Sezioni">
       <a href="#corsi" class="tab" data-tab><i>01</i>&nbsp;CORSI</a>
       <a href="#archivio" class="tab" data-tab><i>02</i>&nbsp;ARCHIVE</a>
-      <a href="#metodo" class="tab" data-tab><i>03</i>&nbsp;METODO</a>
-      <a href="#about" class="tab" data-tab><i>04</i>&nbsp;ABOUT</a>
-      <a href="#collab" class="tab" data-tab><i>05</i>&nbsp;COLLAB</a>
+      <a href="#gallery" class="tab" data-tab><i>03</i>&nbsp;GALLERY</a>
+      <a href="#metodo" class="tab" data-tab><i>04</i>&nbsp;METODO</a>
+      <a href="#about" class="tab" data-tab><i>05</i>&nbsp;ABOUT</a>
+      <a href="#collab" class="tab" data-tab><i>06</i>&nbsp;COLLAB</a>
     </nav>
     <a href="#archivio" class="topbar__cta">[&nbsp;ARCHIVE&nbsp;]</a>
   </header>
@@ -289,10 +290,30 @@
       </div>
     </section>
 
-    <!-- ===================== 03 · METODO ===================== -->
+    <!-- ===================== 03 · GALLERY ===================== -->
+    <section class="win" id="gallery">
+      <div class="win__bar">
+        <span class="win__name">📁&nbsp;<i>03</i>&nbsp;GALLERY.IMG</span>
+        <span class="win__status">[ 135 FILES ]</span>
+        <span class="win__ctrl" aria-hidden="true"><b></b><b></b><b></b></span>
+      </div>
+      <div class="win__body">
+        <div class="block__head">
+          <h2 class="block__title neon-solid">Gallery</h2>
+          <span class="block__meta">// rullino · dal vivo dai workshop</span>
+        </div>
+        <div class="sheet" id="gal-sheet" aria-label="Anteprima foto dai workshop"></div>
+        <div class="gal__foot">
+          <span>Clicca un fotogramma per aprirlo</span>
+          <a class="btn" href="gallery.html">Apri la gallery →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 04 · METODO ===================== -->
     <section class="win" id="metodo">
       <div class="win__bar">
-        <span class="win__name">📁&nbsp;<i>03</i>&nbsp;METODO.SYS</span>
+        <span class="win__name">📁&nbsp;<i>04</i>&nbsp;METODO.SYS</span>
         <span class="win__status">[ RUNNING · 8Y ]</span>
         <span class="win__ctrl" aria-hidden="true"><b></b><b></b><b></b></span>
       </div>
@@ -333,7 +354,7 @@
     <!-- ===================== 04 · ABOUT ===================== -->
     <section class="win" id="about">
       <div class="win__bar">
-        <span class="win__name">📁&nbsp;<i>04</i>&nbsp;ABOUT.TXT</span>
+        <span class="win__name">📁&nbsp;<i>05</i>&nbsp;ABOUT.TXT</span>
         <span class="win__status">[ READY ]</span>
         <span class="win__ctrl" aria-hidden="true"><b></b><b></b><b></b></span>
       </div>
@@ -362,7 +383,7 @@
     <!-- ===================== 03 · COLLAB ===================== -->
     <section class="win" id="collab">
       <div class="win__bar">
-        <span class="win__name">📁&nbsp;<i>05</i>&nbsp;COLLAB.LOG</span>
+        <span class="win__name">📁&nbsp;<i>06</i>&nbsp;COLLAB.LOG</span>
         <span class="win__status">[ READY ]</span>
         <span class="win__ctrl" aria-hidden="true"><b></b><b></b><b></b></span>
       </div>
@@ -382,7 +403,7 @@
     <!-- ===================== 04 · INFO & CONTATTI ===================== -->
     <section class="win" id="iscrizioni">
       <div class="win__bar">
-        <span class="win__name">📁&nbsp;<i>06</i>&nbsp;CONTATTI.FORM</span>
+        <span class="win__name">📁&nbsp;<i>07</i>&nbsp;CONTATTI.FORM</span>
         <span class="win__status">[ OPEN ]</span>
         <span class="win__ctrl" aria-hidden="true"><b></b><b></b><b></b></span>
       </div>
@@ -443,7 +464,7 @@
   <div class="pmodal" id="partners-modal" role="dialog" aria-modal="true" aria-labelledby="pmodal-title" hidden>
     <div class="pmodal__panel">
       <header class="pmodal__bar">
-        <span class="pmodal__name">📁&nbsp;<i>05</i>&nbsp;COLLAB / PARTNERS.LIST</span>
+        <span class="pmodal__name">📁&nbsp;<i>06</i>&nbsp;COLLAB / PARTNERS.LIST</span>
         <button type="button" class="pmodal__close" id="partners-close" aria-label="Chiudi">[ ✕ ]</button>
       </header>
       <div class="pmodal__body">
@@ -456,8 +477,10 @@
     </div>
   </div>
 
-  <script src="data/courses.js?v=43"></script>
+  <script src="data/courses.js?v=44"></script>
   <script src="js/main.js?v=43"></script>
   <script src="js/archive.js?v=4"></script>
+  <script src="data/gallery.js?v=2"></script>
+  <script src="js/gallery.js?v=2"></script>
 </body>
 </html>

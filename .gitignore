@@ -4,3 +4,6 @@
 /PROJECTS/
 /PROJECTS
 .DS_Store
+
+# Foto originali (5 GB): si caricano solo le versioni ottimizzate in workshok/assets/gallery
+/sezione foto/

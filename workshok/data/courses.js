@@ -128,10 +128,10 @@ window.PARTNERS = [
   "E. Colantoni", "G. Abbatepaolo",
   "Francesco Pezzuoli", "Diorama Studio",
   "Homu Architects", "Zetafonts",
-  "Atelier Crilo", "Detroit Studio",
+  "Atelier Crilo", "Ditroit Studio",
   "Niccolò Miranda", "Centauroos",
   "Pio L. Cocco", "M. Marinangeli",
-  "Typebreak",
+  "Typebreak", "Emanuele Jane Morelli",
 ];
 
 /* Dati di sistema (UI stile utopia) — version, credit sito, coordinate */
