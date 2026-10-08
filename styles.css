@@ -1041,3 +1041,10 @@ body.is-wip{overflow:hidden;height:100vh}
 @media (hover:hover){.menu__nav .menu__ico:hover{color:var(--stamp);transform:translateY(-4px)}}
 @media(max-width:700px){.menu__contact .m{display:none}.menu__contact{grid-template-columns:auto auto auto}}
 @media(max-width:560px){.menu__nav{--menu-w:min(clamp(34px,12.5vw,72px),9vh)}}
+
+/* About: marchio SS senza cerchi, alto quanto le maiuscole di ABOUT (cap height Archivo = .70em),
+   appoggiato sulla stessa linea di base e a filo con il margine destro della gabbia */
+.about__hero{display:flex;justify-content:space-between;align-items:baseline}
+.about__anchor{font-size:clamp(88px,15vw,220px);height:.70em;width:auto;aspect-ratio:auto;justify-self:auto;margin:0}
+.about__anchor svg{width:auto;height:100%}
+@media(max-width:900px){.about__anchor{width:auto}}
