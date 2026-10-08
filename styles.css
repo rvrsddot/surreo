@@ -1253,3 +1253,10 @@ body.page-cv::after{opacity:.12}
 .page-cv .cv-idx a.on,.page-cv .cv-idx a.on span{color:var(--ink);font-weight:700}
 .page-cv .cv-idx a:hover,.page-cv .cv-contact a:hover,.page-cv .cv-more a:hover{color:var(--muted)}
 .page-cv .cv-list--names li span{color:var(--muted)}
+
+/* CV: testata senza "CV" — nome in colonne 1–3 (sopra la colonna della foto), interfaccia da 4 a 12 fino a fine linea */
+.page-cv .cv-head{align-items:end}
+.page-cv .cv-who{grid-column:1/4;text-align:left;margin:0;font-weight:inherit}
+.page-cv .cv-who b{font-size:clamp(26px,2.6vw,40px);line-height:.95}
+.page-cv .cv-hud{grid-column:4/13}
+@media(max-width:1100px){.page-cv .cv-who{grid-column:1/-1}}
