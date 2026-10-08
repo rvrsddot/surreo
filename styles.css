@@ -1260,3 +1260,28 @@ body.page-cv::after{opacity:.12}
 .page-cv .cv-who b{font-size:clamp(26px,2.6vw,40px);line-height:.95}
 .page-cv .cv-hud{grid-column:4/13}
 @media(max-width:1100px){.page-cv .cv-who{grid-column:1/-1}}
+.cv-ph__ph{aspect-ratio:1011/1100;display:grid;place-items:center;color:var(--muted);background:repeating-linear-gradient(135deg,transparent 0 12px,rgba(22,20,15,.06) 12px 13px)}
+/* CV: software come pulsanti tondi */
+.cv-pills{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.cv-pills li{border:1.5px solid var(--ink);border-radius:999px;padding:7px 13px 6px;font-size:13px;line-height:1;white-space:nowrap;transition:background .2s,color .2s}
+.cv-pills li:hover{background:var(--ink);color:var(--paper)}
+/* CV: corsi Workshok! — anno/edizione · codice · titolo · docenti */
+.cv-list--courses li{display:grid;grid-template-columns:120px 44px minmax(0,1.1fr) minmax(0,1fr);gap:14px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.35}
+.cv-list--courses li .mono{color:var(--muted)}
+.cv-list--courses li b{font-weight:700}
+.cv-list--courses li span:last-child{color:#2f2c26}
+@media(max-width:860px){.cv-list--courses li{grid-template-columns:1fr;gap:2px}}
+/* CV: nelle capsule dei ruoli conta il nome (Surreo, Workshok!, Suburbiæ), il ruolo passa in secondo piano */
+.page-cv .cv .cv-roles li span.mono{font-family:Archivo,sans-serif;font-variation-settings:"wdth" 80,"wght" 900;font-size:clamp(16px,1.5vw,20px);line-height:1;letter-spacing:0;text-transform:uppercase;color:var(--ink)}
+.page-cv .cv-roles li b{font:400 10px/1.3 ui-monospace,'Courier New',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.page-cv .cv-roles li{gap:5px;padding:10px 16px 9px}
+.cv-list--ed li a{color:var(--ink)}.cv-list--ed li a:hover{color:var(--muted)}
+/* CV: corsi Workshok! — anteprima di 6 + pulsante per vederli tutti */
+.cv-list--courses.is-preview li:nth-child(n+7){display:none}
+.cv-list--courses.is-preview{position:relative}
+.cv-more-btn{appearance:none;cursor:pointer;margin-top:12px;background:none;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:9px 16px 8px;
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;transition:background .2s,color .2s}
+.cv-more-btn:hover{background:var(--ink);color:var(--paper)}
+/* menu: link al CV nascosto in piccolo nel piede (quasi invisibile, si accende al passaggio) */
+.menu__cv{color:inherit;text-decoration:none;opacity:.28;letter-spacing:.18em;transition:opacity .25s,color .25s}
+.menu__cv:hover,.menu__cv:focus-visible{opacity:1;color:var(--stamp)}
