@@ -1176,3 +1176,12 @@ body.is-wip{overflow:hidden;height:100vh}
   .cv-row{grid-template-columns:1fr}.cv-row__t{display:none}
   .cv-tool{grid-template-columns:1fr;gap:4px}
 }
+/* CV: elenchi dentro le voci (edizioni Suburbiæ, workshop Workshok!) */
+.cv-list{list-style:none;margin:10px 0 0;padding:0;border-top:1px solid var(--line)}
+.cv-list--ed li{display:grid;grid-template-columns:150px minmax(0,1fr);gap:14px;padding:8px 0;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.45;color:#bdb7a8}
+.cv-list--ed b{color:var(--ink)}
+.cv-list__h{display:block;margin-top:12px;color:var(--muted)}
+.cv-list--names{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:20px;margin-top:6px}
+.cv-list--names li{display:flex;gap:10px;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.3}
+.cv-list--names li span{color:var(--muted)}
+@media(max-width:860px){.cv-list--names{grid-template-columns:1fr 1fr}.cv-list--ed li{grid-template-columns:1fr;gap:2px}}
