@@ -93,7 +93,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&display=swap" />
   <!-- Archivo variabile (hero, manifesto categorie, vetrina): solo maiuscole, cifre e segni usati -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&text=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%26%2C%C2%B7.%E2%86%92%C2%B0%27%E2%80%99-%21%3F%3A%2F%28%29%C3%86%C3%89%C3%88%C3%80%C3%92%C3%99%C3%8C%2B&display=block" />
-  <link rel="stylesheet" href="styles.css?v=222" />
+  <link rel="stylesheet" href="styles.css?v=223" />
 </head>
 <body>
 
@@ -212,35 +212,16 @@
           <span>Ed. 2025 · IT · DE</span>
         </header>
 
-        <div class="about__row" data-reveal>
-          <div class="n">01</div>
-          <div class="k">Chi</div>
-          <div class="v"><b>Hub creativo indipendente e multidisciplinare.</b><br>
-          Ci muoviamo liberamente tra branding, grafica, comunicazione, fotografia, video, motion, web, prodotto, interior, allestimenti, contenuti ed esperienze visive.</div>
-        </div>
-
-        <div class="about__row about__row--key" data-reveal>
-          <div class="n">02</div>
-          <div class="k">Come</div>
-          <div class="v">
-            <span class="hl">Non partiamo da una disciplina, ma da <em>un’idea</em>.</span>
-            Ogni progetto può diventare un’identità, uno spazio, un oggetto, un’immagine, un sito, una campagna o un’esperienza completa.
+        <!-- manifesto con parole che cadono (fisica: Matter.js, caricato solo vicino alla sezione) -->
+        <div class="ab-ph">
+          <div class="ab-ph__txt">
+            <h3 class="ab-ph__title">About<br>studio</h3>
+            <div class="ab-ph__row"><b>01 · Chi</b><h3>Hub creativo <em>indipendente</em>.</h3><p>Branding, grafica, foto, video, motion, web, prodotto, interior, allestimenti. Ci muoviamo tra tutto, senza recinti.</p></div>
+            <div class="ab-ph__row"><b>02 · Come</b><h3>Non partiamo da una disciplina. Partiamo da <em>un’idea</em>.</h3><p>Poi diventa quello che serve: un’identità, uno spazio, un oggetto, un sito, una campagna, un’esperienza.</p></div>
+            <div class="ab-ph__row"><b>03 · Con cosa</b><h3>Matita e <em>AI generativa</em>, stesso metodo.</h3><p>Ricerca ed estetica restano al centro. Dal concept alla realizzazione, sempre insieme.</p></div>
+            <div class="ab-ph__row"><b>04 · Dove</b><h3>Italia · Germania · ovunque serva <em>un’idea</em>.</h3><p>Base tra Abruzzo e Marche, operativi in tutta Europa.</p></div>
           </div>
-        </div>
-
-        <div class="about__row" data-reveal>
-          <div class="n">03</div>
-          <div class="k">Con cosa</div>
-          <div class="v">Passiamo dall’approccio tradizionale del design all’<em>AI generativa</em> con lo stesso metodo.<br>
-          Idee, ricerca ed estetica restano al centro.<br>
-          Dal concept alla realizzazione, sempre insieme.</div>
-        </div>
-
-        <div class="about__row" data-reveal>
-          <div class="n">04</div>
-          <div class="k">Dove</div>
-          <div class="v">Italia · Germania · Ovunque serva <em>un’idea</em>.<br>
-          Base tra Abruzzo e Marche, operativi in tutta Europa.</div>
+          <div class="ab-ph__box" id="abPhys" aria-label="Parole chiave dello studio"><span class="ab-ph__hint">prendi una parola e lanciala</span></div>
         </div>
 
         <div class="about__stats">
@@ -412,6 +393,6 @@
   </script>
 
   <script src="hero-motion.js?v=2"></script>
-  <script src="app.js?v=186"></script>
+  <script src="app.js?v=187"></script>
 </body>
 </html>

@@ -1048,3 +1048,29 @@ body.is-wip{overflow:hidden;height:100vh}
 .about__anchor{font-size:clamp(88px,15vw,220px);height:.70em;width:auto;aspect-ratio:auto;justify-self:auto;margin:0}
 .about__anchor svg{width:auto;height:100%}
 @media(max-width:900px){.about__anchor{width:auto}}
+
+/* =====================================================================
+   ABOUT · manifesto con fisica: testo a sinistra, parole che cadono a destra
+   ===================================================================== */
+.ab-ph{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:20px;background:var(--ink);color:var(--paper);padding:20px;margin-top:14px}
+.ab-ph__txt{grid-column:1/5;display:flex;flex-direction:column;gap:12px}
+.ab-ph__title{font-family:Archivo,sans-serif;font-variation-settings:"wdth" 62,"wght" 900;text-transform:uppercase;font-size:clamp(40px,4.6vw,72px);line-height:.82;margin:0 0 clamp(28px,4vw,64px)}
+.ab-ph__row{border-top:1px solid #3a3830;padding-top:9px}
+.ab-ph__row b{display:block;font:600 10px/1.35 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:#8f8a7d;margin-bottom:4px}
+.ab-ph__row h3{font-family:Archivo,sans-serif;font-variation-settings:"wdth" 80,"wght" 900;text-transform:uppercase;font-size:17px;line-height:1.02;margin:0}
+.ab-ph__row em,.ab-ph__title em{font-style:normal;color:#e0554a}
+.ab-ph__row p{font-size:12.5px;line-height:1.45;color:#bdb7a8;margin:4px 0 0}
+.ab-ph__box{grid-column:5/13;position:relative;min-height:440px;border:1.5px solid #3a3830;overflow:hidden;cursor:grab;touch-action:none}
+.ab-ph__box:active{cursor:grabbing}
+.ab-ph__hint{position:absolute;right:10px;top:8px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:#6f6a5e}
+.ab-wd{position:absolute;left:0;top:0;padding:9px 14px 8px;border:2px solid var(--paper);white-space:nowrap;font-family:Archivo,sans-serif;font-variation-settings:"wdth" 90,"wght" 900;
+  text-transform:uppercase;font-size:clamp(15px,1.5vw,20px);line-height:1;background:var(--ink);color:var(--paper);border-radius:999px;will-change:transform;user-select:none;pointer-events:none}
+.ab-wd.red{background:var(--stamp);border-color:var(--stamp)}
+.ab-wd.pap{background:var(--paper);color:var(--ink)}
+.ab-wd.blue{background:#2a3cff;border-color:#2a3cff}
+.ab-wd.big{font-size:clamp(20px,2.2vw,30px);padding:12px 18px 10px}
+@media(max-width:860px){
+  .ab-ph{display:flex;flex-direction:column;gap:16px}
+  .ab-ph__box{min-height:360px;touch-action:pan-y;cursor:auto}
+  .ab-ph__hint{display:none}
+}

@@ -39,6 +39,58 @@
     window.__offIO = offIO;
   }
 
+  /* --- About: le parole chiave cadono nel riquadro e si lanciano col mouse (Matter.js da cdnjs,
+     caricato solo quando la sezione si avvicina; su touch niente presa, così la pagina scorre) --- */
+  (function aboutPhysics() {
+    const box = document.getElementById("abPhys");
+    if (!box || !("IntersectionObserver" in window)) return;
+    const WORDS = [["Un’idea", "red big"], ["Indipendente", "pap big"], ["Branding", ""], ["Grafica", ""], ["Foto", "pap"], ["Video", ""], ["Motion", "blue"], ["Web", ""],
+      ["Prodotto", "pap"], ["Interior", ""], ["Allestimenti", ""], ["Identità", "pap"], ["Spazio", ""], ["Campagna", ""], ["Matita", "pap"], ["AI generativa", "blue big"],
+      ["Ricerca", ""], ["Estetica", "pap"], ["Italia", "red"], ["Germania", "red"], ["Ovunque", ""]];
+    const start = () => {
+      const { Engine, Bodies, Composite, Mouse, MouseConstraint, Runner } = window.Matter;
+      const W = box.clientWidth, H = box.clientHeight, eng = Engine.create();
+      eng.gravity.y = 1.1;
+      const wall = (x, y, w, h) => Bodies.rectangle(x, y, w, h, { isStatic: true });
+      Composite.add(eng.world, [wall(W / 2, H + 30, W * 2, 60), wall(-30, H / 2, 60, H * 3), wall(W + 30, H / 2, 60, H * 3)]);
+      const items = WORDS.map(([t, c], i) => {
+        const el = document.createElement("span");
+        el.className = "ab-wd " + c; el.textContent = t; box.appendChild(el);
+        const w = el.offsetWidth, h = el.offsetHeight;
+        const b = Bodies.rectangle(40 + Math.random() * (W - 80), -80 - i * 60, w, h, { chamfer: { radius: h / 2 }, restitution: 0.35, friction: 0.3, angle: (Math.random() - 0.5) * 0.6 });
+        Composite.add(eng.world, b);
+        return { el, b, w, h };
+      });
+      if (matchMedia("(pointer:fine)").matches) {
+        const mouse = Mouse.create(box);
+        mouse.element.removeEventListener("wheel", mouse.mousewheel);
+        mouse.element.removeEventListener("DOMMouseScroll", mouse.mousewheel);
+        Composite.add(eng.world, MouseConstraint.create(eng, { mouse, constraint: { stiffness: 0.2, render: { visible: false } } }));
+      }
+      const runner = Runner.create();
+      let raf = 0, on = true;
+      const draw = () => {
+        items.forEach(({ el, b, w, h }) => { el.style.transform = "translate(" + (b.position.x - w / 2) + "px," + (b.position.y - h / 2) + "px) rotate(" + b.angle + "rad)"; });
+        raf = on ? requestAnimationFrame(draw) : 0;
+      };
+      Runner.run(runner, eng); draw();
+      // fuori schermo si ferma tutto
+      new IntersectionObserver(([e]) => {
+        on = e.isIntersecting;
+        if (on) { runner.enabled = true; if (!raf) draw(); } else runner.enabled = false;
+      }).observe(box);
+    };
+    new IntersectionObserver((es, o) => {
+      if (!es[0].isIntersecting) return;
+      o.disconnect();
+      if (window.Matter) return start();
+      const sc = document.createElement("script");
+      sc.src = "https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js";
+      sc.onload = start;
+      document.head.appendChild(sc);
+    }, { rootMargin: "0px 0px -25% 0px" }).observe(box);
+  })();
+
   /* --- dati --- */
   Promise.all([
     fetch("projects.json", { cache: "no-cache" }).then((r) => r.json()),
