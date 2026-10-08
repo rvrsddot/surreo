@@ -151,9 +151,7 @@
     ["Photo & video", /photo|video|editing|short movie/i],
     ["Motion & animation", /animation|motion|rotoscop|vfx|generative/i],
     ["3D & render", /\b3d\b|render|fusion|creo|mockup|unreal/i],
-    ["Industrial", /industrial|display design|responsive surface/i],
     ["Interior & set", /interior|set design/i],
-    ["Exhibit", /exhibit|workshop curation/i],
     ["Videomapping", /videomapping|projecting|visual x concert|responsive visual/i],
     ["AR / VR", /augmented|virtual|unreal|experience design/i],
     ["Website & UI", /website|interface|ux\/ui/i],
@@ -190,15 +188,15 @@
     const short = (c) => c.name.split(/[ ,]/)[0];
 
     app.innerHTML =
-      '<div class="shw"><h2 class="shw__title">Projects</h2>' +
+      '<div class="shw"><div class="shw__head"><h2 class="shw__title">Projects</h2><a class="shw__more" href="progetti.html">Vedi i progetti →</a></div>' +
       '<div class="shw__bar"><span class="shw__lbl">Scene / Layer</span><div class="shw__pills"></div></div>' +
-      '<div class="shw__bar shw__bar--acts"><span class="shw__lbl">Activity</span><div class="shw__acts">' +
-      acts.map((x) => '<button type="button" class="shw__act" data-a="' + x.id + '">' + x.n + "<sup>" + x.k + "</sup></button>").join("") + "</div></div>" +
       '<div class="shw__stage"><canvas></canvas><div class="shw__views"></div><aside class="shw__info" hidden></aside></div><div class="shw__cap"></div></div>';
     const stage = app.querySelector(".shw__stage"), cv = stage.querySelector("canvas"), ctx = cv.getContext("2d"),
       pills = app.querySelector(".shw__pills"), cap = app.querySelector(".shw__cap"), vb = app.querySelector(".shw__views");
     pills.innerHTML = '<button type="button" class="shw__pill" data-c="all">All<sup>' + A.length + "</sup></button>" +
-      IDS.map((id) => '<button type="button" class="shw__pill" data-c="' + id + '">' + short(CAT[id]) + "<sup>" + count(id) + "</sup></button>").join("");
+      IDS.map((id) => '<button type="button" class="shw__pill" data-c="' + id + '">' + short(CAT[id]) + "<sup>" + count(id) + "</sup></button>").join("") +
+      // attività nella stessa griglia, stessi pulsanti
+      acts.map((x) => '<button type="button" class="shw__pill shw__act" data-a="' + x.id + '">' + x.n + "<sup>" + x.k + "</sup></button>").join("");
 
     // immagini: originale (hover, a colori) + copia in grigio fatta una volta sola
     // si scaricano solo quando il palco sta per entrare a schermo (vedi loadImgs più sotto)
@@ -233,14 +231,16 @@
       else cap.innerHTML = "<span><b>" + (c === "all" ? "All" : SHW[c][0] + "·" + pad(IDS.indexOf(c) + 1)) + "</b> " + (c === "all" ? IDS.length + " discipline" : CAT[c].name) + " — " + pad(n) + " lavori</span>" +
         "<span>" + (c === "all" ? IDS.map((k) => SHW[k][0]).join(" · ") : SHW[c][1].join(" · ")) + "</span>" +
         '<a href="progetti.html' + (c === "all" ? "" : "?cat=" + c) + '">' + (c === "all" ? "Tutti i progetti" : "Vedi i " + n + " progetti") + " →</a>";
-      pills.querySelectorAll(".shw__pill").forEach((p) => p.classList.toggle("is-on", p.dataset.c === c));
-      app.querySelectorAll(".shw__act").forEach((p) => p.classList.toggle("is-on", p.dataset.a === c));
+      pills.querySelectorAll(".shw__pill").forEach((p) => p.classList.toggle("is-on", (p.dataset.c || p.dataset.a) === c));
     };
     // ferma su "All": si configura solo al click su un livello
     let visible = false;
-    pills.addEventListener("click", (e) => { const p = e.target.closest(".shw__pill"); if (p && p.dataset.c !== mode) go(p.dataset.c); });
-    // attività: clic accende i lavori che la contengono; secondo clic torna su All
-    app.querySelector(".shw__acts").addEventListener("click", (e) => { const p = e.target.closest(".shw__act"); if (p) go(p.dataset.a === mode ? "all" : p.dataset.a); });
+    // categorie e attività: clic accende i lavori; secondo clic su un'attività torna su All
+    pills.addEventListener("click", (e) => {
+      const p = e.target.closest(".shw__pill"); if (!p) return;
+      const k = p.dataset.c || p.dataset.a;
+      if (p.dataset.a && k === mode) go("all"); else if (k !== mode) go(k);
+    });
 
     // camera: trascina = ruota, rotella = zoom, viste preimpostate
     let hover = null, yaw = 0.6, pitch = 0.38, zoom = 1, tYaw = null, tPitch = null, drag = null, spin = !reduce, moved = 0, mx = -1, my = -1;
