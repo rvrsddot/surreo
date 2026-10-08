@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&display=swap" />
   <!-- Archivo variabile (titolo Work in progress) -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&text=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%26%2C%C2%B7.%E2%86%92%C2%B0%27%E2%80%99-%21%3F%3A%2F%28%29%C3%86%C3%89%C3%88%C3%80%C3%92%C3%99%C3%8C%2B&display=block" />
-  <link rel="stylesheet" href="styles.css?v=229" />
+  <link rel="stylesheet" href="styles.css?v=230" />
 </head>
 <body class="page-progetti page-fv page-cv">
 
@@ -54,7 +54,13 @@
   <!-- CV: stessa gabbia e stesso negativo della pagina progetti -->
   <main class="ix cv" id="cv">
     <div class="cv-head">
-      <h1 class="cv-title">CV</h1>
+      <h1 class="cv-title" data-t="CV">CV</h1>
+      <div class="cv-hud mono" aria-hidden="true">
+        <div class="cv-hud__b"><span class="cv-rec">● REC</span><span id="cvClock">00:00:00</span></div>
+        <canvas id="cvOsc" width="220" height="48"></canvas>
+        <div class="cv-hud__b"><span>SIG</span><i class="cv-bar"><b id="cvBar"></b></i><span id="cvPct">00%</span></div>
+        <pre id="cvHex"></pre>
+      </div>
       <p class="cv-who"><b>Lorenzo Di Gioacchino</b><span class="mono">Multidisciplinary designer · Surreo Studio · Teramo — IT / DE</span></p>
     </div>
     <div class="cv-grid">
@@ -145,7 +151,31 @@
 
 
   <!-- Privacy banner (mostrato solo al primo visit) -->
-    <aside class="privacy-banner" id="privacyBanner" role="dialog" aria-live="polite" aria-label="Informativa privacy" hidden>
+    <script>
+  /* CV: interfaccia lo-fi decorativa — titolo che sfarfalla e si rimescola, oscilloscopio, codici, mirino */
+  (function(){
+    var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var T=document.querySelector('.cv-title'),AB='CV#@%&/\\<>01X',base=T.dataset.t;
+    function scramble(){var n=0,id=setInterval(function(){T.textContent=base.split('').map(function(c,i){return n>6+i*3?c:AB[Math.random()*AB.length|0]}).join('');if(++n>14){clearInterval(id);T.textContent=base}},45)}
+    if(!reduce){scramble();setInterval(scramble,5200)}
+    var t0=Date.now(),ck=document.getElementById('cvClock');
+    setInterval(function(){var s=(Date.now()-t0)/1000|0;ck.textContent=[s/3600|0,(s/60|0)%60,s%60].map(function(v){return String(v).padStart(2,'0')}).join(':')},1000);
+    var hex=document.getElementById('cvHex'),lines=[];
+    function hx(){return Math.random().toString(16).slice(2,8).toUpperCase()}
+    setInterval(function(){lines.push('0x'+hx()+'  '+hx().slice(0,4)+'  '+(Math.random()>.7?'OK':'··'));if(lines.length>4)lines.shift();hex.textContent=lines.join('\n')},reduce?2000:420);
+    var bar=document.getElementById('cvBar'),pct=document.getElementById('cvPct');
+    setInterval(function(){var v=20+Math.random()*80|0;bar.style.width=v+'%';pct.textContent=String(v).padStart(2,'0')+'%'},900);
+    var c=document.getElementById('cvOsc'),x=c.getContext('2d'),ph=0;
+    (function osc(){x.clearRect(0,0,220,48);x.strokeStyle='#5dff7a';x.lineWidth=1.5;x.shadowColor='#5dff7a';x.shadowBlur=6;x.beginPath();
+      for(var i=0;i<=220;i+=2){var y=24+Math.sin(i*.06+ph)*10*Math.sin(ph*.3)+Math.sin(i*.31+ph*2.1)*4+(Math.random()-.5)*2;i?x.lineTo(i,y):x.moveTo(i,y)}
+      x.stroke();ph+=.08;if(!reduce)requestAnimationFrame(osc)})();
+    // mirino che segue il mouse con le coordinate
+    var m=document.createElement('div');m.className='cv-cross mono';m.innerHTML='<i></i><i></i><span></span>';document.body.appendChild(m);
+    addEventListener('mousemove',function(e){m.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)';m.lastChild.textContent='X'+String(e.clientX).padStart(4,'0')+' Y'+String(e.clientY+scrollY|0).padStart(4,'0');m.classList.add('on')},{passive:true});
+    document.addEventListener('mouseleave',function(){m.classList.remove('on')});
+  })();
+  </script>
+  <aside class="privacy-banner" id="privacyBanner" role="dialog" aria-live="polite" aria-label="Informativa privacy" hidden>
     <div class="privacy-banner__inner">
       <p class="privacy-banner__text">
         <b>Cookie &amp; Privacy.</b>
