@@ -19,7 +19,8 @@
   /* ---- forme: ogni disciplina ha una composizione costruita sui moduli (12 colonne × 3 righe).
      c0..c1 / r0..r1 = colonne e righe occupate. dir = da che lato entra la "tendina". ---- */
   const range = (n, f) => Array.from({ length: n }, (_, i) => f(i));
-  const SCENES = [
+  // le scene si possono sostituire da fuori (window.HERO_SCENES) per provare composizioni diverse
+  const SCENES = window.HERO_SCENES || [
     // DISCIPLINARY — indice: una barra per colonna, altezze a scalare
     range(12, (k) => ({ t:"rect", c0:k, c1:k, r0:0, r1:2, fh:(k + 1) / 12, dir:"up", fill:k === 11 ? "stamp" : "ink" })),
     // GRAPHIC — composizione svizzera: quarto, cerchio, pieno, fascia
@@ -141,6 +142,10 @@
       let x = colX(p.c0), w = colX(p.c1) + colW - x, y = rowY(p.r0), h = rowY(p.r1) + rowH - y;
       if (p.fw) w = Math.max(2, w * p.fw);
       if (p.fh) { const nh = Math.max(2, h * p.fh); if (p.from !== "top") y += h - nh; h = nh; }
+      // sc = rimpicciolisce il modulo attorno al centro; dx/dy = spostamento in frazioni di modulo
+      if (p.sc) { const cx = x + w / 2, cy = y + h / 2; w *= p.sc; h *= p.sc; x = cx - w / 2; y = cy - h / 2; }
+      if (p.dx) x += p.dx * colW;
+      if (p.dy) y += p.dy * rowH;
       return { ...p, x, y, w, h };
     }));
 
@@ -151,7 +156,7 @@
   function shapeD(p) {
     const { x, y, w, h } = p;
     if (p.t === "rect" || p.t === "ring") return `M${x},${y}h${w}v${h}h${-w}Z`;
-    if (p.t === "circle") { const r = Math.min(w, h) / 2, cx = x + w / 2, cy = y + h / 2;
+    if (p.t === "circle" || p.t === "o") { const r = Math.min(w, h) / 2, cx = x + w / 2, cy = y + h / 2;
       return `M${cx - r},${cy}a${r},${r} 0 1 0 ${2 * r},0a${r},${r} 0 1 0 ${-2 * r},0Z`; }
     if (p.t === "quarter") { const r = Math.min(w, h), ox = x + (w - r) / 2, oy = y + (h - r) / 2;
       // centro del quarto nell'angolo in basso a sinistra del quadrato
@@ -205,8 +210,8 @@
       ref.shapes = scenes.map((list) => list.map((p) => {
         const el = document.createElementNS(NS, "path");
         el.setAttribute("d", shapeD(p));
-        const col = kind === "inv" ? "var(--paper)" : p.fill === "stamp" ? "var(--stamp)" : "var(--ink)";
-        if (p.t === "ring") { el.setAttribute("fill", "none"); el.setAttribute("stroke", col); el.setAttribute("stroke-width", "2"); el.setAttribute("vector-effect", "non-scaling-stroke"); }
+        const col = kind === "inv" ? (p.fill === "paper" ? "var(--ink)" : "var(--paper)") : p.fill === "stamp" ? "var(--stamp)" : p.fill === "paper" ? "var(--paper)" : "var(--ink)";
+        if (p.t === "ring" || p.t === "o") { el.setAttribute("fill", "none"); el.setAttribute("stroke", col); el.setAttribute("stroke-width", "2"); el.setAttribute("vector-effect", "non-scaling-stroke"); }
         else el.setAttribute("fill", col);
         el.style.visibility = "hidden";
         svg.appendChild(el);

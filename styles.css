@@ -1118,3 +1118,6 @@ body.is-wip{overflow:hidden;height:100vh}
 .shw__spec li{border-color:var(--ink)}
 .shw__spec a{color:var(--ink)}
 .shw__spec a:hover{color:#fff}
+
+/* occhio sopra l'hero (hero-eye.js) */
+.hm__eye{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:3}
