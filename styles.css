@@ -493,25 +493,19 @@ body.has-open,body.menu-open{overflow:hidden}
   align-items:center;padding:clamp(28px,4vw,64px) 0 0;
 }
 .about__letters{
-  font-family:"Bricolage Grotesque",sans-serif;font-weight:700;
-  font-size:clamp(88px,15vw,220px);line-height:.86;letter-spacing:-.055em;
+  font-family:Archivo,sans-serif;font-variation-settings:"wdth" 62,"wght" 900;
+  font-size:clamp(88px,15vw,220px);line-height:.86;letter-spacing:0;
   text-transform:uppercase;margin:0;color:var(--ink);
-  display:flex;gap:0;user-select:none;padding:.08em 0;
+  display:flex;gap:.02em;user-select:none;padding:.08em 0;
 }
-.about__letters .l{
-  display:inline-block;transform-origin:50% 100%;will-change:transform;
-  transform:rotate(var(--r,0deg));
-}
-.about__letters .l:nth-child(1){--r:-1.2deg;animation:about-wob1 5.4s var(--ease) infinite}
-.about__letters .l:nth-child(2){--r: 1deg;  animation:about-wob2 6.1s var(--ease) infinite}
-.about__letters .l:nth-child(3){--r:-.6deg; animation:about-wob3 5.7s var(--ease) infinite}
-.about__letters .l:nth-child(4){--r: 1.4deg;animation:about-wob4 6.4s var(--ease) infinite}
-.about__letters .l:nth-child(5){--r:-1deg;  animation:about-wob5 5.9s var(--ease) infinite}
-@keyframes about-wob1{50%{transform:rotate( .6deg) translateY(-3px) scale(1.015)}}
-@keyframes about-wob2{50%{transform:rotate(-.9deg) translateY(-1px) scale(.995)}}
-@keyframes about-wob3{50%{transform:rotate( .8deg) translateY(-4px) scale(1.015)}}
-@keyframes about-wob4{50%{transform:rotate(-1.2deg) translateY(-2px) scale(1)}}
-@keyframes about-wob5{50%{transform:rotate( .7deg) translateY(-3px) scale(1.015)}}
+/* "respiro": ogni lettera passa da stretta e nera a larga e sottile, a onda (come l'hero) */
+.about__letters .l{display:inline-block;font-variation-settings:"wdth" 62,"wght" 900;
+  animation:about-br 3.6s ease-in-out infinite;animation-delay:calc(var(--k,0) * -.45s)}
+.about__letters .l:nth-child(1){--k:0}.about__letters .l:nth-child(2){--k:1}.about__letters .l:nth-child(3){--k:2}
+.about__letters .l:nth-child(4){--k:3}.about__letters .l:nth-child(5){--k:4}
+.about__letters .l:nth-child(odd){animation-direction:reverse}
+@keyframes about-br{0%,100%{font-variation-settings:"wdth" 62,"wght" 900}50%{font-variation-settings:"wdth" 125,"wght" 300}}
+@media(prefers-reduced-motion:reduce){.about__letters .l{animation:none}}
 
 .about__anchor{
   position:relative;width:clamp(96px,17vw,240px);aspect-ratio:1/1;
