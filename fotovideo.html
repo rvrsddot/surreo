@@ -19,9 +19,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&display=swap" />
-  <link rel="stylesheet" href="styles.css?v=212" />
+  <!-- Archivo variabile (titolo Work in progress) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&text=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%26%2C%C2%B7.%E2%86%92%C2%B0%27%E2%80%99-%21%3F%3A%2F%28%29%C3%86%C3%89%C3%88%C3%80%C3%92%C3%99%C3%8C%2B&display=block" />
+  <link rel="stylesheet" href="styles.css?v=213" />
 </head>
-<body class="page-progetti page-fv">
+<body class="page-progetti page-fv is-wip">
 
   <div class="landing landing--slim">
   <!-- marquee servizi -->
@@ -64,7 +66,7 @@
     <div class="menu__panel"></div>
     <div class="menu__inner">
       <header class="menu__top">
-        <span><b>Menu</b> · Navigation · 005 / 005</span>
+        <span><b>Menu</b> · Navigation · 006 / 006</span>
         <span class="menu__live">Studio · 2026</span>
       </header>
       <nav class="menu__nav" aria-label="Navigazione principale">
@@ -74,26 +76,32 @@
           <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
           <span class="m">Showcase · Video · Motion · Website</span>
         </a>
-        <a href="./#about" style="--i:2">
+        <a href="fotovideo.html" style="--i:2">
           <span class="k">02/</span>
+          <span class="w">Foto / Video</span>
+          <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
+          <span class="m">Shooting · Reel · Backstage</span>
+        </a>
+        <a href="./#about" style="--i:3">
+          <span class="k">03/</span>
           <span class="w">About</span>
           <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
           <span class="m">Studio · Manifesto · Come lavoriamo</span>
         </a>
-        <a href="workshok/" style="--i:3">
-          <span class="k">03/</span>
+        <a href="workshok/" style="--i:4">
+          <span class="k">04/</span>
           <span class="w">Workshok</span>
           <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
           <span class="m">Design · Architettura · Since 2018</span>
         </a>
-        <a href="mailto:surreocreative@gmail.com" style="--i:4">
-          <span class="k">04/</span>
+        <a href="mailto:surreocreative@gmail.com" style="--i:5">
+          <span class="k">05/</span>
           <span class="w">Mail me</span>
           <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
           <span class="m">surreocreative@gmail.com</span>
         </a>
-        <a href="https://wa.me/393313510091" target="_blank" rel="noopener" style="--i:5">
-          <span class="k">05/</span>
+        <a href="https://wa.me/393313510091" target="_blank" rel="noopener" style="--i:6">
+          <span class="k">06/</span>
           <span class="w">WhatsApp</span>
           <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
           <span class="m">Chat · Voce · Video</span>
@@ -108,7 +116,17 @@
 
 
   <!-- Privacy banner (mostrato solo al primo visit) -->
-    <aside class="privacy-banner" id="privacyBanner" role="dialog" aria-live="polite" aria-label="Informativa privacy" hidden>
+    <!-- pagina in costruzione: banner che blocca la vista (togliere quando la galleria è pronta) -->
+  <div class="wip" role="dialog" aria-modal="true" aria-labelledby="wip-t">
+    <div class="wip__tape" aria-hidden="true"><span>Work in progress ✶ Work in progress ✶ Work in progress ✶ Work in progress ✶ Work in progress ✶ Work in progress ✶ </span><span>Work in progress ✶ Work in progress ✶ Work in progress ✶ Work in progress ✶ Work in progress ✶ Work in progress ✶ </span></div>
+    <div class="wip__box">
+      <span class="wip__k mono">FV · Foto / Video · 00 lavori</span>
+      <h2 class="wip__t" id="wip-t">Work in<br>progress</h2>
+      <p class="wip__p">Stiamo costruendo la galleria di foto e video: shooting, reel, backstage. Torna presto.</p>
+      <div class="wip__cta mono"><a href="./">← Home</a><a href="progetti.html">Vedi i progetti →</a></div>
+    </div>
+  </div>
+  <aside class="privacy-banner" id="privacyBanner" role="dialog" aria-live="polite" aria-label="Informativa privacy" hidden>
     <div class="privacy-banner__inner">
       <p class="privacy-banner__text">
         <b>Cookie &amp; Privacy.</b>
