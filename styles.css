@@ -1089,3 +1089,32 @@ body.is-wip{overflow:hidden;height:100vh}
 .ab-ph__nav button.on{color:var(--paper)}
 .ab-ph__nav button.on::after{transform:scaleX(1);transition:transform var(--dur,4.5s) linear}
 .ab-ph__nav button.done::after{transform:scaleX(1)}
+
+/* vetrina home su fondo chiaro: carta + griglia e interfaccia nere (accento blu invariato) */
+.projects--shw{background:var(--paper)}
+.shw{--bd:var(--ink)}
+.shw__title{-webkit-text-stroke-color:var(--ink)}
+.shw__more{color:var(--ink)}
+.shw__more:hover{color:#fff}
+.shw__bar,.shw__cap{background:var(--paper);border-color:var(--ink)}
+.shw__lbl{color:var(--muted)}
+.shw__pill{border-color:var(--ink);color:var(--ink)}
+.shw__pill sup{color:var(--muted)}
+.shw__pill:hover{color:var(--ink);border-color:var(--ink);background:rgba(22,20,15,.06)}
+.shw__pill.is-on{color:#fff;background:var(--blue);border-color:var(--blue)}
+.shw__pill.is-on sup{color:#cfd4ff}
+.shw__stage{background:var(--paper);border-color:var(--ink)}
+.shw__views button{color:var(--ink);border-color:var(--ink);background:rgba(236,234,225,.85)}
+.shw__views button:hover{color:#fff;background:var(--ink)}
+.shw__cap{color:var(--muted)}
+.shw__cap b{color:var(--blue)}
+.shw__cap a{color:var(--ink)}
+.shw__cap a:hover{color:#fff}
+.shw__info{background:rgba(236,234,225,.96);border-color:var(--ink);color:var(--ink)}
+.shw__x{background:var(--paper);color:var(--ink);border-color:var(--ink)}
+.shw__gif{background:var(--ink);border-color:var(--ink)}
+.shw__k{color:var(--blue)}
+.shw__spec p,.shw__spec li{color:#3d3a33}
+.shw__spec li{border-color:var(--ink)}
+.shw__spec a{color:var(--ink)}
+.shw__spec a:hover{color:#fff}

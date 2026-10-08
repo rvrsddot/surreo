@@ -365,7 +365,7 @@
     addEventListener("keydown", (e) => { if (e.key === "Escape" && sel) closeInfo(); });
 
     const HUD = [...Array(6)].map(() => String(Math.random() * 1e6 | 0).padStart(6, "0"));
-    const INK = (a) => "rgba(236,234,225," + a + ")", BLUE = "#2a3cff", FY = 1.1;
+    const INK = (a) => "rgba(22,20,15," + a + ")", BLUE = "#2a3cff", FY = 1.1;   // vetrina su fondo chiaro: griglia e segni neri
     let raf = 0;
     const frame = (now) => {
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.clearRect(0, 0, W, H);
@@ -381,7 +381,7 @@
       // pavimento a griglia + assi
       ctx.lineWidth = 1;
       for (let i = -3; i <= 3; i += 0.5) {
-        const al = i % 1 === 0 ? 0.16 : 0.07;
+        const al = i % 1 === 0 ? 0.5 : 0.2;   // griglia nera ben visibile su fondo chiaro
         let p = P(i, FY, -3), q = P(i, FY, 3); ctx.strokeStyle = INK(al); ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.stroke();
         p = P(-3, FY, i); q = P(3, FY, i); ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.stroke();
       }
@@ -409,7 +409,7 @@
       if (mx >= 0 && !drag) for (let i = L.length - 1; i >= 0; i--) { const o = L[i]; if (!o.a.on) continue; const s = 50 * o.a.sz * o.k * zs; if (Math.abs(mx - o.x) < s / 2 && Math.abs(my - o.y) < s / 2) { hover = o.a; break; } }
       cv.style.cursor = drag ? "grabbing" : hover ? "pointer" : "grab";
       // linee di quota fino al pavimento
-      ctx.setLineDash([2, 3]); ctx.strokeStyle = INK(0.16); ctx.beginPath();
+      ctx.setLineDash([2, 3]); ctx.strokeStyle = INK(0.3); ctx.beginPath();
       L.forEach((o) => { if (!o.a.on) return; const fl = P(o.a.p[0], FY, o.a.p[2]); ctx.moveTo(o.x, o.y); ctx.lineTo(fl[0], fl[1]); });
       ctx.stroke(); ctx.setLineDash([]);
       L.forEach((o) => {
