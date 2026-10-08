@@ -91,6 +91,30 @@
     }, { rootMargin: "0px 0px -25% 0px" }).observe(box);
   })();
 
+  /* --- About: le voci 01–04 passano come slide, una alla volta (clic sui segmenti per sceglierne una) --- */
+  (function aboutSlides() {
+    const box = document.getElementById("abSlides"), nav = document.getElementById("abNav");
+    if (!box || !nav) return;
+    const rows = [...box.querySelectorAll(".ab-ph__row")], DUR = 4500;
+    nav.innerHTML = rows.map((r, i) => '<button type="button" aria-label="' + r.querySelector("b").textContent + '">' + String(i + 1).padStart(2, "0") + "</button>").join("");
+    const btn = [...nav.children];
+    // il riquadro è alto quanto la voce più lunga, così il layout non salta
+    const fit = () => { box.style.minHeight = Math.max(...rows.map((r) => r.offsetHeight)) + "px"; };
+    let cur = -1, t = 0, visible = true;
+    const show = (i) => {
+      if (cur >= 0 && cur !== i) { const o = rows[cur]; o.classList.remove("on"); o.classList.add("out"); setTimeout(() => o.classList.remove("out"), 600); }
+      cur = i; rows[i].classList.add("on");
+      btn.forEach((b, j) => { b.classList.remove("on"); b.classList.toggle("done", j < i); });
+      void btn[i].offsetWidth; btn[i].style.setProperty("--dur", DUR + "ms"); btn[i].classList.add("on");
+      clearTimeout(t); if (!reduce && visible) t = setTimeout(() => show((cur + 1) % rows.length), DUR);
+    };
+    nav.addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(btn.indexOf(b)); });
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) show(cur < 0 ? 0 : cur); else clearTimeout(t); }).observe(box);
+    fit(); addEventListener("resize", fit);
+    if (document.fonts) document.fonts.ready.then(fit);
+    show(0);
+  })();
+
   /* --- dati --- */
   Promise.all([
     fetch("projects.json", { cache: "no-cache" }).then((r) => r.json()),

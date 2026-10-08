@@ -1074,3 +1074,18 @@ body.is-wip{overflow:hidden;height:100vh}
   .ab-ph__box{min-height:360px;touch-action:pan-y;cursor:auto}
   .ab-ph__hint{display:none}
 }
+/* voci 01–04 come slide: una alla volta, la vecchia esce in alto e la nuova entra dal basso */
+.ab-ph__txt{justify-content:flex-start}
+.ab-ph__slides{position:relative;flex:1;min-height:150px;overflow:hidden}
+.ab-ph__slides .ab-ph__row{position:absolute;left:0;right:0;top:0;opacity:0;transform:translateY(40px);transition:opacity .5s var(--ease),transform .6s var(--ease)}
+.ab-ph__slides .ab-ph__row.on{opacity:1;transform:none}
+.ab-ph__slides .ab-ph__row.out{opacity:0;transform:translateY(-40px)}
+.ab-ph__row h3{font-size:clamp(20px,1.9vw,26px)}
+.ab-ph__row p{font-size:13.5px}
+.ab-ph__nav{display:flex;gap:6px;margin-top:auto;padding-top:14px}
+.ab-ph__nav button{all:unset;cursor:pointer;flex:1;font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;color:#8f8a7d;padding-top:8px;position:relative}
+.ab-ph__nav button::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:#3a3830}
+.ab-ph__nav button::after{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--paper);transform:scaleX(0);transform-origin:left}
+.ab-ph__nav button.on{color:var(--paper)}
+.ab-ph__nav button.on::after{transform:scaleX(1);transition:transform var(--dur,4.5s) linear}
+.ab-ph__nav button.done::after{transform:scaleX(1)}
