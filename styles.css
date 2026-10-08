@@ -1034,3 +1034,14 @@ body.is-wip{overflow:hidden;height:100vh}
 .wip__cta a{color:var(--ink);text-decoration:none;border:1px solid var(--line);padding:9px 12px}
 .wip__cta a:hover{background:var(--stamp);border-color:var(--stamp)}
 @media(prefers-reduced-motion:reduce){.wip__tape span{animation:none}}
+
+/* menu: Mail e WhatsApp come icone sulla stessa riga */
+.menu__contact{display:grid;grid-template-columns:auto auto auto minmax(0,1fr);align-items:center;gap:clamp(14px,2.6vw,44px);
+  padding:clamp(10px,1.4vw,20px) 0;border-bottom:1px solid rgba(236,234,225,.12)}
+.menu__contact .k{font:600 clamp(11px,1vw,14px)/1 ui-monospace,monospace;letter-spacing:.18em;color:rgba(236,234,225,.55);align-self:flex-start;padding-top:1em}
+.menu__contact .m{font:600 clamp(10px,.85vw,12px)/1.2 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:rgba(236,234,225,.4);align-self:flex-end;padding-bottom:1em;text-align:right;white-space:nowrap}
+.menu__nav .menu__ico{display:grid;grid-template-columns:1fr;place-items:center;padding:0;border:0;color:var(--paper);
+  width:calc(min(clamp(40px,9vw,140px),10.5vh) * .95);height:calc(min(clamp(40px,9vw,140px),10.5vh) * .95);transition:color .3s var(--ease),transform .35s var(--ease),opacity .5s var(--ease)}
+.menu__nav .menu__ico svg{width:100%;height:100%}
+@media (hover:hover){.menu__nav .menu__ico:hover{color:var(--stamp);transform:translateY(-4px)}}
+@media(max-width:700px){.menu__contact .m{display:none}.menu__contact{grid-template-columns:auto auto auto}}
