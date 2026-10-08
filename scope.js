@@ -3,7 +3,10 @@
    Si fermano fuori schermo; con reduced-motion restano un fotogramma fermo. */
 (() => {
   "use strict";
-  const INK = "#16140f", LINE = "#c9c4b6", STAMP = "#b83b2e";
+  // colori presi dal CSS della pagina (la pagina progetti è in negativo: inchiostro chiaro su nero)
+  const css = getComputedStyle(document.body), cv = (k, d) => (css.getPropertyValue(k).trim() || d);
+  const INK = cv("--ink", "#16140f"), LINE = cv("--line", "#c9c4b6"), STAMP = cv("--stamp", "#b83b2e");
+  const hex = INK.replace("#", ""), RGB = [0, 2, 4].map((i) => parseInt(hex.length === 3 ? hex[i / 2] + hex[i / 2] : hex.slice(i, i + 2), 16)).join(",");
   const PX = 2;                                   // 1 pixel canvas = 2 pixel schermo
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const pad = (n, k) => String(Math.round(n)).padStart(k || 2, "0");
@@ -53,7 +56,7 @@
       // scia della scansione
       for (let k = 1; k < 26; k++) {
         const x = sx - k; if (x < 0) break;
-        ctx.fillStyle = "rgba(22,20,15," + (0.2 * (1 - k / 26)).toFixed(3) + ")";
+        ctx.fillStyle = "rgba(" + RGB + "," + (0.2 * (1 - k / 26)).toFixed(3) + ")";
         ctx.fillRect(x, 0, 1, h);
       }
       ctx.fillStyle = INK; ctx.fillRect(sx, 0, 1, h);
@@ -66,7 +69,7 @@
         const age = (t - b.hit) / (SWEEP * 0.8);
         if (age < 1) {
           found++;
-          ctx.fillStyle = age < 0.12 ? STAMP : "rgba(22,20,15," + (1 - age).toFixed(2) + ")";
+          ctx.fillStyle = age < 0.12 ? STAMP : "rgba(" + RGB + "," + (1 - age).toFixed(2) + ")";
           ctx.fillRect(bx - 1, by - 1, 2, 2);
         }
       }

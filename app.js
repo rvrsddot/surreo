@@ -143,6 +143,24 @@
     website:    ["WB", ["Web design", "Sviluppo", "SEO", "Tour 360°"]],
     virtual:    ["VR", ["Unreal", "VR", "Metaverso"]]
   };
+  // attività: riconosciute da tag/tipo/nome del progetto (+ parole chiave implicite per i video)
+  const ACTS = [
+    ["Branding", /brand|logo/i],
+    ["Graphic design", /graphic|illustrat|editorial|book|packaging|merch|festival design/i],
+    ["Social media", /social|meta ads/i],
+    ["Photo & video", /photo|video|editing|short movie/i],
+    ["Motion & animation", /animation|motion|rotoscop|vfx|generative/i],
+    ["3D & render", /\b3d\b|render|fusion|creo|mockup|unreal/i],
+    ["Industrial", /industrial|display design|responsive surface/i],
+    ["Interior & set", /interior|set design/i],
+    ["Exhibit", /exhibit|workshop curation/i],
+    ["Videomapping", /videomapping|projecting|visual x concert|responsive visual/i],
+    ["AR / VR", /augmented|virtual|unreal|experience design/i],
+    ["Website & UI", /website|interface|ux\/ui/i],
+    ["Strategy", /strateg|marketing|research|concepting|pitch|management/i]
+  ];
+  const IMPLICIT = { videoclip: "video motion videoclip", website: "website", exhibit: "videomapping exhibit", virtual: "virtual reality 3d render" };
+
   // figure 3D: n punti nel cubo [-1,1]^3
   const FIG = {
     all(n) { const k = Math.ceil(Math.cbrt(n * 1.4)), L = Math.ceil(n / (k * k)) - 1 || 1;
@@ -162,13 +180,21 @@
     const IDS = CATS.map((c) => c.id).filter((id) => SHW[id]);
     const CAT = {}; CATS.forEach((c) => (CAT[c.id] = c));
     const A = [];
-    CATS.forEach((c) => c.items.forEach((it, ii) => { if (thumbURL(it)) A.push({ cat: c.id, name: it.name, src: thumbURL(it), code: code6(it.name), href: "progetti.html?cat=" + c.id + "&p=" + (ii + 1) }); }));
+    CATS.forEach((c) => c.items.forEach((it, ii) => {
+      if (!thumbURL(it)) return;
+      const txt = [it.name, it.type || "", (it.tags || []).join(" "), it.kind === "proj" ? "" : IMPLICIT[c.id] || ""].join(" ");
+      A.push({ cat: c.id, name: it.name, src: thumbURL(it), code: code6(it.name), txt, it, idx: ii, href: "progetti.html?cat=" + c.id + "&p=" + (ii + 1) });
+    }));
+    const acts = ACTS.map(([n, re], i) => ({ id: "act" + i, n, re, k: A.filter((a) => re.test(a.txt)).length })).filter((x) => x.k);
     const count = (id) => A.filter((a) => a.cat === id).length;
     const short = (c) => c.name.split(/[ ,]/)[0];
 
     app.innerHTML =
-      '<div class="shw"><div class="shw__bar"><span class="shw__lbl">Scene / Layer</span><div class="shw__pills"></div></div>' +
-      '<div class="shw__stage"><canvas></canvas><div class="shw__views"></div></div><div class="shw__cap"></div></div>';
+      '<div class="shw"><h2 class="shw__title">Projects</h2>' +
+      '<div class="shw__bar"><span class="shw__lbl">Scene / Layer</span><div class="shw__pills"></div></div>' +
+      '<div class="shw__bar shw__bar--acts"><span class="shw__lbl">Activity</span><div class="shw__acts">' +
+      acts.map((x) => '<button type="button" class="shw__act" data-a="' + x.id + '">' + x.n + "<sup>" + x.k + "</sup></button>").join("") + "</div></div>" +
+      '<div class="shw__stage"><canvas></canvas><div class="shw__views"></div><aside class="shw__info" hidden></aside></div><div class="shw__cap"></div></div>';
     const stage = app.querySelector(".shw__stage"), cv = stage.querySelector("canvas"), ctx = cv.getContext("2d"),
       pills = app.querySelector(".shw__pills"), cap = app.querySelector(".shw__cap"), vb = app.querySelector(".shw__views");
     pills.innerHTML = '<button type="button" class="shw__pill" data-c="all">All<sup>' + A.length + "</sup></button>" +
@@ -194,31 +220,39 @@
 
     let mode = "all", nodes = [];
     const go = (c) => {
-      mode = c;
-      const on = c === "all" ? A : A.filter((a) => a.cat === c), pts = FIG[c](on.length), now = performance.now();
+      mode = c; if (sel) closeInfo();
+      const act = acts.find((x) => x.id === c);
+      const on = c === "all" ? A : act ? A.filter((a) => act.re.test(a.txt)) : A.filter((a) => a.cat === c),
+        pts = (act ? FIG.graphic : FIG[c])(on.length), now = performance.now();
       on.forEach((a, i) => { a.t = pts[i]; a.tsz = c === "all" ? 0.9 : 1.5; a.delay = now + i * 18; a.on = true; });
       A.forEach((a) => { if (!on.includes(a)) { a.t = [(Math.random() - 0.5) * 1.9, (Math.random() - 0.5) * 1.9, (Math.random() - 0.5) * 1.9]; a.tsz = 0.12; a.on = false; a.delay = now; } });
       nodes = on.slice().sort(() => Math.random() - 0.5).slice(0, Math.min(4, on.length));
       const n = on.length;
-      cap.innerHTML = "<span><b>" + (c === "all" ? "All" : SHW[c][0] + "·" + pad(IDS.indexOf(c) + 1)) + "</b> " + (c === "all" ? IDS.length + " discipline" : CAT[c].name) + " — " + pad(n) + " lavori</span>" +
+      if (act) cap.innerHTML = "<span><b>Activity</b> " + act.n + " — " + pad(n) + " lavori</span><span>" + [...new Set(on.map((a) => SHW[a.cat][0]))].join(" · ") + "</span>" +
+        '<a href="progetti.html">Tutti i progetti →</a>';
+      else cap.innerHTML = "<span><b>" + (c === "all" ? "All" : SHW[c][0] + "·" + pad(IDS.indexOf(c) + 1)) + "</b> " + (c === "all" ? IDS.length + " discipline" : CAT[c].name) + " — " + pad(n) + " lavori</span>" +
         "<span>" + (c === "all" ? IDS.map((k) => SHW[k][0]).join(" · ") : SHW[c][1].join(" · ")) + "</span>" +
         '<a href="progetti.html' + (c === "all" ? "" : "?cat=" + c) + '">' + (c === "all" ? "Tutti i progetti" : "Vedi i " + n + " progetti") + " →</a>";
       pills.querySelectorAll(".shw__pill").forEach((p) => p.classList.toggle("is-on", p.dataset.c === c));
+      app.querySelectorAll(".shw__act").forEach((p) => p.classList.toggle("is-on", p.dataset.a === c));
     };
     // ferma su "All": si configura solo al click su un livello
     let visible = false;
     pills.addEventListener("click", (e) => { const p = e.target.closest(".shw__pill"); if (p && p.dataset.c !== mode) go(p.dataset.c); });
+    // attività: clic accende i lavori che la contengono; secondo clic torna su All
+    app.querySelector(".shw__acts").addEventListener("click", (e) => { const p = e.target.closest(".shw__act"); if (p) go(p.dataset.a === mode ? "all" : p.dataset.a); });
 
     // camera: trascina = ruota, rotella = zoom, viste preimpostate
     let hover = null, yaw = 0.6, pitch = 0.38, zoom = 1, tYaw = null, tPitch = null, drag = null, spin = !reduce, moved = 0, mx = -1, my = -1;
-    cv.addEventListener("pointerdown", (e) => { drag = { x: e.clientX, y: e.clientY }; moved = 0; spin = false; tYaw = tPitch = null; cv.setPointerCapture(e.pointerId); setView(""); });
+    let downHover = null, sel = null, cam = [0, 0, 0], tZoom = null, closeInfo = () => {};
+    cv.addEventListener("pointerdown", (e) => { downHover = hover; drag = { x: e.clientX, y: e.clientY }; moved = 0; spin = false; tYaw = tPitch = null; cv.setPointerCapture(e.pointerId); setView(""); });
     cv.addEventListener("pointermove", (e) => {
       const r = cv.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top;
       if (drag) { const dx = e.clientX - drag.x, dy = e.clientY - drag.y; moved += Math.abs(dx) + Math.abs(dy); yaw += dx * 0.008; pitch = Math.max(-0.1, Math.min(1.45, pitch + dy * 0.006)); drag = { x: e.clientX, y: e.clientY }; }
     });
-    cv.addEventListener("pointerup", () => { drag = null; if (moved < 5 && hover) location.href = hover.href; });
+    cv.addEventListener("pointerup", () => { drag = null; if (moved < 5) downHover ? openInfo(downHover) : sel && closeInfo(); });
     cv.addEventListener("pointerleave", () => { mx = -1; });
-    cv.addEventListener("wheel", (e) => { e.preventDefault(); zoom = Math.max(0.6, Math.min(2.2, zoom * Math.exp(-e.deltaY * 0.001))); }, { passive: false });
+    cv.addEventListener("wheel", (e) => { e.preventDefault(); tZoom = null; zoom = Math.max(0.5, Math.min(6, zoom * Math.exp(-e.deltaY * 0.0012))); }, { passive: false });
     const VIEWS = { persp: [0.6, 0.38], top: [0, 1.45], front: [0, 0.02], side: [Math.PI / 2, 0.05] };
     vb.innerHTML = Object.keys(VIEWS).map((k) => '<button type="button" data-v="' + k + '">' + k + "</button>").join("") + '<button type="button" data-v="orbit" class="is-on">orbit</button>';
     const setView = (k) => vb.querySelectorAll("button").forEach((b) => b.classList.toggle("is-on", b.dataset.v === k));
@@ -228,6 +262,32 @@
       spin = false; tYaw = VIEWS[k][0] + Math.round((yaw - VIEWS[k][0]) / (2 * Math.PI)) * 2 * Math.PI; tPitch = VIEWS[k][1];
     });
 
+    // clic su un lavoro: la camera ci vola sopra e a destra si apre la scheda con la gif
+    // e le specifiche (le stesse della pagina progetti)
+    const info = stage.querySelector(".shw__info");
+    let stopGif = null;
+    const openInfo = (a) => {
+      sel = a; spin = false; tZoom = 2.8; setView("");
+      const it = a.it, isP = it.kind === "proj", tags = (it.tags && it.tags.length ? it.tags : [isP ? "" : it.kind === "site" ? "Website" : "Video"]).filter(Boolean);
+      const desc = isP && it.description && it.description !== "Work in progress" ? it.description : "";
+      info.innerHTML =
+        '<button type="button" class="shw__x" aria-label="Chiudi">×</button>' +
+        '<div class="shw__gif">' + (isP ? '<img alt="" src="' + toM(it.frames[0]) + '">' : '<img alt="" src="' + YT_THUMB_S(it.vid) + '">') + "</div>" +
+        '<div class="shw__spec"><span class="shw__k">' + SHW[a.cat][0] + "·" + pad(a.idx + 1) + " — " + CAT[a.cat].name + "</span>" +
+        "<h3>" + it.name + "</h3>" + (it.type ? '<span class="shw__k">' + it.type + "</span>" : "") +
+        (desc ? "<p>" + desc + "</p>" : "") +
+        (tags.length ? '<ul>' + tags.map((t) => "<li>" + t + "</li>").join("") + "</ul>" : "") +
+        '<a href="' + a.href + '">Apri il progetto →</a></div>';
+      info.hidden = false;
+      if (stopGif) stopGif();
+      stopGif = null;
+      if (isP && it.frames.length > 1 && !reduce) stopGif = cycleFrames(info.querySelector(".shw__gif img"), it.frames.map(toM));
+      else if (!isP && it.vid) { const f = document.createElement("iframe"); f.src = YT_EMBED(it.vid); f.allow = "autoplay; encrypted-media"; f.title = it.name; info.querySelector(".shw__gif").appendChild(f); }
+      info.querySelector(".shw__x").onclick = () => closeInfo();
+    };
+    closeInfo = () => { sel = null; tZoom = 1; info.hidden = true; info.innerHTML = ""; if (stopGif) stopGif(); stopGif = null; };
+    addEventListener("keydown", (e) => { if (e.key === "Escape" && sel) closeInfo(); });
+
     const HUD = [...Array(6)].map(() => String(Math.random() * 1e6 | 0).padStart(6, "0"));
     const INK = (a) => "rgba(236,234,225," + a + ")", BLUE = "#2a3cff", FY = 1.1;
     let raf = 0;
@@ -236,8 +296,12 @@
       if (spin) yaw += 0.0022;
       if (tYaw != null) { yaw += (tYaw - yaw) * 0.08; pitch += (tPitch - pitch) * 0.08; }
       const ca = Math.cos(yaw), sa = Math.sin(yaw), cb = Math.cos(pitch), sb = Math.sin(pitch);
-      const S = Math.min(W * 0.5, H) * 0.42 * zoom, cx = W / 2, cy = H * 0.5, f = 5.5;
-      const P = (x, y, z) => { const x1 = x * ca + z * sa, z1 = -x * sa + z * ca, y1 = y * cb - z1 * sb, z2 = y * sb + z1 * cb, k = f / (f + z2); return [cx + x1 * S * k, cy + y1 * S * k, k, z2]; };
+      if (tZoom != null) { zoom += (tZoom - zoom) * 0.08; if (Math.abs(tZoom - zoom) < 0.01) { zoom = tZoom; if (!sel) tZoom = null; } }
+      const goal = sel ? sel.p : [0, 0, 0];
+      for (let k = 0; k < 3; k++) cam[k] += (goal[k] - cam[k]) * 0.08;
+      // con la scheda aperta il lavoro scelto si sposta a sinistra, la scheda occupa la destra
+      const S = Math.min(W * 0.5, H) * 0.42 * zoom, cx = sel ? W * 0.3 : W / 2, cy = H * 0.5, f = 5.5;
+      const P = (x, y, z) => { x -= cam[0]; y -= cam[1]; z -= cam[2]; const x1 = x * ca + z * sa, z1 = -x * sa + z * ca, y1 = y * cb - z1 * sb, z2 = y * sb + z1 * cb, k = f / Math.max(0.4, f + z2); return [cx + x1 * S * k, cy + y1 * S * k, k, z2]; };
       // pavimento a griglia + assi
       ctx.lineWidth = 1;
       for (let i = -3; i <= 3; i += 0.5) {
@@ -254,7 +318,7 @@
       ctx.fillStyle = INK(0.55); HUD.forEach((h, i) => ctx.fillText(h, 18, 24 + i * 13));
       const deg = (v) => ((v * 57.2958 % 360 + 360) % 360).toFixed(1) + "°";
       ctx.textAlign = "right"; ctx.fillText("CAM YAW " + deg(yaw) + "  PITCH " + deg(pitch), W - 18, 24);
-      ctx.fillText("ZOOM " + zoom.toFixed(2) + "  ·  N " + (mode === "all" ? A.length : count(mode)) + "/" + A.length, W - 18, 37); ctx.textAlign = "left";
+      ctx.fillText("ZOOM " + zoom.toFixed(2) + "  ·  N " + A.filter((a) => a.on).length + "/" + A.length, W - 18, 37); ctx.textAlign = "left";
       const gx = 40, gy = H - 40;
       [[1, 0, 0, "X", INK(0.9)], [0, -1, 0, "Y", BLUE], [0, 0, 1, "Z", INK(0.9)]].forEach(([x, y, z, l, c]) => {
         const x1 = x * ca + z * sa, z1 = -x * sa + z * ca, y1 = y * cb - z1 * sb;
@@ -263,22 +327,23 @@
       ctx.lineWidth = 1;
       // movimento verso le figure
       A.forEach((a) => { if (now < a.delay) return; for (let k = 0; k < 3; k++) a.p[k] += (a.t[k] - a.p[k]) * 0.07; a.sz += (a.tsz - a.sz) * 0.08; });
+      const zs = Math.pow(zoom, 0.75);   // zoomando crescono anche le miniature
       const L = A.map((a) => { const q = P(a.p[0], a.p[1], a.p[2]); return { a, x: q[0], y: q[1], k: q[2], z: q[3] }; }).sort((p, q) => q.z - p.z);
       hover = null;
-      if (mx >= 0 && !drag) for (let i = L.length - 1; i >= 0; i--) { const o = L[i]; if (!o.a.on) continue; const s = 50 * o.a.sz * o.k; if (Math.abs(mx - o.x) < s / 2 && Math.abs(my - o.y) < s / 2) { hover = o.a; break; } }
+      if (mx >= 0 && !drag) for (let i = L.length - 1; i >= 0; i--) { const o = L[i]; if (!o.a.on) continue; const s = 50 * o.a.sz * o.k * zs; if (Math.abs(mx - o.x) < s / 2 && Math.abs(my - o.y) < s / 2) { hover = o.a; break; } }
       cv.style.cursor = drag ? "grabbing" : hover ? "pointer" : "grab";
       // linee di quota fino al pavimento
       ctx.setLineDash([2, 3]); ctx.strokeStyle = INK(0.16); ctx.beginPath();
       L.forEach((o) => { if (!o.a.on) return; const fl = P(o.a.p[0], FY, o.a.p[2]); ctx.moveTo(o.x, o.y); ctx.lineTo(fl[0], fl[1]); });
       ctx.stroke(); ctx.setLineDash([]);
       L.forEach((o) => {
-        const a = o.a, s = 50 * a.sz * o.k;
+        const a = o.a, s = 50 * a.sz * o.k * zs;
         if (!a.on) { const d = Math.max(1.5, s * 0.35); ctx.fillStyle = INK(0.2 + o.k * 0.25); ctx.fillRect(o.x - d / 2, o.y - d / 2, d, d); return; }
         if (!a.ok) return;
-        const hs = a === hover ? 1.7 : 1, w = (a.ar >= 1 ? s : s * a.ar) * hs, h = (a.ar >= 1 ? s / a.ar : s) * hs;
+        const hot = a === hover || a === sel, hs = a === hover ? 1.7 : 1, w = (a.ar >= 1 ? s : s * a.ar) * hs, h = (a.ar >= 1 ? s / a.ar : s) * hs;
         ctx.globalAlpha = Math.min(1, Math.max(0.4, o.k * 0.95));
-        ctx.drawImage(a === hover ? a.img : a.gray, o.x - w / 2, o.y - h / 2, w, h);
-        ctx.strokeStyle = a === hover ? BLUE : INK(0.5); ctx.lineWidth = a === hover ? 2 : 1; ctx.strokeRect(o.x - w / 2, o.y - h / 2, w, h); ctx.lineWidth = 1;
+        ctx.drawImage(hot ? a.img : a.gray, o.x - w / 2, o.y - h / 2, w, h);
+        ctx.strokeStyle = hot ? BLUE : INK(0.5); ctx.lineWidth = hot ? 2 : 1; ctx.strokeRect(o.x - w / 2, o.y - h / 2, w, h); ctx.lineWidth = 1;
         ctx.globalAlpha = 1;
       });
       // nodi blu con numeri (+ nome sotto il mouse)
@@ -592,13 +657,26 @@
     // Le frecce rosse segnano la riga di lettura: la prima riga visibile.
     const pay = INDEX.querySelector(".ix-pay");
     const refOff = () => { const f = list.querySelector(".ix-sec:not([hidden]) .ix-row"); return f ? f.offsetTop - list.offsetTop + f.offsetHeight / 2 : 60; };
+    // griglia: la riga sotto "N° / Progetto" cade sulla riga sotto "Indice", e il titolo
+    // della categoria occupa esattamente una riga dell'indice (la sua linea = la linea sotto "Tutti")
+    const th = INDEX.querySelector(".ix-th");
+    const align = () => {
+      if (!th) return;
+      th.style.paddingBottom = "";
+      const gap = nav.getBoundingClientRect().top - th.getBoundingClientRect().bottom;
+      th.style.paddingBottom = (parseFloat(getComputedStyle(th).paddingBottom) + gap) + "px";
+      const li = nav.querySelector("li");
+      if (li) list.style.setProperty("--rowh", li.getBoundingClientRect().height + "px");
+    };
     const fit = () => {
+      align();
       const rows = list.querySelectorAll(".ix-sec:not([hidden]) .ix-row"), last = rows[rows.length - 1];
       list.style.paddingTop = "0px";
       list.style.paddingBottom = Math.max(0, list.clientHeight - refOff() - (last ? last.offsetHeight / 2 : 60)) + "px";
       if (pay) pay.style.top = (list.offsetTop + refOff()) + "px";
     };
     fit();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
     addEventListener("resize", fit);
     nav.addEventListener("click", () => setTimeout(fit, 0));
     const centerOn = (el) => { list.scrollTop = el.offsetTop - list.offsetTop + el.offsetHeight / 2 - refOff(); };

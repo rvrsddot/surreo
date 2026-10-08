@@ -734,8 +734,20 @@ body.has-open,body.menu-open{overflow:hidden}
    sotto la barra di stato. Accento blu solo qui. */
 .projects--shw .sec-head{display:none}
 .projects--shw{background:#0b0b0a}
-.shw{--blue:#2a3cff;--bd:#33312b;max-width:1440px;margin:0 auto;padding:0 clamp(16px,3.5vw,44px)}
+.shw{--blue:#2a3cff;--bd:#33312b;max-width:1440px;margin:0 auto;padding:0}   /* i margini li dà già #app: stessa gabbia di About e What we do */
+.shw__title{font-family:Archivo,sans-serif;font-variation-settings:"wdth" 62,"wght" 900;text-transform:uppercase;text-align:left;
+  font-size:clamp(72px,12vw,190px);line-height:.78;letter-spacing:-.01em;color:var(--paper);margin:0 0 14px}
 .shw__bar{display:flex;align-items:center;gap:10px;background:#0f0f0e;border:1px solid var(--bd);padding:6px}
+.shw__bar--acts{margin-top:4px}
+.shw__bar--acts .shw__lbl{width:96px;white-space:nowrap}
+.shw__bar:not(.shw__bar--acts) .shw__lbl{width:96px;white-space:nowrap}
+.shw__acts{flex:1;display:flex;flex-wrap:nowrap;gap:3px;justify-content:space-between;min-width:0}
+.shw__act{appearance:none;background:none;cursor:pointer;flex:1 1 auto;min-width:0;display:inline-flex;justify-content:space-between;gap:5px;align-items:center;white-space:nowrap;
+  border:1px solid #2c2a25;padding:6px 5px;color:#8f8a7d;font:600 clamp(7px,.58vw,9px)/1 ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase;transition:color .2s,border-color .2s,background .2s}
+.shw__act sup{font:600 7px/1 ui-monospace,monospace;color:#5d594f}
+.shw__act:hover{color:var(--paper);border-color:#6f6a5e}
+.shw__act.is-on{color:#fff;border-color:var(--blue);background:var(--blue)}
+.shw__act.is-on sup{color:#cfd4ff}
 .shw__lbl{flex:none;padding:0 6px;font:600 9px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:#6f6a5e}
 .shw__pills{flex:1;display:flex;gap:4px;justify-content:space-between}
 .shw__pill{appearance:none;background:none;cursor:pointer;position:relative;z-index:0;overflow:hidden;flex:1 1 0;display:inline-flex;justify-content:space-between;gap:8px;align-items:center;white-space:nowrap;
@@ -754,6 +766,22 @@ body.has-open,body.menu-open{overflow:hidden}
 .shw__views button{all:unset;cursor:pointer;font:600 9px/1 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:#bdb7a8;border:1px solid #4a463d;padding:6px 8px;background:rgba(0,0,0,.6)}
 .shw__views button:hover{color:var(--paper);border-color:var(--paper)}
 .shw__views button.is-on{background:var(--blue);border-color:var(--blue);color:#fff}
+.shw__info{position:absolute;top:12px;right:12px;bottom:56px;width:min(40%,460px);background:rgba(15,15,14,.94);border:1px solid var(--bd);
+  display:flex;flex-direction:column;overflow:auto;color:var(--paper);animation:shw-in .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes shw-in{from{opacity:0;transform:translateX(24px)}}
+.shw__info[hidden]{display:none}
+.shw__x{position:absolute;top:8px;right:8px;z-index:2;appearance:none;cursor:pointer;width:28px;height:28px;border:1px solid #4a463d;background:#000;color:var(--paper);font:400 18px/1 ui-monospace,monospace}
+.shw__x:hover{background:var(--blue);border-color:var(--blue)}
+.shw__gif{position:relative;flex:none;aspect-ratio:4/3;background:#000;border-bottom:1px solid var(--bd);overflow:hidden}
+.shw__gif img,.shw__gif iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border:0}
+.shw__spec{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px}
+.shw__k{font:600 9px/1.3 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:#9aa4ff}
+.shw__spec h3{font-family:Archivo,sans-serif;font-variation-settings:"wdth" 62,"wght" 900;text-transform:uppercase;font-size:clamp(26px,2.6vw,40px);line-height:.85;margin:0}
+.shw__spec p{font-size:13px;line-height:1.45;color:#bdb7a8;margin:0}
+.shw__spec ul{list-style:none;display:flex;flex-wrap:wrap;gap:4px;margin:0;padding:0}
+.shw__spec li{font:600 9px/1 ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;border:1px solid #4a463d;padding:5px 7px;color:#bdb7a8}
+.shw__spec a{align-self:flex-start;margin-top:4px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:#fff;text-decoration:none;border:1px solid var(--blue);padding:8px 10px}
+.shw__spec a:hover{background:var(--blue)}
 .shw__cap{display:flex;justify-content:space-between;gap:16px;margin-top:6px;padding:7px 10px;background:#0f0f0e;border:1px solid var(--bd);color:#8f8a7d;
   font:600 10px/1.3 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
 .shw__cap span{overflow:hidden;text-overflow:ellipsis}
@@ -838,6 +866,10 @@ body.has-open,body.menu-open{overflow:hidden}
 @media(max-width:860px){.ix-scope{grid-template-columns:1fr;gap:8px}.ix-scope__p{height:52px}}
 
 /* pagina progetti FISSA: scorre solo l'elenco (rullo), il resto sta fermo */
+/* pagina progetti in negativo: fondo nero, testi e grafiche chiari (stesse variabili, invertite) */
+body.page-progetti{--paper:#0b0b0a;--ink:#eceae1;--line:#3a3830;--muted:#8a8578;background:var(--paper);color:var(--ink)}
+html:has(body.page-progetti){background:#0b0b0a}
+.page-progetti .ix-prev__box{background:#151513}
 body.page-progetti{height:100vh;height:100dvh;overflow:hidden;display:flex;flex-direction:column}
 .page-progetti .landing--slim{flex:none}
 .page-progetti .contact{display:none}
@@ -970,3 +1002,7 @@ body.has-open:not(.menu-open) .burger{z-index:1}
 
 /* animazioni in pausa quando la sezione è fuori schermo (classe messa da app.js) */
 .is-off,.is-off *,.is-off *::before,.is-off *::after{animation-play-state:paused!important}
+
+/* pagina progetti: titolo di categoria alto quanto una riga dell'indice (--rowh da app.js) */
+.page-progetti .ix-sec__h{height:calc(var(--rowh,32px) + 1px);padding-top:0;padding-bottom:0;display:flex;align-items:center;box-sizing:border-box}
+.page-progetti .ix-sec:not([hidden]) ~ .ix-sec:not([hidden]) .ix-sec__h{margin-top:var(--rowh,32px)}
