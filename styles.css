@@ -1178,7 +1178,7 @@ body.is-wip{overflow:hidden;height:100vh}
 }
 /* CV: elenchi dentro le voci (edizioni Suburbiæ, workshop Workshok!) */
 .cv-list{list-style:none;margin:10px 0 0;padding:0;border-top:1px solid var(--line)}
-.cv-list--ed li{display:grid;grid-template-columns:150px minmax(0,1fr);gap:14px;padding:8px 0;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.45;color:#bdb7a8}
+.cv-list--ed li{display:grid;grid-template-columns:200px minmax(0,1fr);gap:14px;padding:8px 0;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.45;color:#bdb7a8}
 .cv-list--ed b{color:var(--ink)}
 .cv-list__h{display:block;margin-top:12px;color:var(--muted)}
 .cv-list--names{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:20px;margin-top:6px}
@@ -1228,3 +1228,28 @@ body.is-wip{overflow:hidden;height:100vh}
 .cv-row + .cv-row{border-top:0}
 .cv-idx a.on{color:var(--phos);padding-left:6px}
 .cv-idx a.on span{color:var(--phos)}
+
+/* =====================================================================
+   CV in tortora: fondo grigio tortora, ex-verde → nero, testi secondari grigio scuro, niente rosso
+   ===================================================================== */
+html:has(body.page-cv){background:#c4bcae}
+body.page-cv{--paper:#c4bcae;--ink:#16140f;--line:#9b9385;--muted:#4f4a41;--phos:#16140f;--stamp:#16140f}
+body.page-cv::after{opacity:.12}
+.page-cv .cv-row p,.page-cv .cv-list--ed li{color:#2f2c26}
+.page-cv .cv-row:hover{background:rgba(22,20,15,.05)}
+.page-cv .cv-row__s{color:var(--muted)!important}
+.page-cv .cv-intro em{color:var(--ink);font-weight:700}
+.page-cv .cv-sec__h{background:var(--ink);color:var(--paper)}
+.page-cv .cv-sec__k{border-left-color:var(--paper)}
+.page-cv .cv-sec__c{color:var(--paper)!important;opacity:.75}
+.page-cv .cv-hud__l{color:var(--muted)}
+.page-cv .cv-hud__c{border-left-color:var(--line)}
+.page-cv #cvOsc{border-color:var(--line)}
+.page-cv #cvHex{color:var(--muted)}
+.page-cv .cv-rec{color:var(--ink)}
+.page-cv .cv-ph{border-color:var(--ink)}
+.page-cv .cv-ph figcaption{background:var(--paper);border-top-color:var(--ink)}
+.page-cv .cv-tags li{border-color:var(--ink)}
+.page-cv .cv-idx a.on,.page-cv .cv-idx a.on span{color:var(--ink);font-weight:700}
+.page-cv .cv-idx a:hover,.page-cv .cv-contact a:hover,.page-cv .cv-more a:hover{color:var(--muted)}
+.page-cv .cv-list--names li span{color:var(--muted)}
