@@ -93,7 +93,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&display=swap" />
   <!-- Archivo variabile (hero, manifesto categorie, vetrina): solo maiuscole, cifre e segni usati -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&text=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%26%2C%C2%B7.%E2%86%92%C2%B0%27%E2%80%99-%21%3F%3A%2F%28%29%C3%86%C3%89%C3%88%C3%80%C3%92%C3%99%C3%8C%2B&display=block" />
-  <link rel="stylesheet" href="styles.css?v=245" />
+  <link rel="stylesheet" href="styles.css?v=247" />
 </head>
 <body>
 
@@ -346,6 +346,54 @@
   })();
   </script>
 
+  <!-- Benvenuto: una volta per visita (sessionStorage) -->
+  <div class="hello" id="hello" role="dialog" aria-modal="true" aria-labelledby="hello-t" hidden>
+    <div class="hello__scrim" data-close></div>
+    <div class="hello__card">
+      <div class="hello__head mono"><span>Da: Surreo</span><i>A: te · adesso</i></div>
+      <div class="hello__stamp mono" aria-hidden="true">IT<br>✶<br>DE</div>
+      <div class="hello__body">
+        <h2 class="hello__t" id="hello-t">Hello Dear,</h2>
+        <p>siamo <strong>Surreo</strong>, un collettivo multidisciplinare tra Italia e Germania.</p>
+        <p>Lavoriamo su quattro fronti, spesso insieme nello stesso progetto:</p>
+        <ul class="hello__list">
+          <li><b>Product</b><span>oggetti, interni, allestimenti</span></li>
+          <li><b>Media strategy</b><span>social, campagne, contenuti</span></li>
+          <li><b>Graphic &amp; Motion</b><span>brand, grafica, animazione, 3D</span></li>
+          <li><b>Photo &amp; Film</b><span>shooting, spot, videoclip</span></li>
+        </ul>
+        <p>Hai un'idea, anche solo a metà? È il punto da cui ci piace partire.</p>
+      </div>
+      <div class="hello__cta mono">
+        <button type="button" class="hello__no" data-close>Prima mi guardo in giro</button>
+        <a class="hello__go" href="#about">Parliamone →</a>
+      </div>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var KEY='surreo.hello.v1';
+    try { if(sessionStorage.getItem(KEY)==='1') return; } catch(e){}
+    var el=document.getElementById('hello');
+    if(!el) return;
+    function close(){
+      el.classList.remove('is-on');
+      document.removeEventListener('keydown',onKey);
+      setTimeout(function(){ el.hidden=true; }, 520);
+      try { sessionStorage.setItem(KEY,'1'); } catch(e){}
+    }
+    function onKey(e){ if(e.key==='Escape') close(); }
+    setTimeout(function(){
+      el.hidden=false;
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){ el.classList.add('is-on'); }); });
+      el.querySelector('.hello__go').focus({preventScroll:true});
+      document.addEventListener('keydown',onKey);
+    }, 700);
+    el.querySelectorAll('[data-close]').forEach(function(b){ b.addEventListener('click',close); });
+    el.querySelector('.hello__go').addEventListener('click',close);
+  })();
+  </script>
+
   <script>
   (function(){
     var burger=document.querySelector('.burger');
@@ -397,6 +445,6 @@
 
   <script src="hero-motion.js?v=3"></script>
   <script src="hero-eye.js?v=1"></script>
-  <script src="app.js?v=190"></script>
+  <script src="app.js?v=192"></script>
 </body>
 </html>

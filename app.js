@@ -264,9 +264,14 @@
     const short = (c) => c.name.split(/[ ,]/)[0];
 
     app.innerHTML =
-      '<div class="shw"><div class="shw__head"><h2 class="shw__title">Projects</h2><a class="shw__more" href="progetti.html">Vedi i progetti →</a></div>' +
+      '<div class="shw"><div class="shw__head"><h2 class="shw__title">Projects</h2><div class="shw__acts">' +
+      '<div class="shw__switch" role="group" aria-label="Vista progetti">' +
+      '<button type="button" data-m="3d" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5 14 5v6L8 14.5 2 11V5z M2 5l6 3.5L14 5 M8 8.5v6"/></svg>3D</button>' +
+      '<button type="button" data-m="easy" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 3.5h5l1.5 1.5h6.5v8h-13z"/></svg><span>Easy mode</span></button></div>' +
+      '<a class="shw__more" href="progetti.html">Vedi i progetti →</a></div></div>' +
       '<div class="shw__bar"><span class="shw__lbl">Scene / Layer</span><div class="shw__pills"></div></div>' +
-      '<div class="shw__stage"><canvas></canvas><div class="shw__views"></div><aside class="shw__info" hidden></aside></div><div class="shw__cap"></div></div>';
+      '<div class="shw__stage"><canvas></canvas><div class="shw__views"></div><aside class="shw__info" hidden></aside></div>' +
+      '<div class="shw__easy" hidden></div><div class="shw__cap"></div></div>';
     const stage = app.querySelector(".shw__stage"), cv = stage.querySelector("canvas"), ctx = cv.getContext("2d"),
       pills = app.querySelector(".shw__pills"), cap = app.querySelector(".shw__cap"), vb = app.querySelector(".shw__views");
     pills.innerHTML = '<button type="button" class="shw__pill" data-c="all">All<sup>' + A.length + "</sup></button>" +
@@ -435,6 +440,54 @@
       raf = visible ? requestAnimationFrame(frame) : 0;
     };
     go("all");
+
+    // Easy mode: vista a colonne (cartella → progetto → anteprima) al posto della vetrina 3D
+    const easy = app.querySelector(".shw__easy"), bar = app.querySelector(".shw__bar"), sw = app.querySelector(".shw__switch");
+    const ECATS = CATS.filter((c) => c.items.length);
+    const eThumb = (it) => (it.kind === "proj" ? (it.frames[0] ? toThumb(it.frames[0]) : "") : YT_THUMB_S(it.vid));
+    const eBig = (it) => (it.kind === "proj" ? (it.frames[0] ? toM(it.frames[0]) : "") : YT_THUMB(it.vid));
+    easy.innerHTML = '<div class="ez__col ez__c1"><div class="ez__h"><span>Cartelle</span><span>' + pad(ECATS.length) + "</span></div>" +
+      ECATS.map((c, i) => '<button type="button" class="ez__row" data-i="' + i + '"><span class="ez__fold" aria-hidden="true"></span><span>' + c.name + " <sup>" + c.items.length + '</sup></span><span class="ez__chev">›</span></button>').join("") +
+      '</div><div class="ez__col ez__c2"></div><div class="ez__col ez__c3"></div>';
+    const c2 = easy.querySelector(".ez__c2"), c3 = easy.querySelector(".ez__c3");
+    const href = (c, k) => "progetti.html?cat=" + c.id + "&p=" + (k + 1);
+    const ePrev = (c, k) => {
+      const it = c.items[k], isP = it.kind === "proj";
+      const desc = isP && it.description && it.description !== "Work in progress" ? it.description : "";
+      c3.innerHTML = '<div class="ez__pv"><a class="ez__big" href="' + href(c, k) + '" tabindex="-1"><img alt=""' + (isP ? "" : ' class="is-yt"') + ' src="' + eBig(it) + '"></a><div class="ez__spec">' +
+        '<span class="shw__k">' + (SHW[c.id] ? SHW[c.id][0] + "·" : "") + pad(k + 1) + " — " + c.name + (it.type ? " · " + it.type : "") + "</span>" +
+        "<h3>" + it.name + "</h3>" + (desc ? "<p>" + desc + "</p>" : "") + '<a href="' + href(c, k) + '">Apri il progetto →</a></div></div>';
+    };
+    const ePick = (i) => {
+      const c = ECATS[i];
+      easy.querySelectorAll(".ez__c1 .ez__row").forEach((r) => r.classList.toggle("is-on", +r.dataset.i === i));
+      c2.innerHTML = '<div class="ez__h"><span>' + c.name + "</span><span>" + pad(c.items.length) + "</span></div>" +
+        c.items.map((it, k) => '<button type="button" class="ez__row" data-k="' + k + '"><img loading="lazy" alt="" src="' + eThumb(it) + '"><span>' + it.name + '</span><span class="ez__chev">›</span></button>').join("");
+      c2.scrollTop = 0;
+      c2.querySelectorAll(".ez__row").forEach((r) => {
+        const k = +r.dataset.k;
+        r.addEventListener("mouseenter", () => ePrev(c, k));
+        r.addEventListener("focus", () => ePrev(c, k));
+        r.addEventListener("click", () => { c2.querySelectorAll(".ez__row").forEach((x) => x.classList.toggle("is-on", x === r)); ePrev(c, k); });
+      });
+      ePrev(c, 0);
+      cap.innerHTML = "<span><b>Easy mode</b> " + c.name + " — " + pad(c.items.length) + " lavori</span><span>cartella → progetto → anteprima</span>" +
+        '<a href="progetti.html?cat=' + c.id + '">Vedi i ' + c.items.length + " progetti →</a>";
+    };
+    easy.querySelectorAll(".ez__c1 .ez__row").forEach((r) => r.addEventListener("click", () => ePick(+r.dataset.i)));
+    let eCat = 0;
+    const setMode = (m) => {
+      const on = m === "easy";
+      sw.querySelectorAll("button").forEach((b) => { const x = b.dataset.m === m; b.classList.toggle("is-on", x); b.setAttribute("aria-pressed", x); });
+      easy.hidden = !on; stage.hidden = on; bar.hidden = on;
+      if (on) { if (sel) closeInfo(); ePick(eCat); } else go(mode);
+      try { localStorage.setItem("surreo.shw.mode", m); } catch (e) {}
+    };
+    easy.querySelector(".ez__c1").addEventListener("click", (e) => { const r = e.target.closest(".ez__row"); if (r) eCat = +r.dataset.i; });
+    sw.addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) setMode(b.dataset.m); });
+    let m0 = "3d"; try { m0 = localStorage.getItem("surreo.shw.mode") || "3d"; } catch (e) {}
+    setMode(m0 === "easy" ? "easy" : "3d");
+
     new IntersectionObserver((e, o) => {
       if (e[0].isIntersecting) { A.forEach((a) => (a.img.src = a.src)); o.disconnect(); }
     }, { rootMargin: "800px 0px" }).observe(stage);
@@ -977,7 +1030,7 @@
     const media =
       it.kind === "proj"
         ? '<div class="pcard__media"><img class="slide-img" loading="lazy" alt="' + it.name + '" data-src="' + (it.frames[0] || "") + '"></div>' +
-          '<div class="pcard__play"><i></i> gif</div>'
+          (it.frames.length > 1 ? '<div class="pcard__play"><i></i> gif</div>' : "")
         : '<div class="pcard__media"><img class="v-thumb" loading="lazy" alt="' + it.name + '" data-src="' + YT_THUMB(it.vid) + '"></div>' +
           '<div class="pcard__play"><i></i> video</div>';
 

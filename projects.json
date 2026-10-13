@@ -689,6 +689,86 @@
       "title": "Industrial Design",
       "projects": [
         {
+          "id": "dyno-lamp",
+          "name": "DYNO-LAMP",
+          "type": "Lampada da tavolo",
+          "description": "Lampada da tavolo ricaricabile. La forma compatta e la possibilità di variare il fascio luminoso la rendono perfetta per il comodino",
+          "tags": [
+            "Lighting Design",
+            "Industrial Design",
+            "3D Model",
+            "Rendering"
+          ],
+          "frames": [
+            "assets/projects/dyno-lamp/01.jpg"
+          ]
+        },
+        {
+          "id": "helmix",
+          "name": "HELMIX",
+          "type": "Casco per ciclismo in ambiente urbano",
+          "description": "Il casco ha una calotta esterna con struttura parametrica. Presenta delle luci di direzione integrate che si attivano con il movimento della testa e altre funzioni smart.",
+          "tags": [
+            "Parametric Design",
+            "Smart Product",
+            "Industrial Design",
+            "3D Model",
+            "Rendering"
+          ],
+          "frames": [
+            "assets/projects/helmix/01.jpg"
+          ]
+        },
+        {
+          "id": "chance-paragliding",
+          "name": "CHANCE PARAGLIDING",
+          "type": "Prodotto industriale",
+          "description": "Particolare carrozzina per la pratica del volo in parapendio per persone con difficoltà motorie",
+          "tags": [
+            "Inclusive Design",
+            "Industrial Design",
+            "3D Model",
+            "Rendering"
+          ],
+          "frames": [
+            "assets/projects/chance-paragliding/01.jpg"
+          ]
+        },
+        {
+          "id": "timbratrice-pneumatica",
+          "name": "TIMBRATRICE PNEUMATICA",
+          "type": "Prodotto industriale - Industria metalmeccanica",
+          "description": "Pressa per timbratura a caldo nel tessile",
+          "tags": [
+            "Machine Design",
+            "Industrial Design",
+            "3D Model",
+            "Rendering"
+          ],
+          "frames": [
+            "assets/projects/timbratrice-pneumatica/01.jpg"
+          ]
+        },
+        {
+          "id": "render-architettura",
+          "name": "RENDER ARCHITETTURA",
+          "type": "Render architettura esterno · interno",
+          "description": "Struttura industriale contemporanea caratterizzata da volumi articolati, ampie superfici vetrate e rivestimenti in pannelli metallici. L’ingresso principale, valorizzato da un ampio volume vetrato e da una copertura aggettante, definisce un’immagine architettonica moderna, elegante e rappresentativa. Struttura industriale contemporanea dalle linee essenziali e rigorose, realizzata con un involucro caratterizzato da pannelli di rivestimento e ampie superfici vetrate. Il prospetto principale integra un ingresso vetrato ben riconoscibile, mentre i fronti laterali presentano aperture e accessi funzionali, mantenendo un linguaggio architettonico sobrio e ordinato Sala conferenze di ampie dimensioni, progettata per ospitare 12–16 persone, con tavolo centrale, sistema di proiezione e ampie superfici vetrate. L’ambiente combina materiali contemporanei, illuminazione naturale e sistemi di illuminazione integrata, creando uno spazio luminoso, funzionale e rappresentativo",
+          "tags": [
+            "Architectural Rendering",
+            "Interior Rendering",
+            "3D Model"
+          ],
+          "frames": [
+            "assets/projects/render-architettura/01.jpg",
+            "assets/projects/render-architettura/02.jpg",
+            "assets/projects/render-architettura/03.jpg",
+            "assets/projects/render-architettura/04.jpg",
+            "assets/projects/render-architettura/05.jpg",
+            "assets/projects/render-architettura/06.jpg"
+          ]
+        },
+        {
           "id": "saponi-di-un-tempo",
           "name": "SAPONI DI UN TEMPO",
           "type": "Project X",
@@ -850,8 +930,8 @@
           ]
         },
         {
-          "id": "concept-industrial-design",
-          "name": "CHAIR CONCEPTING",
+          "id": "concept-01",
+          "name": "ORIGAMI ESPRESSO",
           "type": "Indie Project",
           "description": "Random concepting.",
           "tags": [
@@ -860,17 +940,147 @@
             "3D Model"
           ],
           "frames": [
-            "assets/projects/concept-industrial-design/01.jpg",
-            "assets/projects/concept-industrial-design/02.jpg",
-            "assets/projects/concept-industrial-design/03.jpg",
-            "assets/projects/concept-industrial-design/04.jpg",
-            "assets/projects/concept-industrial-design/05.jpg",
-            "assets/projects/concept-industrial-design/06.jpg",
-            "assets/projects/concept-industrial-design/07.jpg",
-            "assets/projects/concept-industrial-design/08.jpg",
-            "assets/projects/concept-industrial-design/09.jpg",
-            "assets/projects/concept-industrial-design/10.jpg",
-            "assets/projects/concept-industrial-design/11.jpg"
+            "assets/projects/concept-01/01.jpg"
+          ]
+        },
+        {
+          "id": "concept-02",
+          "name": "ARC LAMP",
+          "type": "Indie Project",
+          "description": "Random concepting.",
+          "tags": [
+            "Industrial Design Concepting",
+            "Rendering",
+            "3D Model"
+          ],
+          "frames": [
+            "assets/projects/concept-02/01.jpg"
+          ]
+        },
+        {
+          "id": "concept-03",
+          "name": "RIBBON LAMP",
+          "type": "Indie Project",
+          "description": "Random concepting.",
+          "tags": [
+            "Industrial Design Concepting",
+            "Rendering",
+            "3D Model"
+          ],
+          "frames": [
+            "assets/projects/concept-03/01.jpg"
+          ]
+        },
+        {
+          "id": "concept-04",
+          "name": "FOLD LAMP",
+          "type": "Indie Project",
+          "description": "Random concepting.",
+          "tags": [
+            "Industrial Design Concepting",
+            "Rendering",
+            "3D Model"
+          ],
+          "frames": [
+            "assets/projects/concept-04/01.jpg"
+          ]
+        },
+        {
+          "id": "concept-05",
+          "name": "CAPSULE COFFEE",
+          "type": "Indie Project",
+          "description": "Random concepting.",
+          "tags": [
+            "Industrial Design Concepting",
+            "Rendering",
+            "3D Model"
+          ],
+          "frames": [
+            "assets/projects/concept-05/01.jpg"
+          ]
+        },
+        {
+          "id": "concept-06",
+          "name": "SHEET CHAIR",
+          "type": "Indie Project",
+          "description": "Random concepting.",
+          "tags": [
+            "Industrial Design Concepting",
+            "Rendering",
+            "3D Model"
+          ],
+          "frames": [
+            "assets/projects/concept-06/01.jpg"
+          ]
+        },
+        {
+          "id": "concept-07",
+          "name": "SMART MIRROR",
+          "type": "Indie Project",
+          "description": "Random concepting.",
+          "tags": [
+            "Industrial Design Concepting",
+            "Rendering",
+            "3D Model"
+          ],
+          "frames": [
+            "assets/projects/concept-07/01.jpg"
+          ]
+        },
+        {
+          "id": "concept-08",
+          "name": "GLASS ARMCHAIR",
+          "type": "Indie Project",
+          "description": "Random concepting.",
+          "tags": [
+            "Industrial Design Concepting",
+            "Rendering",
+            "3D Model"
+          ],
+          "frames": [
+            "assets/projects/concept-08/01.jpg"
+          ]
+        },
+        {
+          "id": "concept-09",
+          "name": "POUF SET",
+          "type": "Indie Project",
+          "description": "Random concepting.",
+          "tags": [
+            "Industrial Design Concepting",
+            "Rendering",
+            "3D Model"
+          ],
+          "frames": [
+            "assets/projects/concept-09/01.jpg"
+          ]
+        },
+        {
+          "id": "concept-10",
+          "name": "DESK SETUP",
+          "type": "Indie Project",
+          "description": "Random concepting.",
+          "tags": [
+            "Industrial Design Concepting",
+            "Rendering",
+            "3D Model"
+          ],
+          "frames": [
+            "assets/projects/concept-10/01.jpg"
+          ]
+        },
+        {
+          "id": "concept-11",
+          "name": "RIBBED CHAIR",
+          "type": "Indie Project",
+          "description": "Random concepting.",
+          "tags": [
+            "Industrial Design Concepting",
+            "Rendering",
+            "3D Model"
+          ],
+          "frames": [
+            "assets/projects/concept-11/01.jpg"
           ]
         },
         {
