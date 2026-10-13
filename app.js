@@ -147,7 +147,7 @@
     });
     if (vids.visual && vids.visual.items) {
       const items = [];
-      vids.visual.items.forEach((it) => (it.videos || []).forEach((v) => items.push({ kind: "video", name: it.id ? pretty(it.id) : "Videoclip", vid: v })));
+      vids.visual.items.forEach((it) => (it.videos || []).forEach((v) => items.push({ kind: "video", name: it.title || (it.id ? pretty(it.id) : "Videoclip"), vid: v })));
       CATS.push({ id: "videoclip", name: "Videoclip & Motion", items });
     }
     if (vids.website && vids.website.items) {
