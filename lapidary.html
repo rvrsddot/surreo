@@ -80,8 +80,12 @@
     .dl{margin-top:auto;display:flex;justify-content:space-between;align-items:center;background:var(--deep);color:var(--cream);text-decoration:none;
       padding:18px;font:700 16px/1 "Bricolage Grotesque",sans-serif;transition:background .15s}
     .dl:hover{background:var(--red)}
-    .dl--soon{opacity:.55;cursor:default}
-    .dl--soon:hover{background:var(--deep)}
+    button.dl{all:unset;box-sizing:border-box;margin-top:auto;display:flex;justify-content:space-between;align-items:center;width:100%;cursor:pointer;
+      background:var(--deep);color:var(--cream);padding:18px;font:700 16px/1 "Bricolage Grotesque",sans-serif;transition:background .15s}
+    button.dl:hover{background:var(--red)}
+    button.dl:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+    button.dl.is-soon{background:var(--red);animation:nudge .4s cubic-bezier(.3,1.6,.5,1)}
+    @keyframes nudge{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}60%{transform:translateX(4px)}}
     .dl small{font:400 10px/1 ui-monospace,'Courier New',monospace;letter-spacing:.06em;text-transform:uppercase;opacity:.7}
     .is-it .fcard__t{font-style:italic}
     .is-alt .fcard__t{font-feature-settings:"salt" 1}
@@ -183,7 +187,7 @@
               <button class="chip" type="button" data-st="it" aria-pressed="false">Italic</button>
               <button class="chip" type="button" data-alt aria-pressed="false">Alternative</button>
             </div>
-            <span class="dl dl--soon" aria-disabled="true">Download in arrivo <small>.zip</small></span>
+            <button class="dl dl--soon" type="button" id="dl-soon" aria-live="polite"><span class="dl__t">Scarica il font</span> <small class="dl__s">.zip ↓</small></button>
           </div>
         </article>
         <div class="soon"><span class="k">L·02</span><b>In arrivo</b></div>
@@ -359,6 +363,13 @@
     card.querySelectorAll('[data-st]').forEach(function(b){b.addEventListener('click',function(){
       card.querySelectorAll('[data-st]').forEach(function(x){x.setAttribute('aria-pressed',x===b);});
       card.classList.toggle('is-it',b.dataset.st==='it');});});
+    var dl=document.getElementById('dl-soon'), dlT;
+    if(dl) dl.addEventListener('click',function(){
+      var t=dl.querySelector('.dl__t'), sm=dl.querySelector('.dl__s');
+      dl.classList.remove('is-soon'); void dl.offsetWidth; dl.classList.add('is-soon');
+      t.textContent='Sta per arrivare'; sm.textContent='Coming soon';
+      clearTimeout(dlT); dlT=setTimeout(function(){dl.classList.remove('is-soon');t.textContent='Scarica il font';sm.textContent='.zip ↓';},2600);
+    });
     var a=card.querySelector('[data-alt]');
     a.addEventListener('click',function(){var on=a.getAttribute('aria-pressed')!=='true';a.setAttribute('aria-pressed',on);card.classList.toggle('is-alt',on);});
   })();
