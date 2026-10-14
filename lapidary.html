@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lapidary — Surreo Studio</title>
+  <meta name="description" content="Lapidary è un progetto di Surreo: scritte trovate per strada, su serrande, facciate e insegne, ridisegnate come font. Mandaci una foto e il posto." />
+  <link rel="canonical" href="https://surreostudio.com/lapidary.html" />
+  <meta name="theme-color" content="#b8341f" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Surreo Studio" />
+  <meta property="og:title" content="Lapidary — Found on the street. Drawn by Surreo." />
+  <meta property="og:description" content="Scritte trovate per strada, ridisegnate come font da Surreo." />
+  <meta property="og:url" content="https://surreostudio.com/lapidary.html" />
+  <meta property="og:image" content="https://surreostudio.com/og-image.jpg" />
+  <meta property="og:locale" content="it_IT" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&text=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%26%2C%C2%B7.%E2%86%92%C2%B0%27%E2%80%99-%21%3F%3A%2F%28%29%C3%86%C3%89%C3%88%C3%80%C3%92%C3%99%C3%8C%2B&display=block" />
+  <link rel="stylesheet" href="styles.css?v=247" />
+  <style>
+    @font-face{font-family:"Vindobona";src:url("assets/lapidary/Vindobona1683Fedele-Regular.woff2") format("woff2");font-style:normal;font-display:block}
+    @font-face{font-family:"Vindobona";src:url("assets/lapidary/Vindobona1683Fedele-Italic.woff2") format("woff2");font-style:italic;font-display:block}
+
+    /* pagina in rosso: le variabili del sito si invertono (come fa la pagina progetti col nero) */
+    body.page-lp{--red:#b8341f;--cream:#f1eadb;--deep:#15120e;
+      --paper:var(--red);--ink:var(--cream);--line:rgba(241,234,219,.32);--muted:rgba(241,234,219,.68);
+      background:var(--red);color:var(--cream)}
+    html:has(body.page-lp){background:#b8341f}
+    .page-lp .site{border-bottom:1.5px solid var(--ink)}
+    .page-lp .marquee{background:var(--deep);color:var(--cream);border-bottom-color:var(--deep)}
+    .page-lp .marquee__t span{border-right-color:rgba(241,234,219,.2)}
+    .lp{max-width:1440px;margin:0 auto;padding:0 clamp(16px,3.5vw,44px) clamp(40px,6vw,80px)}
+    .k{font:700 11px/1.3 ui-monospace,'Courier New',monospace;letter-spacing:.06em;text-transform:uppercase}
+    .k--m{font-weight:400;opacity:.7}
+
+    /* ── HERO ───────────────────────────────── */
+    .hero-lp{min-height:calc(100svh - 110px);display:flex;flex-direction:column;justify-content:space-between;gap:clamp(18px,3vw,34px);
+      padding:clamp(16px,2.4vw,28px) 0 clamp(20px,3vw,36px)}
+    .hero-lp__bar{display:flex;justify-content:space-between;gap:12px}
+    .morph{position:relative;margin:clamp(6px,1.5vw,18px) 0 0;cursor:crosshair;touch-action:pan-y}
+    .morph svg{display:block;width:100%;height:auto;overflow:visible}
+    .morph path{fill:var(--cream)}
+    .morph__meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-top:1.5px solid var(--cream);padding-top:10px;margin-top:clamp(8px,1.2vw,14px)}
+    .morph__now{display:flex;gap:10px;align-items:baseline;min-width:0}
+    .morph__now b{font:800 clamp(14px,1.4vw,18px)/1 "Bricolage Grotesque",sans-serif;letter-spacing:-.01em;text-transform:none;white-space:nowrap;transition:opacity .35s}
+    .morph__dots{display:flex;gap:5px}
+    .morph__dots i{width:7px;height:7px;border:1.2px solid var(--cream);border-radius:50%;transition:background .3s}
+    .morph__dots i.on{background:var(--cream)}
+    .hero-lp__foot{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:20px;align-items:end}
+    .tag{grid-column:1/7;font:800 clamp(30px,4.2vw,64px)/.95 "Bricolage Grotesque",sans-serif;letter-spacing:-.035em}
+    .tag span{display:block}
+    .tag span+span{color:var(--deep)}
+    .lead{grid-column:8/13;font:300 clamp(15px,1.25vw,18px)/1.5 "Bricolage Grotesque",sans-serif}
+    .lead p+p{margin-top:.8em}
+    .lead b{font-weight:700}
+    .scroll{display:flex;justify-content:space-between;align-items:center;border-top:1.5px solid var(--cream);padding-top:10px}
+    .scroll a{color:inherit;text-decoration:none}
+
+    /* ── FONT ───────────────────────────────── */
+    .sec-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:clamp(40px,6vw,80px) 0 12px;border-bottom:1.5px solid var(--cream)}
+    .sec-h h2{font:800 clamp(30px,4vw,56px)/.9 "Bricolage Grotesque",sans-serif;letter-spacing:-.03em;text-transform:uppercase}
+    .fonts{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(16px,2vw,24px);margin-top:clamp(18px,2.4vw,28px)}
+    .fcard{grid-column:1/-1;background:var(--cream);color:var(--deep);border:1.5px solid var(--deep);box-shadow:10px 12px 0 rgba(0,0,0,.22);display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr)}
+    .fcard__try{background:#16203a;color:#d9b66c;display:flex;flex-direction:column;justify-content:space-between;min-height:clamp(320px,34vw,520px);border-right:1.5px solid var(--deep)}
+    .fcard__bar{display:flex;justify-content:space-between;gap:10px;padding:12px 16px;border-bottom:1px solid rgba(217,182,108,.3)}
+    .fcard__t{font-family:Vindobona,serif;font-size:clamp(54px,8.4vw,150px);line-height:1;padding:0 clamp(14px,2.4vw,32px);outline:none;overflow-wrap:anywhere;caret-color:#d9b66c}
+    .fcard__ph{height:clamp(56px,6vw,86px);background:url(assets/lapidary/vindobona-foto.jpg) 30% 50%/cover;border-top:1px solid rgba(217,182,108,.3)}
+    .fcard__info{display:flex;flex-direction:column}
+    .fcard__name{font-family:Vindobona,serif;font-size:clamp(44px,4.6vw,72px);line-height:.95;padding:18px 18px 14px}
+    .fcard__meta{display:grid;grid-template-columns:auto 1fr;border-top:1.5px solid var(--deep);margin:0 18px}
+    .fcard__meta dt,.fcard__meta dd{padding:8px 0;border-bottom:1px solid rgba(21,18,14,.18);font-size:13px}
+    .fcard__meta dt{font:400 10px/1.9 ui-monospace,'Courier New',monospace;letter-spacing:.06em;text-transform:uppercase;opacity:.6;padding-right:18px}
+    .fcard__opts{display:flex;gap:8px;padding:14px 18px;flex-wrap:wrap}
+    .chip{all:unset;cursor:pointer;border:1.5px solid var(--deep);padding:7px 11px;font:700 10px/1 ui-monospace,'Courier New',monospace;letter-spacing:.06em;text-transform:uppercase}
+    .chip[aria-pressed=true]{background:var(--deep);color:var(--cream)}
+    .chip:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+    .dl{margin-top:auto;display:flex;justify-content:space-between;align-items:center;background:var(--deep);color:var(--cream);text-decoration:none;
+      padding:18px;font:700 16px/1 "Bricolage Grotesque",sans-serif;transition:background .15s}
+    .dl:hover{background:var(--red)}
+    .dl--soon{opacity:.55;cursor:default}
+    .dl--soon:hover{background:var(--deep)}
+    .dl small{font:400 10px/1 ui-monospace,'Courier New',monospace;letter-spacing:.06em;text-transform:uppercase;opacity:.7}
+    .is-it .fcard__t{font-style:italic}
+    .is-alt .fcard__t{font-feature-settings:"salt" 1}
+    .soon{grid-column:span 6;border:1.5px dashed var(--cream);min-height:clamp(150px,14vw,210px);display:flex;flex-direction:column;justify-content:space-between;padding:14px 16px;
+      background:repeating-linear-gradient(135deg,transparent 0 10px,rgba(241,234,219,.07) 10px 11px)}
+    .soon b{font:800 clamp(24px,2.4vw,34px)/1 "Bricolage Grotesque",sans-serif;text-transform:uppercase;letter-spacing:-.02em;opacity:.8}
+
+    /* ── SEGNALA ────────────────────────────── */
+    .send{margin-top:clamp(56px,8vw,110px);display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:20px;align-items:end;
+      border-top:1.5px solid var(--cream);padding-top:clamp(18px,2.4vw,28px)}
+    .send h2{grid-column:1/8;font:800 clamp(40px,6.4vw,100px)/.92 "Bricolage Grotesque",sans-serif;letter-spacing:-.04em}
+    .send p{grid-column:1/8;font:300 clamp(18px,1.8vw,26px)/1.3 "Bricolage Grotesque",sans-serif;margin-top:12px}
+    .send__cta{grid-column:9/13;grid-row:1/3;display:flex;flex-direction:column;border:1.5px solid var(--cream)}
+    .send__cta a{display:flex;justify-content:space-between;padding:16px;color:var(--cream);text-decoration:none;font:700 15px/1 "Bricolage Grotesque",sans-serif;transition:background .15s,color .15s}
+    .send__cta a+a{border-top:1.5px solid var(--cream)}
+    .send__cta a:hover{background:var(--cream);color:var(--red)}
+    .send__cta a small{display:block;margin-bottom:8px}
+    .send__cta a>span:first-child{min-width:0;overflow-wrap:anywhere}
+    .foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:clamp(40px,6vw,80px);padding-top:14px;border-top:1px solid var(--line)}
+
+    @media(max-width:900px){
+      .tag,.lead{grid-column:1/-1}
+      .lead{margin-top:18px}
+      .fcard{grid-template-columns:1fr}
+      .fcard__try{border-right:0;border-bottom:1.5px solid var(--deep);min-height:300px}
+      .soon{grid-column:1/-1}
+      .send h2,.send p,.send__cta{grid-column:1/-1;grid-row:auto}
+      .send__cta{margin-top:20px}
+    }
+    @media(max-width:560px){
+      .morph__dots{display:none}
+      .hero-lp{min-height:0}
+    }
+  </style>
+</head>
+<body class="page-lp">
+
+  <div class="landing landing--slim">
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__t">
+      <span>Social Media</span><span>Branding · Design Graphic</span><span>Photo / Video</span><span>3D Model · Render</span><span>Interior Design</span><span>Advertising</span><span>Metaverse</span><span>Videomapping</span><span>Visual</span><span>Exhibit</span><span>Animation</span><span>Website</span><span>Spot</span><span>350° Tour</span>
+      <span>Social Media</span><span>Branding · Design Graphic</span><span>Photo / Video</span><span>3D Model · Render</span><span>Interior Design</span><span>Advertising</span><span>Metaverse</span><span>Videomapping</span><span>Visual</span><span>Exhibit</span><span>Animation</span><span>Website</span><span>Spot</span><span>350° Tour</span>
+    </div>
+  </div>
+  <header class="site">
+    <a class="brand" href="./">
+      <svg class="brand__logo" viewBox="0 0 551.76 551.76" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle class="ring" cx="275.88" cy="275.88" r="273.53" fill="none" stroke="currentColor" stroke-dasharray="28.64 28.64" stroke-miterlimit="10" stroke-width="14"/>
+        <path d="M264.31,275.78h-57.09v-1.47s25.39-32.96,25.39-32.96v-88.2s-53.77,0-53.77,0c-21.42,0-30.67,7.56-30.67,19.33,0,16.8,18.69,20.37,45.79,20.37h30.32s-3.64,6.51-3.64,6.51h-18.06s-21.21,235.79-21.21,235.79h-60.7v-1.47s74.78-234.32,74.78-234.32c-39.49-.21-63.01-13.02-63.01-41.59,0-19.32,14.07-41.17,63.43-41.17h70.16v1.68s-26.89,51.88-26.89,51.88v70.97s25.18,33.17,25.18,33.17v1.47Z" fill="currentColor"/>
+        <path d="M287.46,274.31l25.18-33.17v-70.97l-26.89-51.88v-1.68h70.16c49.36,0,63.43,21.85,63.43,41.17,0,28.57-23.53,41.38-63.01,41.59l74.78,234.32v1.47h-60.7l-21.21-235.79h-18.06l-3.63-6.47,30.31-.04c27.1,0,45.79-3.57,45.79-20.37,0-11.76-9.24-19.33-30.67-19.33h-53.77v88.2l25.39,32.96v1.47h-57.09v-1.47Z" fill="currentColor"/>
+        <path d="M207.22,369.56c0-39.14,27.67-65.78,68.38-65.78s68.97,26.46,68.97,65.42-27.86,65.96-68.97,65.96-68.38-26.64-68.38-65.6ZM275.59,401.36c38.34,0,62.84-14.68,62.84-32.44s-24.5-32.62-62.84-32.62-62.25,14.68-62.25,32.62,24.11,32.44,62.25,32.44Z" fill="currentColor"/>
+      </svg>
+      <span class="brand__txt">Surreo <em>Studio</em></span>
+    </a>
+    <button class="burger" type="button" aria-label="Apri menu" aria-expanded="false" aria-controls="menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+  </div>
+
+  <main class="lp">
+
+    <!-- HERO -->
+    <section class="hero-lp">
+      <div class="hero-lp__bar"><span class="k">Scrittura</span><span class="k k--m">Surreo · Lapidary</span></div>
+      <h1 class="morph" id="morph" aria-label="Lapidary"><svg id="morph-svg" aria-hidden="true"></svg></h1>
+      <div class="morph__meta k"><span class="morph__now"><span class="k--m">Ora</span><b id="morph-name">Archivo Condensed</b><span class="k--m" id="morph-src">grottesco</span></span><span class="morph__dots" id="morph-dots"></span></div>
+      <div class="hero-lp__foot">
+        <p class="tag"><span>Found on the street.</span><span>Drawn by Surreo.</span></p>
+        <div class="lead">
+          <p>Ci sono lettere che non trovi in nessun catalogo. Stanno sopra una serranda, incise su una facciata, dipinte sull’insegna di un bar che ha chiuso.</p>
+          <p><b>Lapidary</b> è un progetto di Surreo. Cerchiamo queste scritte, le raccogliamo con le vostre segnalazioni e ci lavoriamo sopra per farne font. Da poche lettere a un alfabeto intero, tenendo dentro le stranezze che ci hanno fatto fermare a guardarle.</p>
+        </div>
+      </div>
+      <div class="scroll k"><a href="#font">Font ↓</a><span class="k--m">01 / 03</span></div>
+    </section>
+
+    <!-- FONT -->
+    <section id="font">
+      <div class="sec-h"><h2>Font</h2><span class="k k--m">01 disponibile</span></div>
+      <div class="fonts">
+        <article class="fcard" id="vindobona">
+          <div class="fcard__try">
+            <div class="fcard__bar"><span class="k">L·01</span><span class="k k--m">Scrivi ↓</span></div>
+            <div class="fcard__t" contenteditable="true" spellcheck="false">Viennam relata</div>
+            <div class="fcard__ph" role="img" aria-label="L’iscrizione originale a Loreto"></div>
+          </div>
+          <div class="fcard__info">
+            <div class="fcard__name">Vindobona 1683</div>
+            <dl class="fcard__meta">
+              <dt>Trovata</dt><dd>Loreto, IT</dd>
+              <dt>Data</dt><dd>1683</dd>
+              <dt>Stili</dt><dd>Regular · Italic</dd>
+              <dt>Glifi</dt><dd>141</dd>
+              <dt>Licenza</dt><dd>—</dd>
+            </dl>
+            <div class="fcard__opts">
+              <button class="chip" type="button" data-st="rg" aria-pressed="true">Regular</button>
+              <button class="chip" type="button" data-st="it" aria-pressed="false">Italic</button>
+              <button class="chip" type="button" data-alt aria-pressed="false">Alternative</button>
+            </div>
+            <span class="dl dl--soon" aria-disabled="true">Download in arrivo <small>.zip</small></span>
+          </div>
+        </article>
+        <div class="soon"><span class="k">L·02</span><b>In arrivo</b></div>
+        <div class="soon"><span class="k">L·03</span><b>In arrivo</b></div>
+      </div>
+    </section>
+
+    <!-- SEGNALA -->
+    <section class="send" id="segnala">
+      <h2>Hai visto qualcosa?</h2>
+      <p>Mandaci una foto e il posto.</p>
+      <div class="send__cta">
+        <a class="send__mail" href="mailto:surreocreative@gmail.com?subject=Lapidary%20%C2%B7%20segnalazione&amp;body=Foto%3A%20(allegata)%0APosto%3A%20">
+          <span><small class="k k--m">Mail</small>surreocreative@gmail.com</span><span>→</span></a>
+      </div>
+    </section>
+
+    <footer class="foot k k--m"><span>Surreo Studio · Lapidary</span><span>IT / DE · © 2026</span></footer>
+  </main>
+
+  <!-- menu -->
+  <div class="menu" id="menu" aria-hidden="true">
+    <div class="menu__panel"></div>
+    <div class="menu__inner">
+      <header class="menu__top">
+        <span><b>Menu</b> · Navigation · 006 / 006</span>
+        <span class="menu__live">Studio · 2026</span>
+      </header>
+      <nav class="menu__nav" aria-label="Navigazione principale">
+        <a href="progetti.html" style="--i:1">
+          <span class="k">01/</span>
+          <span class="w">Projects</span>
+          <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
+          <span class="m">Showcase · Video · Motion · Website</span>
+        </a>
+        <a href="fotovideo.html" style="--i:2">
+          <span class="k">02/</span>
+          <span class="w">Photo &amp; Film</span>
+          <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
+          <span class="m">Photography · Moving image</span>
+        </a>
+        <a href="lapidary.html" style="--i:3">
+          <span class="k">03/</span>
+          <span class="w">Lapidary</span>
+          <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
+          <span class="m">Scrittura · Font trovati per strada</span>
+        </a>
+        <a href="./#about" style="--i:4">
+          <span class="k">04/</span>
+          <span class="w">About</span>
+          <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
+          <span class="m">Studio · Manifesto · Come lavoriamo</span>
+        </a>
+        <a href="workshok/" style="--i:5">
+          <span class="k">05/</span>
+          <span class="w">Workshok</span>
+          <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
+          <span class="m">Design · Architettura · Since 2018</span>
+        </a>
+        <div class="menu__contact" style="--i:6">
+          <span class="k">06/</span>
+          <a class="menu__ico" href="mailto:surreocreative@gmail.com" style="--i:6" aria-label="Mail me · surreocreative@gmail.com" title="surreocreative@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="1"/><path d="m3 6 9 7 9-7"/></svg>
+          </a>
+          <a class="menu__ico" href="https://wa.me/393313510091" target="_blank" rel="noopener" style="--i:7" aria-label="WhatsApp · +39 331 351 0091" title="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.55 2 2.08 6.46 2.08 11.95c0 1.76.46 3.47 1.33 4.98L2 22l5.2-1.36a9.93 9.93 0 0 0 4.84 1.23h.01c5.49 0 9.96-4.46 9.96-9.95C22 6.46 17.53 2 12.04 2Zm0 18.2h-.01a8.27 8.27 0 0 1-4.21-1.15l-.3-.18-3.09.81.82-3.01-.2-.31a8.24 8.24 0 0 1-1.27-4.41c0-4.56 3.71-8.26 8.27-8.26 2.2 0 4.28.86 5.84 2.42a8.2 8.2 0 0 1 2.42 5.85c0 4.56-3.71 8.24-8.27 8.24Zm4.53-6.18c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.79.98-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.44.12-.15.17-.25.25-.41.08-.17.04-.31-.02-.44-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.57.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.17-.48-.29Z"/></svg>
+          </a>
+          <span class="m">Mail · WhatsApp</span>
+        </div>
+      </nav>
+      <footer class="menu__foot">
+        <span><b>Surreo Studio</b> · Unbased #Design Studio</span>
+        <span><a class="menu__cv" href="cv.html">CV</a></span><span>IT / DE · © 2026</span>
+      </footer>
+    </div>
+  </div>
+
+  <aside class="privacy-banner" id="privacyBanner" role="dialog" aria-live="polite" aria-label="Informativa privacy" hidden>
+    <div class="privacy-banner__inner">
+      <p class="privacy-banner__text">
+        <b>Cookie &amp; Privacy.</b>
+        Questo sito <b>non usa cookie di tracciamento né analytics</b>. Carica solo risorse tecniche da Google Fonts, YouTube (nocookie) e GitHub Pages — con eventuale trasferimento del tuo IP a questi provider.
+        <a href="/privacy.html">Leggi l'informativa</a>.
+      </p>
+      <button class="privacy-banner__ok" type="button" id="privacyBannerOk" aria-label="Chiudi banner privacy">Ok, ho capito</button>
+    </div>
+  </aside>
+  <script>
+  (function(){
+    var KEY='surreo.privacy.ack.v1';
+    try { if(localStorage.getItem(KEY)==='1') return; } catch(e){}
+    var el=document.getElementById('privacyBanner');
+    var ok=document.getElementById('privacyBannerOk');
+    if(!el||!ok) return;
+    el.hidden=false;
+    requestAnimationFrame(function(){ el.classList.add('is-on'); });
+    ok.addEventListener('click', function(){
+      el.classList.remove('is-on');
+      setTimeout(function(){ el.hidden=true; }, 260);
+      try { localStorage.setItem(KEY,'1'); } catch(e){}
+    });
+  })();
+  </script>
+
+  <script>
+  (function(){
+    var burger=document.querySelector('.burger'), menu=document.getElementById('menu');
+    function setOpen(o){burger.classList.toggle('is-active',o);menu.classList.toggle('is-open',o);burger.setAttribute('aria-expanded',o);menu.setAttribute('aria-hidden',!o);document.body.classList.toggle('menu-open',o);}
+    burger.addEventListener('click',function(){setOpen(!menu.classList.contains('is-open'));});
+    menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setOpen(false);});});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false);});
+
+    // LAPIDARY: la stessa parola passa da un font all'altro, le forme si fondono.
+    // Dati: lapidary/morph.json (contorni ricampionati e allineati, 9 font a licenza libera + Vindobona).
+    var box=document.getElementById('morph'), svg=document.getElementById('morph-svg'),
+        nameEl=document.getElementById('morph-name'), srcEl=document.getElementById('morph-src'), dotsEl=document.getElementById('morph-dots');
+    var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    fetch('assets/lapidary/morph.json').then(function(r){return r.json();}).then(function(D){
+      var W=D.word.split(''), F=D.fonts, NF=F.length, CAP=D.cap, TR=CAP*.035;
+      var maxW=0; F.forEach(function(f){var t=0;W.forEach(function(c){t+=f.adv[c]+TR;});maxW=Math.max(maxW,t);});
+      var VB={x:0,y:-CAP-130,w:maxW,h:CAP+130+300};
+      svg.setAttribute('viewBox',[VB.x,VB.y,VB.w,VB.h].join(' '));
+      var paths=W.map(function(){var p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('fill-rule','nonzero');svg.appendChild(p);return p;});
+      dotsEl.innerHTML=F.map(function(){return '<i></i>';}).join('');
+      var dots=[].slice.call(dotsEl.children);
+      var SPEED=1/2.6;                       // un font ogni 2,6 s
+      var ph=W.map(function(c,i){return -i*.06;});  // piccola onda da sinistra a destra
+      var px=-1, pv=0, last=performance.now(), shown=-1;
+      function ease(u){return u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2;}
+      function lerpPts(a,b,t){var o=new Array(a.length);for(var k=0;k<a.length;k++)o[k]=a[k]+(b[k]-a[k])*t;return o;}
+      function frame(now){
+        var dt=Math.min(.05,(now-last)/1000); last=now;
+        var x=0, xs=[], shapes=[];
+        W.forEach(function(c,i){
+          var near=px<0?0:Math.exp(-Math.pow((px-(i+.5)/W.length)/.13,2));
+          if(!reduce) ph[i]+=dt*SPEED*(1+near*(2.2+pv*14));
+          var p=Math.max(0,ph[i]), fa=Math.floor(p)%NF, fb=(fa+1)%NF, fr=p-Math.floor(p);
+          var t=ease(Math.min(1,Math.max(0,(fr-.55)/.45)));     // pausa leggibile, poi la fusione
+          var A=D.glyphs[c][fa], B=D.glyphs[c][fb];
+          var adv=F[fa].adv[c]+(F[fb].adv[c]-F[fa].adv[c])*t;
+          shapes.push(A.map(function(ca,k){return lerpPts(ca,B[k],t);}));
+          xs.push(x); x+=adv+TR;
+          if(i===0){var cur=t<.5?fa:fb; if(cur!==shown){shown=cur;nameEl.textContent=F[cur].name;srcEl.textContent=F[cur].src;dots.forEach(function(d,j){d.classList.toggle('on',j===cur);});}}
+        });
+        var off=(VB.w-(x-TR))/2;
+        shapes.forEach(function(sh,i){
+          var d='', ox=xs[i]+off;
+          sh.forEach(function(pts){
+            d+='M'+(pts[0]+ox).toFixed(1)+' '+(-pts[1]).toFixed(1);
+            for(var k=2;k<pts.length;k+=2) d+='L'+(pts[k]+ox).toFixed(1)+' '+(-pts[k+1]).toFixed(1);
+            d+='Z';
+          });
+          paths[i].setAttribute('d',d);
+        });
+        pv*=.9;
+        if(!reduce) requestAnimationFrame(frame);
+      }
+      // reattiva: le lettere vicino al puntatore corrono avanti; più veloce muovi, più si scompongono
+      box.addEventListener('pointermove',function(e){
+        var r=box.getBoundingClientRect(), nx=(e.clientX-r.left)/r.width;
+        if(px>=0) pv=Math.min(1,pv+Math.abs(nx-px)*6);
+        px=nx;
+      });
+      box.addEventListener('pointerleave',function(){px=-1;});
+      // clic / tocco: tutta la parola passa al font successivo, in onda
+      box.addEventListener('click',function(){ph=ph.map(function(p,i){return Math.floor(p+.55)+.55+i*.0001;});});
+      requestAnimationFrame(frame);
+    });
+  })();
+
+  (function(){
+    var card=document.getElementById('vindobona'); if(!card) return;
+    card.querySelectorAll('[data-st]').forEach(function(b){b.addEventListener('click',function(){
+      card.querySelectorAll('[data-st]').forEach(function(x){x.setAttribute('aria-pressed',x===b);});
+      card.classList.toggle('is-it',b.dataset.st==='it');});});
+    var a=card.querySelector('[data-alt]');
+    a.addEventListener('click',function(){var on=a.getAttribute('aria-pressed')!=='true';a.setAttribute('aria-pressed',on);card.classList.toggle('is-alt',on);});
+  })();
+  </script>
+</body>
+</html>
