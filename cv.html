@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&display=swap" />
   <!-- Archivo variabile (titolo Work in progress) -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&text=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%26%2C%C2%B7.%E2%86%92%C2%B0%27%E2%80%99-%21%3F%3A%2F%28%29%C3%86%C3%89%C3%88%C3%80%C3%92%C3%99%C3%8C%2B&display=block" />
-  <link rel="stylesheet" href="styles.css?v=245" />
+  <link rel="stylesheet" href="styles.css?v=260" />
 </head>
 <body class="page-progetti page-fv page-cv">
 
@@ -54,22 +54,26 @@
   <!-- CV: stessa gabbia e stesso negativo della pagina progetti -->
   <main class="ix cv" id="cv">
     <div class="cv-head">
-      <h1 class="cv-who"><b>Lorenzo Di Gioacchino</b><span class="mono">Multidisciplinary designer · Discover my projects on surreostudio.com</span></h1>
-      <div class="cv-hud mono" aria-hidden="true">
-        <div class="cv-hud__c"><span class="cv-hud__l">REC</span><span class="cv-rec">●</span> <span id="cvClock">00:00:00</span><span class="cv-hud__l">SIG</span><span class="cv-hud__b"><i class="cv-bar"><b id="cvBar"></b></i><span id="cvPct">00%</span></span></div>
-        <div class="cv-hud__c"><span class="cv-hud__l">OSC · CH1</span><canvas id="cvOsc" width="220" height="48"></canvas></div>
-        <div class="cv-hud__c"><span class="cv-hud__l">MEM</span><pre id="cvHex"></pre></div>
-      </div>
+      <figure class="cv-ph"><img src="assets/cv/ldg.jpg" width="900" height="900" alt="Lorenzo Di Gioacchino"><figcaption class="mono"><span>fig. LDG</span><span>2026</span></figcaption></figure>
+      <h1 class="cv-who"><span class="ln"><b>Lorenzo Di Gioacchino</b></span><span class="cv-who__t">Multidisciplinary designer</span><span class="cv-who__ai mono"><i>Photographer</i><i>Videomaker</i><i>Persuasive Communication</i><i>AI Creative Technologist</i><i>AI Coding</i><i>AI Concept Design</i><i>AI Photo &amp; Video</i></span></h1>
+      <a class="cv-more-btn cv-who__btn mono" href="progetti.html"><span>Discover my projects</span><span aria-hidden="true">→</span></a>
+      <ul class="cv-roles">
+        <li><span class="mono">Surreo Studio</span><b>Founder &amp; Creative Director</b></li>
+        <li><span class="mono">Workshok!</span><b>Co-Founder &amp; Creative Director</b></li>
+        <li><span class="mono">Suburbiæ Fest</span><b>Co-Founder &amp; Creative Director</b></li>
+        <li><span class="mono">JAY27</span><b>Co-Founder</b></li>
+      </ul>
     </div>
+    <nav class="cv-nav" aria-label="CV sections">
+      <div class="cv-nav__cur" aria-hidden="true"><span class="cv-nav__st"><span><b>01</b>Projects</span><span><b>02</b>Teaching</span><span><b>03</b>Education</span><span><b>04</b>Awards &amp; exhibitions</span><span><b>05</b>Main fields</span><span><b>06</b>Software &amp; tools</span></span></div>
+      <div class="cv-nav__l mono"><a href="#cv-01" class="on"><span>01</span>Projects</a><a href="#cv-02"><span>02</span>Teaching</a><a href="#cv-03"><span>03</span>Education</a><a href="#cv-04"><span>04</span>Awards &amp; exhibitions</a><a href="#cv-05"><span>05</span>Main fields</a><a href="#cv-06"><span>06</span>Software &amp; tools</a></div>
+    </nav>
     <div class="cv-grid">
       <aside class="cv-side">
-        <!-- riquadro foto nascosto finché non arriva la nuova foto: rimettere qui <figure class="cv-ph"><img src="assets/cv/…" alt="Lorenzo Di Gioacchino"><figcaption class="mono"><span>fig. LDG</span><span>2026</span></figcaption></figure> -->
-        <ul class="cv-roles">
-          <li><span class="mono">Surreo Studio</span><b>Founder &amp; Creative Director</b></li>
-          <li><span class="mono">Workshok!</span><b>Co-Founder &amp; Creative Director</b></li>
-          <li><span class="mono">Suburbiæ Fest</span><b>Co-Founder &amp; Creative Director</b></li>
-        </ul>
-        <nav class="cv-idx mono" aria-label="CV sections"><a href="#cv-01"><span>01</span>Projects</a><a href="#cv-02"><span>02</span>Teaching</a><a href="#cv-03"><span>03</span>Education</a><a href="#cv-04"><span>04</span>Awards &amp; exhibitions</a><a href="#cv-05"><span>05</span>Main fields</a><a href="#cv-06"><span>06</span>Software &amp; tools</a></nav>
+        <!-- registro: contatore a rulli + righello degli anni (riempiti dallo script in fondo) -->
+        <div class="cv-odo" id="cvOdo" aria-hidden="true"></div>
+        <div class="cv-meta mono" aria-hidden="true"><span id="cvN">01 / 13</span><span id="cvT">Festival</span></div>
+        <div class="cv-ruler" id="cvRuler" aria-hidden="true"></div>
         <p class="cv-contact mono"><a href="mailto:surreocreative@gmail.com">surreocreative@gmail.com</a><a href="https://wa.me/393313510091" target="_blank" rel="noopener">+39 331 351 0091</a><span>Italian · Basic English</span></p>
       </aside>
       <div class="cv-main">
@@ -152,32 +156,66 @@
 
   <!-- Privacy banner (mostrato solo al primo visit) -->
     <script>
-  /* CV: interfaccia lo-fi decorativa — titolo che sfarfalla e si rimescola, oscilloscopio, codici, mirino */
+  /* CV · registro: titoli che salgono, barre degli anni, contatore a rulli + righello che seguono lo scroll; mirino da tavolo da disegno */
   (function(){
+    var main=document.querySelector('.cv');if(!main)return;
     var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var T=document.querySelector('.cv-title'),AB='CV#@%&/\\<>01X',base=T?T.dataset.t:'';
-    function scramble(){var n=0,id=setInterval(function(){T.textContent=base.split('').map(function(c,i){return n>6+i*3?c:AB[Math.random()*AB.length|0]}).join('');if(++n>14){clearInterval(id);T.textContent=base}},45)}
-    if(T&&!reduce){scramble();setInterval(scramble,5200)}
-    var t0=Date.now(),ck=document.getElementById('cvClock');
-    setInterval(function(){var s=(Date.now()-t0)/1000|0;ck.textContent=[s/3600|0,(s/60|0)%60,s%60].map(function(v){return String(v).padStart(2,'0')}).join(':')},1000);
-    var hex=document.getElementById('cvHex'),lines=[];
-    function hx(){return Math.random().toString(16).slice(2,8).toUpperCase()}
-    setInterval(function(){lines.push('0x'+hx()+'  '+hx().slice(0,4)+'  '+(Math.random()>.7?'OK':'··'));if(lines.length>4)lines.shift();hex.textContent=lines.join('\n')},reduce?2000:420);
-    var bar=document.getElementById('cvBar'),pct=document.getElementById('cvPct');
-    setInterval(function(){var v=20+Math.random()*80|0;bar.style.width=v+'%';pct.textContent=String(v).padStart(2,'0')+'%'},900);
-    var c=document.getElementById('cvOsc'),x=c.getContext('2d'),ph=0;
-    (function osc(){x.clearRect(0,0,220,48);x.strokeStyle='#16140f';x.lineWidth=1.5;x.beginPath();
-      for(var i=0;i<=220;i+=2){var y=24+Math.sin(i*.06+ph)*10*Math.sin(ph*.3)+Math.sin(i*.31+ph*2.1)*4+(Math.random()-.5)*2;i?x.lineTo(i,y):x.moveTo(i,y)}
-      x.stroke();ph+=.08;if(!reduce)requestAnimationFrame(osc)})();
-    // mirino che segue il mouse con le coordinate
-    var m=document.createElement('div');m.className='cv-cross mono';m.innerHTML='<i></i><i></i><span></span>';document.body.appendChild(m);
-    addEventListener('mousemove',function(e){m.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)';m.lastChild.textContent='X'+String(e.clientX).padStart(4,'0')+' Y'+String(e.clientY+scrollY|0).padStart(4,'0');m.classList.add('on')},{passive:true});
-    document.addEventListener('mouseleave',function(){m.classList.remove('on')});
+    main.classList.add('js');
+    var rows=[].slice.call(main.querySelectorAll('.cv-row')),pad=function(n){return String(n).padStart(2,'0')};
+    // anni letti dalla colonna di sinistra ("2024 — Present", "2020 — 2021", "2018")
+    var data=rows.map(function(r,i){
+      var y=r.querySelector('.cv-row__y').textContent,m=y.match(/(\d{4})(?:\s*—\s*(\d{4}|Present))?/),h=r.querySelector('h3');
+      h.innerHTML='<span>'+h.innerHTML+'</span>';h.classList.add('ln');
+      var d={n:i+1,tag:r.querySelector('.cv-row__t').textContent,y0:m?+m[1]:null,y1:m?(m[2]==='Present'?null:+(m[2]||m[1])):null,label:y};
+      if(d.y0){var end=d.y1==null?2026:d.y1,g=document.createElement('div');g.className='cv-gantt';g.setAttribute('aria-hidden','true');
+        g.innerHTML='<span class="mono">2018</span><span class="mono">2026</span><i'+(d.y1==null?' class="live"':'')+' style="left:'+((d.y0-2018)/9*100)+'%;width:'+((end-d.y0+1)/9*100)+'%"></i>';
+        var s=r.querySelector('.cv-row__s');s.parentNode.insertBefore(g,s.nextSibling)}
+      return d});
+    main.querySelectorAll('.cv-tags li').forEach(function(li,i){li.style.setProperty('--i',i)});
+    // contatore e righello
+    var odo=document.getElementById('cvOdo'),ru=document.getElementById('cvRuler'),cN=document.getElementById('cvN'),cT=document.getElementById('cvT');
+    odo.innerHTML=[0,1,2,3].map(function(){return '<span class="dg"><span class="st">'+'0123456789'.split('').map(function(n){return '<span>'+n+'</span>'}).join('')+'</span></span>'}).join('');
+    var tk='';for(var i=0;i<9;i++)tk+='<span class="tk mono" data-y="'+(2026-i)+'" style="top:'+((i+.5)/9*100)+'%">'+(2026-i)+'</span>';
+    ru.innerHTML=tk+'<i class="cv-ruler__span"></i><i class="cv-ruler__cur"></i>';
+    var sts=[].slice.call(odo.querySelectorAll('.st')),tks=[].slice.call(ru.querySelectorAll('.tk')),span=ru.querySelector('.cv-ruler__span'),cur=ru.querySelector('.cv-ruler__cur'),last=null;
+    function slot(y){return (2026-y)/9*100}
+    function set(d){if(d===last)return;last=d;
+      cN.textContent=pad(d.n)+' / '+pad(data.length);cT.textContent=d.tag;
+      if(!d.y0){cur.dataset.l=d.label;return}
+      var end=d.y1==null?2026:d.y1;
+      String(d.y0).split('').forEach(function(c,i){sts[i].style.transitionDelay=(i*70)+'ms';sts[i].style.transform='translateY('+(-c*.8)+'em)'});
+      span.style.top=slot(end)+'%';span.style.height=((end-d.y0+1)/9*100)+'%';
+      cur.style.top=(slot(d.y0)+100/18)+'%';cur.dataset.l=d.y1==null?'→ Present':(d.y0===d.y1?d.y0:d.y0+'–'+d.y1);
+      tks.forEach(function(t){var y=+t.dataset.y;t.classList.toggle('on',y>=d.y0&&y<=end)})}
+    set(data[0]);
+    var raf=0;function tick(){raf=0;var lim=innerHeight*.45,c=0;rows.forEach(function(r,i){if(r.getBoundingClientRect().top<lim)c=i});set(data[c])}
+    addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(tick)},{passive:true});
+    // entrate: righe, fasce di sezione, campi
+    var els=main.querySelectorAll('.cv-head,.cv-row,.cv-sec__h,.cv-tags,.cv-tool');
+    if(reduce||!('IntersectionObserver' in window))els.forEach(function(e){e.classList.add('in')});
+    else{var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -12% 0px'});
+      els.forEach(function(e){io.observe(e)})}
+    // mirino: linee a tutto schermo, si aggancia ai bordi delle 12 colonne, segna colonna · riga di base · X
+    if(!matchMedia('(hover:hover) and (min-width:861px)').matches)return;
+    var grid=main.querySelector('.cv-grid'),xh=document.createElement('div');xh.className='cv-xh';xh.setAttribute('aria-hidden','true');
+    xh.innerHTML='<i class="v"></i><i class="h"></i><span></span>';document.body.appendChild(xh);
+    var v=xh.children[0],h=xh.children[1],lab=xh.children[2];
+    addEventListener('mousemove',function(e){
+      if(document.body.classList.contains('menu-open')){xh.classList.remove('on');return}
+      var b=grid.getBoundingClientRect(),gap=parseFloat(getComputedStyle(grid).columnGap)||20,cw=(b.width-gap*11)/12,x=e.clientX,snap=false,lbl='M';
+      for(var i=0;i<12;i++){var l=b.left+i*(cw+gap),r=l+cw;
+        if(x>=l&&x<=r)lbl='C'+pad(i+1);else if(i<11&&x>r&&x<r+gap)lbl='G'+pad(i+1);
+        if(Math.abs(x-l)<8){x=l;snap=true}else if(Math.abs(x-r)<8){x=r;snap=true}}
+      v.style.left=x+'px';h.style.top=e.clientY+'px';xh.classList.toggle('snap',snap);
+      lab.style.left=(x+8)+'px';lab.style.top=(e.clientY+8)+'px';
+      lab.textContent=lbl+' · BL '+String(Math.round((e.clientY+scrollY)/8)).padStart(4,'0')+' · X '+String(Math.round(x)).padStart(4,'0');
+      xh.classList.add('on')},{passive:true});
+    document.addEventListener('mouseleave',function(){xh.classList.remove('on')});
   })();
   </script>
   <script>
-  (function(){var links=[].slice.call(document.querySelectorAll('.cv-idx a'));if(!('IntersectionObserver' in window))return;
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)})})},{rootMargin:'-30% 0px -60% 0px'});
+  (function(){var links=[].slice.call(document.querySelectorAll('.cv-nav__l a')),st=document.querySelector('.cv-nav__st');if(!('IntersectionObserver' in window))return;
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;links.forEach(function(a,i){var on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&st)st.style.transform='translateY('+(-i*100/links.length)+'%)'})})},{rootMargin:'-30% 0px -60% 0px'});
     document.querySelectorAll('.cv-sec').forEach(function(s){io.observe(s)})})();
   </script>
   <script>
