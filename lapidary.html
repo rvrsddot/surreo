@@ -23,6 +23,7 @@
   <style>
     @font-face{font-family:"Vindobona";src:url("assets/lapidary/Vindobona1683Fedele-Regular.woff2") format("woff2");font-style:normal;font-display:block}
     @font-face{font-family:"Vindobona";src:url("assets/lapidary/Vindobona1683Fedele-Italic.woff2") format("woff2");font-style:italic;font-display:block}
+    @font-face{font-family:"Panterak";src:url("assets/lapidary/Panterak-Regular.woff2") format("woff2");font-display:block}
 
     /* pagina in rosso: le variabili del sito si invertono (come fa la pagina progetti col nero) */
     body.page-lp{--red:#b8341f;--cream:#f1eadb;--deep:#15120e;
@@ -62,36 +63,42 @@
     /* ── FONT ───────────────────────────────── */
     .sec-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:clamp(40px,6vw,80px) 0 12px;border-bottom:1.5px solid var(--cream)}
     .sec-h h2{font:800 clamp(30px,4vw,56px)/.9 "Bricolage Grotesque",sans-serif;letter-spacing:-.03em;text-transform:uppercase}
-    .fonts{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(16px,2vw,24px);margin-top:clamp(18px,2.4vw,28px)}
-    .fcard{grid-column:1/-1;background:var(--cream);color:var(--deep);border:1.5px solid var(--deep);box-shadow:10px 12px 0 rgba(0,0,0,.22);display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr)}
-    .fcard__try{background:#16203a;color:#d9b66c;display:flex;flex-direction:column;justify-content:space-between;min-height:clamp(320px,34vw,520px);border-right:1.5px solid var(--deep)}
-    .fcard__bar{display:flex;justify-content:space-between;gap:10px;padding:12px 16px;border-bottom:1px solid rgba(217,182,108,.3)}
-    .fcard__t{font-family:Vindobona,serif;font-size:clamp(54px,8.4vw,150px);line-height:1;padding:0 clamp(14px,2.4vw,32px);outline:none;overflow-wrap:anywhere;caret-color:#d9b66c}
-    .fcard__ph{height:clamp(56px,6vw,86px);background:url(assets/lapidary/vindobona-foto.jpg) 30% 50%/cover;border-top:1px solid rgba(217,182,108,.3)}
-    .fcard__info{display:flex;flex-direction:column}
-    .fcard__name{font-family:Vindobona,serif;font-size:clamp(44px,4.6vw,72px);line-height:.95;padding:18px 18px 14px}
-    .fcard__meta{display:grid;grid-template-columns:auto 1fr;border-top:1.5px solid var(--deep);margin:0 18px}
-    .fcard__meta dt,.fcard__meta dd{padding:8px 0;border-bottom:1px solid rgba(21,18,14,.18);font-size:13px}
-    .fcard__meta dt{font:400 10px/1.9 ui-monospace,'Courier New',monospace;letter-spacing:.06em;text-transform:uppercase;opacity:.6;padding-right:18px}
-    .fcard__opts{display:flex;gap:8px;padding:14px 18px;flex-wrap:wrap}
+    /* indice dei font: ogni riga apre il banco di prova */
+    .fonts{margin-top:clamp(6px,1vw,12px)}
+    .frow{border-bottom:1.5px solid var(--cream)}
+    .frow__head{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:70px minmax(0,1fr) auto;align-items:center;gap:16px;padding:18px 0}
+    .frow__head:focus-visible{outline:2px solid var(--cream);outline-offset:4px}
+    .frow__name{font-size:clamp(30px,7vw,112px);line-height:.95;white-space:nowrap;overflow:hidden}
+    .frow__plus{font:300 40px/1 "Bricolage Grotesque",sans-serif;transition:transform .3s}
+    .frow.is-open .frow__plus{transform:rotate(45deg)}
+    .frow--soon .frow__name{font:800 clamp(30px,4vw,56px)/1 "Bricolage Grotesque",sans-serif;text-transform:uppercase;letter-spacing:-.03em;opacity:.55}
+    .bench{display:none;background:var(--cream);color:var(--deep);border:1.5px solid var(--deep);margin-bottom:22px;box-shadow:10px 12px 0 rgba(0,0,0,.22)}
+    .frow.is-open .bench{display:block}
+    .tools{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;padding:12px 16px;border-bottom:1.5px solid var(--deep)}
+    .tools label{display:flex;gap:10px;align-items:center}
+    .tools input[type=range]{accent-color:var(--red);width:160px}
+    .tools .sp{margin-left:auto}
     .chip{all:unset;cursor:pointer;border:1.5px solid var(--deep);padding:7px 11px;font:700 10px/1 ui-monospace,'Courier New',monospace;letter-spacing:.06em;text-transform:uppercase}
     .chip[aria-pressed=true]{background:var(--deep);color:var(--cream)}
     .chip:focus-visible{outline:2px solid var(--red);outline-offset:2px}
-    .dl{margin-top:auto;display:flex;justify-content:space-between;align-items:center;background:var(--deep);color:var(--cream);text-decoration:none;
-      padding:18px;font:700 16px/1 "Bricolage Grotesque",sans-serif;transition:background .15s}
-    .dl:hover{background:var(--red)}
-    button.dl{all:unset;box-sizing:border-box;margin-top:auto;display:flex;justify-content:space-between;align-items:center;width:100%;cursor:pointer;
-      background:var(--deep);color:var(--cream);padding:18px;font:700 16px/1 "Bricolage Grotesque",sans-serif;transition:background .15s}
-    button.dl:hover{background:var(--red)}
-    button.dl:focus-visible{outline:2px solid var(--red);outline-offset:2px}
-    button.dl.is-soon{background:var(--red);animation:nudge .4s cubic-bezier(.3,1.6,.5,1)}
-    @keyframes nudge{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}60%{transform:translateX(4px)}}
-    .dl small{font:400 10px/1 ui-monospace,'Courier New',monospace;letter-spacing:.06em;text-transform:uppercase;opacity:.7}
-    .is-it .fcard__t{font-style:italic}
-    .is-alt .fcard__t{font-feature-settings:"salt" 1}
-    .soon{grid-column:span 6;border:1.5px dashed var(--cream);min-height:clamp(150px,14vw,210px);display:flex;flex-direction:column;justify-content:space-between;padding:14px 16px;
-      background:repeating-linear-gradient(135deg,transparent 0 10px,rgba(241,234,219,.07) 10px 11px)}
-    .soon b{font:800 clamp(24px,2.4vw,34px)/1 "Bricolage Grotesque",sans-serif;text-transform:uppercase;letter-spacing:-.02em;opacity:.8}
+    .stage{padding:clamp(18px,3vw,36px);min-height:clamp(200px,22vw,320px);outline:none;line-height:1.05;overflow-wrap:anywhere}
+    .lower{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);border-top:1.5px solid var(--deep)}
+    .glass{border-right:1.5px solid var(--deep);display:flex;flex-direction:column}
+    .glass__big{flex:1;min-height:240px;display:flex;align-items:center;justify-content:center;font-size:clamp(140px,16vw,240px);line-height:1;
+      background:linear-gradient(transparent calc(50% - .5px),rgba(184,52,31,.35) calc(50% - .5px) calc(50% + .5px),transparent 0)}
+    .glass__meta{display:flex;justify-content:space-between;padding:10px 14px;border-top:1px solid rgba(21,18,14,.18)}
+    .set{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));align-content:start}
+    .set button{all:unset;cursor:pointer;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:24px;border-right:1px solid rgba(21,18,14,.12);border-bottom:1px solid rgba(21,18,14,.12)}
+    .set button:hover,.set button[aria-pressed=true]{background:var(--deep);color:var(--cream)}
+    .about{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);border-top:1.5px solid var(--deep)}
+    .about dl{display:grid;grid-template-columns:auto 1fr;padding:6px 14px 10px;border-right:1.5px solid var(--deep)}
+    .about dt,.about dd{padding:7px 0;border-bottom:1px solid rgba(21,18,14,.15);font-size:13px}
+    .about dt{font:400 10px/1.9 ui-monospace,'Courier New',monospace;letter-spacing:.06em;text-transform:uppercase;opacity:.6;padding-right:14px}
+    .about p{padding:14px 18px;font-size:15px;line-height:1.5;max-width:60ch}
+    .about .view{display:block;margin-top:10px;font:700 10px/1 ui-monospace,'Courier New',monospace;letter-spacing:.06em;text-transform:uppercase;opacity:.6}
+    .f-vin{font-family:Vindobona,serif}
+    .f-pan{font-family:Panterak,sans-serif}
+    .is-it .stage,.is-it .glass__big,.is-it .set button{font-style:italic}
 
     /* ── SEGNALA ────────────────────────────── */
     .send{margin-top:clamp(56px,8vw,110px);display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:20px;align-items:end;
@@ -109,9 +116,9 @@
     @media(max-width:900px){
       .tag,.lead{grid-column:1/-1}
       .lead{margin-top:18px}
-      .fcard{grid-template-columns:1fr}
-      .fcard__try{border-right:0;border-bottom:1.5px solid var(--deep);min-height:300px}
-      .soon{grid-column:1/-1}
+      .lower,.about{grid-template-columns:1fr}
+      .glass,.about dl{border-right:0;border-bottom:1.5px solid var(--deep)}
+      .frow__head{grid-template-columns:52px minmax(0,1fr) auto}
       .send h2,.send p,.send__cta{grid-column:1/-1;grid-row:auto}
       .send__cta{margin-top:20px}
     }
@@ -165,33 +172,49 @@
 
     <!-- FONT -->
     <section id="font">
-      <div class="sec-h"><h2>Font</h2><span class="k k--m">01 disponibile</span></div>
+      <div class="sec-h"><h2>Font</h2><span class="k k--m">02 in visione</span></div>
       <div class="fonts">
-        <article class="fcard" id="vindobona">
-          <div class="fcard__try">
-            <div class="fcard__bar"><span class="k">L·01</span><span class="k k--m">Scrivi ↓</span></div>
-            <div class="fcard__t" contenteditable="true" spellcheck="false">Viennam relata</div>
-            <div class="fcard__ph" role="img" aria-label="L’iscrizione originale a Loreto"></div>
-          </div>
-          <div class="fcard__info">
-            <div class="fcard__name">Vindobona 1683</div>
-            <dl class="fcard__meta">
-              <dt>Trovata</dt><dd>Loreto, IT</dd>
-              <dt>Data</dt><dd>1683</dd>
-              <dt>Stili</dt><dd>Regular · Italic</dd>
-              <dt>Glifi</dt><dd>141</dd>
-              <dt>Licenza</dt><dd>—</dd>
-            </dl>
-            <div class="fcard__opts">
-              <button class="chip" type="button" data-st="rg" aria-pressed="true">Regular</button>
-              <button class="chip" type="button" data-st="it" aria-pressed="false">Italic</button>
-              <button class="chip" type="button" data-alt aria-pressed="false">Alternative</button>
+        <div class="frow is-open" id="vindobona">
+          <button class="frow__head" type="button" aria-expanded="true"><span class="k">L·01</span><span class="frow__name f-vin">Vindobona 1683</span><span class="frow__plus" aria-hidden="true">+</span></button>
+          <div class="bench">
+            <div class="tools">
+              <label class="k">Corpo <input type="range" min="24" max="200" value="110" data-size aria-label="Corpo del testo" /></label>
+              <span><button class="chip" type="button" data-st="rg" aria-pressed="true">Regular</button> <button class="chip" type="button" data-st="it" aria-pressed="false">Italic</button></span>
+              <span class="k k--m sp">Scrivi nel riquadro</span>
             </div>
-            <button class="dl dl--soon" type="button" id="dl-soon" aria-live="polite"><span class="dl__t">Scarica il font</span> <small class="dl__s">.zip ↓</small></button>
+            <div class="stage f-vin" contenteditable="true" spellcheck="false" style="font-size:110px">Viennam relata</div>
+            <div class="lower">
+              <div class="glass"><div class="glass__big f-vin" data-big>V</div><div class="glass__meta k"><span data-ch>V</span><span class="k--m" data-cp>U+0056</span></div></div>
+              <div class="set f-vin" data-set="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ÀÁÄÈÉËÌÍÏÒÓÖÙÚÜàáäèéëìíïòóöùúü!&quot;'(),-./:;?‘’“”–—·•❦"></div>
+            </div>
+            <div class="about">
+              <dl><dt>Trovata</dt><dd>Loreto, IT</dd><dt>Data</dt><dd>1683</dd><dt>Stili</dt><dd>Regular · Italic</dd><dt>Caratteri</dt><dd>118</dd><dt>Licenza</dt><dd>—</dd></dl>
+              <p>Un font naturale. È stato ridisegnato lettera per lettera dall’iscrizione dipinta di Loreto, tenendo apposta le sue irregolarità: aste mai uguali, curve un po’ storte, bordi mossi dal pennello e dalla superficie. Così il carattere non perde l’effetto del materiale su cui è nato.<span class="view">Solo in visione · download non disponibile</span></p>
+            </div>
           </div>
-        </article>
-        <div class="soon"><span class="k">L·02</span><b>In arrivo</b></div>
-        <div class="soon"><span class="k">L·03</span><b>In arrivo</b></div>
+        </div>
+
+        <div class="frow" id="panterak">
+          <button class="frow__head" type="button" aria-expanded="false"><span class="k">L·02</span><span class="frow__name f-pan">Panterak</span><span class="frow__plus" aria-hidden="true">+</span></button>
+          <div class="bench">
+            <div class="tools">
+              <label class="k">Corpo <input type="range" min="24" max="200" value="96" data-size aria-label="Corpo del testo" /></label>
+              <span class="k k--m">Solo maiuscole</span>
+              <span class="k k--m sp">Scrivi nel riquadro</span>
+            </div>
+            <div class="stage f-pan" contenteditable="true" spellcheck="false" style="font-size:96px">WE INTEND TO CAUSE HAVOC</div>
+            <div class="lower">
+              <div class="glass"><div class="glass__big f-pan" data-big>W</div><div class="glass__meta k"><span data-ch>W</span><span class="k--m" data-cp>U+0057</span></div></div>
+              <div class="set f-pan" data-set="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ÀÈÉÌÒÙÄÖÜÆ.,:;!?-–·'’&quot;()+=«»°*/%#&amp;@$€"></div>
+            </div>
+            <div class="about">
+              <dl><dt>Trovata</dt><dd>Poster WITCH, US Tour 2022 · lettering di Andrew McGranahan</dd><dt>Griglia</dt><dd>16 × 14 moduli</dd><dt>Stili</dt><dd>Regular</dd><dt>Caratteri</dt><dd>110</dd><dt>Licenza</dt><dd>—</dd></dl>
+              <p>Nasce dalle cinque lettere WITCH di un poster rock: blocchi pieni da cui la lettera viene fuori solo per sottrazione. Da lì un alfabeto intero su una griglia di 16 × 14 moduli, senza diagonali.<span class="view">Solo in visione · download non disponibile</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="frow frow--soon"><div class="frow__head" style="cursor:default"><span class="k">L·03</span><span class="frow__name">In arrivo</span><span></span></div></div>
       </div>
     </section>
 
@@ -359,19 +382,22 @@
   })();
 
   (function(){
-    var card=document.getElementById('vindobona'); if(!card) return;
-    card.querySelectorAll('[data-st]').forEach(function(b){b.addEventListener('click',function(){
-      card.querySelectorAll('[data-st]').forEach(function(x){x.setAttribute('aria-pressed',x===b);});
-      card.classList.toggle('is-it',b.dataset.st==='it');});});
-    var dl=document.getElementById('dl-soon'), dlT;
-    if(dl) dl.addEventListener('click',function(){
-      var t=dl.querySelector('.dl__t'), sm=dl.querySelector('.dl__s');
-      dl.classList.remove('is-soon'); void dl.offsetWidth; dl.classList.add('is-soon');
-      t.textContent='Sta per arrivare'; sm.textContent='Coming soon';
-      clearTimeout(dlT); dlT=setTimeout(function(){dl.classList.remove('is-soon');t.textContent='Scarica il font';sm.textContent='.zip ↓';},2600);
+    document.querySelectorAll('.frow:not(.frow--soon)').forEach(function(r){
+      var head=r.querySelector('.frow__head'), stage=r.querySelector('.stage'), big=r.querySelector('[data-big]'),
+          ch=r.querySelector('[data-ch]'), cp=r.querySelector('[data-cp]'), set=r.querySelector('[data-set]');
+      head.addEventListener('click',function(){var on=r.classList.toggle('is-open');head.setAttribute('aria-expanded',on);});
+      var size=r.querySelector('[data-size]');
+      // su telefono si parte da un corpo più piccolo
+      if(window.matchMedia('(max-width:600px)').matches){size.value=Math.round(size.value*.45);stage.style.fontSize=size.value+'px';}
+      size.addEventListener('input',function(e){stage.style.fontSize=e.target.value+'px';});
+      function pick(c,b){big.textContent=c;ch.textContent=c;cp.textContent='U+'+c.codePointAt(0).toString(16).toUpperCase().padStart(4,'0');
+        set.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});}
+      Array.from(set.dataset.set).forEach(function(c){var b=document.createElement('button');b.type='button';b.textContent=c;b.setAttribute('aria-label',c);
+        b.addEventListener('mouseenter',function(){pick(c,b);});b.addEventListener('click',function(){pick(c,b);});set.appendChild(b);});
+      r.querySelectorAll('[data-st]').forEach(function(b){b.addEventListener('click',function(){
+        r.querySelectorAll('[data-st]').forEach(function(x){x.setAttribute('aria-pressed',x===b);});
+        r.classList.toggle('is-it',b.dataset.st==='it');});});
     });
-    var a=card.querySelector('[data-alt]');
-    a.addEventListener('click',function(){var on=a.getAttribute('aria-pressed')!=='true';a.setAttribute('aria-pressed',on);card.classList.toggle('is-alt',on);});
   })();
   </script>
 </body>
