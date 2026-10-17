@@ -170,6 +170,16 @@ body.menu-open .burger{
   background:var(--ink);color:var(--paper);
 }
 body.menu-open .burger:hover{box-shadow:3px 3px 0 var(--paper)}
+/* LINGUA — chip IT | EN accanto al burger, stesso bordo e altezza (lang.js) */
+.lang-chip{margin-left:auto;margin-right:-6px;flex:none;display:inline-flex;height:46px;
+  border:1.5px solid var(--ink);border-radius:3px;background:var(--paper);overflow:hidden}
+.lang-chip button{appearance:none;border:0;margin:0;background:none;color:var(--ink);cursor:pointer;
+  padding:0 12px;font:600 12px/1 ui-monospace,'Courier New',monospace;letter-spacing:.06em;
+  transition:background .2s var(--ease),color .2s var(--ease)}
+.lang-chip button+button{border-left:1.5px solid var(--ink)}
+.lang-chip button.is-on{background:var(--ink);color:var(--paper);cursor:default}
+.lang-chip button:not(.is-on):hover{background:rgba(22,20,15,.08)}
+.lang-chip button:focus-visible{outline:3px solid var(--ink);outline-offset:-4px}
 .burger span{
   display:block;height:1.5px;background:currentColor;
   transform-origin:50% 50%;

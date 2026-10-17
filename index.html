@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Surreo — Creative Studio</title>
-  <meta name="description" content="Creative studio a 360°: branding e creatività sono il nostro forte. Progettiamo unendo strategia, estetica e intelligenza artificiale — dall'idea al risultato. Co-founder di Workshok (già SAAD Workshop Week) — workshop AI, design e architettura ad Ascoli Piceno dal 2018." />
+  <meta name="description" data-en-content="Creative studio across every discipline: branding and creativity are our strength. We design by combining strategy, aesthetics and artificial intelligence — from idea to result. Co-founders of Workshok (formerly SAAD Workshop Week) — AI, design and architecture workshops in Ascoli Piceno since 2018." content="Creative studio a 360°: branding e creatività sono il nostro forte. Progettiamo unendo strategia, estetica e intelligenza artificiale — dall'idea al risultato. Co-founder di Workshok (già SAAD Workshop Week) — workshop AI, design e architettura ad Ascoli Piceno dal 2018." />
   <meta name="keywords" content="creative studio, studio creativo, branding, brand identity, creatività, direzione creativa, design a 360, intelligenza artificiale, AI design, social media, grafica, video, motion graphics, spot, videoclip, animazione, 3D, rendering, industrial design, interior design, exhibit, videomapping, web design, tour 360, Abruzzo, Marche, Italia, Surreo, Workshok, SAAD Workshop Week, SAAD Workshop Week 2026, workshop AI, workshop design Ascoli Piceno, UNICAM SAAD, Suburbiæ Music Fest" />
   <meta name="author" content="Surreo Studio" />
   <link rel="canonical" href="https://surreostudio.com/" />
@@ -93,7 +93,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&display=swap" />
   <!-- Archivo variabile (hero, manifesto categorie, vetrina): solo maiuscole, cifre e segni usati -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&text=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%26%2C%C2%B7.%E2%86%92%C2%B0%27%E2%80%99-%21%3F%3A%2F%28%29%C3%86%C3%89%C3%88%C3%80%C3%92%C3%99%C3%8C%2B&display=block" />
-  <link rel="stylesheet" href="styles.css?v=247" />
+  <link rel="stylesheet" href="styles.css?v=248" />
+  <script src="lang.js?v=1"></script>
 </head>
 <body>
 
@@ -117,7 +118,10 @@
       </svg>
       <span class="brand__txt">Surreo <em>Studio</em></span>
     </a>
-    <button class="burger" type="button" aria-label="Apri menu" aria-expanded="false" aria-controls="menu">
+    <div class="lang-chip" role="group" aria-label="Lingua · Language">
+      <button type="button" data-lang="it" lang="it" aria-label="Italiano">IT</button><button type="button" data-lang="en" lang="en" aria-label="English">EN</button>
+    </div>
+    <button class="burger" type="button" aria-label="Apri menu" data-en-aria-label="Open menu" aria-expanded="false" aria-controls="menu">
       <span></span><span></span><span></span>
     </button>
   </header>
@@ -145,19 +149,19 @@
       <div class="coll__items">
         <div class="coll__box">
           <span class="coll__tag">CO-FOUNDER</span>
-          <a class="coll__item" href="workshok/" title="SAAD Workshop Week — oggi Workshok · Ascoli Piceno · dal 2018" aria-label="Vai a Workshok (ex SAAD Workshop Week)">
+          <a class="coll__item" href="workshok/" title="SAAD Workshop Week — oggi Workshok · Ascoli Piceno · dal 2018" data-en-title="SAAD Workshop Week — now Workshok · Ascoli Piceno · since 2018" aria-label="Vai a Workshok (ex SAAD Workshop Week)" data-en-aria-label="Go to Workshok (formerly SAAD Workshop Week)">
             <div class="coll__thumb coll__thumb--saad"><img src="assets/collateral/saad-logo.svg" alt="SAAD Workshop Week" loading="lazy"></div>
           </a>
         </div>
         <div class="coll__box">
           <span class="coll__tag">CO-FOUNDER<br>CREATIVE<br>DIRECTION</span>
-          <a class="coll__item" href="workshok/" title="Workshok — Workshop AI, Design, Grafica e Architettura · Ascoli Piceno" aria-label="Vai a Workshok">
+          <a class="coll__item" href="workshok/" title="Workshok — Workshop AI, Design, Grafica e Architettura · Ascoli Piceno" data-en-title="Workshok — AI, Design, Graphics and Architecture workshops · Ascoli Piceno" aria-label="Vai a Workshok" data-en-aria-label="Go to Workshok">
             <div class="coll__thumb coll__thumb--workshok"><img src="assets/collateral/workshok-mark-crema.svg" alt="Workshok" loading="lazy"></div>
           </a>
         </div>
         <div class="coll__box">
           <span class="coll__tag">CO-FOUNDER<br>CREATIVE<br>DIRECTION</span>
-          <a class="coll__item" href="https://www.suburbiaefest.com" target="_blank" rel="noopener" title="Suburbiæ Music Fest · Teramo" aria-label="Vai al sito di Suburbiæ Fest">
+          <a class="coll__item" href="https://www.suburbiaefest.com" target="_blank" rel="noopener" title="Suburbiæ Music Fest · Teramo" aria-label="Vai al sito di Suburbiæ Fest" data-en-aria-label="Go to the Suburbiæ Fest website">
             <div class="coll__thumb coll__thumb--sub"><img src="assets/collateral/suburbiae-gatto.png" alt="Suburbiæ Music Fest" loading="lazy"></div>
           </a>
         </div>
@@ -167,7 +171,7 @@
 
   <!-- projects (sezione categorie/carosello) -->
   <section class="projects" id="projects">
-    <div class="sec-head"><h2>Projects — Showcase</h2><span class="sec-head__note">Clicca una miniatura</span></div>
+    <div class="sec-head"><h2>Projects — Showcase</h2><span class="sec-head__note" data-en="Click a thumbnail">Clicca una miniatura</span></div>
     <main id="app" aria-live="polite"></main>
   </section>
 
@@ -195,20 +199,20 @@
 
       <div class="about__thesis" aria-label="Manifesto">
         <div class="about__thesis-track">
-          <span>Non partiamo da una disciplina<span class="sep"> / </span></span>
-          <span>Partiamo da <em>un’idea</em><span class="sep"> — </span></span>
-          <span>Non partiamo da una disciplina<span class="sep"> / </span></span>
-          <span>Partiamo da <em>un’idea</em><span class="sep"> — </span></span>
-          <span>Non partiamo da una disciplina<span class="sep"> / </span></span>
-          <span>Partiamo da <em>un’idea</em><span class="sep"> — </span></span>
-          <span>Non partiamo da una disciplina<span class="sep"> / </span></span>
-          <span>Partiamo da <em>un’idea</em><span class="sep"> — </span></span>
+          <span data-en="We don’t start from a discipline<span class=&quot;sep&quot;> / </span>">Non partiamo da una disciplina<span class="sep"> / </span></span>
+          <span data-en="We start from <em>an idea</em><span class=&quot;sep&quot;> — </span>">Partiamo da <em>un’idea</em><span class="sep"> — </span></span>
+          <span data-en="We don’t start from a discipline<span class=&quot;sep&quot;> / </span>">Non partiamo da una disciplina<span class="sep"> / </span></span>
+          <span data-en="We start from <em>an idea</em><span class=&quot;sep&quot;> — </span>">Partiamo da <em>un’idea</em><span class="sep"> — </span></span>
+          <span data-en="We don’t start from a discipline<span class=&quot;sep&quot;> / </span>">Non partiamo da una disciplina<span class="sep"> / </span></span>
+          <span data-en="We start from <em>an idea</em><span class=&quot;sep&quot;> — </span>">Partiamo da <em>un’idea</em><span class="sep"> — </span></span>
+          <span data-en="We don’t start from a discipline<span class=&quot;sep&quot;> / </span>">Non partiamo da una disciplina<span class="sep"> / </span></span>
+          <span data-en="We start from <em>an idea</em><span class=&quot;sep&quot;> — </span>">Partiamo da <em>un’idea</em><span class="sep"> — </span></span>
         </div>
       </div>
 
       <div class="about__manifest">
         <header class="about__mf-head">
-          <span><b>Studio</b> · Chi siamo · Come lavoriamo</span>
+          <span data-en="<b>Studio</b> · Who we are · How we work"><b>Studio</b> · Chi siamo · Come lavoriamo</span>
           <span>Ed. 2025 · IT · DE</span>
         </header>
 
@@ -217,27 +221,27 @@
           <div class="ab-ph__txt">
             <h3 class="ab-ph__title">About<br>studio</h3>
             <div class="ab-ph__slides" id="abSlides">
-            <div class="ab-ph__row"><b>01 · Chi</b><h3>Hub creativo <em>indipendente</em>.</h3><p>Branding, grafica, foto, video, motion, web, prodotto, interior, allestimenti. Ci muoviamo tra tutto, senza recinti.</p></div>
-            <div class="ab-ph__row"><b>02 · Come</b><h3>Non partiamo da una disciplina. Partiamo da <em>un’idea</em>.</h3><p>Poi diventa quello che serve: un’identità, uno spazio, un oggetto, un sito, una campagna, un’esperienza.</p></div>
-            <div class="ab-ph__row"><b>03 · Con cosa</b><h3>Matita e <em>AI generativa</em>, stesso metodo.</h3><p>Ricerca ed estetica restano al centro. Dal concept alla realizzazione, sempre insieme.</p></div>
-            <div class="ab-ph__row"><b>04 · Dove</b><h3>Italia · Germania · ovunque serva <em>un’idea</em>.</h3><p>Base tra Abruzzo e Marche, operativi in tutta Europa.</p></div>
+            <div class="ab-ph__row"><b data-en="01 · Who">01 · Chi</b><h3 data-en="An <em>independent</em> creative hub.">Hub creativo <em>indipendente</em>.</h3><p data-en="Branding, graphics, photo, video, motion, web, product, interiors, exhibition design. We move across all of it, with no fences.">Branding, grafica, foto, video, motion, web, prodotto, interior, allestimenti. Ci muoviamo tra tutto, senza recinti.</p></div>
+            <div class="ab-ph__row"><b data-en="02 · How">02 · Come</b><h3 data-en="We don’t start from a discipline. We start from <em>an idea</em>.">Non partiamo da una disciplina. Partiamo da <em>un’idea</em>.</h3><p data-en="Then it becomes whatever it needs to be: an identity, a space, an object, a website, a campaign, an experience.">Poi diventa quello che serve: un’identità, uno spazio, un oggetto, un sito, una campagna, un’esperienza.</p></div>
+            <div class="ab-ph__row"><b data-en="03 · With what">03 · Con cosa</b><h3 data-en="Pencil and <em>generative AI</em>, same method.">Matita e <em>AI generativa</em>, stesso metodo.</h3><p data-en="Research and aesthetics stay at the core. From concept to execution, always together.">Ricerca ed estetica restano al centro. Dal concept alla realizzazione, sempre insieme.</p></div>
+            <div class="ab-ph__row"><b data-en="04 · Where">04 · Dove</b><h3 data-en="Italy · Germany · wherever <em>an idea</em> is needed.">Italia · Germania · ovunque serva <em>un’idea</em>.</h3><p data-en="Based between Abruzzo and Marche, working all over Europe.">Base tra Abruzzo e Marche, operativi in tutta Europa.</p></div>
             </div>
-            <div class="ab-ph__nav" id="abNav" aria-label="Voci"></div>
+            <div class="ab-ph__nav" id="abNav" aria-label="Voci" data-en-aria-label="Topics"></div>
           </div>
-          <div class="ab-ph__box" id="abPhys" aria-label="Parole chiave dello studio"><span class="ab-ph__hint">prendi una parola e lanciala</span></div>
+          <div class="ab-ph__box" id="abPhys" aria-label="Parole chiave dello studio" data-en-aria-label="Studio keywords"><span class="ab-ph__hint" data-en="grab a word and throw it">prendi una parola e lanciala</span></div>
         </div>
 
         <div class="about__stats">
           <div class="about__stat"><span class="v v--word">Unbased</span><span class="k">Studio</span></div>
-          <div class="about__stat"><span class="v">XXX</span><span class="k">Progetti</span></div>
-          <div class="about__stat"><span class="v">2025</span><span class="k">Fondato</span></div>
-          <div class="about__stat"><span class="v">IT / DE</span><span class="k">Basi</span></div>
+          <div class="about__stat"><span class="v">XXX</span><span class="k" data-en="Projects">Progetti</span></div>
+          <div class="about__stat"><span class="v">2025</span><span class="k" data-en="Founded">Fondato</span></div>
+          <div class="about__stat"><span class="v">IT / DE</span><span class="k" data-en="Bases">Basi</span></div>
         </div>
       </div>
 
       <div class="about__cta">
         <a class="about__btn" href="tel:+393313510091">
-          <span class="lbl"><b>Chiama</b></span>
+          <span class="lbl"><b data-en="Call">Chiama</b></span>
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.1-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2z"/></svg>
         </a>
         <a class="about__btn" href="mailto:surreocreative@gmail.com">
@@ -275,7 +279,7 @@
         <span><b>Menu</b> · Navigation · 006 / 006</span>
         <span class="menu__live">Studio · 2026</span>
       </header>
-      <nav class="menu__nav" aria-label="Navigazione principale">
+      <nav class="menu__nav" aria-label="Navigazione principale" data-en-aria-label="Main navigation">
         <a href="progetti.html" style="--i:1">
           <span class="k">01/</span>
           <span class="w">Projects</span>
@@ -292,19 +296,19 @@
           <span class="k">03/</span>
           <span class="w">Lapidary</span>
           <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
-          <span class="m">Scrittura · Font trovati per strada</span>
+          <span class="m" data-en="Lettering · Fonts found on the street">Scrittura · Font trovati per strada</span>
         </a>
         <a href="#about" style="--i:4">
           <span class="k">04/</span>
           <span class="w">About</span>
           <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
-          <span class="m">Studio · Manifesto · Come lavoriamo</span>
+          <span class="m" data-en="Studio · Manifesto · How we work">Studio · Manifesto · Come lavoriamo</span>
         </a>
         <a href="workshok/" style="--i:5">
           <span class="k">05/</span>
           <span class="w">Workshok</span>
           <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
-          <span class="m">Design · Architettura · Since 2018</span>
+          <span class="m" data-en="Design · Architecture · Since 2018">Design · Architettura · Since 2018</span>
         </a>
         <div class="menu__contact" style="--i:6">
           <span class="k">06/</span>
@@ -325,14 +329,14 @@
   </div>
 
   <!-- Privacy banner (mostrato solo al primo visit) -->
-  <aside class="privacy-banner" id="privacyBanner" role="dialog" aria-live="polite" aria-label="Informativa privacy" hidden>
+  <aside class="privacy-banner" id="privacyBanner" role="dialog" aria-live="polite" aria-label="Informativa privacy" data-en-aria-label="Privacy notice" hidden>
     <div class="privacy-banner__inner">
-      <p class="privacy-banner__text">
+      <p class="privacy-banner__text" data-en="<b>Cookie &amp;amp; Privacy.</b> This site <b>uses no tracking cookies or analytics</b>. It only loads technical resources from Google Fonts, YouTube (nocookie) and GitHub Pages — which may involve sending your IP address to these providers. <a href=&quot;/privacy.html&quot;>Read the privacy policy</a>.">
         <b>Cookie &amp; Privacy.</b>
         Questo sito <b>non usa cookie di tracciamento né analytics</b>. Carica solo risorse tecniche da Google Fonts, YouTube (nocookie) e GitHub Pages — con eventuale trasferimento del tuo IP a questi provider.
         <a href="/privacy.html">Leggi l'informativa</a>.
       </p>
-      <button class="privacy-banner__ok" type="button" id="privacyBannerOk" aria-label="Chiudi banner privacy">Ok, ho capito</button>
+      <button class="privacy-banner__ok" type="button" id="privacyBannerOk" aria-label="Chiudi banner privacy" data-en-aria-label="Close privacy banner" data-en="Ok, got it">Ok, ho capito</button>
     </div>
   </aside>
   <script>
@@ -356,23 +360,23 @@
   <div class="hello" id="hello" role="dialog" aria-modal="true" aria-labelledby="hello-t" hidden>
     <div class="hello__scrim" data-close></div>
     <div class="hello__card">
-      <div class="hello__head mono"><span>Da: Surreo</span><i>A: te · adesso</i></div>
+      <div class="hello__head mono"><span data-en="From: Surreo">Da: Surreo</span><i data-en="To: you · now">A: te · adesso</i></div>
       <div class="hello__stamp mono" aria-hidden="true">IT<br>✶<br>DE</div>
       <div class="hello__body">
         <h2 class="hello__t" id="hello-t">Hello Dear,</h2>
-        <p>siamo <strong>Surreo</strong>, un collettivo multidisciplinare tra Italia e Germania.</p>
-        <p>Lavoriamo su quattro fronti, spesso insieme nello stesso progetto:</p>
+        <p data-en="we are <strong>Surreo</strong>, a multidisciplinary collective between Italy and Germany.">siamo <strong>Surreo</strong>, un collettivo multidisciplinare tra Italia e Germania.</p>
+        <p data-en="We work on four fronts, often together in the same project:">Lavoriamo su quattro fronti, spesso insieme nello stesso progetto:</p>
         <ul class="hello__list">
-          <li><b>Product</b><span>oggetti, interni, allestimenti</span></li>
-          <li><b>Media strategy</b><span>social, campagne, contenuti</span></li>
-          <li><b>Graphic &amp; Motion</b><span>brand, grafica, animazione, 3D</span></li>
-          <li><b>Photo &amp; Film</b><span>shooting, spot, videoclip</span></li>
+          <li><b>Product</b><span data-en="objects, interiors, exhibitions">oggetti, interni, allestimenti</span></li>
+          <li><b>Media strategy</b><span data-en="social, campaigns, content">social, campagne, contenuti</span></li>
+          <li><b>Graphic &amp; Motion</b><span data-en="brand, graphics, animation, 3D">brand, grafica, animazione, 3D</span></li>
+          <li><b>Photo &amp; Film</b><span data-en="shoots, commercials, music videos">shooting, spot, videoclip</span></li>
         </ul>
-        <p>Hai un'idea, anche solo a metà? È il punto da cui ci piace partire.</p>
+        <p data-en="Got an idea, even a half-formed one? That’s exactly where we like to start.">Hai un'idea, anche solo a metà? È il punto da cui ci piace partire.</p>
       </div>
       <div class="hello__cta mono">
-        <button type="button" class="hello__no" data-close>Prima mi guardo in giro</button>
-        <a class="hello__go" href="#about">Parliamone →</a>
+        <button type="button" class="hello__no" data-close data-en="Let me look around first">Prima mi guardo in giro</button>
+        <a class="hello__go" href="#about" data-en="Let’s talk →">Parliamone →</a>
       </div>
     </div>
   </div>
@@ -451,6 +455,6 @@
 
   <script src="hero-motion.js?v=3"></script>
   <script src="hero-eye.js?v=1"></script>
-  <script src="app.js?v=193"></script>
+  <script src="app.js?v=194"></script>
 </body>
 </html>

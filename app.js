@@ -3,6 +3,9 @@
 
   const app = document.getElementById("app");
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // lingua: lang.js imposta <html lang>; L("italiano", "english")
+  const EN = document.documentElement.lang === "en";
+  const L = (it, en) => (EN ? en : it);
 
   // backdrop condiviso
   const backdrop = document.createElement("div");
@@ -44,9 +47,9 @@
   (function aboutPhysics() {
     const box = document.getElementById("abPhys");
     if (!box || !("IntersectionObserver" in window)) return;
-    const WORDS = [["Un’idea", "red big"], ["Indipendente", "pap big"], ["Branding", ""], ["Grafica", ""], ["Foto", "pap"], ["Video", ""], ["Motion", "blue"], ["Web", ""],
-      ["Prodotto", "pap"], ["Interior", ""], ["Allestimenti", ""], ["Identità", "pap"], ["Spazio", ""], ["Campagna", ""], ["Matita", "pap"], ["AI generativa", "blue big"],
-      ["Ricerca", ""], ["Estetica", "pap"], ["Italia", "red"], ["Germania", "red"], ["Ovunque", ""]];
+    const WORDS = [[L("Un’idea", "An idea"), "red big"], [L("Indipendente", "Independent"), "pap big"], ["Branding", ""], [L("Grafica", "Graphics"), ""], [L("Foto", "Photo"), "pap"], ["Video", ""], ["Motion", "blue"], ["Web", ""],
+      [L("Prodotto", "Product"), "pap"], ["Interior", ""], [L("Allestimenti", "Exhibitions"), ""], [L("Identità", "Identity"), "pap"], [L("Spazio", "Space"), ""], [L("Campagna", "Campaign"), ""], [L("Matita", "Pencil"), "pap"], [L("AI generativa", "Generative AI"), "blue big"],
+      [L("Ricerca", "Research"), ""], [L("Estetica", "Aesthetics"), "pap"], [L("Italia", "Italy"), "red"], [L("Germania", "Germany"), "red"], [L("Ovunque", "Anywhere"), ""]];
     const start = () => {
       const { Engine, Bodies, Composite, Mouse, MouseConstraint, Runner } = window.Matter;
       const W = box.clientWidth, H = box.clientHeight, eng = Engine.create();
@@ -121,7 +124,7 @@
     fetch("videos.json", { cache: "no-cache" }).then((r) => r.json()).catch(() => ({})),
   ])
     .then(([data, vids]) => build(data.sections || [], vids || {}))
-    .catch((e) => { app.innerHTML = '<p style="color:#b00;padding:20px">Impossibile caricare i progetti (' + e + ")</p>"; });
+    .catch((e) => { app.innerHTML = '<p style="color:#b00;padding:20px">' + L("Impossibile caricare i progetti", "Couldn’t load the projects") + " (" + e + ")</p>"; });
 
   const YT_THUMB = (id) => "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
   // copertina piccola 320x180, già 16:9 (senza bande nere): per miniature e righe
@@ -186,12 +189,12 @@
         k = 0;
         return '<div class="mf__ln">' + ids.filter((id) => byId[id]).map((id) => {
           const c = byId[id];
-          return '<a class="mf__w" href="progetti.html?cat=' + id + '" aria-label="' + esc(c.name) + " — " + c.items.length + ' lavori">' +
+          return '<a class="mf__w" href="progetti.html?cat=' + id + '" aria-label="' + esc(c.name) + " — " + c.items.length + " " + L("lavori", "works") + '">' +
             cube(c.name, li) + "<sup>" + c.items.length + "</sup></a>";
         }).join('<span class="mf__dot" aria-hidden="true">·</span>') + "</div>";
       }).join("") +
-      '<div class="mf__foot"><span><b>' + CATS.length + " discipline</b> — " + total + " lavori</span>" +
-      '<a href="#contact">Non partiamo da una disciplina. Partiamo da un’idea →</a></div></nav></div>';
+      '<div class="mf__foot"><span><b>' + CATS.length + " " + L("discipline", "disciplines") + "</b> — " + total + " " + L("lavori", "works") + "</span>" +
+      '<a href="#contact">' + L("Non partiamo da una disciplina. Partiamo da un’idea →", "We don’t start from a discipline. We start from an idea →") + "</a></div></nav></div>";
     // ordine in home: hero → What we do → Collateral projects → vetrina
     const before = document.getElementById("collateral") || projects;
     before.parentNode.insertBefore(picker, before);
@@ -212,12 +215,12 @@
      figura, gli altri lavori restano come punti. Trascina = ruota, rotella = zoom, viste.
      Leggera: miniature 256px già in grigio (pre-render una volta), gira solo a schermo. --- */
   const SHW = {
-    graphic:    ["GR", ["Brand identity", "Editoria", "Packaging", "Social"]],
+    graphic:    ["GR", ["Brand identity", L("Editoria", "Editorial"), "Packaging", "Social"]],
     industrial: ["ID", ["Concept", "3D", "Render", "Display"]],
-    exhibit:    ["EX", ["Allestimenti", "Videomapping", "AR"]],
-    videoclip:  ["VC", ["Regia", "Montaggio", "Motion", "Spot"]],
-    website:    ["WB", ["Web design", "Sviluppo", "SEO", "Tour 360°"]],
-    virtual:    ["VR", ["Unreal", "VR", "Metaverso"]]
+    exhibit:    ["EX", [L("Allestimenti", "Exhibitions"), "Videomapping", "AR"]],
+    videoclip:  ["VC", [L("Regia", "Direction"), L("Montaggio", "Editing"), "Motion", "Spot"]],
+    website:    ["WB", ["Web design", L("Sviluppo", "Development"), "SEO", "Tour 360°"]],
+    virtual:    ["VR", ["Unreal", "VR", L("Metaverso", "Metaverse")]]
   };
   // attività: riconosciute da tag/tipo/nome del progetto (+ parole chiave implicite per i video)
   const ACTS = [
@@ -265,10 +268,10 @@
 
     app.innerHTML =
       '<div class="shw"><div class="shw__head"><h2 class="shw__title">Projects</h2><div class="shw__acts">' +
-      '<div class="shw__switch" role="group" aria-label="Vista progetti">' +
+      '<div class="shw__switch" role="group" aria-label="' + L("Vista progetti", "Project view") + '">' +
       '<button type="button" data-m="3d" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5 14 5v6L8 14.5 2 11V5z M2 5l6 3.5L14 5 M8 8.5v6"/></svg>3D</button>' +
       '<button type="button" data-m="easy" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 3.5h5l1.5 1.5h6.5v8h-13z"/></svg><span>Easy mode</span></button></div>' +
-      '<a class="shw__more" href="progetti.html">Vedi i progetti →</a></div></div>' +
+      '<a class="shw__more" href="progetti.html">' + L("Vedi i progetti →", "See the projects →") + "</a></div></div>" +
       '<div class="shw__bar"><span class="shw__lbl">Scene / Layer</span><div class="shw__pills"></div></div>' +
       '<div class="shw__stage"><canvas></canvas><div class="shw__views"></div><aside class="shw__info" hidden></aside></div>' +
       '<div class="shw__easy" hidden></div><div class="shw__cap"></div></div>';
@@ -307,11 +310,11 @@
       A.forEach((a) => { if (!on.includes(a)) { a.t = [(Math.random() - 0.5) * 1.9, (Math.random() - 0.5) * 1.9, (Math.random() - 0.5) * 1.9]; a.tsz = 0.12; a.on = false; a.delay = now; } });
       nodes = on.slice().sort(() => Math.random() - 0.5).slice(0, Math.min(4, on.length));
       const n = on.length;
-      if (act) cap.innerHTML = "<span><b>Activity</b> " + act.n + " — " + pad(n) + " lavori</span><span>" + [...new Set(on.map((a) => SHW[a.cat][0]))].join(" · ") + "</span>" +
-        '<a href="progetti.html">Tutti i progetti →</a>';
-      else cap.innerHTML = "<span><b>" + (c === "all" ? "All" : SHW[c][0] + "·" + pad(IDS.indexOf(c) + 1)) + "</b> " + (c === "all" ? IDS.length + " discipline" : CAT[c].name) + " — " + pad(n) + " lavori</span>" +
+      if (act) cap.innerHTML = "<span><b>Activity</b> " + act.n + " — " + pad(n) + " " + L("lavori", "works") + "</span><span>" + [...new Set(on.map((a) => SHW[a.cat][0]))].join(" · ") + "</span>" +
+        '<a href="progetti.html">' + L("Tutti i progetti →", "All projects →") + "</a>";
+      else cap.innerHTML = "<span><b>" + (c === "all" ? "All" : SHW[c][0] + "·" + pad(IDS.indexOf(c) + 1)) + "</b> " + (c === "all" ? IDS.length + " " + L("discipline", "disciplines") : CAT[c].name) + " — " + pad(n) + " " + L("lavori", "works") + "</span>" +
         "<span>" + (c === "all" ? IDS.map((k) => SHW[k][0]).join(" · ") : SHW[c][1].join(" · ")) + "</span>" +
-        '<a href="progetti.html' + (c === "all" ? "" : "?cat=" + c) + '">' + (c === "all" ? "Tutti i progetti" : "Vedi i " + n + " progetti") + " →</a>";
+        '<a href="progetti.html' + (c === "all" ? "" : "?cat=" + c) + '">' + (c === "all" ? L("Tutti i progetti", "All projects") : L("Vedi i " + n + " progetti", "See the " + n + " projects")) + " →</a>";
       pills.querySelectorAll(".shw__pill").forEach((p) => p.classList.toggle("is-on", (p.dataset.c || p.dataset.a) === c));
     };
     // ferma su "All": si configura solo al click su un livello
@@ -352,13 +355,13 @@
       const it = a.it, isP = it.kind === "proj", tags = (it.tags && it.tags.length ? it.tags : [isP ? "" : it.kind === "site" ? "Website" : "Video"]).filter(Boolean);
       const desc = isP && it.description && it.description !== "Work in progress" ? it.description : "";
       info.innerHTML =
-        '<button type="button" class="shw__x" aria-label="Chiudi">×</button>' +
+        '<button type="button" class="shw__x" aria-label="' + L("Chiudi", "Close") + '">×</button>' +
         '<div class="shw__gif">' + (isP ? '<img alt="" src="' + toM(it.frames[0]) + '">' : '<img alt="" src="' + YT_THUMB_S(it.vid) + '">') + "</div>" +
         '<div class="shw__spec"><span class="shw__k">' + SHW[a.cat][0] + "·" + pad(a.idx + 1) + " — " + CAT[a.cat].name + "</span>" +
         "<h3>" + it.name + "</h3>" + (it.type ? '<span class="shw__k">' + it.type + "</span>" : "") +
         (desc ? "<p>" + desc + "</p>" : "") +
         (tags.length ? '<ul>' + tags.map((t) => "<li>" + t + "</li>").join("") + "</ul>" : "") +
-        '<a href="' + a.href + '">Apri il progetto →</a></div>';
+        '<a href="' + a.href + '">' + L("Apri il progetto →", "Open the project →") + "</a></div>";
       info.hidden = false;
       if (stopGif) stopGif();
       stopGif = null;
@@ -446,7 +449,7 @@
     const ECATS = CATS.filter((c) => c.items.length);
     const eThumb = (it) => (it.kind === "proj" ? (it.frames[0] ? toThumb(it.frames[0]) : "") : YT_THUMB_S(it.vid));
     const eBig = (it) => (it.kind === "proj" ? (it.frames[0] ? toM(it.frames[0]) : "") : YT_THUMB(it.vid));
-    easy.innerHTML = '<div class="ez__col ez__c1"><div class="ez__h"><span>Cartelle</span><span>' + pad(ECATS.length) + "</span></div>" +
+    easy.innerHTML = '<div class="ez__col ez__c1"><div class="ez__h"><span>' + L("Cartelle", "Folders") + "</span><span>" + pad(ECATS.length) + "</span></div>" +
       ECATS.map((c, i) => '<button type="button" class="ez__row" data-i="' + i + '"><span class="ez__fold" aria-hidden="true"></span><span>' + c.name + " <sup>" + c.items.length + '</sup></span><span class="ez__chev">›</span></button>').join("") +
       '</div><div class="ez__col ez__c2"></div><div class="ez__col ez__c3"></div>';
     const c2 = easy.querySelector(".ez__c2"), c3 = easy.querySelector(".ez__c3");
@@ -456,7 +459,7 @@
       const desc = isP && it.description && it.description !== "Work in progress" ? it.description : "";
       c3.innerHTML = '<div class="ez__pv"><a class="ez__big" href="' + href(c, k) + '" tabindex="-1"><img alt=""' + (isP ? "" : ' class="is-yt"') + ' src="' + eBig(it) + '"></a><div class="ez__spec">' +
         '<span class="shw__k">' + (SHW[c.id] ? SHW[c.id][0] + "·" : "") + pad(k + 1) + " — " + c.name + (it.type ? " · " + it.type : "") + "</span>" +
-        "<h3>" + it.name + "</h3>" + (desc ? "<p>" + desc + "</p>" : "") + '<a href="' + href(c, k) + '">Apri il progetto →</a></div></div>';
+        "<h3>" + it.name + "</h3>" + (desc ? "<p>" + desc + "</p>" : "") + '<a href="' + href(c, k) + '">' + L("Apri il progetto →", "Open the project →") + "</a></div></div>";
     };
     const ePick = (i) => {
       const c = ECATS[i];
@@ -471,8 +474,8 @@
         r.addEventListener("click", () => { c2.querySelectorAll(".ez__row").forEach((x) => x.classList.toggle("is-on", x === r)); ePrev(c, k); });
       });
       ePrev(c, 0);
-      cap.innerHTML = "<span><b>Easy mode</b> " + c.name + " — " + pad(c.items.length) + " lavori</span><span>cartella → progetto → anteprima</span>" +
-        '<a href="progetti.html?cat=' + c.id + '">Vedi i ' + c.items.length + " progetti →</a>";
+      cap.innerHTML = "<span><b>Easy mode</b> " + c.name + " — " + pad(c.items.length) + " " + L("lavori", "works") + "</span><span>" + L("cartella → progetto → anteprima", "folder → project → preview") + "</span>" +
+        '<a href="progetti.html?cat=' + c.id + '">' + L("Vedi i " + c.items.length + " progetti", "See the " + c.items.length + " projects") + " →</a>";
     };
     easy.querySelectorAll(".ez__c1 .ez__row").forEach((r) => r.addEventListener("click", () => ePick(+r.dataset.i)));
     let eCat = 0;
@@ -869,7 +872,7 @@
   function buildMobileHome(CATS) {
     app.classList.add("mhome");
     const note = document.querySelector(".projects .sec-head__note");
-    if (note) note.textContent = "Scorri · tocca per aprire";
+    if (note) note.textContent = L("Scorri · tocca per aprire", "Swipe · tap to open");
     CATS.forEach((cat) => {
       const play = gifStage();                        // una gif per riga, si ferma quando la riga esce
       const sec = document.createElement("section");
@@ -879,7 +882,7 @@
         '<a class="mcard" href="' + href + '" data-i="' + i + '"><div class="mcard__ph' + (it.kind === "proj" ? "" : " is-wide") + '">' +
         '<img loading="lazy" alt="' + it.name + '" src="' + coverM(it) + '"></div>' +
         '<div class="mcard__cap"><b>' + it.name + '</b><span>' + pad2(i + 1) + "</span></div></a>").join("");
-      const more = cat.items.length > 8 ? '<a class="mcard mcard--more" href="' + href + '"><span>Tutti i ' + cat.items.length + "<br>progetti →</span></a>" : "";
+      const more = cat.items.length > 8 ? '<a class="mcard mcard--more" href="' + href + '"><span>' + L("Tutti i " + cat.items.length + "<br>progetti →", "All " + cat.items.length + "<br>projects →") + "</span></a>" : "";
       sec.innerHTML = '<a class="mcat__head" href="' + href + '"><b>' + cat.name + "</b><span>" + pad2(cat.items.length) + " →</span></a>" +
         '<div class="mcat__row">' + cards + more + "</div>";
       app.appendChild(sec);
