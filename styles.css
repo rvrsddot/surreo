@@ -32,10 +32,10 @@ body{background:var(--paper);color:var(--ink);font-family:Helvetica,Arial,sans-s
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
 /* categorie video/website: miniature e card 16:9 (niente barre nere) */
 .cat--wide .thumb{aspect-ratio:16/9;width:clamp(150px,22vw,260px)}
-/* progetti (frame quadrati o verticali): sempre riquadro quadrato, anche nelle righe 16:9
-   (stessa altezza delle miniature video), e immagine intera senza ritagli */
+/* progetti: miniatura sempre quadrata e piena (ritaglio al centro, niente bordi),
+   anche nelle righe 16:9 (stessa altezza delle miniature video); nella scheda invece immagine intera */
 .cat--wide .thumb.is-proj{aspect-ratio:1/1;width:calc(clamp(150px,22vw,260px) * 9 / 16)}
-.thumb.is-proj img,.pcard.is-proj .pcard__media img{object-fit:contain}
+.pcard.is-proj .pcard__media img{object-fit:contain}
 .thumb:hover{transform:scale(1.06);z-index:2;
   box-shadow:0 0 10px var(--accent,#ff2bd6),0 0 24px var(--accent,#ff2bd6),0 0 40px color-mix(in srgb,var(--accent,#ff2bd6) 55%,transparent)}
 .thumb:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
@@ -829,8 +829,7 @@ body.has-open,body.menu-open{overflow:hidden}
 .ix-row__n,.ix-row__ct,.ix-row__tg{font:10px/1.5 ui-monospace,'Courier New',monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 .ix-row__n{color:var(--ink)}
 .ix-row__th{position:relative;width:96px;height:96px;background:#dcd8cc;overflow:hidden}
-.ix-row__th img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-.ix-row.is-wide .ix-row__th img{object-fit:cover}
+.ix-row__th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .ix-row__nm{font:500 clamp(22px,2.6vw,36px)/1 "Bricolage Grotesque",sans-serif;letter-spacing:-.015em;text-transform:uppercase}
 .ix-row:hover,.ix-row:focus-visible{background:var(--ink);color:var(--paper)}
 .ix-row:hover .ix-row__n,.ix-row:focus-visible .ix-row__n{color:var(--paper)}

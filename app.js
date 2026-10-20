@@ -138,7 +138,7 @@
     sections.forEach((s) => {
       const items = (s.projects || []).map((p) => ({
         kind: "proj", name: p.name, frames: p.frames || [],
-        type: p.type || null, description: p.description || null, tags: p.tags || []
+        type: (EN && p.type_en) || p.type || null, description: (EN && p.description_en) || p.description || null, tags: p.tags || []
       }));
       if (s.id === "exhibit" && vids.exhibitCards && vids.exhibitCards.items) {
         vids.exhibitCards.items.forEach((it) => items.push({ kind: "video", name: it.title, vid: it.id }));
@@ -146,7 +146,7 @@
       if (s.id === "virtual" && vids.virtualCards && vids.virtualCards.items) {
         vids.virtualCards.items.forEach((it) => items.push({ kind: "video", name: it.title, vid: it.id }));
       }
-      CATS.push({ id: s.id, name: s.title, items });
+      CATS.push({ id: s.id, name: (EN && s.title_en) || s.title, items });
     });
     if (vids.visual && vids.visual.items) {
       const items = [];
@@ -519,8 +519,8 @@
     closed.className = "cat__closed";
     closed.innerHTML =
       '<div class="cat__top"><span class="cat__name">' + cat.name + "</span>" +
-      '<button class="cat__count" type="button" aria-label="Apri categoria ' + cat.name + '">' +
-        String(cat.items.length).padStart(2, "0") + " progetti &rarr;</button></div>" +
+      '<button class="cat__count" type="button" aria-label="' + L("Apri categoria ", "Open category ") + cat.name + '">' +
+        String(cat.items.length).padStart(2, "0") + " " + L("progetti", "projects") + " &rarr;</button></div>" +
       '<div class="cat__line"></div>';
     closed.querySelector(".cat__count").addEventListener("click", (e) => {
       e.stopPropagation(); act(0);
@@ -532,7 +532,7 @@
     strip.className = "strip";
     cat.items.forEach((it, i) => {
       const b = document.createElement("button");
-      b.className = "thumb"; b.type = "button"; b.setAttribute("aria-label", "Apri " + it.name);
+      b.className = "thumb"; b.type = "button"; b.setAttribute("aria-label", L("Apri ", "Open ") + it.name);
       b.innerHTML = '<img loading="lazy" alt="' + it.name + '" src="' + thumbURL(it) + '">';
       b.addEventListener("click", (e) => { e.stopPropagation(); act(i); });
       if (it.kind === "proj") b.classList.add("is-proj");
@@ -622,14 +622,14 @@
     openW.className = "cat__open"; openW.setAttribute("aria-hidden", "true");
     openW.innerHTML =
       '<div class="open__bar"><span class="open__name">' + cat.name + "</span>" +
-      '<button class="close" type="button" aria-label="Chiudi sezione">&times;</button></div>';
+      '<button class="close" type="button" aria-label="' + L("Chiudi sezione", "Close section") + '">&times;</button></div>';
     const car = document.createElement("div");
     car.className = "carousel";
     cat.items.forEach((it, i) => car.appendChild(makeCard(it, cat)));
     openW.appendChild(car);
     const foot = document.createElement("div");
     foot.className = "open__foot";
-    foot.innerHTML = "<span>Scorri &rarr; · click card = info</span>" +
+    foot.innerHTML = "<span>" + L("Scorri &rarr; · click card = info", "Scroll &rarr; · click card = info") + "</span>" +
       '<span class="mono g-pos">01 / ' + String(cat.items.length).padStart(2, "0") + "</span>";
     openW.appendChild(foot);
     el.appendChild(openW);
@@ -686,12 +686,12 @@
     const li = (id, n, name, count) =>
       '<li><button type="button" data-cat="' + id + '"><span class="n">' + n + '</span><span class="t">' + name +
       '</span><span class="d"></span><span class="c">' + count + "</span></button></li>";
-    nav.innerHTML = li("", "00", "Tutti", tot) + CATS.map((c, i) => li(c.id, pad(i + 1), c.name, pad(c.items.length))).join("");
+    nav.innerHTML = li("", "00", L("Tutti", "All"), tot) + CATS.map((c, i) => li(c.id, pad(i + 1), c.name, pad(c.items.length))).join("");
 
     CATS.forEach((c, ci) => {
       const sec = document.createElement("section");
       sec.className = "ix-sec"; sec.dataset.cat = c.id;
-      sec.innerHTML = '<h2 class="ix-sec__h"><span>§ ' + pad(ci + 1) + " — " + c.name + '</span><span class="ix-sec__c">' + pad(c.items.length) + " voci</span></h2>";
+      sec.innerHTML = '<h2 class="ix-sec__h"><span>§ ' + pad(ci + 1) + " — " + c.name + '</span><span class="ix-sec__c">' + pad(c.items.length) + " " + L("voci", "entries") + "</span></h2>";
       c.items.forEach((it, ii) => {
         const row = document.createElement("button");
         row.type = "button"; row.className = "ix-row" + (it.kind === "proj" ? "" : " is-wide");
@@ -759,7 +759,7 @@
       prev.innerHTML = '<img alt="" src="' + f[0] + '" style="object-fit:cover">';
       const c = CATS.find((k) => k.id === id);
       prevN.textContent = "fig. " + (id ? (CODES[id] || "XX") + "·——" : "ALL·——");
-      prevT.textContent = (c ? c.name : "Tutti i lavori") + " · random";
+      prevT.textContent = (c ? c.name : L("Tutti i lavori", "All works")) + " · random";
       if (!reduce && f.length > 1) prevStop = cycleFrames(prev.querySelector("img"), f);
     };
     list.addEventListener("mouseleave", () => catGif(curCat));
@@ -931,7 +931,7 @@
     const feed = document.createElement("div");
     feed.className = "mfeed";
     const tot = CATS.reduce((s, c) => s + c.items.length, 0);
-    feed.innerHTML = '<nav class="mchips" aria-label="Categorie"><button type="button" class="on" data-cat="">Tutti <i>' + tot + "</i></button>" +
+    feed.innerHTML = '<nav class="mchips" aria-label="' + L("Categorie", "Categories") + '"><button type="button" class="on" data-cat="">' + L("Tutti", "All") + " <i>" + tot + "</i></button>" +
       CATS.map((c) => '<button type="button" data-cat="' + c.id + '">' + c.name.split(/[,&]/)[0].trim() + " <i>" + pad2(c.items.length) + "</i></button>").join("") + "</nav>";
     const play = gifStage();
     CATS.forEach((cat, ci) => {
@@ -969,7 +969,7 @@
           card.insertBefore(box, top);
           more.innerHTML =
             (it.description ? '<p class="mfc__desc">' + it.description + "</p>" : "") +
-            (it.url ? '<a class="mfc__link" href="' + it.url + '" target="_blank" rel="noopener">Visita il sito ↗</a>' : "");
+            (it.url ? '<a class="mfc__link" href="' + it.url + '" target="_blank" rel="noopener">' + L("Visita il sito ↗", "Visit the website ↗") + "</a>" : "");
           top.querySelector(".mfc__ph").hidden = true;
           const gal = box.querySelector(".mfc__gal");
           if (gal) gal.addEventListener("scroll", () => {
@@ -1037,7 +1037,7 @@
         : '<div class="pcard__media"><img class="v-thumb" loading="lazy" alt="' + it.name + '" data-src="' + YT_THUMB(it.vid) + '"></div>' +
           '<div class="pcard__play"><i></i> video</div>';
 
-    const visit = it.url ? '<a class="visit" href="' + it.url + '" target="_blank" rel="noopener">VISIT &#8599;</a>' : "<span>&larr; chiudi info</span>";
+    const visit = it.url ? '<a class="visit" href="' + it.url + '" target="_blank" rel="noopener">VISIT &#8599;</a>' : "<span>&larr; " + L("chiudi info", "close info") + "</span>";
 
     card.innerHTML =
       '<div class="pcard__inner">' +

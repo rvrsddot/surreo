@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lapidary — Surreo Studio</title>
-  <meta name="description" content="Lapidary è un progetto di Surreo: scritte trovate per strada, su serrande, facciate e insegne, ridisegnate come font. Mandaci una foto e il posto." />
+  <title data-en="Lapidary — Surreo Studio">Lapidary — Surreo Studio</title>
+  <meta name="description" content="Lapidary è un progetto di Surreo: scritte trovate per strada, su serrande, facciate e insegne, ridisegnate come font. Mandaci una foto e il posto." data-en-content="Lapidary is a Surreo project: lettering found on the street, on shutters, façades and shop signs, redrawn as fonts. Send us a photo and the place." />
   <link rel="canonical" href="https://surreostudio.com/lapidary.html" />
   <meta name="theme-color" content="#b8341f" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -19,7 +19,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&text=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%26%2C%C2%B7.%E2%86%92%C2%B0%27%E2%80%99-%21%3F%3A%2F%28%29%C3%86%C3%89%C3%88%C3%80%C3%92%C3%99%C3%8C%2B&display=block" />
-  <link rel="stylesheet" href="styles.css?v=247" />
+  <link rel="stylesheet" href="styles.css?v=262" />
+  <script src="lang.js?v=1"></script>
   <style>
     @font-face{font-family:"Vindobona";src:url("assets/lapidary/Vindobona1683Fedele-Regular.woff2") format("woff2");font-style:normal;font-display:block}
     @font-face{font-family:"Vindobona";src:url("assets/lapidary/Vindobona1683Fedele-Italic.woff2") format("woff2");font-style:italic;font-display:block}
@@ -147,7 +148,10 @@
       </svg>
       <span class="brand__txt">Surreo <em>Studio</em></span>
     </a>
-    <button class="burger" type="button" aria-label="Apri menu" aria-expanded="false" aria-controls="menu">
+    <div class="lang-chip" role="group" aria-label="Lingua · Language">
+      <button type="button" data-lang="it" lang="it" aria-label="Italiano">IT</button><button type="button" data-lang="en" lang="en" aria-label="English">EN</button>
+    </div>
+    <button class="burger" type="button" aria-label="Apri menu" data-en-aria-label="Open menu" aria-expanded="false" aria-controls="menu">
       <span></span><span></span><span></span>
     </button>
   </header>
@@ -157,14 +161,14 @@
 
     <!-- HERO -->
     <section class="hero-lp">
-      <div class="hero-lp__bar"><span class="k">Scrittura</span><span class="k k--m">Surreo · Lapidary</span></div>
+      <div class="hero-lp__bar"><span class="k" data-en="Lettering">Scrittura</span><span class="k k--m">Surreo · Lapidary</span></div>
       <h1 class="morph" id="morph" aria-label="Lapidary"><svg id="morph-svg" aria-hidden="true"></svg></h1>
-      <div class="morph__meta k"><span class="morph__now"><span class="k--m">Ora</span><b id="morph-name">Archivo Condensed</b><span class="k--m" id="morph-src">grottesco</span></span><span class="morph__dots" id="morph-dots"></span></div>
+      <div class="morph__meta k"><span class="morph__now"><span class="k--m" data-en="Now">Ora</span><b id="morph-name">Archivo Condensed</b><span class="k--m" id="morph-src">grottesco</span></span><span class="morph__dots" id="morph-dots"></span></div>
       <div class="hero-lp__foot">
         <p class="tag"><span>Found on the street.</span><span>Drawn by Surreo.</span></p>
         <div class="lead">
-          <p>Ci sono lettere che non trovi in nessun catalogo. Stanno sopra una serranda, incise su una facciata, dipinte sull’insegna di un bar che ha chiuso.</p>
-          <p><b>Lapidary</b> è un progetto di Surreo. Cerchiamo queste scritte, le raccogliamo con le vostre segnalazioni e ci lavoriamo sopra per farne font. Da poche lettere a un alfabeto intero, tenendo dentro le stranezze che ci hanno fatto fermare a guardarle.</p>
+          <p data-en="There are letters you won’t find in any catalogue. They sit above a rolling shutter, carved into a façade, painted on the sign of a bar that has closed down.">Ci sono lettere che non trovi in nessun catalogo. Stanno sopra una serranda, incise su una facciata, dipinte sull’insegna di un bar che ha chiuso.</p>
+          <p data-en="<b>Lapidary</b> is a Surreo project. We look for this lettering, collect it through your reports and work on it to turn it into fonts. From a handful of letters to a whole alphabet, keeping in the quirks that made us stop and look."><b>Lapidary</b> è un progetto di Surreo. Cerchiamo queste scritte, le raccogliamo con le vostre segnalazioni e ci lavoriamo sopra per farne font. Da poche lettere a un alfabeto intero, tenendo dentro le stranezze che ci hanno fatto fermare a guardarle.</p>
         </div>
       </div>
       <div class="scroll k"><a href="#font">Font ↓</a><span class="k--m">01 / 03</span></div>
@@ -172,15 +176,15 @@
 
     <!-- FONT -->
     <section id="font">
-      <div class="sec-h"><h2>Font</h2><span class="k k--m">02 in visione</span></div>
+      <div class="sec-h"><h2>Font</h2><span class="k k--m" data-en="02 on view">02 in visione</span></div>
       <div class="fonts">
         <div class="frow is-open" id="vindobona">
           <button class="frow__head" type="button" aria-expanded="true"><span class="k">L·01</span><span class="frow__name f-vin">Vindobona 1683</span><span class="frow__plus" aria-hidden="true">+</span></button>
           <div class="bench">
             <div class="tools">
-              <label class="k">Corpo <input type="range" min="24" max="200" value="110" data-size aria-label="Corpo del testo" /></label>
+              <label class="k"><span data-en="Size">Corpo</span> <input type="range" min="24" max="200" value="110" data-size aria-label="Corpo del testo" data-en-aria-label="Text size" /></label>
               <span><button class="chip" type="button" data-st="rg" aria-pressed="true">Regular</button> <button class="chip" type="button" data-st="it" aria-pressed="false">Italic</button></span>
-              <span class="k k--m sp">Scrivi nel riquadro</span>
+              <span class="k k--m sp" data-en="Type in the box">Scrivi nel riquadro</span>
             </div>
             <div class="stage f-vin" contenteditable="true" spellcheck="false" style="font-size:110px">Viennam relata</div>
             <div class="lower">
@@ -188,8 +192,8 @@
               <div class="set f-vin" data-set="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ÀÁÄÈÉËÌÍÏÒÓÖÙÚÜàáäèéëìíïòóöùúü!&quot;'(),-./:;?‘’“”–—·•❦"></div>
             </div>
             <div class="about">
-              <dl><dt>Trovata</dt><dd>Loreto, IT</dd><dt>Data</dt><dd>1683</dd><dt>Stili</dt><dd>Regular · Italic</dd><dt>Caratteri</dt><dd>118</dd><dt>Licenza</dt><dd>—</dd></dl>
-              <p>Un font naturale. È stato ridisegnato lettera per lettera dall’iscrizione dipinta di Loreto, tenendo apposta le sue irregolarità: aste mai uguali, curve un po’ storte, bordi mossi dal pennello e dalla superficie. Così il carattere non perde l’effetto del materiale su cui è nato.<span class="view">Solo in visione · download non disponibile</span></p>
+              <dl><dt data-en="Found">Trovata</dt><dd>Loreto, IT</dd><dt data-en="Date">Data</dt><dd>1683</dd><dt data-en="Styles">Stili</dt><dd>Regular · Italic</dd><dt data-en="Characters">Caratteri</dt><dd>118</dd><dt data-en="Licence">Licenza</dt><dd>—</dd></dl>
+              <p data-en="A natural font. It was redrawn letter by letter from the painted inscription in Loreto, deliberately keeping its irregularities: stems never alike, slightly crooked curves, edges shaken by the brush and the surface. That way the typeface doesn’t lose the feel of the material it was born on.<span class=&quot;view&quot;>View only · download not available</span>">Un font naturale. È stato ridisegnato lettera per lettera dall’iscrizione dipinta di Loreto, tenendo apposta le sue irregolarità: aste mai uguali, curve un po’ storte, bordi mossi dal pennello e dalla superficie. Così il carattere non perde l’effetto del materiale su cui è nato.<span class="view">Solo in visione · download non disponibile</span></p>
             </div>
           </div>
         </div>
@@ -198,9 +202,9 @@
           <button class="frow__head" type="button" aria-expanded="false"><span class="k">L·02</span><span class="frow__name f-pan">Panterak</span><span class="frow__plus" aria-hidden="true">+</span></button>
           <div class="bench">
             <div class="tools">
-              <label class="k">Corpo <input type="range" min="24" max="200" value="96" data-size aria-label="Corpo del testo" /></label>
-              <span class="k k--m">Solo maiuscole</span>
-              <span class="k k--m sp">Scrivi nel riquadro</span>
+              <label class="k"><span data-en="Size">Corpo</span> <input type="range" min="24" max="200" value="96" data-size aria-label="Corpo del testo" data-en-aria-label="Text size" /></label>
+              <span class="k k--m" data-en="Capitals only">Solo maiuscole</span>
+              <span class="k k--m sp" data-en="Type in the box">Scrivi nel riquadro</span>
             </div>
             <div class="stage f-pan" contenteditable="true" spellcheck="false" style="font-size:96px">WE INTEND TO CAUSE HAVOC</div>
             <div class="lower">
@@ -208,20 +212,20 @@
               <div class="set f-pan" data-set="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ÀÈÉÌÒÙÄÖÜÆ.,:;!?-–·'’&quot;()+=«»°*/%#&amp;@$€"></div>
             </div>
             <div class="about">
-              <dl><dt>Trovata</dt><dd>Poster WITCH, US Tour 2022 · lettering di Andrew McGranahan</dd><dt>Griglia</dt><dd>16 × 14 moduli</dd><dt>Stili</dt><dd>Regular</dd><dt>Caratteri</dt><dd>110</dd><dt>Licenza</dt><dd>—</dd></dl>
-              <p>Nasce dalle cinque lettere WITCH di un poster rock: blocchi pieni da cui la lettera viene fuori solo per sottrazione. Da lì un alfabeto intero su una griglia di 16 × 14 moduli, senza diagonali.<span class="view">Solo in visione · download non disponibile</span></p>
+              <dl><dt data-en="Found">Trovata</dt><dd data-en="WITCH poster, US Tour 2022 · lettering by Andrew McGranahan">Poster WITCH, US Tour 2022 · lettering di Andrew McGranahan</dd><dt data-en="Grid">Griglia</dt><dd data-en="16 × 14 modules">16 × 14 moduli</dd><dt data-en="Styles">Stili</dt><dd>Regular</dd><dt data-en="Characters">Caratteri</dt><dd>110</dd><dt data-en="Licence">Licenza</dt><dd>—</dd></dl>
+              <p data-en="It comes from the five letters WITCH on a rock poster: solid blocks from which the letter emerges only by subtraction. From there, a whole alphabet on a grid of 16 × 14 modules, with no diagonals.<span class=&quot;view&quot;>View only · download not available</span>">Nasce dalle cinque lettere WITCH di un poster rock: blocchi pieni da cui la lettera viene fuori solo per sottrazione. Da lì un alfabeto intero su una griglia di 16 × 14 moduli, senza diagonali.<span class="view">Solo in visione · download non disponibile</span></p>
             </div>
           </div>
         </div>
 
-        <div class="frow frow--soon"><div class="frow__head" style="cursor:default"><span class="k">L·03</span><span class="frow__name">In arrivo</span><span></span></div></div>
+        <div class="frow frow--soon"><div class="frow__head" style="cursor:default"><span class="k">L·03</span><span class="frow__name" data-en="Coming soon">In arrivo</span><span></span></div></div>
       </div>
     </section>
 
     <!-- SEGNALA -->
     <section class="send" id="segnala">
-      <h2>Hai visto qualcosa?</h2>
-      <p>Mandaci una foto e il posto.</p>
+      <h2 data-en="Seen something?">Hai visto qualcosa?</h2>
+      <p data-en="Send us a photo and the place.">Mandaci una foto e il posto.</p>
       <div class="send__cta">
         <a class="send__mail" href="mailto:surreocreative@gmail.com?subject=Lapidary%20%C2%B7%20segnalazione&amp;body=Foto%3A%20(allegata)%0APosto%3A%20">
           <span><small class="k k--m">Mail</small>surreocreative@gmail.com</span><span>→</span></a>
@@ -239,7 +243,7 @@
         <span><b>Menu</b> · Navigation · 006 / 006</span>
         <span class="menu__live">Studio · 2026</span>
       </header>
-      <nav class="menu__nav" aria-label="Navigazione principale">
+      <nav class="menu__nav" aria-label="Navigazione principale" data-en-aria-label="Main navigation">
         <a href="progetti.html" style="--i:1">
           <span class="k">01/</span>
           <span class="w">Projects</span>
@@ -256,19 +260,19 @@
           <span class="k">03/</span>
           <span class="w">Lapidary</span>
           <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
-          <span class="m">Scrittura · Font trovati per strada</span>
+          <span class="m" data-en="Lettering · Fonts found on the street">Scrittura · Font trovati per strada</span>
         </a>
         <a href="./#about" style="--i:4">
           <span class="k">04/</span>
           <span class="w">About</span>
           <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
-          <span class="m">Studio · Manifesto · Come lavoriamo</span>
+          <span class="m" data-en="Studio · Manifesto · How we work">Studio · Manifesto · Come lavoriamo</span>
         </a>
         <a href="workshok/" style="--i:5">
           <span class="k">05/</span>
           <span class="w">Workshok</span>
           <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
-          <span class="m">Design · Architettura · Since 2018</span>
+          <span class="m" data-en="Design · Architecture · Since 2018">Design · Architettura · Since 2018</span>
         </a>
         <div class="menu__contact" style="--i:6">
           <span class="k">06/</span>
@@ -288,14 +292,14 @@
     </div>
   </div>
 
-  <aside class="privacy-banner" id="privacyBanner" role="dialog" aria-live="polite" aria-label="Informativa privacy" hidden>
+  <aside class="privacy-banner" id="privacyBanner" role="dialog" aria-live="polite" aria-label="Informativa privacy" data-en-aria-label="Privacy notice" hidden>
     <div class="privacy-banner__inner">
-      <p class="privacy-banner__text">
+      <p class="privacy-banner__text" data-en="<b>Cookie &amp;amp; Privacy.</b> This site <b>uses no tracking cookies or analytics</b>. It only loads technical resources from Google Fonts, YouTube (nocookie) and GitHub Pages — which may involve sending your IP address to these providers. <a href=&quot;/privacy.html&quot;>Read the privacy policy</a>.">
         <b>Cookie &amp; Privacy.</b>
         Questo sito <b>non usa cookie di tracciamento né analytics</b>. Carica solo risorse tecniche da Google Fonts, YouTube (nocookie) e GitHub Pages — con eventuale trasferimento del tuo IP a questi provider.
         <a href="/privacy.html">Leggi l'informativa</a>.
       </p>
-      <button class="privacy-banner__ok" type="button" id="privacyBannerOk" aria-label="Chiudi banner privacy">Ok, ho capito</button>
+      <button class="privacy-banner__ok" type="button" id="privacyBannerOk" aria-label="Chiudi banner privacy" data-en-aria-label="Close privacy banner" data-en="Ok, got it">Ok, ho capito</button>
     </div>
   </aside>
   <script>
@@ -327,6 +331,10 @@
     // Dati: lapidary/morph.json (contorni ricampionati e allineati, 9 font a licenza libera + Vindobona).
     var box=document.getElementById('morph'), svg=document.getElementById('morph-svg'),
         nameEl=document.getElementById('morph-name'), srcEl=document.getElementById('morph-src'), dotsEl=document.getElementById('morph-dots');
+    var EN=document.documentElement.lang==='en',
+        SRC_EN={'grottesco':'grotesque','lapidario romano':'Roman capitals','gotico':'blackletter','didone':'Didone','manifesto':'poster'};
+    if(EN){var m=document.querySelector('.send__mail');m.href='mailto:surreocreative@gmail.com?subject=Lapidary%20%C2%B7%20sighting&body=Photo%3A%20(attached)%0APlace%3A%20';}
+    if(EN) srcEl.textContent='grotesque';
     var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
     fetch('assets/lapidary/morph.json').then(function(r){return r.json();}).then(function(D){
       var W=D.word.split(''), F=D.fonts, NF=F.length, CAP=D.cap, TR=CAP*.035;
@@ -353,7 +361,7 @@
           var adv=F[fa].adv[c]+(F[fb].adv[c]-F[fa].adv[c])*t;
           shapes.push(A.map(function(ca,k){return lerpPts(ca,B[k],t);}));
           xs.push(x); x+=adv+TR;
-          if(i===0){var cur=t<.5?fa:fb; if(cur!==shown){shown=cur;nameEl.textContent=F[cur].name;srcEl.textContent=F[cur].src;dots.forEach(function(d,j){d.classList.toggle('on',j===cur);});}}
+          if(i===0){var cur=t<.5?fa:fb; if(cur!==shown){shown=cur;nameEl.textContent=F[cur].name;srcEl.textContent=(EN&&SRC_EN[F[cur].src])||F[cur].src;dots.forEach(function(d,j){d.classList.toggle('on',j===cur);});}}
         });
         var off=(VB.w-(x-TR))/2;
         shapes.forEach(function(sh,i){

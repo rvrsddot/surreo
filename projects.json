@@ -5,131 +5,11 @@
       "title": "Graphic, Branding & Social",
       "projects": [
         {
-          "id": "mybestlazio",
-          "name": "MYBESTLAZIO",
-          "type": "Project X",
-          "description": "Creazione di locandine vettoriali altamente personalizzate e illustrate per promuovere il turismo nella Regione Lazio, con uno stile unico e riconoscibile che valorizza le peculiarità del territorio.",
-          "tags": [
-            "Illustration",
-            "Social Media Content",
-            "Graphic Design"
-          ],
-          "frames": [
-            "assets/projects/mybestlazio/01.jpg",
-            "assets/projects/mybestlazio/02.jpg",
-            "assets/projects/mybestlazio/03.jpg",
-            "assets/projects/mybestlazio/04.jpg",
-            "assets/projects/mybestlazio/05.jpg",
-            "assets/projects/mybestlazio/06.jpg",
-            "assets/projects/mybestlazio/07.jpg",
-            "assets/projects/mybestlazio/08.jpg",
-            "assets/projects/mybestlazio/09.jpg",
-            "assets/projects/mybestlazio/10.jpg",
-            "assets/projects/mybestlazio/11.jpg",
-            "assets/projects/mybestlazio/12.jpg",
-            "assets/projects/mybestlazio/13.jpg",
-            "assets/projects/mybestlazio/14.jpg",
-            "assets/projects/mybestlazio/15.jpg"
-          ]
-        },
-        {
-          "id": "caffe-meletti",
-          "name": "6° PIANO X MELETTI",
-          "type": "Project X",
-          "description": "Locandine per Meletti in stile retrò, caratterizzate da un tocco surreale che valorizza l'identità storica del brand con un design raffinato e di forte impatto visivo.",
-          "tags": [
-            "Social Media Strategy",
-            "Social Media Content",
-            "Graphic Design"
-          ],
-          "frames": [
-            "assets/projects/caffe-meletti/01.jpg",
-            "assets/projects/caffe-meletti/02.jpg",
-            "assets/projects/caffe-meletti/03.jpg",
-            "assets/projects/caffe-meletti/04.jpg",
-            "assets/projects/caffe-meletti/05.jpg",
-            "assets/projects/caffe-meletti/06.jpg",
-            "assets/projects/caffe-meletti/07.jpg",
-            "assets/projects/caffe-meletti/08.jpg",
-            "assets/projects/caffe-meletti/09.jpg",
-            "assets/projects/caffe-meletti/10.jpg",
-            "assets/projects/caffe-meletti/11.jpg",
-            "assets/projects/caffe-meletti/12.jpg",
-            "assets/projects/caffe-meletti/13.jpg"
-          ]
-        },
-        {
-          "id": "castelmania",
-          "name": "COMUNE DI CASTELLI",
-          "type": "Project X",
-          "description": "Promozione e branding per CASTELVANIA FESTIVAL, evento organizzato da Jay27 in collaborazione con il Comune di Castelli, dedicato alla valorizzazione e promozione del territorio.",
-          "tags": [
-            "Graphic Design",
-            "Meta Ads",
-            "Social Media Strategy",
-            "Brand Identity"
-          ],
-          "frames": [
-            "assets/projects/castelmania/01.jpg",
-            "assets/projects/castelmania/02.jpg",
-            "assets/projects/castelmania/03.jpg",
-            "assets/projects/castelmania/04.jpg",
-            "assets/projects/castelmania/05.jpg",
-            "assets/projects/castelmania/06.jpg",
-            "assets/projects/castelmania/07.jpg",
-            "assets/projects/castelmania/08.jpg",
-            "assets/projects/castelmania/09.jpg",
-            "assets/projects/castelmania/10.jpg",
-            "assets/projects/castelmania/11.jpg"
-          ]
-        },
-        {
-          "id": "persuasio",
-          "name": "PERSUASIO",
-          "type": "Bachelor's Thesis",
-          "description": "Progettazione grafica di un libro basato su una ricerca approfondita sull'operazione mediatica, integrato con tecnologie di realtà aumentata per arricchire i contenuti con video ed elementi interattivi, offrendo un'esperienza immersiva e innovativa.",
-          "tags": [
-            "Augmented Reality Experience",
-            "Research Publication",
-            "Editorial Design",
-            "Research"
-          ],
-          "frames": [
-            "assets/projects/persuasio/01.jpg",
-            "assets/projects/persuasio/02.jpg",
-            "assets/projects/persuasio/03.jpg",
-            "assets/projects/persuasio/04.jpg",
-            "assets/projects/persuasio/05.jpg",
-            "assets/projects/persuasio/06.jpg",
-            "assets/projects/persuasio/07.jpg",
-            "assets/projects/persuasio/08.jpg",
-            "assets/projects/persuasio/09.jpg"
-          ]
-        },
-        {
-          "id": "merletto-di-offida",
-          "name": "MERLETTO DI OFFIDA",
-          "type": "Project X",
-          "description": "Realizzazione di un video in stile onirico per il Merletto di Offida, caratterizzato da sovrimpressioni e atmosfere sospese, che evocano emozioni e raccontano il territorio con poesia visiva.",
-          "tags": [
-            "Short Movie",
-            "Book Design",
-            "Video & Foto"
-          ],
-          "frames": [
-            "assets/projects/merletto-di-offida/01.jpg",
-            "assets/projects/merletto-di-offida/02.jpg",
-            "assets/projects/merletto-di-offida/03.jpg",
-            "assets/projects/merletto-di-offida/04.jpg",
-            "assets/projects/merletto-di-offida/05.jpg",
-            "assets/projects/merletto-di-offida/06.jpg"
-          ]
-        },
-        {
           "id": "suburbi",
           "name": "SUBURBIÆ FEST",
           "type": "Project X",
           "description": "Supervisione completa della comunicazione creativa per Suburbiæ, festival multidisciplinare a Teramo. Gestione dell'identità visiva, produzione di contenuti foto/video, campagne pubblicitarie e coordinamento immagine su tutti i canali.",
+          "description_en": "Full supervision of creative communication for Suburbiæ, a multidisciplinary festival in Teramo. Management of the visual identity, photo/video content production, advertising campaigns and image coordination across all channels.",
           "tags": [
             "Design Strategy",
             "Festival Design",
@@ -157,103 +37,21 @@
           ]
         },
         {
-          "id": "shine-soap",
-          "name": "SHINE SOAP LAB",
-          "type": "Project X",
-          "description": "Un progetto visivo dal tono esoterico e simbolico, costruito su segni arcaici, palette profonde e tipografie evocative. L'identità comunica mistero e spiritualità con eleganza e coerenza contemporanea.",
-          "tags": [
-            "Design Strategy",
-            "Social Media Graphic Content",
-            "Packaging Design",
-            "Graphic Design",
-            "Brand Identity",
-            "Logo Design"
-          ],
-          "frames": [
-            "assets/projects/shine-soap/01.jpg",
-            "assets/projects/shine-soap/02.jpg",
-            "assets/projects/shine-soap/03.jpg",
-            "assets/projects/shine-soap/04.jpg",
-            "assets/projects/shine-soap/05.jpg",
-            "assets/projects/shine-soap/06.jpg",
-            "assets/projects/shine-soap/07.jpg",
-            "assets/projects/shine-soap/08.jpg",
-            "assets/projects/shine-soap/09.jpg"
-          ]
-        },
-        {
-          "id": "handmade",
-          "name": "B-HANDMADE",
-          "type": "Project X",
-          "description": "Progettazione di logo e sito web per un'artigiana specializzata in prodotti in cuoio e pelle handmade su misura. L'identità trasmette qualità, tradizione e personalizzazione con un design pulito e raffinato.",
-          "tags": [
-            "Photo Editing & Still Life",
-            "Website",
-            "Brand Identity",
-            "Graphic Design"
-          ],
-          "frames": [
-            "assets/projects/handmade/01.jpg",
-            "assets/projects/handmade/02.jpg",
-            "assets/projects/handmade/03.jpg",
-            "assets/projects/handmade/04.jpg",
-            "assets/projects/handmade/05.jpg",
-            "assets/projects/handmade/06.jpg",
-            "assets/projects/handmade/07.jpg",
-            "assets/projects/handmade/08.jpg",
-            "assets/projects/handmade/09.jpg",
-            "assets/projects/handmade/10.jpg",
-            "assets/projects/handmade/11.jpg",
-            "assets/projects/handmade/12.jpg",
-            "assets/projects/handmade/13.jpg",
-            "assets/projects/handmade/14.jpg"
-          ]
-        },
-        {
-          "id": "gizzi-fisioterapista",
-          "name": "F GIZZI FISIOTERAPIA",
+          "id": "caffe-design",
+          "name": "CAFFÈ DESIGN",
           "type": "Project",
-          "description": "Identità visiva per fisioterapista dermatofunzionale.",
+          "description": "Shooting tematico per Caffè Design in stile surrealista.",
+          "description_en": "Themed surrealist photo shoot for Caffè Design.",
           "tags": [
-            "Brand Identity",
-            "Meta Ads",
-            "Social Media Strategy",
-            "Illustration Design",
-            "Photo & Video"
+            "Editing",
+            "Set Design",
+            "Photo"
           ],
           "frames": [
-            "assets/projects/gizzi-fisioterapista/01.jpg",
-            "assets/projects/gizzi-fisioterapista/02.jpg",
-            "assets/projects/gizzi-fisioterapista/03.jpg",
-            "assets/projects/gizzi-fisioterapista/04.jpg",
-            "assets/projects/gizzi-fisioterapista/05.jpg",
-            "assets/projects/gizzi-fisioterapista/06.jpg",
-            "assets/projects/gizzi-fisioterapista/07.jpg",
-            "assets/projects/gizzi-fisioterapista/08.jpg",
-            "assets/projects/gizzi-fisioterapista/09.jpg",
-            "assets/projects/gizzi-fisioterapista/10.jpg",
-            "assets/projects/gizzi-fisioterapista/11.jpg"
-          ]
-        },
-        {
-          "id": "gizzi-illustration",
-          "name": "GIZZI FISIOTERAPIA",
-          "type": "Project X",
-          "description": "Progetto di identità visiva per una professionista in ambito dermatofunzionale. Il linguaggio grafico unisce rigore scientifico a illustrazioni vettoriali psichedeliche, creando un'immagine distintiva, sensoriale e inaspettata per il settore.",
-          "tags": [
-            "Illustration"
-          ],
-          "frames": [
-            "assets/projects/gizzi-illustration/01.jpg",
-            "assets/projects/gizzi-illustration/02.jpg",
-            "assets/projects/gizzi-illustration/03.jpg",
-            "assets/projects/gizzi-illustration/04.jpg",
-            "assets/projects/gizzi-illustration/05.jpg",
-            "assets/projects/gizzi-illustration/06.jpg",
-            "assets/projects/gizzi-illustration/07.jpg",
-            "assets/projects/gizzi-illustration/08.jpg",
-            "assets/projects/gizzi-illustration/09.jpg",
-            "assets/projects/gizzi-illustration/10.jpg"
+            "assets/projects/caffe-design/01.jpg",
+            "assets/projects/caffe-design/02.jpg",
+            "assets/projects/caffe-design/03.jpg",
+            "assets/projects/caffe-design/04.jpg"
           ]
         },
         {
@@ -261,6 +59,7 @@
           "name": "PALANDRANI STUDIO",
           "type": "Project X",
           "description": "Creazione di un'identità visiva moderna e professionale per uno studio di ingegneria, con logo, palette cromatica e materiali coordinati. Il design comunica precisione, innovazione e affidabilità.",
+          "description_en": "A modern, professional visual identity for an engineering firm, with logo, colour palette and coordinated materials. The design conveys precision, innovation and reliability.",
           "tags": [
             "Website",
             "Brand Identity",
@@ -284,230 +83,130 @@
           ]
         },
         {
-          "id": "spd-ing",
-          "name": "SPD ING",
-          "type": "Project X",
-          "description": "Sviluppo flyer e formati social per evento.",
-          "tags": [
-            "Website",
-            "Strategic Design",
-            "Graphic Design",
-            "Brand Identity"
-          ],
+          "id": "lagarock",
+          "name": "LAGAROCK",
+          "description": "Work in progress",
           "frames": [
-            "assets/projects/spd-ing/01.jpg",
-            "assets/projects/spd-ing/02.jpg",
-            "assets/projects/spd-ing/03.jpg",
-            "assets/projects/spd-ing/04.jpg",
-            "assets/projects/spd-ing/05.jpg",
-            "assets/projects/spd-ing/06.jpg",
-            "assets/projects/spd-ing/07.jpg",
-            "assets/projects/spd-ing/08.jpg",
-            "assets/projects/spd-ing/09.jpg",
-            "assets/projects/spd-ing/10.jpg",
-            "assets/projects/spd-ing/11.jpg",
-            "assets/projects/spd-ing/12.jpg",
-            "assets/projects/spd-ing/13.jpg"
+            "assets/projects/lagarock/01.jpg",
+            "assets/projects/lagarock/02.jpg",
+            "assets/projects/lagarock/03.jpg",
+            "assets/projects/lagarock/04.jpg",
+            "assets/projects/lagarock/05.jpg",
+            "assets/projects/lagarock/06.jpg",
+            "assets/projects/lagarock/07.jpg",
+            "assets/projects/lagarock/08.jpg",
+            "assets/projects/lagarock/09.jpg",
+            "assets/projects/lagarock/10.jpg",
+            "assets/projects/lagarock/11.jpg",
+            "assets/projects/lagarock/12.jpg"
           ]
         },
         {
-          "id": "panetta-bakery",
-          "name": "PANETTA BAKERY",
-          "type": "Project X",
-          "description": "Sviluppo completo dell'identità visiva, sito web, merchandising e interior design per una bakery, combinando estetica accogliente e funzionalità per un'esperienza di marca coerente e distintiva.",
-          "tags": [
-            "Website",
-            "Social Media",
-            "Brand Identity",
-            "Graphic Design",
-            "Interior Design",
-            "Packaging Design"
-          ],
+          "id": "rumore-x-suburbiae",
+          "name": "RUMORE X SUBURBIÆ",
+          "description": "Work in progress",
           "frames": [
-            "assets/projects/panetta-bakery/01.jpg",
-            "assets/projects/panetta-bakery/02.jpg",
-            "assets/projects/panetta-bakery/03.jpg",
-            "assets/projects/panetta-bakery/04.jpg",
-            "assets/projects/panetta-bakery/05.jpg",
-            "assets/projects/panetta-bakery/06.jpg",
-            "assets/projects/panetta-bakery/07.jpg",
-            "assets/projects/panetta-bakery/08.jpg",
-            "assets/projects/panetta-bakery/09.jpg",
-            "assets/projects/panetta-bakery/10.jpg"
+            "assets/projects/rumore-x-suburbiae/01.jpg",
+            "assets/projects/rumore-x-suburbiae/02.jpg",
+            "assets/projects/rumore-x-suburbiae/03.jpg",
+            "assets/projects/rumore-x-suburbiae/04.jpg",
+            "assets/projects/rumore-x-suburbiae/05.jpg",
+            "assets/projects/rumore-x-suburbiae/06.jpg"
           ]
         },
         {
-          "id": "jay27-asd",
-          "name": "JAY27 ASD",
-          "type": "Project X",
-          "description": "Creazione dell'identità visiva e progettazione degli allestimenti per mostre ed eventi, supportando l'associazione nella valorizzazione artistica e culturale del territorio attraverso soluzioni visive efficaci e coinvolgenti.",
+          "id": "suburbiae-3-edizione",
+          "name": "SUBURBIÆ 3ª EDIZIONE",
+          "description": "Work in progress",
+          "frames": [
+            "assets/projects/suburbiae-3-edizione/01.jpg",
+            "assets/projects/suburbiae-3-edizione/02.jpg"
+          ]
+        },
+        {
+          "id": "workshok",
+          "name": "WORKSHOK!",
+          "type": "Project",
+          "description": "Co-fondatore di WORKSHOK, hub dedicato all'organizzazione di workshop con grandi nomi del design per studenti e professionisti. Contribuisco allo sviluppo dell'identità visiva e alla gestione creativa del progetto, che promuove formazione avanzata e networking nel settore.",
+          "description_en": "Co-founder of WORKSHOK, a hub that organises workshops with leading names in design for students and professionals. I contribute to the development of the visual identity and the creative management of the project, which promotes advanced training and networking in the sector.",
           "tags": [
+            "Co-Founding",
             "Design Strategy",
             "Exhibit Design",
-            "Videomapping & Visual",
-            "Co-Founding",
-            "Brand Identity",
-            "Graphic Design"
+            "Graphic Design / Photo & Video",
+            "Social Media Content",
+            "Workshop Curation"
           ],
           "frames": [
-            "assets/projects/jay27-asd/01.jpg",
-            "assets/projects/jay27-asd/02.jpg",
-            "assets/projects/jay27-asd/03.jpg",
-            "assets/projects/jay27-asd/04.jpg",
-            "assets/projects/jay27-asd/05.jpg",
-            "assets/projects/jay27-asd/06.jpg"
+            "assets/projects/workshok/01.jpg",
+            "assets/projects/workshok/02.jpg",
+            "assets/projects/workshok/03.jpg",
+            "assets/projects/workshok/04.jpg",
+            "assets/projects/workshok/05.jpg",
+            "assets/projects/workshok/06.jpg",
+            "assets/projects/workshok/07.jpg"
           ]
         },
         {
-          "id": "zioma-fritti",
-          "name": "ZIO MA'",
+          "id": "sww-since-2018",
+          "name": "SAAD WORKSHOP WEEK",
           "type": "Project",
-          "description": "Sviluppo di branding completo, progettazione insegna e gestione dei contenuti social con foto e video, per valorizzare l'identità autentica e tradizionale della friggitoria napoletana.",
+          "description": "Coordinamento e partecipazione a SAAD Workshop Week, evento multidisciplinare all'interno di UNICAM SAAD Ascoli. Un'occasione di formazione intensiva e confronto creativo tra studenti, professionisti e docenti, con focus su design e innovazione.",
+          "description_en": "Coordination of and participation in SAAD Workshop Week, a multidisciplinary event at UNICAM SAAD Ascoli. An intensive training opportunity and creative exchange between students, professionals and teachers, focused on design and innovation.",
           "tags": [
-            "Meta Ads",
-            "Photo, Video & Editing",
-            "Strategic Design",
-            "Brand Identity & Graphic Design",
+            "Co-Founding",
+            "Brand Identity / Photo & Video",
+            "Workshop Curation",
+            "Collab. x Università di Camerino",
+            "Social Media Content",
+            "Exhibit Design"
+          ],
+          "frames": [
+            "assets/projects/sww-since-2018/01.jpg",
+            "assets/projects/sww-since-2018/02.jpg",
+            "assets/projects/sww-since-2018/03.jpg",
+            "assets/projects/sww-since-2018/04.jpg",
+            "assets/projects/sww-since-2018/05.jpg",
+            "assets/projects/sww-since-2018/06.jpg"
+          ]
+        },
+        {
+          "id": "gian-e-gli-spiriti",
+          "name": "GIAN E GLI SPIRITI",
+          "description": "Work in progress",
+          "frames": [
+            "assets/projects/gian-e-gli-spiriti/01.jpg",
+            "assets/projects/gian-e-gli-spiriti/02.jpg",
+            "assets/projects/gian-e-gli-spiriti/03.jpg",
+            "assets/projects/gian-e-gli-spiriti/04.jpg",
+            "assets/projects/gian-e-gli-spiriti/05.jpg",
+            "assets/projects/gian-e-gli-spiriti/06.jpg"
+          ]
+        },
+        {
+          "id": "appicciafuoco",
+          "name": "ILENIA APPICCIAFUOCO",
+          "type": "Project X",
+          "description": "Un videoclip dallo stile Disney rétro, realizzato con una tecnica mista che simula il frame-by-frame unendo animazione digitale e illustrazione manuale per un effetto nostalgico ma contemporaneo.",
+          "description_en": "A music video in a retro Disney style, made with a mixed technique that simulates frame-by-frame animation by combining digital animation and hand illustration, for a nostalgic yet contemporary effect.",
+          "tags": [
+            "Illustration",
+            "Animation Movie",
             "Social Media"
           ],
           "frames": [
-            "assets/projects/zioma-fritti/01.jpg",
-            "assets/projects/zioma-fritti/02.jpg",
-            "assets/projects/zioma-fritti/03.jpg",
-            "assets/projects/zioma-fritti/04.jpg",
-            "assets/projects/zioma-fritti/05.jpg"
-          ]
-        },
-        {
-          "id": "diemme-caffe-concorso",
-          "name": "CAFFÈ DIEMME CONTEST",
-          "type": "Project X",
-          "description": "Shooting realizzato per Caffè Design, esplorando un universo surreale dove realtà e immaginazione si fondono per raccontare la creatività unica del podcast.",
-          "tags": [
-            "Concepting",
-            "Mockup",
-            "Brand Identity",
-            "Graphic Design"
-          ],
-          "frames": [
-            "assets/projects/diemme-caffe-concorso/01.jpg",
-            "assets/projects/diemme-caffe-concorso/02.jpg",
-            "assets/projects/diemme-caffe-concorso/03.jpg",
-            "assets/projects/diemme-caffe-concorso/04.jpg",
-            "assets/projects/diemme-caffe-concorso/05.jpg",
-            "assets/projects/diemme-caffe-concorso/06.jpg",
-            "assets/projects/diemme-caffe-concorso/07.jpg",
-            "assets/projects/diemme-caffe-concorso/08.jpg",
-            "assets/projects/diemme-caffe-concorso/09.jpg",
-            "assets/projects/diemme-caffe-concorso/10.jpg",
-            "assets/projects/diemme-caffe-concorso/11.jpg",
-            "assets/projects/diemme-caffe-concorso/12.jpg"
-          ]
-        },
-        {
-          "id": "villa-ebe",
-          "name": "VILLA EBE",
-          "type": "Project",
-          "description": "Shooting per luxury house.",
-          "tags": [
-            "Editing",
-            "Photo"
-          ],
-          "frames": [
-            "assets/projects/villa-ebe/01.jpg",
-            "assets/projects/villa-ebe/02.jpg",
-            "assets/projects/villa-ebe/03.jpg",
-            "assets/projects/villa-ebe/04.jpg",
-            "assets/projects/villa-ebe/05.jpg",
-            "assets/projects/villa-ebe/06.jpg"
-          ]
-        },
-        {
-          "id": "escaped",
-          "name": "ESCAPED",
-          "type": "Project X",
-          "description": "Creazione di un'identità visiva intensa e illustrata per una band metal, caratterizzata da disegni tetri e dettagliati che riflettono l'energia oscura e la forza del loro sound.",
-          "tags": [
-            "Graphic Design",
-            "Logo Band",
-            "Brand Identity",
-            "Merch Design"
-          ],
-          "frames": [
-            "assets/projects/escaped/01.jpg",
-            "assets/projects/escaped/02.jpg",
-            "assets/projects/escaped/03.jpg",
-            "assets/projects/escaped/04.jpg",
-            "assets/projects/escaped/05.jpg",
-            "assets/projects/escaped/06.jpg",
-            "assets/projects/escaped/07.jpg",
-            "assets/projects/escaped/08.jpg",
-            "assets/projects/escaped/09.jpg",
-            "assets/projects/escaped/10.jpg",
-            "assets/projects/escaped/11.jpg",
-            "assets/projects/escaped/12.jpg",
-            "assets/projects/escaped/13.jpg"
-          ]
-        },
-        {
-          "id": "donna-mayla",
-          "name": "DONNA MAYLA",
-          "description": "Work in progress",
-          "frames": [
-            "assets/projects/donna-mayla/01.jpg",
-            "assets/projects/donna-mayla/02.jpg",
-            "assets/projects/donna-mayla/03.jpg",
-            "assets/projects/donna-mayla/04.jpg",
-            "assets/projects/donna-mayla/05.jpg",
-            "assets/projects/donna-mayla/06.jpg",
-            "assets/projects/donna-mayla/07.jpg",
-            "assets/projects/donna-mayla/08.jpg"
-          ]
-        },
-        {
-          "id": "samisdat",
-          "name": "SAMISDAT",
-          "type": "Project X",
-          "description": "Produzione di videoclip e grafica per band, realizzati sperimentalmente con tecniche di grafica generativa per creare un'estetica unica e innovativa.",
-          "tags": [
-            "Responsive Visual",
-            "Videoclip",
-            "Brand Identity",
-            "Generative Graphic"
-          ],
-          "frames": [
-            "assets/projects/samisdat/01.jpg",
-            "assets/projects/samisdat/02.jpg",
-            "assets/projects/samisdat/03.jpg",
-            "assets/projects/samisdat/04.jpg",
-            "assets/projects/samisdat/05.jpg",
-            "assets/projects/samisdat/06.jpg",
-            "assets/projects/samisdat/07.jpg",
-            "assets/projects/samisdat/08.jpg",
-            "assets/projects/samisdat/09.jpg",
-            "assets/projects/samisdat/10.jpg"
-          ]
-        },
-        {
-          "id": "lucrezia-perelli",
-          "name": "L. PERELLI",
-          "type": "Project X",
-          "description": "Gestione strategica e creativa dei canali social per Lucrezia Perelli, pittrice ed ex Miss Italia. Dal content alla direzione artistica, il progetto valorizza la sua immagine e il suo lavoro con un taglio curato e professionale.",
-          "tags": [
-            "Editing / Photo / Video",
-            "Exhibit Design",
-            "Management",
-            "Design Strategy",
-            "Website",
-            "Graphic Design"
-          ],
-          "frames": [
-            "assets/projects/lucrezia-perelli/01.jpg",
-            "assets/projects/lucrezia-perelli/02.jpg",
-            "assets/projects/lucrezia-perelli/03.jpg",
-            "assets/projects/lucrezia-perelli/04.jpg",
-            "assets/projects/lucrezia-perelli/05.jpg",
-            "assets/projects/lucrezia-perelli/06.jpg"
+            "assets/projects/appicciafuoco/01.jpg",
+            "assets/projects/appicciafuoco/02.jpg",
+            "assets/projects/appicciafuoco/03.jpg",
+            "assets/projects/appicciafuoco/04.jpg",
+            "assets/projects/appicciafuoco/05.jpg",
+            "assets/projects/appicciafuoco/06.jpg",
+            "assets/projects/appicciafuoco/07.jpg",
+            "assets/projects/appicciafuoco/08.jpg",
+            "assets/projects/appicciafuoco/09.jpg",
+            "assets/projects/appicciafuoco/10.jpg",
+            "assets/projects/appicciafuoco/11.jpg",
+            "assets/projects/appicciafuoco/12.jpg"
           ]
         },
         {
@@ -515,6 +214,7 @@
           "name": "IMURI",
           "type": "Project X",
           "description": "Realizzazione di due videoclip in stile psichedelico con tecnica rotoscoping, accompagnati da grafica stampa, merchandising e contenuti digitali per Spotify. Un progetto completo che crea un'identità visiva forte e coerente, in sintonia con il sound della band.",
+          "description_en": "Two psychedelic music videos made with rotoscoping, along with print graphics, merchandising and digital content for Spotify. A complete project that builds a strong, coherent visual identity in tune with the band’s sound.",
           "tags": [
             "x2 Videoclip",
             "Graphic Design Canva & Disco",
@@ -542,157 +242,541 @@
           ]
         },
         {
-          "id": "caffe-design",
-          "name": "CAFFÈ DESIGN",
+          "id": "lucrezia-perelli",
+          "name": "L. PERELLI",
+          "type": "Project X",
+          "description": "Gestione strategica e creativa dei canali social per Lucrezia Perelli, pittrice ed ex Miss Italia. Dal content alla direzione artistica, il progetto valorizza la sua immagine e il suo lavoro con un taglio curato e professionale.",
+          "description_en": "Strategic and creative management of the social channels of Lucrezia Perelli, painter and former Miss Italia. From content to art direction, the project enhances her image and her work with a polished, professional approach.",
+          "tags": [
+            "Editing / Photo / Video",
+            "Exhibit Design",
+            "Management",
+            "Design Strategy",
+            "Website",
+            "Graphic Design"
+          ],
+          "frames": [
+            "assets/projects/lucrezia-perelli/01.jpg",
+            "assets/projects/lucrezia-perelli/02.jpg",
+            "assets/projects/lucrezia-perelli/03.jpg",
+            "assets/projects/lucrezia-perelli/04.jpg",
+            "assets/projects/lucrezia-perelli/05.jpg",
+            "assets/projects/lucrezia-perelli/06.jpg"
+          ]
+        },
+        {
+          "id": "samisdat",
+          "name": "SAMISDAT",
+          "type": "Project X",
+          "description": "Produzione di videoclip e grafica per band, realizzati sperimentalmente con tecniche di grafica generativa per creare un'estetica unica e innovativa.",
+          "description_en": "Music video and graphics for a band, made experimentally with generative graphics techniques to create a unique, innovative aesthetic.",
+          "tags": [
+            "Responsive Visual",
+            "Videoclip",
+            "Brand Identity",
+            "Generative Graphic"
+          ],
+          "frames": [
+            "assets/projects/samisdat/01.jpg",
+            "assets/projects/samisdat/02.jpg",
+            "assets/projects/samisdat/03.jpg",
+            "assets/projects/samisdat/04.jpg",
+            "assets/projects/samisdat/05.jpg",
+            "assets/projects/samisdat/06.jpg",
+            "assets/projects/samisdat/07.jpg",
+            "assets/projects/samisdat/08.jpg",
+            "assets/projects/samisdat/09.jpg",
+            "assets/projects/samisdat/10.jpg"
+          ]
+        },
+        {
+          "id": "donna-mayla",
+          "name": "DONNA MAYLA",
+          "description": "Work in progress",
+          "frames": [
+            "assets/projects/donna-mayla/01.jpg",
+            "assets/projects/donna-mayla/02.jpg",
+            "assets/projects/donna-mayla/03.jpg",
+            "assets/projects/donna-mayla/04.jpg",
+            "assets/projects/donna-mayla/05.jpg",
+            "assets/projects/donna-mayla/06.jpg",
+            "assets/projects/donna-mayla/07.jpg",
+            "assets/projects/donna-mayla/08.jpg"
+          ]
+        },
+        {
+          "id": "escaped",
+          "name": "ESCAPED",
+          "type": "Project X",
+          "description": "Creazione di un'identità visiva intensa e illustrata per una band metal, caratterizzata da disegni tetri e dettagliati che riflettono l'energia oscura e la forza del loro sound.",
+          "description_en": "An intense, illustrated visual identity for a metal band, with dark, detailed drawings that reflect the brooding energy and power of their sound.",
+          "tags": [
+            "Graphic Design",
+            "Logo Band",
+            "Brand Identity",
+            "Merch Design"
+          ],
+          "frames": [
+            "assets/projects/escaped/01.jpg",
+            "assets/projects/escaped/02.jpg",
+            "assets/projects/escaped/03.jpg",
+            "assets/projects/escaped/04.jpg",
+            "assets/projects/escaped/05.jpg",
+            "assets/projects/escaped/06.jpg",
+            "assets/projects/escaped/07.jpg",
+            "assets/projects/escaped/08.jpg",
+            "assets/projects/escaped/09.jpg",
+            "assets/projects/escaped/10.jpg",
+            "assets/projects/escaped/11.jpg",
+            "assets/projects/escaped/12.jpg",
+            "assets/projects/escaped/13.jpg"
+          ]
+        },
+        {
+          "id": "villa-ebe",
+          "name": "VILLA EBE",
           "type": "Project",
-          "description": "Shooting tematico per Caffè Design in stile surrealista.",
+          "description": "Shooting per luxury house.",
+          "description_en": "Photo shoot for a luxury house.",
           "tags": [
             "Editing",
-            "Set Design",
             "Photo"
           ],
           "frames": [
-            "assets/projects/caffe-design/01.jpg",
-            "assets/projects/caffe-design/02.jpg",
-            "assets/projects/caffe-design/03.jpg",
-            "assets/projects/caffe-design/04.jpg"
+            "assets/projects/villa-ebe/01.jpg",
+            "assets/projects/villa-ebe/02.jpg",
+            "assets/projects/villa-ebe/03.jpg",
+            "assets/projects/villa-ebe/04.jpg",
+            "assets/projects/villa-ebe/05.jpg",
+            "assets/projects/villa-ebe/06.jpg"
           ]
         },
         {
-          "id": "appicciafuoco",
-          "name": "ILENIA APPICCIAFUOCO",
+          "id": "diemme-caffe-concorso",
+          "name": "CAFFÈ DIEMME CONTEST",
           "type": "Project X",
-          "description": "Un videoclip dallo stile Disney rétro, realizzato con una tecnica mista che simula il frame-by-frame unendo animazione digitale e illustrazione manuale per un effetto nostalgico ma contemporaneo.",
+          "description": "Shooting realizzato per Caffè Design, esplorando un universo surreale dove realtà e immaginazione si fondono per raccontare la creatività unica del podcast.",
+          "description_en": "A photo shoot for Caffè Design, exploring a surreal universe where reality and imagination merge to tell the podcast’s unique creativity.",
           "tags": [
-            "Illustration",
-            "Animation Movie",
+            "Concepting",
+            "Mockup",
+            "Brand Identity",
+            "Graphic Design"
+          ],
+          "frames": [
+            "assets/projects/diemme-caffe-concorso/01.jpg",
+            "assets/projects/diemme-caffe-concorso/02.jpg",
+            "assets/projects/diemme-caffe-concorso/03.jpg",
+            "assets/projects/diemme-caffe-concorso/04.jpg",
+            "assets/projects/diemme-caffe-concorso/05.jpg",
+            "assets/projects/diemme-caffe-concorso/06.jpg",
+            "assets/projects/diemme-caffe-concorso/07.jpg",
+            "assets/projects/diemme-caffe-concorso/08.jpg",
+            "assets/projects/diemme-caffe-concorso/09.jpg",
+            "assets/projects/diemme-caffe-concorso/10.jpg",
+            "assets/projects/diemme-caffe-concorso/11.jpg",
+            "assets/projects/diemme-caffe-concorso/12.jpg"
+          ]
+        },
+        {
+          "id": "zioma-fritti",
+          "name": "ZIO MA'",
+          "type": "Project",
+          "description": "Sviluppo di branding completo, progettazione insegna e gestione dei contenuti social con foto e video, per valorizzare l'identità autentica e tradizionale della friggitoria napoletana.",
+          "description_en": "Complete branding, shop sign design and social media content management with photo and video, to bring out the authentic, traditional identity of a Neapolitan fried-food shop.",
+          "tags": [
+            "Meta Ads",
+            "Photo, Video & Editing",
+            "Strategic Design",
+            "Brand Identity & Graphic Design",
             "Social Media"
           ],
           "frames": [
-            "assets/projects/appicciafuoco/01.jpg",
-            "assets/projects/appicciafuoco/02.jpg",
-            "assets/projects/appicciafuoco/03.jpg",
-            "assets/projects/appicciafuoco/04.jpg",
-            "assets/projects/appicciafuoco/05.jpg",
-            "assets/projects/appicciafuoco/06.jpg",
-            "assets/projects/appicciafuoco/07.jpg",
-            "assets/projects/appicciafuoco/08.jpg",
-            "assets/projects/appicciafuoco/09.jpg",
-            "assets/projects/appicciafuoco/10.jpg",
-            "assets/projects/appicciafuoco/11.jpg",
-            "assets/projects/appicciafuoco/12.jpg"
+            "assets/projects/zioma-fritti/01.jpg",
+            "assets/projects/zioma-fritti/02.jpg",
+            "assets/projects/zioma-fritti/03.jpg",
+            "assets/projects/zioma-fritti/04.jpg",
+            "assets/projects/zioma-fritti/05.jpg"
           ]
         },
         {
-          "id": "gian-e-gli-spiriti",
-          "name": "GIAN E GLI SPIRITI",
-          "description": "Work in progress",
-          "frames": [
-            "assets/projects/gian-e-gli-spiriti/01.jpg",
-            "assets/projects/gian-e-gli-spiriti/02.jpg",
-            "assets/projects/gian-e-gli-spiriti/03.jpg",
-            "assets/projects/gian-e-gli-spiriti/04.jpg",
-            "assets/projects/gian-e-gli-spiriti/05.jpg",
-            "assets/projects/gian-e-gli-spiriti/06.jpg"
-          ]
-        },
-        {
-          "id": "sww-since-2018",
-          "name": "SAAD WORKSHOP WEEK",
-          "type": "Project",
-          "description": "Coordinamento e partecipazione a SAAD Workshop Week, evento multidisciplinare all'interno di UNICAM SAAD Ascoli. Un'occasione di formazione intensiva e confronto creativo tra studenti, professionisti e docenti, con focus su design e innovazione.",
+          "id": "jay27-asd",
+          "name": "JAY27 ASD",
+          "type": "Project X",
+          "description": "Creazione dell'identità visiva e progettazione degli allestimenti per mostre ed eventi, supportando l'associazione nella valorizzazione artistica e culturale del territorio attraverso soluzioni visive efficaci e coinvolgenti.",
+          "description_en": "Visual identity and exhibition design for shows and events, supporting the association in promoting the art and culture of the territory through effective, engaging visual solutions.",
           "tags": [
-            "Co-Founding",
-            "Brand Identity / Photo & Video",
-            "Workshop Curation",
-            "Collab. x Università di Camerino",
-            "Social Media Content",
-            "Exhibit Design"
-          ],
-          "frames": [
-            "assets/projects/sww-since-2018/01.jpg",
-            "assets/projects/sww-since-2018/02.jpg",
-            "assets/projects/sww-since-2018/03.jpg",
-            "assets/projects/sww-since-2018/04.jpg",
-            "assets/projects/sww-since-2018/05.jpg",
-            "assets/projects/sww-since-2018/06.jpg"
-          ]
-        },
-        {
-          "id": "workshok",
-          "name": "WORKSHOK!",
-          "type": "Project",
-          "description": "Co-fondatore di WORKSHOK, hub dedicato all'organizzazione di workshop con grandi nomi del design per studenti e professionisti. Contribuisco allo sviluppo dell'identità visiva e alla gestione creativa del progetto, che promuove formazione avanzata e networking nel settore.",
-          "tags": [
-            "Co-Founding",
             "Design Strategy",
             "Exhibit Design",
-            "Graphic Design / Photo & Video",
-            "Social Media Content",
-            "Workshop Curation"
+            "Videomapping & Visual",
+            "Co-Founding",
+            "Brand Identity",
+            "Graphic Design"
           ],
           "frames": [
-            "assets/projects/workshok/01.jpg",
-            "assets/projects/workshok/02.jpg",
-            "assets/projects/workshok/03.jpg",
-            "assets/projects/workshok/04.jpg",
-            "assets/projects/workshok/05.jpg",
-            "assets/projects/workshok/06.jpg",
-            "assets/projects/workshok/07.jpg"
+            "assets/projects/jay27-asd/01.jpg",
+            "assets/projects/jay27-asd/02.jpg",
+            "assets/projects/jay27-asd/03.jpg",
+            "assets/projects/jay27-asd/04.jpg",
+            "assets/projects/jay27-asd/05.jpg",
+            "assets/projects/jay27-asd/06.jpg"
           ]
         },
         {
-          "id": "suburbiae-3-edizione",
-          "name": "SUBURBIÆ 3ª EDIZIONE",
-          "description": "Work in progress",
+          "id": "panetta-bakery",
+          "name": "PANETTA BAKERY",
+          "type": "Project X",
+          "description": "Sviluppo completo dell'identità visiva, sito web, merchandising e interior design per una bakery, combinando estetica accogliente e funzionalità per un'esperienza di marca coerente e distintiva.",
+          "description_en": "Complete development of the visual identity, website, merchandising and interior design for a bakery, combining a welcoming aesthetic with functionality for a coherent, distinctive brand experience.",
+          "tags": [
+            "Website",
+            "Social Media",
+            "Brand Identity",
+            "Graphic Design",
+            "Interior Design",
+            "Packaging Design"
+          ],
           "frames": [
-            "assets/projects/suburbiae-3-edizione/01.jpg",
-            "assets/projects/suburbiae-3-edizione/02.jpg"
+            "assets/projects/panetta-bakery/01.jpg",
+            "assets/projects/panetta-bakery/02.jpg",
+            "assets/projects/panetta-bakery/03.jpg",
+            "assets/projects/panetta-bakery/04.jpg",
+            "assets/projects/panetta-bakery/05.jpg",
+            "assets/projects/panetta-bakery/06.jpg",
+            "assets/projects/panetta-bakery/07.jpg",
+            "assets/projects/panetta-bakery/08.jpg",
+            "assets/projects/panetta-bakery/09.jpg",
+            "assets/projects/panetta-bakery/10.jpg"
           ]
         },
         {
-          "id": "rumore-x-suburbiae",
-          "name": "RUMORE X SUBURBIÆ",
-          "description": "Work in progress",
+          "id": "spd-ing",
+          "name": "SPD ING",
+          "type": "Project X",
+          "description": "Sviluppo flyer e formati social per evento.",
+          "description_en": "Flyers and social media formats for an event.",
+          "tags": [
+            "Website",
+            "Strategic Design",
+            "Graphic Design",
+            "Brand Identity"
+          ],
           "frames": [
-            "assets/projects/rumore-x-suburbiae/01.jpg",
-            "assets/projects/rumore-x-suburbiae/02.jpg",
-            "assets/projects/rumore-x-suburbiae/03.jpg",
-            "assets/projects/rumore-x-suburbiae/04.jpg",
-            "assets/projects/rumore-x-suburbiae/05.jpg",
-            "assets/projects/rumore-x-suburbiae/06.jpg"
+            "assets/projects/spd-ing/01.jpg",
+            "assets/projects/spd-ing/02.jpg",
+            "assets/projects/spd-ing/03.jpg",
+            "assets/projects/spd-ing/04.jpg",
+            "assets/projects/spd-ing/05.jpg",
+            "assets/projects/spd-ing/06.jpg",
+            "assets/projects/spd-ing/07.jpg",
+            "assets/projects/spd-ing/08.jpg",
+            "assets/projects/spd-ing/09.jpg",
+            "assets/projects/spd-ing/10.jpg",
+            "assets/projects/spd-ing/11.jpg",
+            "assets/projects/spd-ing/12.jpg",
+            "assets/projects/spd-ing/13.jpg"
           ]
         },
         {
-          "id": "lagarock",
-          "name": "LAGAROCK",
-          "description": "Work in progress",
+          "id": "gizzi-illustration",
+          "name": "GIZZI FISIOTERAPIA",
+          "type": "Project X",
+          "description": "Progetto di identità visiva per una professionista in ambito dermatofunzionale. Il linguaggio grafico unisce rigore scientifico a illustrazioni vettoriali psichedeliche, creando un'immagine distintiva, sensoriale e inaspettata per il settore.",
+          "description_en": "Visual identity project for a professional in the dermatofunctional field. The graphic language combines scientific rigour with psychedelic vector illustrations, creating a distinctive, sensory and unexpected image for the sector.",
+          "tags": [
+            "Illustration"
+          ],
           "frames": [
-            "assets/projects/lagarock/01.jpg",
-            "assets/projects/lagarock/02.jpg",
-            "assets/projects/lagarock/03.jpg",
-            "assets/projects/lagarock/04.jpg",
-            "assets/projects/lagarock/05.jpg",
-            "assets/projects/lagarock/06.jpg",
-            "assets/projects/lagarock/07.jpg",
-            "assets/projects/lagarock/08.jpg",
-            "assets/projects/lagarock/09.jpg",
-            "assets/projects/lagarock/10.jpg",
-            "assets/projects/lagarock/11.jpg",
-            "assets/projects/lagarock/12.jpg"
+            "assets/projects/gizzi-illustration/01.jpg",
+            "assets/projects/gizzi-illustration/02.jpg",
+            "assets/projects/gizzi-illustration/03.jpg",
+            "assets/projects/gizzi-illustration/04.jpg",
+            "assets/projects/gizzi-illustration/05.jpg",
+            "assets/projects/gizzi-illustration/06.jpg",
+            "assets/projects/gizzi-illustration/07.jpg",
+            "assets/projects/gizzi-illustration/08.jpg",
+            "assets/projects/gizzi-illustration/09.jpg",
+            "assets/projects/gizzi-illustration/10.jpg"
+          ]
+        },
+        {
+          "id": "gizzi-fisioterapista",
+          "name": "F GIZZI FISIOTERAPIA",
+          "type": "Project",
+          "description": "Identità visiva per fisioterapista dermatofunzionale.",
+          "description_en": "Visual identity for a dermatofunctional physiotherapist.",
+          "tags": [
+            "Brand Identity",
+            "Meta Ads",
+            "Social Media Strategy",
+            "Illustration Design",
+            "Photo & Video"
+          ],
+          "frames": [
+            "assets/projects/gizzi-fisioterapista/01.jpg",
+            "assets/projects/gizzi-fisioterapista/02.jpg",
+            "assets/projects/gizzi-fisioterapista/03.jpg",
+            "assets/projects/gizzi-fisioterapista/04.jpg",
+            "assets/projects/gizzi-fisioterapista/05.jpg",
+            "assets/projects/gizzi-fisioterapista/06.jpg",
+            "assets/projects/gizzi-fisioterapista/07.jpg",
+            "assets/projects/gizzi-fisioterapista/08.jpg",
+            "assets/projects/gizzi-fisioterapista/09.jpg",
+            "assets/projects/gizzi-fisioterapista/10.jpg",
+            "assets/projects/gizzi-fisioterapista/11.jpg"
+          ]
+        },
+        {
+          "id": "handmade",
+          "name": "B-HANDMADE",
+          "type": "Project X",
+          "description": "Progettazione di logo e sito web per un'artigiana specializzata in prodotti in cuoio e pelle handmade su misura. L'identità trasmette qualità, tradizione e personalizzazione con un design pulito e raffinato.",
+          "description_en": "Logo and website design for an artisan specialising in made-to-measure handmade leather goods. The identity conveys quality, tradition and personalisation through clean, refined design.",
+          "tags": [
+            "Photo Editing & Still Life",
+            "Website",
+            "Brand Identity",
+            "Graphic Design"
+          ],
+          "frames": [
+            "assets/projects/handmade/01.jpg",
+            "assets/projects/handmade/02.jpg",
+            "assets/projects/handmade/03.jpg",
+            "assets/projects/handmade/04.jpg",
+            "assets/projects/handmade/05.jpg",
+            "assets/projects/handmade/06.jpg",
+            "assets/projects/handmade/07.jpg",
+            "assets/projects/handmade/08.jpg",
+            "assets/projects/handmade/09.jpg",
+            "assets/projects/handmade/10.jpg",
+            "assets/projects/handmade/11.jpg",
+            "assets/projects/handmade/12.jpg",
+            "assets/projects/handmade/13.jpg",
+            "assets/projects/handmade/14.jpg"
+          ]
+        },
+        {
+          "id": "shine-soap",
+          "name": "SHINE SOAP LAB",
+          "type": "Project X",
+          "description": "Un progetto visivo dal tono esoterico e simbolico, costruito su segni arcaici, palette profonde e tipografie evocative. L'identità comunica mistero e spiritualità con eleganza e coerenza contemporanea.",
+          "description_en": "A visual project with an esoteric, symbolic tone, built on archaic signs, deep palettes and evocative typography. The identity conveys mystery and spirituality with elegance and contemporary coherence.",
+          "tags": [
+            "Design Strategy",
+            "Social Media Graphic Content",
+            "Packaging Design",
+            "Graphic Design",
+            "Brand Identity",
+            "Logo Design"
+          ],
+          "frames": [
+            "assets/projects/shine-soap/01.jpg",
+            "assets/projects/shine-soap/02.jpg",
+            "assets/projects/shine-soap/03.jpg",
+            "assets/projects/shine-soap/04.jpg",
+            "assets/projects/shine-soap/05.jpg",
+            "assets/projects/shine-soap/06.jpg",
+            "assets/projects/shine-soap/07.jpg",
+            "assets/projects/shine-soap/08.jpg",
+            "assets/projects/shine-soap/09.jpg"
+          ]
+        },
+        {
+          "id": "merletto-di-offida",
+          "name": "MERLETTO DI OFFIDA",
+          "type": "Project X",
+          "description": "Realizzazione di un video in stile onirico per il Merletto di Offida, caratterizzato da sovrimpressioni e atmosfere sospese, che evocano emozioni e raccontano il territorio con poesia visiva.",
+          "description_en": "A dreamlike video for the Merletto di Offida (Offida lace), built on superimpositions and suspended atmospheres that evoke emotion and tell the story of the territory with visual poetry.",
+          "tags": [
+            "Short Movie",
+            "Book Design",
+            "Video & Foto"
+          ],
+          "frames": [
+            "assets/projects/merletto-di-offida/01.jpg",
+            "assets/projects/merletto-di-offida/02.jpg",
+            "assets/projects/merletto-di-offida/03.jpg",
+            "assets/projects/merletto-di-offida/04.jpg",
+            "assets/projects/merletto-di-offida/05.jpg",
+            "assets/projects/merletto-di-offida/06.jpg"
+          ]
+        },
+        {
+          "id": "persuasio",
+          "name": "PERSUASIO",
+          "type": "Bachelor's Thesis",
+          "description": "Progettazione grafica di un libro basato su una ricerca approfondita sull'operazione mediatica, integrato con tecnologie di realtà aumentata per arricchire i contenuti con video ed elementi interattivi, offrendo un'esperienza immersiva e innovativa.",
+          "description_en": "Graphic design of a book based on in-depth research into media operations, integrated with augmented reality to enrich the content with video and interactive elements, offering an immersive and innovative experience.",
+          "tags": [
+            "Augmented Reality Experience",
+            "Research Publication",
+            "Editorial Design",
+            "Research"
+          ],
+          "frames": [
+            "assets/projects/persuasio/01.jpg",
+            "assets/projects/persuasio/02.jpg",
+            "assets/projects/persuasio/03.jpg",
+            "assets/projects/persuasio/04.jpg",
+            "assets/projects/persuasio/05.jpg",
+            "assets/projects/persuasio/06.jpg",
+            "assets/projects/persuasio/07.jpg",
+            "assets/projects/persuasio/08.jpg",
+            "assets/projects/persuasio/09.jpg"
+          ]
+        },
+        {
+          "id": "castelmania",
+          "name": "COMUNE DI CASTELLI",
+          "type": "Project X",
+          "description": "Promozione e branding per CASTELVANIA FESTIVAL, evento organizzato da Jay27 in collaborazione con il Comune di Castelli, dedicato alla valorizzazione e promozione del territorio.",
+          "description_en": "Promotion and branding for CASTELVANIA FESTIVAL, an event organised by Jay27 in collaboration with the Municipality of Castelli, dedicated to enhancing and promoting the local area.",
+          "tags": [
+            "Graphic Design",
+            "Meta Ads",
+            "Social Media Strategy",
+            "Brand Identity"
+          ],
+          "frames": [
+            "assets/projects/castelmania/01.jpg",
+            "assets/projects/castelmania/02.jpg",
+            "assets/projects/castelmania/03.jpg",
+            "assets/projects/castelmania/04.jpg",
+            "assets/projects/castelmania/05.jpg",
+            "assets/projects/castelmania/06.jpg",
+            "assets/projects/castelmania/07.jpg",
+            "assets/projects/castelmania/08.jpg",
+            "assets/projects/castelmania/09.jpg",
+            "assets/projects/castelmania/10.jpg",
+            "assets/projects/castelmania/11.jpg"
+          ]
+        },
+        {
+          "id": "caffe-meletti",
+          "name": "6° PIANO X MELETTI",
+          "type": "Project X",
+          "description": "Locandine per Meletti in stile retrò, caratterizzate da un tocco surreale che valorizza l'identità storica del brand con un design raffinato e di forte impatto visivo.",
+          "description_en": "Retro-style posters for Meletti with a surreal touch, celebrating the brand’s historic identity through refined design with strong visual impact.",
+          "tags": [
+            "Social Media Strategy",
+            "Social Media Content",
+            "Graphic Design"
+          ],
+          "frames": [
+            "assets/projects/caffe-meletti/01.jpg",
+            "assets/projects/caffe-meletti/02.jpg",
+            "assets/projects/caffe-meletti/03.jpg",
+            "assets/projects/caffe-meletti/04.jpg",
+            "assets/projects/caffe-meletti/05.jpg",
+            "assets/projects/caffe-meletti/06.jpg",
+            "assets/projects/caffe-meletti/07.jpg",
+            "assets/projects/caffe-meletti/08.jpg",
+            "assets/projects/caffe-meletti/09.jpg",
+            "assets/projects/caffe-meletti/10.jpg",
+            "assets/projects/caffe-meletti/11.jpg",
+            "assets/projects/caffe-meletti/12.jpg",
+            "assets/projects/caffe-meletti/13.jpg"
+          ]
+        },
+        {
+          "id": "mybestlazio",
+          "name": "MYBESTLAZIO",
+          "type": "Project X",
+          "description": "Creazione di locandine vettoriali altamente personalizzate e illustrate per promuovere il turismo nella Regione Lazio, con uno stile unico e riconoscibile che valorizza le peculiarità del territorio.",
+          "description_en": "Highly customised, illustrated vector posters promoting tourism in the Lazio Region, with a unique, recognisable style that brings out the distinctive character of the territory.",
+          "tags": [
+            "Illustration",
+            "Social Media Content",
+            "Graphic Design"
+          ],
+          "frames": [
+            "assets/projects/mybestlazio/01.jpg",
+            "assets/projects/mybestlazio/02.jpg",
+            "assets/projects/mybestlazio/03.jpg",
+            "assets/projects/mybestlazio/04.jpg",
+            "assets/projects/mybestlazio/05.jpg",
+            "assets/projects/mybestlazio/06.jpg",
+            "assets/projects/mybestlazio/07.jpg",
+            "assets/projects/mybestlazio/08.jpg",
+            "assets/projects/mybestlazio/09.jpg",
+            "assets/projects/mybestlazio/10.jpg",
+            "assets/projects/mybestlazio/11.jpg",
+            "assets/projects/mybestlazio/12.jpg",
+            "assets/projects/mybestlazio/13.jpg",
+            "assets/projects/mybestlazio/14.jpg",
+            "assets/projects/mybestlazio/15.jpg"
           ]
         }
       ]
     },
     {
       "id": "industrial",
-      "title": "Industrial Design",
+      "title": "Progetti e Concept",
+      "title_en": "Projects & Concepts",
       "projects": [
+        {
+          "id": "concept-09",
+          "name": "POUF SET",
+          "type": "Indie Project",
+          "description": "Random concepting.",
+          "tags": [
+            "Industrial Design Concepting",
+            "Rendering",
+            "3D Model"
+          ],
+          "frames": [
+            "assets/projects/concept-09/01.jpg"
+          ]
+        },
+        {
+          "id": "concept-08",
+          "name": "GLASS ARMCHAIR",
+          "type": "Indie Project",
+          "description": "Random concepting.",
+          "tags": [
+            "Industrial Design Concepting",
+            "Rendering",
+            "3D Model"
+          ],
+          "frames": [
+            "assets/projects/concept-08/01.jpg"
+          ]
+        },
+        {
+          "id": "concept-07",
+          "name": "SMART MIRROR",
+          "type": "Indie Project",
+          "description": "Random concepting.",
+          "tags": [
+            "Industrial Design Concepting",
+            "Rendering",
+            "3D Model"
+          ],
+          "frames": [
+            "assets/projects/concept-07/01.jpg"
+          ]
+        },
+        {
+          "id": "concept-06",
+          "name": "SHEET CHAIR",
+          "type": "Indie Project",
+          "description": "Random concepting.",
+          "tags": [
+            "Industrial Design Concepting",
+            "Rendering",
+            "3D Model"
+          ],
+          "frames": [
+            "assets/projects/concept-06/01.jpg"
+          ]
+        },
         {
           "id": "dyno-lamp",
           "name": "DYNO-LAMP",
           "type": "Lampada da tavolo",
+          "type_en": "Table lamp",
           "description": "Lampada da tavolo ricaricabile. La forma compatta e la possibilità di variare il fascio luminoso la rendono perfetta per il comodino",
+          "description_en": "Rechargeable table lamp. Its compact shape and adjustable light beam make it perfect for the bedside table.",
           "tags": [
             "Lighting Design",
             "Industrial Design",
@@ -707,7 +791,9 @@
           "id": "helmix",
           "name": "HELMIX",
           "type": "Casco per ciclismo in ambiente urbano",
+          "type_en": "Urban cycling helmet",
           "description": "Il casco ha una calotta esterna con struttura parametrica. Presenta delle luci di direzione integrate che si attivano con il movimento della testa e altre funzioni smart.",
+          "description_en": "The helmet has an outer shell with a parametric structure. It features integrated direction lights that switch on with head movement, plus other smart functions.",
           "tags": [
             "Parametric Design",
             "Smart Product",
@@ -723,7 +809,9 @@
           "id": "chance-paragliding",
           "name": "CHANCE PARAGLIDING",
           "type": "Prodotto industriale",
+          "type_en": "Industrial product",
           "description": "Particolare carrozzina per la pratica del volo in parapendio per persone con difficoltà motorie",
+          "description_en": "A special wheelchair for paragliding, designed for people with motor disabilities.",
           "tags": [
             "Inclusive Design",
             "Industrial Design",
@@ -738,7 +826,9 @@
           "id": "timbratrice-pneumatica",
           "name": "TIMBRATRICE PNEUMATICA",
           "type": "Prodotto industriale - Industria metalmeccanica",
+          "type_en": "Industrial product - Metalworking industry",
           "description": "Pressa per timbratura a caldo nel tessile",
+          "description_en": "Hot-stamping press for textiles.",
           "tags": [
             "Machine Design",
             "Industrial Design",
@@ -753,7 +843,9 @@
           "id": "render-architettura",
           "name": "RENDER ARCHITETTURA",
           "type": "Render architettura esterno · interno",
+          "type_en": "Architectural render · exterior · interior",
           "description": "Struttura industriale contemporanea caratterizzata da volumi articolati, ampie superfici vetrate e rivestimenti in pannelli metallici. L’ingresso principale, valorizzato da un ampio volume vetrato e da una copertura aggettante, definisce un’immagine architettonica moderna, elegante e rappresentativa. Struttura industriale contemporanea dalle linee essenziali e rigorose, realizzata con un involucro caratterizzato da pannelli di rivestimento e ampie superfici vetrate. Il prospetto principale integra un ingresso vetrato ben riconoscibile, mentre i fronti laterali presentano aperture e accessi funzionali, mantenendo un linguaggio architettonico sobrio e ordinato Sala conferenze di ampie dimensioni, progettata per ospitare 12–16 persone, con tavolo centrale, sistema di proiezione e ampie superfici vetrate. L’ambiente combina materiali contemporanei, illuminazione naturale e sistemi di illuminazione integrata, creando uno spazio luminoso, funzionale e rappresentativo",
+          "description_en": "A contemporary industrial building with articulated volumes, large glazed surfaces and metal panel cladding. The main entrance, emphasised by a large glazed volume and a projecting canopy, defines a modern, elegant and representative architectural image. A contemporary industrial building with essential, rigorous lines, built with an envelope of cladding panels and large glazed surfaces. The main façade integrates a clearly recognisable glazed entrance, while the side elevations feature functional openings and access points, keeping a sober, orderly architectural language. A large conference room designed for 12–16 people, with a central table, projection system and large glazed surfaces. The space combines contemporary materials, natural light and integrated lighting systems, creating a bright, functional and representative space.",
           "tags": [
             "Architectural Rendering",
             "Interior Rendering",
@@ -773,6 +865,7 @@
           "name": "SAPONI DI UN TEMPO",
           "type": "Project X",
           "description": "Progettazione di un display da banco in stile moderno per saponi artigianali, destinato ai negozi. Realizzato anche il servizio fotografico della fabbrica per valorizzare la tradizione e la qualità del prodotto.",
+          "description_en": "Design of a modern countertop display for handmade soaps, intended for shops. We also shot the photo series of the factory to celebrate the tradition and quality of the product.",
           "tags": [
             "Photo & Video",
             "Design Project",
@@ -799,6 +892,7 @@
           "name": "PREMIO TERMOLI",
           "type": "Project X",
           "description": "Progettazione di una pensilina per autobus sostenibile e autonoma, sviluppata per il premio di Termoli. Il design integra tecnologie green e soluzioni smart per migliorare l'esperienza urbana e la mobilità sostenibile.",
+          "description_en": "Design of a sustainable, self-sufficient bus shelter, developed for the Termoli award. The design integrates green technologies and smart solutions to improve the urban experience and sustainable mobility.",
           "tags": [
             "Design Project",
             "Rendering",
@@ -824,6 +918,7 @@
           "name": "INTIME",
           "type": "2nd Prize Winner · Contest",
           "description": "Dispositivo GPS modulare per minori, pensato per prevenire dispersioni e rapimenti. La sfera GPS si aggancia a collane, bracciali e altri accessori, collegata a un'app mobile che consente il monitoraggio in tempo reale, unendo sicurezza e personalizzazione.",
+          "description_en": "A modular GPS device for children, designed to prevent them from getting lost or abducted. The GPS sphere clips onto necklaces, bracelets and other accessories, and connects to a mobile app for real-time monitoring, combining safety and personalisation.",
           "tags": [
             "Design Strategy",
             "Marketing",
@@ -850,6 +945,7 @@
           "name": "MIRROR X",
           "type": "Project X",
           "description": "Progettazione industriale e interfaccia UI/UX di uno specchio smart che permette di provare virtualmente i vestiti di Amazon, trasformando l'esperienza d'acquisto in un'idea innovativa di negozio digitale.",
+          "description_en": "Industrial design and UI/UX interface of a smart mirror that lets you virtually try on Amazon clothes, turning the shopping experience into an innovative idea of a digital store.",
           "tags": [
             "Rendering",
             "3D Model",
@@ -881,6 +977,7 @@
           "name": "DUM MD1 DRONE",
           "type": "Project X",
           "description": "Drone ad alte prestazioni per sicurezza urbana, progettato per trasporto di aiuti medici, ricerca persone disperse e sorveglianza discreta tramite telecamera passiva integrata. Design innovativo e funzionale per operazioni critiche e quotidiane.",
+          "description_en": "A high-performance drone for urban safety, designed to deliver medical aid, search for missing people and carry out discreet surveillance through an integrated passive camera. Innovative, functional design for critical and everyday operations.",
           "tags": [
             "3D Creo Modelling",
             "Research",
@@ -909,6 +1006,7 @@
           "name": "ORIKATA",
           "type": "Project X",
           "description": "Progettazione di superfici responsive ispirate all'origami, con moduli che si aprono e si trasformano come una finestra dinamica, unendo estetica minimalista e innovazione funzionale.",
+          "description_en": "Origami-inspired responsive surfaces, with modules that open and transform like a dynamic window, combining minimalist aesthetics and functional innovation.",
           "tags": [
             "3D Moving Model",
             "Fusion 360",
@@ -1000,62 +1098,6 @@
           ]
         },
         {
-          "id": "concept-06",
-          "name": "SHEET CHAIR",
-          "type": "Indie Project",
-          "description": "Random concepting.",
-          "tags": [
-            "Industrial Design Concepting",
-            "Rendering",
-            "3D Model"
-          ],
-          "frames": [
-            "assets/projects/concept-06/01.jpg"
-          ]
-        },
-        {
-          "id": "concept-07",
-          "name": "SMART MIRROR",
-          "type": "Indie Project",
-          "description": "Random concepting.",
-          "tags": [
-            "Industrial Design Concepting",
-            "Rendering",
-            "3D Model"
-          ],
-          "frames": [
-            "assets/projects/concept-07/01.jpg"
-          ]
-        },
-        {
-          "id": "concept-08",
-          "name": "GLASS ARMCHAIR",
-          "type": "Indie Project",
-          "description": "Random concepting.",
-          "tags": [
-            "Industrial Design Concepting",
-            "Rendering",
-            "3D Model"
-          ],
-          "frames": [
-            "assets/projects/concept-08/01.jpg"
-          ]
-        },
-        {
-          "id": "concept-09",
-          "name": "POUF SET",
-          "type": "Indie Project",
-          "description": "Random concepting.",
-          "tags": [
-            "Industrial Design Concepting",
-            "Rendering",
-            "3D Model"
-          ],
-          "frames": [
-            "assets/projects/concept-09/01.jpg"
-          ]
-        },
-        {
           "id": "concept-10",
           "name": "DESK SETUP",
           "type": "Indie Project",
@@ -1088,6 +1130,7 @@
           "name": "ETNIÆ & PSICHÆ",
           "type": "Contest",
           "description": "Sviluppo di una texture esclusiva per superfici in legno, pensata per esaltare la naturale eleganza del materiale. Progettata su misura per garantire perfetta lavorabilità nei processi aziendali, unisce raffinatezza estetica e qualità artigianale.",
+          "description_en": "An exclusive texture for wooden surfaces, designed to enhance the natural elegance of the material. Tailored to ensure perfect workability in the company’s processes, it combines aesthetic refinement and craftsmanship.",
           "tags": [
             "Contest",
             "Design Project",
@@ -1117,6 +1160,7 @@
           "name": "ABOUT ROCK X THE SOUNDCHECK",
           "type": "Project",
           "description": "Allestimento articolato per una mostra fotografica dedicata alle band rock, realizzato con materiali poveri come filo e chiodi. Un progetto che unisce minimalismo e complessità, valorizzando l'essenza grezza della musica attraverso un design espressivo e coinvolgente.",
+          "description_en": "An elaborate installation for a photo exhibition dedicated to rock bands, made with humble materials such as thread and nails. A project that combines minimalism and complexity, bringing out the raw essence of music through expressive, engaging design.",
           "tags": [
             "Exhibit Design",
             "Design Strategy",
@@ -1143,6 +1187,7 @@
           "name": "A PERSPECTIVE",
           "type": "Project",
           "description": "Progetto di installazione immersiva in realtà aumentata dove natura e digitale si fondono in un glitch poetico, mettendo in scena un processo che evidenzia l'errore come elemento centrale dell'esperienza sensoriale.",
+          "description_en": "An immersive augmented reality installation where nature and digital merge in a poetic glitch, staging a process that puts error at the centre of the sensory experience.",
           "tags": [
             "Design",
             "Graphic Design",
@@ -1171,6 +1216,7 @@
           "name": "UNNECESSARY EXHIBIT",
           "type": "Project",
           "description": "Organizzazione e realizzazione completa di una mostra di pittura surrealista, curando dalla comunicazione pubblicitaria all'allestimento, che utilizza materiali come fili e cemento per creare un ambiente immersivo e coerente con l'estetica delle opere.",
+          "description_en": "Complete organisation and production of a surrealist painting exhibition, from advertising to installation design, using materials such as thread and concrete to create an immersive environment consistent with the aesthetics of the works.",
           "tags": [
             "Exhibit Design",
             "Design Strategy",
@@ -1196,6 +1242,7 @@
           "name": "BUTTERFLY EFFECTS",
           "type": "Project",
           "description": "Evento multisensoriale con performance live accompagnata da video glitchati in tempo reale, creando un dialogo dinamico tra musica e immagini che amplifica l'esperienza artistica.",
+          "description_en": "A multisensory event with a live performance accompanied by real-time glitched video, creating a dynamic dialogue between music and images that amplifies the artistic experience.",
           "tags": [
             "Graphic Design",
             "Exhibit Design",
@@ -1220,6 +1267,7 @@
           "name": "MELIÈS VIRTUAL EXP",
           "type": "Indie Project",
           "description": "Sviluppo di un ambiente virtuale immersivo ispirato all'universo onirico e visionario di Georges Méliès, realizzato con Unreal Engine per offrire un viaggio interattivo tra magia, cinema e fantasia.",
+          "description_en": "An immersive virtual environment inspired by the dreamlike, visionary universe of Georges Méliès, built with Unreal Engine to offer an interactive journey through magic, cinema and fantasy.",
           "tags": [
             "Design Project",
             "Experience Design",

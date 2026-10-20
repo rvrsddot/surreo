@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Progetti — Surreo Studio</title>
-  <meta name="description" content="Indice dei lavori di Surreo Studio: graphic e branding, industrial design, exhibit e videomapping, videoclip e motion, website, esperienze virtuali e VR." />
+  <title data-en="Projects — Surreo Studio">Progetti — Surreo Studio</title>
+  <meta name="description" data-en-content="Index of Surreo Studio’s work: graphic and branding, industrial design, exhibit and videomapping, music videos and motion, websites, virtual experiences and VR." content="Indice dei lavori di Surreo Studio: graphic e branding, industrial design, exhibit e videomapping, videoclip e motion, website, esperienze virtuali e VR." />
   <link rel="canonical" href="https://surreostudio.com/progetti.html" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="theme-color" content="#eceae1" />
@@ -19,7 +19,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&display=swap" />
-  <link rel="stylesheet" href="styles.css?v=247" />
+  <link rel="stylesheet" href="styles.css?v=262" />
+  <script src="lang.js?v=1"></script>
 </head>
 <body class="page-progetti">
 
@@ -43,7 +44,10 @@
       </svg>
       <span class="brand__txt">Surreo <em>Studio</em></span>
     </a>
-    <button class="burger" type="button" aria-label="Apri menu" aria-expanded="false" aria-controls="menu">
+    <div class="lang-chip" role="group" aria-label="Lingua · Language">
+      <button type="button" data-lang="it" lang="it" aria-label="Italiano">IT</button><button type="button" data-lang="en" lang="en" aria-label="English">EN</button>
+    </div>
+    <button class="burger" type="button" aria-label="Apri menu" data-en-aria-label="Open menu" aria-expanded="false" aria-controls="menu">
       <span></span><span></span><span></span>
     </button>
   </header>
@@ -52,16 +56,16 @@
   <!-- indice progetti -->
   <div class="ix" id="indice">
     <div class="ix-head">
-      <h1 class="ix-title">Progetti</h1>
-      <p class="ix-note mono">Indice dei lavori — clicca una voce per aprirla</p>
+      <h1 class="ix-title" data-en="Projects">Progetti</h1>
+      <p class="ix-note mono" data-en="Index of works — click an entry to open it">Indice dei lavori — clicca una voce per aprirla</p>
     </div>
     <div class="ix-scope" aria-hidden="true">
-      <div class="ix-scope__p"><canvas id="scope-radar"></canvas><span class="ix-scope__l">Radar · scansione archivio</span><span class="ix-scope__r" id="scope-radar-r"></span></div>
-      <div class="ix-scope__p"><canvas id="scope-ecg"></canvas><span class="ix-scope__l">Segnale · battito studio</span><span class="ix-scope__r" id="scope-ecg-r"></span></div>
+      <div class="ix-scope__p"><canvas id="scope-radar"></canvas><span class="ix-scope__l" data-en="Radar · archive scan">Radar · scansione archivio</span><span class="ix-scope__r" id="scope-radar-r"></span></div>
+      <div class="ix-scope__p"><canvas id="scope-ecg"></canvas><span class="ix-scope__l" data-en="Signal · studio heartbeat">Segnale · battito studio</span><span class="ix-scope__r" id="scope-ecg-r"></span></div>
     </div>
     <div class="ix-grid">
       <aside class="ix-side">
-        <p class="ix-lbl mono">Indice — filtra per categoria</p>
+        <p class="ix-lbl mono" data-en="Index — filter by category">Indice — filtra per categoria</p>
         <ul class="ix-idx"></ul>
         <figure class="ix-prev" aria-hidden="true">
           <div class="ix-prev__box"></div>
@@ -69,7 +73,7 @@
         </figure>
       </aside>
       <div class="ix-main">
-        <div class="ix-th mono" aria-hidden="true"><span>N°</span><span></span><span>Progetto</span><span>Discipline</span></div>
+        <div class="ix-th mono" aria-hidden="true"><span>N°</span><span></span><span data-en="Project">Progetto</span><span data-en="Disciplines">Discipline</span></div>
         <div class="ix-list"></div>
         <div class="ix-pay" aria-hidden="true"></div>
       </div>
@@ -96,7 +100,7 @@
         <span><b>Menu</b> · Navigation · 006 / 006</span>
         <span class="menu__live">Studio · 2026</span>
       </header>
-      <nav class="menu__nav" aria-label="Navigazione principale">
+      <nav class="menu__nav" aria-label="Navigazione principale" data-en-aria-label="Main navigation">
         <a href="progetti.html" style="--i:1">
           <span class="k">01/</span>
           <span class="w">Projects</span>
@@ -113,19 +117,19 @@
           <span class="k">03/</span>
           <span class="w">Lapidary</span>
           <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
-          <span class="m">Scrittura · Font trovati per strada</span>
+          <span class="m" data-en="Lettering · Fonts found on the street">Scrittura · Font trovati per strada</span>
         </a>
         <a href="./#about" style="--i:4">
           <span class="k">04/</span>
           <span class="w">About</span>
           <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
-          <span class="m">Studio · Manifesto · Come lavoriamo</span>
+          <span class="m" data-en="Studio · Manifesto · How we work">Studio · Manifesto · Come lavoriamo</span>
         </a>
         <a href="workshok/" style="--i:5">
           <span class="k">05/</span>
           <span class="w">Workshok</span>
           <svg class="arrow" viewBox="0 0 72 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
-          <span class="m">Design · Architettura · Since 2018</span>
+          <span class="m" data-en="Design · Architecture · Since 2018">Design · Architettura · Since 2018</span>
         </a>
         <div class="menu__contact" style="--i:6">
           <span class="k">06/</span>
@@ -147,14 +151,14 @@
 
 
   <!-- Privacy banner (mostrato solo al primo visit) -->
-  <aside class="privacy-banner" id="privacyBanner" role="dialog" aria-live="polite" aria-label="Informativa privacy" hidden>
+  <aside class="privacy-banner" id="privacyBanner" role="dialog" aria-live="polite" aria-label="Informativa privacy" data-en-aria-label="Privacy notice" hidden>
     <div class="privacy-banner__inner">
-      <p class="privacy-banner__text">
+      <p class="privacy-banner__text" data-en="<b>Cookie &amp;amp; Privacy.</b> This site <b>uses no tracking cookies or analytics</b>. It only loads technical resources from Google Fonts, YouTube (nocookie) and GitHub Pages — which may involve sending your IP address to these providers. <a href=&quot;/privacy.html&quot;>Read the privacy policy</a>.">
         <b>Cookie &amp; Privacy.</b>
         Questo sito <b>non usa cookie di tracciamento né analytics</b>. Carica solo risorse tecniche da Google Fonts, YouTube (nocookie) e GitHub Pages — con eventuale trasferimento del tuo IP a questi provider.
         <a href="/privacy.html">Leggi l'informativa</a>.
       </p>
-      <button class="privacy-banner__ok" type="button" id="privacyBannerOk" aria-label="Chiudi banner privacy">Ok, ho capito</button>
+      <button class="privacy-banner__ok" type="button" id="privacyBannerOk" aria-label="Chiudi banner privacy" data-en-aria-label="Close privacy banner" data-en="Ok, got it">Ok, ho capito</button>
     </div>
   </aside>
   <script>
@@ -191,7 +195,7 @@
     document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false);});
   })();
   </script>
-  <script src="app.js?v=193"></script>
+  <script src="app.js?v=196"></script>
   <script src="scope.js?v=4"></script>
 </body>
 </html>
