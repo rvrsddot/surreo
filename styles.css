@@ -1518,6 +1518,8 @@ body.page-cv::after{display:none}
 .page-cv .cv-head .cv-roles li:nth-last-child(-n+2){border-bottom:0;padding-bottom:0}
 .page-cv .cv-head .cv-who__btn{padding:11px 14px 10px;margin-top:14px}
 .page-cv .cv-head .cv-ph{align-self:stretch;display:flex;flex-direction:column}
+/* CV: la foto riempie tutta l'altezza della testata, niente riquadro bianco sotto la didascalia */
+@media(min-width:861px){.page-cv .cv-head .cv-ph img{flex:1 1 0;min-height:0;aspect-ratio:auto;height:100%;object-fit:cover;object-position:50% 50%}}
 /* CV: barra delle sezioni fissata in alto — a sinistra il nome della sezione che rolla come l'anno, a destra le 6 voci */
 .cv-nav{position:sticky;top:0;z-index:30;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:20px;align-items:stretch;
   background:var(--paper);border-bottom:1.5px solid var(--ink);margin-top:-1.5px;border-top:1.5px solid var(--ink)}
