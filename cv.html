@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&display=swap" />
   <!-- Archivo variabile (titolo Work in progress) -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=block" />
-  <link rel="stylesheet" href="styles.css?v=263" />
+  <link rel="stylesheet" href="styles.css?v=264" />
   <style>
   /* ================= CV · RITAGLIO — zine fotocopiata su griglia ================= */
   .zn{--acid:#5dff7a;--tape:#16140f;--card:#e9e5dc;--g:20px;--pad:clamp(16px,3.5vw,44px);--mono:ui-monospace,'Courier New',monospace;
@@ -180,7 +180,6 @@
   .zn-cta:hover .zn-cta__st{animation-duration:4s}
   .zn-cta:hover .zn-cta__l{transform:rotate(0) scale(1.06);box-shadow:6px 6px 0 var(--ink)}
   .zn-cta:hover .zn-cta__l i{transform:translateX(5px)}
-  @media(prefers-reduced-motion:reduce){.zn-cta__st{animation:none}}
   @media(max-width:860px){.zn-cta{width:210px;margin:30px auto 0}}
   /* cariche: un bollo tondo sopra ogni nome, con monogramma e anno di inizio */
   .zn-roles li{padding-top:16px}
@@ -228,7 +227,6 @@
   .zn-roles li:hover .zn-mk--jay img{animation-duration:3s}
   .zn-mk--jay>span{border-radius:0}
   .zn-mk--jay{overflow:visible}.zn-mk--jay img{border-radius:50%}
-  @media(prefers-reduced-motion:reduce){.zn-mk,.zn-mk *{animation:none!important}}
   /* tutti i segni iscritti in un cerchio, come JAY27 */
   .zn-mk{border-radius:50%}
   .zn-mk__cl{border-radius:50%}
@@ -447,7 +445,7 @@
   /* CV · registro: titoli che salgono, barre degli anni, contatore a rulli + righello che seguono lo scroll; mirino da tavolo da disegno */
   (function(){
     var main=document.querySelector('.cv');if(!main)return;
-    var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var reduce=false;
     main.classList.add('js');
     var rows=[].slice.call(main.querySelectorAll('.cv-row')),pad=function(n){return String(n).padStart(2,'0')};
     // anni letti dalla colonna di sinistra ("2024 — Present", "2020 — 2021", "2018")
@@ -558,7 +556,7 @@
   <script>
   /* CV · Ritaglio: entrate, etichetta della sezione attiva, i 41 corsi */
   (function(){var z=document.querySelector('.zn');if(!z)return;
-    var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,rv=z.querySelectorAll('.zn-rv');
+    var reduce=false,rv=z.querySelectorAll('.zn-rv');
     if(!reduce&&'IntersectionObserver' in window){z.classList.add('js');var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});rv.forEach(function(e){io.observe(e)})}
     var links=[].slice.call(z.querySelectorAll('.zn-nav a[href^="#"]'));
     if('IntersectionObserver' in window){var so=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting||(z.classList.contains('acc')&&!e.target.classList.contains('open')))return;links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)})})},{rootMargin:'-30% 0px -60% 0px'});

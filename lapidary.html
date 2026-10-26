@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&text=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%26%2C%C2%B7.%E2%86%92%C2%B0%27%E2%80%99-%21%3F%3A%2F%28%29%C3%86%C3%89%C3%88%C3%80%C3%92%C3%99%C3%8C%2B&display=block" />
-  <link rel="stylesheet" href="styles.css?v=263" />
+  <link rel="stylesheet" href="styles.css?v=264" />
   <script src="lang.js?v=1"></script>
   <style>
     @font-face{font-family:"Vindobona";src:url("assets/lapidary/Vindobona1683Fedele-Regular.woff2") format("woff2");font-style:normal;font-display:block}
@@ -335,7 +335,7 @@
         SRC_EN={'grottesco':'grotesque','lapidario romano':'Roman capitals','gotico':'blackletter','didone':'Didone','manifesto':'poster'};
     if(EN){var m=document.querySelector('.send__mail');m.href='mailto:surreocreative@gmail.com?subject=Lapidary%20%C2%B7%20sighting&body=Photo%3A%20(attached)%0APlace%3A%20';}
     if(EN) srcEl.textContent='grotesque';
-    var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var reduce=false;
     fetch('assets/lapidary/morph.json').then(function(r){return r.json();}).then(function(D){
       var W=D.word.split(''), F=D.fonts, NF=F.length, CAP=D.cap, TR=CAP*.035;
       var maxW=0; F.forEach(function(f){var t=0;W.forEach(function(c){t+=f.adv[c]+TR;});maxW=Math.max(maxW,t);});

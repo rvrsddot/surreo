@@ -1,6 +1,6 @@
 /* Strumenti lo-fi sotto il titolo della pagina progetti: radar + battito.
    Disegnati a bassa risoluzione (PX) e ingranditi con image-rendering:pixelated.
-   Si fermano fuori schermo; con reduced-motion restano un fotogramma fermo. */
+   Si fermano fuori schermo. */
 (() => {
   "use strict";
   // colori presi dal CSS della pagina (la pagina progetti è in negativo: inchiostro chiaro su nero)
@@ -8,7 +8,7 @@
   const INK = cv("--ink", "#16140f"), LINE = cv("--line", "#c9c4b6"), STAMP = cv("--stamp", "#b83b2e");
   const hex = INK.replace("#", ""), RGB = [0, 2, 4].map((i) => parseInt(hex.length === 3 ? hex[i / 2] + hex[i / 2] : hex.slice(i, i + 2), 16)).join(",");
   const PX = 2;                                   // 1 pixel canvas = 2 pixel schermo
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduce = false; // animazioni sempre attive, anche con "Riduci movimento" (spegneva tutto sui telefoni)
   const pad = (n, k) => String(Math.round(n)).padStart(k || 2, "0");
   const voci = () => document.querySelectorAll(".ix-row").length;
 

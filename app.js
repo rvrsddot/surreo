@@ -2,7 +2,7 @@
   "use strict";
 
   const app = document.getElementById("app");
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduce = false; // animazioni sempre attive, anche con "Riduci movimento" (spegneva tutto sui telefoni)
   // lingua: lang.js imposta <html lang>; L("italiano", "english")
   const EN = document.documentElement.lang === "en";
   const L = (it, en) => (EN ? en : it);

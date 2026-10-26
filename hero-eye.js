@@ -6,7 +6,7 @@
 (() => {
   const hm = document.getElementById("hm");
   if (!hm) return;
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduce = false; // animazioni sempre attive, anche con "Riduci movimento" (spegneva tutto sui telefoni)
   const NS = "http://www.w3.org/2000/svg";
   const INK = "#16140f", PAP = "#eceae1", RED = "#b83b2e";
   const KEYS = ["graphic", "motion", "web", "space", "type"];

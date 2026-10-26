@@ -52,7 +52,7 @@
 
   const hm = document.getElementById("hm");
   if (!hm) return;
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduce = false; // animazioni sempre attive, anche con "Riduci movimento" (spegneva tutto sui telefoni)
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const outExpo = (p) => p >= 1 ? 1 : 1 - Math.pow(2, -10 * p);
   const inOut = (p) => p < .5 ? 4*p*p*p : 1 - Math.pow(-2*p + 2, 3) / 2;
