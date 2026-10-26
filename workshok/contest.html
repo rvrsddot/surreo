@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Make a Toy! · Clementoni Design Challenge · Workshok</title>
+  <meta name="description" content="Make a Toy! — Clementoni Design Challenge. Workshop di toy design in coppia, 8–11 febbraio 2027, Ascoli Piceno · UNICAM SAAD. Premio in denaro e stage per il vincitore. Solo per studenti, ticket 130 €." />
+  <!-- bozza: non indicizzare finché i dati non sono definitivi -->
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#edf3db" />
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" sizes="any" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Unbounded:wght@300;500;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=46" />
+
+  <style>
+    /* =====================================================================
+       MAKE A TOY! — pagina campagna. Struttura del sito Workshok (finestre,
+       barre, Space Grotesk/Mono) con la palette e i segni del poster:
+       blu + corallo, righello a tacche, tratteggi, griglia a celle.
+       ===================================================================== */
+    :root {
+      --bg: #edf3db;
+      --paper: #f3f7e6;
+      --ink: #1c4fbb;
+      --dim: rgba(28,79,187,.62);
+      --line: rgba(28,79,187,.26);
+      --coral: #e5644e;
+      --disp: "Unbounded", "Space Grotesk", system-ui, sans-serif;
+    }
+
+    /* loghi ricolorati col blu del poster */
+    .mask-logo { display: block; background: currentColor; -webkit-mask: var(--src) center / contain no-repeat; mask: var(--src) center / contain no-repeat; }
+    .topbar__logo.mask-logo { width: 22px; height: 22px; --src: url(assets/workshok-mark.svg); }
+    .footer__logo.mask-logo { width: min(46vw, 300px); aspect-ratio: 1100 / 360; --src: url(assets/workshok-wordmark.svg); }
+
+    /* puntatore retrò a pixel (freccia 1-bit con ombra corallo; sui link si riempie di corallo) */
+    .cursor { width: 26px; height: 40px; background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2013%2020%22%20shape-rendering%3D%22crispEdges%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%221%22%20y%3D%222%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%221%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%221%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%224%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%221%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%224%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%225%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%221%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%224%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%225%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%221%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%224%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%225%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%221%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%224%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%225%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%221%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%224%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%225%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%228%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%229%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%221%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%224%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%225%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%228%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%229%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%2210%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%221%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%224%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%225%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%228%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%229%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%2210%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%2211%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%221%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%224%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%225%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%221%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%225%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%228%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%221%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%225%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%228%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%221%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%228%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%229%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%228%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%229%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%228%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%229%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%2210%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%2218%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%228%22%20y%3D%2218%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%229%22%20y%3D%2218%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%2210%22%20y%3D%2218%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%228%22%20y%3D%2219%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%229%22%20y%3D%2219%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%221%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%222%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%222%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%222%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%222%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%223%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%224%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%222%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%223%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%224%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%225%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%222%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%223%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%224%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%225%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%222%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%223%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%224%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%225%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%226%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%227%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%222%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%223%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%224%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%225%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%226%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%227%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%222%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%223%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%224%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%225%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%226%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%227%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%228%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%229%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%222%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%223%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%224%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%225%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%226%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%228%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%229%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%2210%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%222%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%223%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%224%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%225%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%226%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%222%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%224%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%225%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%226%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%227%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%224%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%225%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%226%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%227%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%225%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%227%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%228%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%225%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%227%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%228%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%228%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%229%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%228%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23f3f7e6%22/%3E%3Crect%20x%3D%229%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%2218%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%228%22%20y%3D%2218%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat; clip-path: none; mix-blend-mode: normal; image-rendering: pixelated; transition: none; }
+    .cursor.is-hot { width: 26px; height: 40px; background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2013%2020%22%20shape-rendering%3D%22crispEdges%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%222%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%222%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%222%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%223%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%224%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%222%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%223%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%224%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%225%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%222%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%223%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%224%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%225%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%222%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%223%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%224%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%225%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%222%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%223%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%224%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%225%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%222%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%223%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%224%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%225%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%228%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%229%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%222%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%223%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%224%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%225%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%228%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%229%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%2210%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%222%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%223%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%224%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%225%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%228%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%229%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%2210%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%2211%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%222%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%223%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%224%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%225%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%222%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%223%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%225%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%228%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%222%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%225%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%228%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%228%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%229%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%228%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%229%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%228%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%229%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%2210%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%2218%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%228%22%20y%3D%2218%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%229%22%20y%3D%2218%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%2210%22%20y%3D%2218%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%228%22%20y%3D%2219%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%229%22%20y%3D%2219%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%221%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%222%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%222%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%224%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%224%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%225%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%224%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%225%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%224%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%225%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%224%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%225%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%224%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%225%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%228%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%229%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%224%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%225%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%228%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%229%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%2210%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%223%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%224%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%225%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%2211%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%222%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%224%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%225%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%221%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%224%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%225%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%226%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%2213%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%220%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%225%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%228%22%20y%3D%2214%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%225%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%227%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%228%22%20y%3D%2215%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%228%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%229%22%20y%3D%2216%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%226%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%228%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23e5644e%22/%3E%3Crect%20x%3D%229%22%20y%3D%2217%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%227%22%20y%3D%2218%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3Crect%20x%3D%228%22%20y%3D%2218%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%231c4fbb%22/%3E%3C/svg%3E"); }
+
+    /* ---------- ACCESSO CON PASSWORD (filtro leggero, non è una protezione vera) ---------- */
+    body.is-locked { overflow: hidden; }
+    body.is-locked main, body.is-locked .footer { visibility: hidden; }
+    .gate { position: fixed; inset: 0; z-index: 9000; display: none; place-items: center; padding: 1rem; background: var(--bg); }
+    body.is-locked .gate { display: grid; }
+    .gate__box { width: min(440px, 100%); border: 2px solid var(--ink); background: var(--paper); }
+    .gate__bar { display: flex; justify-content: space-between; gap: 1rem; padding: .5rem .9rem; background: var(--ink); color: var(--bg);
+      font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+    .gate__body { padding: clamp(1.2rem, 4vw, 2rem); display: grid; gap: 1rem; }
+    .gate__t { margin: 0; font-family: var(--disp); font-weight: 800; text-transform: uppercase; font-size: clamp(2rem, 7vw, 2.8rem); line-height: .86; letter-spacing: -.04em; }
+    .gate__t em { font-style: normal; color: var(--coral); }
+    .gate__p { margin: 0; font-family: var(--mono); font-size: 12px; letter-spacing: .04em; color: var(--dim); }
+    .gate form { display: flex; gap: .6rem; flex-wrap: wrap; }
+    .gate input { flex: 1 1 10rem; min-width: 0; padding: .7em 1em; border: 2px solid var(--ink); border-radius: 999px; background: var(--bg); color: var(--ink);
+      font-family: var(--mono); font-size: 14px; letter-spacing: .1em; outline: none; cursor: none; }
+    .gate input:focus { border-color: var(--coral); }
+    .gate button { cursor: none; }
+    .gate__err { margin: 0; min-height: 1.2em; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--coral); }
+    .gate.is-wrong .gate__box { animation: gate-shake .3s steps(4); }
+    @keyframes gate-shake { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+    @media (hover: none), (pointer: coarse) { .gate input, .gate button { cursor: auto; } }
+
+    /* dato ancora da definire */
+    .tbd { display: inline-block; font-family: var(--mono); font-size: .72em; font-weight: 400; letter-spacing: .06em;
+      text-transform: uppercase; padding: .15em .5em; border: 1.5px dashed currentColor; opacity: .75; vertical-align: middle; white-space: nowrap; }
+
+    .dash { border: 0; border-top: 2px dashed var(--coral); margin: 0; }
+
+    /* ---------- HERO ---------- */
+    .mt-hero { position: relative; z-index: 1; display: flex; flex-direction: column;
+      padding: clamp(1.2rem, 3vh, 2.4rem) calc(var(--pad) + 22px) 0; }
+    /* righelli a tacche ai lati: le tacche scorrono in loop */
+    .mt-hero::before, .mt-hero::after { content: ""; position: absolute; top: 0; bottom: 0; width: 14px; pointer-events: none;
+      background:
+        linear-gradient(var(--coral), var(--coral)) center top / 1.5px 100% no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 30px, var(--coral) 30px 32px) 0 0 / 100% 32px repeat-y;
+      animation: mt-ruler 1.6s linear infinite; }
+    .mt-hero::before { left: calc(var(--pad) * .5); }
+    .mt-hero::after { right: calc(var(--pad) * .5); animation-direction: reverse; }
+    @keyframes mt-ruler { from { background-position: center top, 0 0; } to { background-position: center top, 0 32px; } }
+
+    .mt-hero__labels { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-bottom: .8rem; border-bottom: 2px dashed var(--coral);
+      font-family: var(--mono); font-size: clamp(10px, 1.05vw, 12px); letter-spacing: .08em; text-transform: uppercase; }
+    .mt-hero__labels b { font-weight: 700; }
+    .mt-hero__labels .lock { color: var(--coral); }
+    .mt-hero__labels .lock::before { content: "■ "; animation: blink 1.2s steps(1) infinite; }
+
+    /* griglia a 12 colonne: titolo 1–7, scheda 8–12 */
+    .mt-hero__main { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(1rem, 2.5vw, 2rem);
+      align-items: start; padding: clamp(1rem, 2.4vh, 1.6rem) 0 clamp(1.2rem, 3vh, 2rem); }
+    .mt-text { grid-column: 1 / 8; display: flex; flex-direction: column; gap: clamp(1rem, 2.4vh, 1.6rem); }
+    .mt-kicker { margin: 0; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+    .mt-title { margin: 0; }
+    .mt-title__big { display: block; font-family: var(--disp); font-weight: 800; text-transform: uppercase; line-height: .84; letter-spacing: -.04em;
+      font-size: clamp(3rem, min(9.6vw, 15vh), 9.6rem); color: var(--ink); }
+    .mt-title__big em { font-style: normal; color: var(--coral); }
+    .mt-title__sub { display: block; margin-top: .6em; font-family: var(--disp); font-weight: 300; text-transform: uppercase; letter-spacing: .02em;
+      font-size: clamp(.95rem, min(2.2vw, 3.4vh), 2rem); transform: skewX(-12deg); transform-origin: left; }
+    .mt-prize { margin: 0; max-width: 46ch; border: 2px solid var(--coral); border-radius: 999px; padding: .7em 1.5em;
+      font-family: var(--disp); font-weight: 300; font-size: clamp(.82rem, 1.1vw, 1rem); line-height: 1.35; }
+    .mt-prize b { font-weight: 800; color: var(--coral); }
+    .mt-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem; }
+    .mt-ghost { display: inline-flex; align-items: center; padding: .7em 1.4em; border-radius: 999px; border: 2px solid var(--ink);
+      font-family: var(--disp); font-weight: 500; text-transform: uppercase; font-size: clamp(.8rem, 1.1vw, .95rem); transition: background .15s, color .15s; }
+    .mt-ghost:hover { background: var(--ink); color: var(--bg); }
+
+    /* scheda: label → valore, come le schede dei poster */
+    .mt-sheet { grid-column: 8 / 13; border: 2px solid var(--ink); background: var(--paper); }
+    .mt-sheet__bar { display: flex; justify-content: space-between; gap: 1rem; padding: .5rem .9rem; border-bottom: 2px solid var(--ink); background: var(--ink); color: var(--bg);
+      font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+    .mt-sheet dl { margin: 0; }
+    .mt-sheet__row { display: grid; grid-template-columns: 7.5em 1fr; gap: 1rem; align-items: baseline; padding: .55rem .9rem; border-top: 1.5px dashed var(--line); }
+    .mt-sheet__row:first-child { border-top: none; }
+    .mt-sheet dt { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--coral); }
+    .mt-sheet dt::after { content: " →"; }
+    .mt-sheet dd { margin: 0; text-align: right; font-family: var(--disp); font-weight: 500; font-size: clamp(.9rem, 1.25vw, 1.1rem); line-height: 1.15; letter-spacing: -.01em; }
+    .mt-sheet dd small { display: block; font-family: var(--mono); font-weight: 400; font-size: 11px; color: var(--dim); letter-spacing: .02em; margin-top: .2rem; }
+    .mt-sheet .is-big dd { font-weight: 800; color: var(--coral); font-size: clamp(1.4rem, 2.2vw, 2rem); letter-spacing: -.03em; }
+
+    .mt-cta { display: inline-flex; align-items: center; gap: .5em; padding: .7em 1.4em; border-radius: 999px; border: 2px solid var(--coral);
+      background: var(--coral); color: var(--bg); font-family: var(--disp); font-weight: 800; text-transform: uppercase; font-size: clamp(.85rem, 1.2vw, 1.05rem);
+      transition: transform .18s cubic-bezier(.2,.8,.2,1), background .18s, color .18s, box-shadow .18s; box-shadow: 4px 4px 0 rgba(229,100,78,.25); }
+    .mt-cta::after { content: "→"; }
+    .mt-cta:hover, .mt-cta:focus-visible { background: transparent; color: var(--coral); transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--coral); outline: none; }
+
+    /* percorso: la griglia a celle del poster */
+    .mt-path { list-style: none; margin: 0 0 clamp(1rem, 2.4vh, 1.6rem); padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
+      border: 2px solid var(--coral); }
+    .mt-path li { position: relative; padding: .7rem .9rem .8rem; border-left: 2px solid var(--coral); min-width: 0; }
+    .mt-path li:first-child { border-left: none; }
+    .mt-path b { display: block; font-family: var(--mono); font-weight: 400; font-size: 11px; letter-spacing: .08em; color: var(--coral); }
+    .mt-path strong { display: block; font-family: var(--disp); font-weight: 800; text-transform: uppercase; font-size: clamp(.78rem, 1.05vw, .95rem); line-height: 1.05; margin: .3rem 0 .25rem; letter-spacing: -.01em; }
+    .mt-path span { display: block; font-size: 12px; line-height: 1.35; color: var(--dim); }
+    .mt-path .is-now { background: var(--coral); color: var(--bg); }
+    .mt-path .is-now b, .mt-path .is-now span { color: color-mix(in srgb, var(--bg) 82%, transparent); }
+    .mt-path .is-now::before { content: "SEI QUI"; position: absolute; right: .9rem; top: .7rem; font-family: var(--mono); font-size: 10px; letter-spacing: .1em; animation: blink 1.2s steps(1) infinite; }
+
+    /* nastro riservato */
+    .ct-tape { position: relative; z-index: 1; overflow: hidden; background: var(--coral); color: var(--bg);
+      font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
+    .ct-tape__track { display: inline-flex; animation: ct-tape 38s linear infinite; padding: .55rem 0; }
+    .ct-tape__track span { padding-right: 2.5rem; }
+    @keyframes ct-tape { to { transform: translateX(-50%); } }
+
+    /* ---------- finestre: accenti corallo ---------- */
+    .win__status.hot { color: var(--coral); opacity: 1; }
+    .block__meta { color: var(--dim); }
+
+    /* ---------- 01 · LA CHALLENGE ---------- */
+    .ct-about { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(1rem, 2.5vw, 2rem); row-gap: clamp(1.6rem, 4vw, 2.6rem); }
+    .ct-about__lede { grid-column: 1 / 8; margin: 0; font-weight: 500; font-size: clamp(1.5rem, 3.4vw, 2.6rem); line-height: 1.08; letter-spacing: -.015em; text-wrap: balance; }
+    .ct-about__lede em { font-style: normal; color: var(--coral); }
+    .ct-about__body { grid-column: 8 / 13; margin: 0; font-size: clamp(15px, 1.3vw, 17px); line-height: 1.55; padding-top: 1rem; border-top: 2px dashed var(--coral); text-wrap: pretty; }
+    .ct-facts { grid-column: 1 / 13; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: clamp(1rem, 2.5vw, 2rem); }
+    .ct-facts li { border-top: 1.5px solid var(--ink); padding-top: .9rem; }
+    .ct-facts b { font-family: var(--mono); font-size: 12px; font-weight: 400; letter-spacing: .06em; color: var(--coral); }
+    .ct-facts h3 { margin: .35rem 0 .35rem; font-family: var(--disp); font-weight: 800; font-size: clamp(1rem, 1.5vw, 1.25rem); text-transform: uppercase; line-height: 1; letter-spacing: -.02em; }
+    .ct-facts p { margin: 0; font-size: 14px; line-height: 1.45; }
+
+    /* ---------- 02 · PROGRAMMA ---------- */
+    .ct-cal { border-top: 1.5px solid var(--ink); }
+    .ct-cal__row { display: grid; grid-template-columns: 12rem 15rem 1fr; gap: clamp(1rem, 2.5vw, 2rem); padding: clamp(1rem, 2.4vw, 1.6rem) 0; border-bottom: 1.5px solid var(--ink); align-items: baseline; }
+    .ct-cal__when { font-family: var(--disp); font-weight: 500; color: var(--coral); font-size: clamp(1.6rem, 3vw, 2.4rem); line-height: .9; letter-spacing: -.03em; }
+    .ct-cal__when i { display: block; font-family: var(--mono); font-style: normal; color: var(--dim); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; margin-top: .4rem; }
+    .ct-cal__where { font-family: var(--disp); font-weight: 800; text-transform: uppercase; font-size: clamp(1rem, 1.7vw, 1.4rem); line-height: 1; letter-spacing: -.02em; }
+    .ct-cal__where span { display: block; font-weight: 300; }
+    .ct-cal__what { margin: 0; font-size: 15px; line-height: 1.5; max-width: 60ch; }
+
+    /* ---------- 03 · ISCRIZIONE ---------- */
+    .ct-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1.5px solid var(--ink); border-left: 1.5px solid var(--ink); }
+    .ct-steps li { border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); padding: clamp(1rem, 2.2vw, 1.5rem); display: flex; flex-direction: column; gap: .5rem; min-height: 13rem; }
+    .ct-steps__n { font-family: var(--disp); font-weight: 500; color: var(--coral); font-size: clamp(2.2rem, 4.4vw, 3.2rem); line-height: .8; letter-spacing: -.04em; }
+    .ct-steps__who { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); margin-top: auto; }
+    .ct-steps h3 { margin: 0; font-family: var(--disp); font-weight: 800; font-size: clamp(.95rem, 1.4vw, 1.15rem); text-transform: uppercase; line-height: 1.05; letter-spacing: -.02em; }
+    .ct-steps p { margin: 0; font-size: 14px; line-height: 1.45; }
+    .ct-cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.6rem; margin-top: clamp(1.4rem, 3vw, 2rem); }
+    .ct-cta-row p { margin: 0; font-family: var(--mono); font-size: 12px; color: var(--dim); letter-spacing: .04em; max-width: 52ch; }
+
+    /* ---------- 04 · REGOLE ---------- */
+    .ct-rules { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1.5px solid var(--ink); border-left: 1.5px solid var(--ink); counter-reset: r; }
+    .ct-rules li { counter-increment: r; position: relative; border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); padding: clamp(1rem, 2.2vw, 1.5rem); padding-top: 2.6rem; }
+    .ct-rules li::before { content: "R." counter(r, decimal-leading-zero); position: absolute; left: clamp(1rem, 2.2vw, 1.5rem); top: .9rem; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; color: var(--dim); }
+    .ct-rules li::after { content: "✕"; position: absolute; right: clamp(1rem, 2.2vw, 1.5rem); top: .75rem; font-family: var(--mono); font-size: 14px; color: var(--coral); }
+    .ct-rules h3 { margin: 0 0 .4rem; font-family: var(--disp); font-weight: 800; font-size: clamp(1rem, 1.6vw, 1.3rem); text-transform: uppercase; line-height: 1; letter-spacing: -.02em; }
+    .ct-rules p { margin: 0; font-size: 14px; line-height: 1.45; }
+
+    .ct-doc { margin-top: clamp(1.4rem, 3vw, 2rem); border: 1.5px solid var(--ink); background: var(--bg); }
+    .ct-doc > summary { list-style: none; display: flex; justify-content: space-between; gap: 1rem; padding: .8rem 1rem; cursor: none;
+      font-family: var(--mono); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }
+    .ct-doc > summary::-webkit-details-marker { display: none; }
+    .ct-doc > summary::after { content: "[ + APRI ]"; color: var(--coral); }
+    .ct-doc[open] > summary { border-bottom: 1.5px solid var(--ink); }
+    .ct-doc[open] > summary::after { content: "[ − CHIUDI ]"; }
+    .ct-doc > summary:hover { background: color-mix(in srgb, var(--ink) 7%, transparent); }
+    .ct-doc__body { padding: clamp(1rem, 3vw, 2rem); columns: 2 22rem; column-gap: clamp(1.5rem, 3vw, 2.5rem); }
+    .ct-doc__body section { break-inside: avoid; margin-bottom: 1.2rem; }
+    .ct-doc__body h4 { margin: 0 0 .3rem; font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+    .ct-doc__body p { margin: 0; font-size: 14px; line-height: 1.5; }
+    @media (hover: none), (pointer: coarse) { .ct-doc > summary, .ct-faq summary { cursor: pointer; } }
+
+    /* ---------- 05 · COSA FIRMI ---------- */
+    .ct-sign { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(1rem, 2.5vw, 2rem); }
+    .ct-sign article { border: 1.5px solid var(--ink); background: var(--bg); padding: clamp(1rem, 2.2vw, 1.4rem); display: flex; flex-direction: column; gap: .6rem; }
+    .ct-sign__tag { align-self: flex-start; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: .25em .7em; border-radius: 999px; background: var(--coral); color: var(--bg); }
+    .ct-sign h3 { margin: 0; font-family: var(--disp); font-weight: 800; font-size: clamp(1rem, 1.5vw, 1.25rem); text-transform: uppercase; line-height: 1; letter-spacing: -.02em; }
+    .ct-sign p { margin: 0; font-size: 14px; line-height: 1.45; }
+    .ct-sign__foot { margin-top: auto !important; padding-top: .7rem; border-top: 1px dashed var(--line); font-family: var(--mono); font-size: 11px !important; letter-spacing: .04em; text-transform: uppercase; color: var(--dim); }
+    .ct-sign__big { font-family: var(--disp); font-weight: 500; color: var(--coral); font-size: clamp(2rem, 3.6vw, 2.8rem); line-height: .9; letter-spacing: -.04em; }
+
+    /* ---------- 06 · FAQ ---------- */
+    .ct-faq { border-top: 1.5px solid var(--ink); }
+    .ct-faq details { border-bottom: 1.5px solid var(--ink); }
+    .ct-faq summary { list-style: none; display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 0; cursor: none;
+      font-weight: 600; font-size: clamp(1rem, 1.6vw, 1.25rem); line-height: 1.2; }
+    .ct-faq summary::-webkit-details-marker { display: none; }
+    .ct-faq summary::after { content: "+"; font-family: var(--mono); font-weight: 400; color: var(--coral); }
+    .ct-faq details[open] summary::after { content: "−"; }
+    .ct-faq p { margin: 0 0 1.1rem; max-width: 70ch; font-size: 15px; line-height: 1.55; }
+
+    /* ---------- CHIUSURA ---------- */
+    .ct-end { position: relative; z-index: 1; margin: clamp(2rem, 5vw, 4rem) var(--pad); padding: clamp(2rem, 6vw, 4.5rem) clamp(1.4rem, 4vw, 3rem);
+      background: var(--ink); color: var(--bg); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(1rem, 2.5vw, 2rem); row-gap: 1.6rem; align-items: end; }
+    .ct-end h2 { grid-column: 1 / 9; margin: 0; font-family: var(--disp); font-weight: 800; text-transform: uppercase; font-size: clamp(2.2rem, 6.6vw, 6rem); line-height: .86; letter-spacing: -.04em; }
+    .ct-end h2 em { font-style: normal; color: var(--coral); }
+    .ct-end__side { grid-column: 9 / 13; display: flex; flex-direction: column; gap: 1rem; }
+    .ct-end__side p { margin: 0; font-family: var(--mono); font-size: 12px; letter-spacing: .04em; line-height: 1.5; }
+    .ct-end .mt-cta { align-self: flex-start; }
+    .ct-end .mt-cta:hover { color: var(--bg); border-color: var(--bg); box-shadow: 6px 6px 0 var(--bg); }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1100px) {
+      .mt-text, .mt-sheet { grid-column: 1 / 13; }
+      .mt-sheet { margin-top: 2rem; }
+      .mt-path { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .mt-path li:nth-child(4) { border-left: none; }
+      .mt-path li:nth-child(n+4) { border-top: 2px solid var(--coral); }
+      .ct-sign { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 760px) {
+      .ct-about__lede, .ct-about__body { grid-column: 1 / 13; }
+      .ct-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 1.4rem; }
+      .ct-cal__row { grid-template-columns: 1fr; gap: .4rem; }
+      .ct-steps, .ct-rules { grid-template-columns: 1fr; }
+      .ct-steps li { min-height: 0; }
+      .ct-steps__who { margin-top: .3rem; }
+      .ct-end h2, .ct-end__side { grid-column: 1 / 13; }
+    }
+    @media (max-width: 560px) {
+      .mt-hero { padding-left: calc(var(--pad) + 10px); padding-right: calc(var(--pad) + 10px); }
+      .mt-hero::before, .mt-hero::after { width: 8px; }
+      .mt-hero::before { left: 4px; } .mt-hero::after { right: 4px; }
+      .mt-sheet__row { grid-template-columns: 6.5em 1fr; }
+      .mt-path { grid-template-columns: 1fr; }
+      .mt-path li, .mt-path li:nth-child(4) { border-left: none; }
+      .mt-path li + li { border-top: 2px solid var(--coral); }
+      .mt-prize { border-radius: 22px; }
+      .ct-sign, .ct-facts { grid-template-columns: 1fr; }
+      .mt-hero__labels { font-size: 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .ct-tape__track, .mt-hero::before, .mt-hero::after { animation: none; } }
+  </style>
+</head>
+<body class="is-locked">
+  <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-t">
+    <div class="gate__box">
+      <div class="gate__bar"><span>📁 MAKE_A_TOY.LOCK</span><span>[ LOCKED ]</span></div>
+      <div class="gate__body">
+        <h2 class="gate__t" id="gate-t">Make a <em>Toy!</em></h2>
+        <p class="gate__p">// pagina riservata · inserisci la password</p>
+        <form id="gate-form" autocomplete="off">
+          <input type="password" id="gate-pw" aria-label="Password" placeholder="password" autofocus />
+          <button type="submit" class="mt-cta">Entra</button>
+        </form>
+        <p class="gate__err" id="gate-err" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"></div>
+
+  <!-- ===================== TOP BAR ===================== -->
+  <header class="topbar" id="top">
+    <a href="./" class="topbar__brand" aria-label="Workshok — home">
+      <span class="topbar__logo mask-logo" role="img" aria-label="WorkShok"></span>
+    </a>
+    <span class="topbar__ver" id="sys-ver">v2.6</span>
+    <nav class="topbar__nav" aria-label="Sezioni">
+      <a href="#challenge" class="tab" data-tab><i>01</i>&nbsp;CHALLENGE</a>
+      <a href="#programma" class="tab" data-tab><i>02</i>&nbsp;PROGRAMMA</a>
+      <a href="#iscrizione" class="tab" data-tab><i>03</i>&nbsp;ISCRIZIONE</a>
+      <a href="#regole" class="tab" data-tab><i>04</i>&nbsp;REGOLE</a>
+      <a href="#firmi" class="tab" data-tab><i>05</i>&nbsp;COSA FIRMI</a>
+      <a href="#faq" class="tab" data-tab><i>06</i>&nbsp;FAQ</a>
+    </nav>
+    <a href="./" class="topbar__cta">[&nbsp;← HOME&nbsp;]</a>
+  </header>
+
+  <main>
+    <!-- ===================== HERO ===================== -->
+    <section class="mt-hero" id="hero">
+      <div class="mt-hero__labels">
+        <span><b>WORKSHOK! × CLEMENTONI</b>&nbsp;&nbsp;ED. 2027</span>
+        <span class="lock">CONFIDENTIAL · NDA REQUIRED</span>
+      </div>
+
+      <div class="mt-hero__main">
+        <div class="mt-text">
+          <p class="mt-kicker">// toy design challenge · in coppia · 4 giorni</p>
+          <h1 class="mt-title">
+            <span class="mt-title__big">Make a<br><em>Toy!</em></span>
+            <span class="mt-title__sub">Clementoni Design Challenge</span>
+          </h1>
+          <p class="mt-prize">☺☺☺&nbsp; <b>In palio?</b> Premio in denaro e uno stage per il progetto vincitore. E Clementoni può acquistare il progetto e produrlo.</p>
+          <div class="mt-ctas">
+            <a class="mt-cta" href="#iscrizione">Candidati</a>
+            <a class="mt-ghost" href="#programma">Come funziona ↓</a>
+          </div>
+        </div>
+
+        <aside class="mt-sheet" aria-label="Scheda della challenge">
+          <div class="mt-sheet__bar"><span>📁 SCHEDA.TXT</span><span>[ 2027 ]</span></div>
+          <dl>
+            <div class="mt-sheet__row is-big"><dt>Quando</dt><dd>8&gt;11 FEB</dd></div>
+            <div class="mt-sheet__row"><dt>Dove</dt><dd>Recanati → Ascoli Piceno<small>8 feb in Clementoni · 9–11 feb UNICAM#SAAD</small></dd></div>
+            <div class="mt-sheet__row"><dt>Formato</dt><dd>In coppia · aula chiusa</dd></div>
+            <div class="mt-sheet__row"><dt>Per chi</dt><dd>Solo studenti</dd></div>
+            <div class="mt-sheet__row"><dt>Posti</dt><dd><span class="tbd">da definire</span></dd></div>
+            <div class="mt-sheet__row"><dt>Premio</dt><dd>Denaro + stage<small>cifra: <span class="tbd">€ —</span></small></dd></div>
+            <div class="mt-sheet__row is-big"><dt>Ticket</dt><dd>130 €</dd></div>
+            <div class="mt-sheet__row"><dt>Candidature</dt><dd>entro <span class="tbd">gg/mm</span></dd></div>
+          </dl>
+        </aside>
+      </div>
+
+      <ol class="mt-path" aria-label="Il percorso, dalla candidatura al workshop">
+        <li class="is-now"><b>01</b><strong>Candidatura</strong><span>Compili il modulo con portfolio e competenze.</span></li>
+        <li><b>02</b><strong>Selezione</strong><span>Valutiamo le candidature e ti ricontattiamo.</span></li>
+        <li><b>03</b><strong>Ticket + firme</strong><span>Paghi 130 € e firmi NDA e contratto.</span></li>
+        <li><b>04</b><strong>8 feb · Recanati</strong><span>In Clementoni: il brief.</span></li>
+        <li><b>05</b><strong>9–11 feb · UNICAM</strong><span>Si progetta in coppia, in aula chiusa.</span></li>
+        <li><b>06</b><strong>Il vincitore</strong><span>Premio in denaro + stage. E il progetto può diventare un giocattolo Clementoni.</span></li>
+      </ol>
+    </section>
+
+    <div class="ct-tape" aria-hidden="true"><div class="ct-tape__track">
+      <span>Aule chiuse ✶ Niente telefoni ✶ Niente foto né video ✶ NDA obbligatorio ✶ Materiale cancellato a fine workshop ✶</span>
+      <span>Aule chiuse ✶ Niente telefoni ✶ Niente foto né video ✶ NDA obbligatorio ✶ Materiale cancellato a fine workshop ✶</span>
+    </div></div>
+
+    <!-- ===================== 01 · LA CHALLENGE ===================== -->
+    <section class="win" id="challenge">
+      <div class="win__bar">
+        <span class="win__name">📁&nbsp;<i>01</i>&nbsp;CHALLENGE.TXT</span>
+        <span class="win__status hot">[ CONFIDENTIAL ]</span>
+        <span class="win__ctrl" aria-hidden="true"><b></b><b></b><b></b></span>
+      </div>
+      <div class="win__body">
+        <div class="block__head">
+          <h2 class="block__title neon-solid">La&nbsp;Challenge</h2>
+          <span class="block__meta">// toy design · brief reale · in coppia</span>
+        </div>
+        <div class="ct-about">
+          <p class="ct-about__lede">Clementoni ci affida un brief vero. Voi lo trasformate in un giocattolo, in coppia, in quattro giorni. <em>Al vincitore premio in denaro e stage.</em></p>
+          <p class="ct-about__body">È un workshop Workshok! con una differenza: tutto quello che succede in aula è coperto da segreto industriale. Il brief e i progetti restano riservati. Per questo si lavora a porte chiuse, senza telefoni, e si firma un accordo di riservatezza prima di entrare. In cambio lavorate su un tema reale, con chi i giocattoli li produce davvero.</p>
+          <ul class="ct-facts">
+            <li><b>01</b><h3>Brief reale</h3><p>Il tema arriva da Clementoni il primo giorno, in sede a Recanati.</p></li>
+            <li><b>02</b><h3>In coppia</h3><p>Ti iscrivi con un compagno, oppure da solo e ti abbiniamo noi.</p></li>
+            <li><b>03</b><h3>Solo studenti</h3><p>La challenge è aperta solo a studenti. Ticket 130 €.</p></li>
+            <li><b>04</b><h3>In palio</h3><p>Premio in denaro <span class="tbd">€ —</span> e uno stage per il progetto vincitore. In più Clementoni può acquistare il progetto e produrlo.</p></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 02 · PROGRAMMA ===================== -->
+    <section class="win" id="programma">
+      <div class="win__bar">
+        <span class="win__name">📁&nbsp;<i>02</i>&nbsp;PROGRAMMA.CAL</span>
+        <span class="win__status">[ 8&gt;11 FEB 2027 ]</span>
+        <span class="win__ctrl" aria-hidden="true"><b></b><b></b><b></b></span>
+      </div>
+      <div class="win__body">
+        <div class="block__head">
+          <h2 class="block__title neon-solid">Programma</h2>
+          <span class="block__meta">// 4 giorni · orari <span class="tbd">da definire</span></span>
+        </div>
+        <div class="ct-cal">
+          <div class="ct-cal__row">
+            <div class="ct-cal__when">8 feb<i>giorno 1</i></div>
+            <div class="ct-cal__where">Recanati<span>in Clementoni</span></div>
+            <p class="ct-cal__what">Firma dei documenti, presentazione dell'azienda e consegna del brief. Si formano le coppie e si parte.</p>
+          </div>
+          <div class="ct-cal__row">
+            <div class="ct-cal__when">9 → 11 feb<i>giorni 2–4</i></div>
+            <div class="ct-cal__where">Ascoli Piceno<span>UNICAM#SAAD</span></div>
+            <p class="ct-cal__what">Si progetta in coppia, in aula chiusa, dal concept al modello. I tutor Workshok seguono ogni coppia da vicino; revisioni con i mentor Clementoni, una coppia alla volta.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 03 · ISCRIZIONE ===================== -->
+    <section class="win" id="iscrizione">
+      <div class="win__bar">
+        <span class="win__name">📁&nbsp;<i>03</i>&nbsp;ISCRIZIONE.EXE</span>
+        <span class="win__status hot">[ OPEN ]</span>
+        <span class="win__ctrl" aria-hidden="true"><b></b><b></b><b></b></span>
+      </div>
+      <div class="win__body">
+        <div class="block__head">
+          <h2 class="block__title neon-solid">Come&nbsp;ti&nbsp;iscrivi</h2>
+          <span class="block__meta">// 6 passaggi · il posto è tuo solo dopo ticket e firme</span>
+        </div>
+        <ol class="ct-steps">
+          <li><span class="ct-steps__n">01</span><h3>Compili il modulo</h3><p>Dati, cosa studi, software che usi, link al portfolio e il nome del compagno, se ce l'hai.</p><span class="ct-steps__who">tu · google form</span></li>
+          <li><span class="ct-steps__n">02</span><h3>Valutiamo</h3><p>Guardiamo portfolio e risposte, per essere sicuri che tu possa affrontare la challenge.</p><span class="ct-steps__who">noi · entro <span class="tbd">x</span> giorni</span></li>
+          <li><span class="ct-steps__n">03</span><h3>Ti ricontattiamo</h3><p>Via email o WhatsApp: conferma del posto, modalità di pagamento e i documenti da leggere.</p><span class="ct-steps__who">noi · email / whatsapp</span></li>
+          <li><span class="ct-steps__n">04</span><h3>Paghi il ticket</h3><p>130 €, entro la scadenza indicata. Mandi la ricevuta.</p><span class="ct-steps__who">tu · <span class="tbd">modalità</span></span></li>
+          <li><span class="ct-steps__n">05</span><h3>Firmi</h3><p>Accordo di riservatezza e contratto con Clementoni. Senza firme non si entra.</p><span class="ct-steps__who">tu · <span class="tbd">prima / 8 feb</span></span></li>
+          <li><span class="ct-steps__n">06</span><h3>Sei dentro</h3><p>Ricevi programma, indirizzi e cosa portare. Ci vediamo a Recanati l'8 febbraio.</p><span class="ct-steps__who">noi · conferma finale</span></li>
+        </ol>
+        <div class="ct-cta-row">
+          <a class="mt-cta" href="#" data-form>Apri il modulo</a>
+          <p>— circa 10 minuti. Tieni pronto il link al portfolio. Se ti iscrivi in coppia, anche il tuo compagno deve compilarlo.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 04 · REGOLE ===================== -->
+    <section class="win" id="regole">
+      <div class="win__bar">
+        <span class="win__name">📁&nbsp;<i>04</i>&nbsp;RISERVATEZZA.LOCK</span>
+        <span class="win__status hot">[ LOCKED ]</span>
+        <span class="win__ctrl" aria-hidden="true"><b></b><b></b><b></b></span>
+      </div>
+      <div class="win__body">
+        <div class="block__head">
+          <h2 class="block__title neon-solid">Le&nbsp;regole</h2>
+          <span class="block__meta">// segreto industriale · leggile prima di candidarti</span>
+        </div>
+        <ul class="ct-rules">
+          <li><h3>Aule chiuse</h3><p>Entrano solo partecipanti, organizzatori e referenti Clementoni. Niente ospiti.</p></li>
+          <li><h3>Niente telefoni</h3><p>Telefoni e smartwatch si lasciano all'ingresso. Si riprendono in pausa, fuori dall'aula.</p></li>
+          <li><h3>Niente foto né video</h3><p>Nessuna foto, video, registrazione o screenshot. Né dentro né fuori dall'aula.</p></li>
+          <li><h3>Solo strumenti indicati</h3><p>Niente chiavette, cloud personali, chat o AI non autorizzate per il materiale della challenge.</p></li>
+          <li><h3>Tutto si cancella</h3><p>A fine workshop i file si cancellano davanti a noi e i fogli restano in aula.</p></li>
+          <li><h3>Silenzio sui social</h3><p>Non si parla di brief e progetti. Se e quando si potrà, ve lo diciamo noi.</p></li>
+        </ul>
+
+        <details class="ct-doc">
+          <summary>📄 Regolamento completo · 13 articoli</summary>
+          <div class="ct-doc__body">
+            <section><h4>Art. 1 — Riservatezza</h4><p>Il workshop è coperto da segreto industriale. Tutto ciò che viene mostrato, detto o prodotto (brief, materiali Clementoni, idee, sketch, modelli 3D, render, presentazioni) è riservato. Ogni partecipante firma un NDA prima dell'inizio: senza NDA firmato non si entra.</p></section>
+            <section><h4>Art. 2 — Partecipazione in coppia</h4><p>Si lavora in coppia. Entrambi i componenti rispondono insieme del rispetto del regolamento.</p></section>
+            <section><h4>Art. 3 — Accesso alle aule</h4><p>Le sessioni si svolgono in aule chiuse. Entrano solo i partecipanti registrati, gli organizzatori, i docenti e i referenti Clementoni. Non sono ammessi ospiti, amici o visitatori.</p></section>
+            <section><h4>Art. 4 — Telefoni e dispositivi personali</h4><p>All'ingresso telefoni, smartwatch e altri dispositivi personali si consegnano o si ripongono negli spazi indicati. Si riprendono durante le pause, fuori dall'aula. Per le emergenze c'è un numero di riferimento degli organizzatori.</p></section>
+            <section><h4>Art. 5 — Foto, video e registrazioni</h4><p>È vietato fare foto, video, registrazioni audio o screenshot di qualsiasi materiale del workshop, dentro e fuori dall'aula.</p></section>
+            <section><h4>Art. 6 — Computer e software</h4><p>Si lavora solo sui dispositivi e sugli account indicati dagli organizzatori. Vietati chiavette USB e dischi esterni non autorizzati, cloud personali (Drive, iCloud, Dropbox, WeTransfer…), invio di file via email o chat, caricamento del materiale su servizi online o AI non autorizzati.</p></section>
+            <section><h4>Art. 7 — Materiale cartaceo</h4><p>Sketchbook e fogli sono forniti dagli organizzatori, numerati, e vengono ritirati alla fine di ogni giornata. Lavagne e fogli appesi si cancellano o si ritirano a fine sessione.</p></section>
+            <section><h4>Art. 8 — Cancellazione del materiale</h4><p>Alla fine del workshop tutto il materiale digitale viene cancellato, davanti agli organizzatori, da ogni dispositivo usato. Il partecipante firma una dichiarazione di avvenuta cancellazione. Il materiale cartaceo resta agli organizzatori o a Clementoni.</p></section>
+            <section><h4>Art. 9 — Social e comunicazione</h4><p>È vietato parlare pubblicamente del contenuto del workshop (brief, temi, progetti, materiali Clementoni). Si può dire solo di aver partecipato, se e quando gli organizzatori lo autorizzano. La comunicazione ufficiale è curata solo da Workshok.</p></section>
+            <section><h4>Art. 10 — Portfolio</h4><p>I progetti non possono essere pubblicati né inseriti nel portfolio. <span class="tbd">da confermare</span></p></section>
+            <section><h4>Art. 11 — Non concorrenza</h4><p>Per i 3 mesi successivi i partecipanti si impegnano a non partecipare ad altri workshop di toy design.</p></section>
+            <section><h4>Art. 12 — Violazioni</h4><p>Chi viola il regolamento viene allontanato subito dal workshop, senza rimborso del ticket, e perde il diritto al premio. Restano valide le conseguenze previste dall'NDA e dal contratto.</p></section>
+            <section><h4>Art. 13 — Accettazione</h4><p>Con l'iscrizione e la firma il partecipante dichiara di aver letto e accettato il regolamento.</p></section>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ===================== 05 · COSA FIRMI ===================== -->
+    <section class="win" id="firmi">
+      <div class="win__bar">
+        <span class="win__name">📁&nbsp;<i>05</i>&nbsp;FIRME.DOC</span>
+        <span class="win__status">[ 3 DOCS + TICKET ]</span>
+        <span class="win__ctrl" aria-hidden="true"><b></b><b></b><b></b></span>
+      </div>
+      <div class="win__body">
+        <div class="block__head">
+          <h2 class="block__title neon-solid">Cosa&nbsp;firmi</h2>
+          <span class="block__meta">// te lo diciamo prima, così sai a cosa vai incontro</span>
+        </div>
+        <div class="ct-sign">
+          <article><span class="ct-sign__tag">Doc 01</span><h3>Accordo di riservatezza</h3><p>L'NDA: ti impegni a non divulgare nulla di quello che vedi e produci durante il workshop.</p><p class="ct-sign__foot">obbligatorio · prima di entrare</p></article>
+          <article><span class="ct-sign__tag">Doc 02</span><h3>Contratto con Clementoni</h3><p>Regola il premio e i diritti sui progetti sviluppati durante la challenge.</p><p class="ct-sign__foot">obbligatorio · con Clementoni</p></article>
+          <article><span class="ct-sign__tag">Doc 03</span><h3>Non concorrenza</h3><p>Per 3 mesi dopo il workshop non partecipi ad altri workshop di toy design.</p><p class="ct-sign__foot">3 mesi · solo toy design</p></article>
+          <article><span class="ct-sign__tag">Ticket</span><span class="ct-sign__big">130 €</span><p>Quota di partecipazione. Le modalità di pagamento te le mandiamo quando ti ricontattiamo.</p><p class="ct-sign__foot">only × students</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 06 · FAQ ===================== -->
+    <section class="win" id="faq">
+      <div class="win__bar">
+        <span class="win__name">📁&nbsp;<i>06</i>&nbsp;FAQ.LOG</span>
+        <span class="win__status">[ READY ]</span>
+        <span class="win__ctrl" aria-hidden="true"><b></b><b></b><b></b></span>
+      </div>
+      <div class="win__body">
+        <div class="block__head">
+          <h2 class="block__title neon-solid">FAQ</h2>
+          <span class="block__meta">// altre domande? scrivici dalla home</span>
+        </div>
+        <div class="ct-faq">
+          <details><summary>Cosa si vince?</summary><p>Il progetto vincitore riceve un premio in denaro <span class="tbd">€ —</span> e uno stage. In più Clementoni può acquistare il progetto e produrlo: la tua idea, il loro prossimo passo.</p></details>
+          <details><summary>Posso iscrivermi da solo?</summary><p>Sì. Nel modulo scegli "da solo, abbinatemi voi" e ti mettiamo in coppia con un altro partecipante.</p></details>
+          <details><summary>Chi può partecipare?</summary><p>Solo studenti. <span class="tbd">corsi / anni da definire</span> Guardiamo soprattutto portfolio e competenze.</p></details>
+          <details><summary>Perché tutta questa riservatezza?</summary><p>Perché lavoriamo su un brief reale di Clementoni, coperto da segreto industriale. Brief e progetti restano riservati: per questo aule chiuse, niente telefoni e un NDA da firmare.</p></details>
+          <details><summary>Posso mettere il progetto nel portfolio?</summary><p><span class="tbd">da confermare</span> Al momento no: il progetto resta riservato.</p></details>
+          <details><summary>Devo portare il mio computer?</summary><p><span class="tbd">da definire</span></p></details>
+          <details><summary>Quanto costa e come si paga?</summary><p>Il ticket è di 130 €. Le modalità di pagamento te le mandiamo quando ti ricontattiamo dopo la candidatura.</p></details>
+          <details><summary>E se non posso esserci un giorno?</summary><p>Serve essere presenti a tutte e quattro le giornate: l'8 febbraio a Recanati e dal 9 all'11 febbraio in UNICAM ad Ascoli Piceno.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CHIUSURA ===================== -->
+    <section class="ct-end" aria-label="Candidati">
+      <h2>Make a <em>Toy!</em><br>Candidati.</h2>
+      <div class="ct-end__side">
+        <p>8&gt;11 febbraio 2027 · Recanati + Ascoli Piceno.<br>Candidature aperte fino al <span class="tbd">gg/mm</span>. Posti limitati, si lavora in coppia.</p>
+        <a class="mt-cta" href="#" data-form>Apri il modulo</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <span class="footer__logo mask-logo" role="img" aria-label="WorkShok" style="margin:0 auto 1.5rem"></span>
+    <div class="footer__meta">
+      <span>MAKE A TOY! · CLEMENTONI DESIGN CHALLENGE</span>
+      <span>8&gt;11 FEB 2027</span>
+      <span class="footer__credit">SITE — <i id="foot-credit">—</i></span>
+      <a href="#top">↑ TOP</a>
+    </div>
+  </footer>
+
+  <div class="statusbar" aria-hidden="true">
+    <span class="statusbar__coord">CUR&nbsp;X:<i id="sb-x">000</i>&nbsp;Y:<i id="sb-y">000</i></span>
+    <span class="statusbar__msg">MAKE A TOY! // CANDIDATURE APERTE</span>
+    <span class="statusbar__sys"><i id="sb-coords">—</i>&nbsp;·&nbsp;ASCOLI&nbsp;<i id="sb-clock">00:00:00</i></span>
+  </div>
+
+  <script>
+    /* accesso: confronta lo SHA-256 della password (filtro leggero lato browser) */
+    (function () {
+      var HASH = "31c0aa338b9460d51748ec2b66e25a74ab1b6396a5c7a6199fcc497ae2ee009f", KEY = "mat-ok";
+      function open() { document.body.classList.remove("is-locked"); }
+      try { if (sessionStorage.getItem(KEY) === HASH) open(); } catch (e) {}
+      var form = document.getElementById("gate-form"), pw = document.getElementById("gate-pw"),
+          err = document.getElementById("gate-err"), gate = document.getElementById("gate");
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var data = new TextEncoder().encode(pw.value.trim().toLowerCase());
+        crypto.subtle.digest("SHA-256", data).then(function (buf) {
+          var hex = Array.prototype.map.call(new Uint8Array(buf), function (b) { return ("0" + b.toString(16)).slice(-2); }).join("");
+          if (hex === HASH) { try { sessionStorage.setItem(KEY, HASH); } catch (e) {} open(); window.scrollTo(0, 0); }
+          else { err.textContent = "Password errata"; gate.classList.remove("is-wrong"); void gate.offsetWidth; gate.classList.add("is-wrong"); pw.select(); }
+        });
+      });
+    })();
+
+    /* link al Google Form: da inserire quando il modulo è pronto */
+    window.CONTEST_FORM = "";
+    document.querySelectorAll("[data-form]").forEach(function (a) {
+      if (window.CONTEST_FORM) { a.href = window.CONTEST_FORM; a.target = "_blank"; a.rel = "noopener"; }
+      else a.addEventListener("click", function (e) { e.preventDefault(); a.textContent = "Modulo in arrivo"; });
+    });
+  </script>
+  <script src="data/courses.js?v=44"></script>
+  <script src="js/main.js?v=43"></script>
+</body>
+</html>
