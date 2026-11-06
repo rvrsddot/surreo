@@ -185,12 +185,12 @@ window.ARCHIVE = [
         "01": {
           number: "12A",
           thumb: "assets/corsi/storico/12a.jpg",
-          summary: "Quattro giorni per imparare a costruire siti web e applicazioni con l'intelligenza artificiale, anche partendo da zero con la programmazione. Tanta pratica e poca teoria: dal prototipo in cinque minuti al progetto completo, con strumenti come Ollama e un metodo per lavorare senza limiti tecnici. Ogni partecipante seguito uno a uno.",
+          summary: "Quattro giorni per costruire siti web e app con l'intelligenza artificiale, anche senza saper programmare. Si parte da un prototipo fatto in pochi minuti e si arriva a un progetto completo, con strumenti come Ollama. Il docente segue ogni partecipante da vicino.",
         },
         "02": {
           number: "12B",
           thumb: "assets/corsi/storico/12b.jpg",
-          summary: "Un workshop intensivo sull'intelligenza artificiale come alleata del processo creativo. Dopo casi studio e una breve introduzione, ogni partecipante ha lavorato a un progetto originale con FloraFauna AI (immagini, concept, direzione visiva) tra revisioni e mentoring, fino a impaginarlo e presentarlo.",
+          summary: "L'intelligenza artificiale usata dentro il lavoro di branding. Dopo alcuni casi studio, ognuno ha sviluppato un progetto con FloraFauna AI (immagini, concept, direzione visiva), rivedendolo ogni giorno con la docente. Alla fine i progetti sono stati impaginati e presentati.",
         },
       }[c.number] || {};
       var o = {}; for (var k in c) o[k] = c[k];
