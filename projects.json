@@ -37,27 +37,6 @@
           ]
         },
         {
-          "id": "magno-sito",
-          "name": "PASTICCERIA MAGNO — SITO",
-          "type": "Project",
-          "description": "Sito web per Pasticceria Magno, pasticceria e caffetteria a Teramo: menu, lievitati, eventi e shop online, con un'identità illustrata ispirata alle vecchie insegne di pasticceria. Online su pasticceriamagno.com.",
-          "description_en": "Website for Pasticceria Magno, a pastry shop and café in Teramo: menu, leavened cakes, events and online shop, with an illustrated identity inspired by old pastry-shop signs. Live at pasticceriamagno.com.",
-          "tags": [
-            "Website",
-            "Web Design",
-            "Illustration",
-            "Brand Identity"
-          ],
-          "frames": [
-            "assets/projects/magno-sito/01.jpg",
-            "assets/projects/magno-sito/02.jpg",
-            "assets/projects/magno-sito/03.jpg",
-            "assets/projects/magno-sito/04.jpg",
-            "assets/projects/magno-sito/05.jpg",
-            "assets/projects/magno-sito/06.jpg"
-          ]
-        },
-        {
           "id": "magno-pack",
           "name": "MAGNO — PACK PANETTONE",
           "type": "Project",
@@ -76,46 +55,6 @@
             "assets/projects/magno-pack/05.jpg",
             "assets/projects/magno-pack/06.jpg",
             "assets/projects/magno-pack/07.jpg"
-          ]
-        },
-        {
-          "id": "panetta-sito",
-          "name": "PANETTA BAKERY — SITO",
-          "type": "Project",
-          "description": "Sito web per Panetta Bakery e il Panificio di Cerchiara a Colledara: hero a tessere animate, menu asporto, servizi e catering, con una versione mobile a parte pensata come un sacchetto del pane. Online su panettabakery.com.",
-          "description_en": "Website for Panetta Bakery and Panificio di Cerchiara in Colledara: animated tile hero, takeaway menu, services and catering, with a separate mobile version designed like a bread bag. Live at panettabakery.com.",
-          "tags": [
-            "Website",
-            "Web Design",
-            "Motion",
-            "Brand Identity"
-          ],
-          "frames": [
-            "assets/projects/panetta-sito/01.jpg",
-            "assets/projects/panetta-sito/02.jpg",
-            "assets/projects/panetta-sito/03.jpg",
-            "assets/projects/panetta-sito/04.jpg",
-            "assets/projects/panetta-sito/05.jpg"
-          ]
-        },
-        {
-          "id": "suburbiae-sito",
-          "name": "SUBURBIÆ FEST — SITO",
-          "type": "Project",
-          "description": "Sito web del Suburbiæ Unexpected Fest: edizioni passate con gallery e band, zine, merch con carrello e contatti, nello stesso immaginario rosso e nero del festival. Online su suburbiaefest.com.",
-          "description_en": "Website for Suburbiæ Unexpected Fest: past editions with gallery and bands, zine, merch shop with cart and contacts, in the festival's red-and-black imagery. Live at suburbiaefest.com.",
-          "tags": [
-            "Website",
-            "Web Design",
-            "Festival Design",
-            "E-commerce"
-          ],
-          "frames": [
-            "assets/projects/suburbiae-sito/01.jpg",
-            "assets/projects/suburbiae-sito/02.jpg",
-            "assets/projects/suburbiae-sito/03.jpg",
-            "assets/projects/suburbiae-sito/04.jpg",
-            "assets/projects/suburbiae-sito/05.jpg"
           ]
         },
         {
@@ -1379,6 +1318,76 @@
             "assets/projects/parallels-archives/07.jpg",
             "assets/projects/parallels-archives/08.jpg",
             "assets/projects/parallels-archives/09.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "website",
+      "title": "Website",
+      "projects": [
+        {
+          "id": "magno-sito",
+          "name": "Pasticceria Magno",
+          "type": "Project",
+          "description": "Sito web per Pasticceria Magno, pasticceria e caffetteria a Teramo: menu, lievitati, eventi e shop online, con un'identità illustrata ispirata alle vecchie insegne di pasticceria. Online su pasticceriamagno.com.",
+          "description_en": "Website for Pasticceria Magno, a pastry shop and café in Teramo: menu, leavened cakes, events and online shop, with an illustrated identity inspired by old pastry-shop signs. Live at pasticceriamagno.com.",
+          "tags": [
+            "Website",
+            "Web Design",
+            "Illustration",
+            "Brand Identity"
+          ],
+          "url": "https://pasticceriamagno.com",
+          "frames": [
+            "assets/projects/magno-sito/01.jpg",
+            "assets/projects/magno-sito/02.jpg",
+            "assets/projects/magno-sito/03.jpg",
+            "assets/projects/magno-sito/04.jpg",
+            "assets/projects/magno-sito/05.jpg",
+            "assets/projects/magno-sito/06.jpg"
+          ]
+        },
+        {
+          "id": "panetta-sito",
+          "name": "Panetta Bakery",
+          "type": "Project",
+          "description": "Sito web per Panetta Bakery e il Panificio di Cerchiara a Colledara: hero a tessere animate, menu asporto, servizi e catering, con una versione mobile a parte pensata come un sacchetto del pane. Online su panettabakery.com.",
+          "description_en": "Website for Panetta Bakery and Panificio di Cerchiara in Colledara: animated tile hero, takeaway menu, services and catering, with a separate mobile version designed like a bread bag. Live at panettabakery.com.",
+          "tags": [
+            "Website",
+            "Web Design",
+            "Motion",
+            "Brand Identity"
+          ],
+          "url": "https://panettabakery.com",
+          "frames": [
+            "assets/projects/panetta-sito/01.jpg",
+            "assets/projects/panetta-sito/02.jpg",
+            "assets/projects/panetta-sito/03.jpg",
+            "assets/projects/panetta-sito/04.jpg",
+            "assets/projects/panetta-sito/05.jpg"
+          ]
+        },
+        {
+          "id": "suburbiae-sito",
+          "name": "Suburbiæ Fest",
+          "type": "Project",
+          "description": "Sito web del Suburbiæ Unexpected Fest: edizioni passate con gallery e band, zine, merch con carrello e contatti, nello stesso immaginario rosso e nero del festival. Online su suburbiaefest.com.",
+          "description_en": "Website for Suburbiæ Unexpected Fest: past editions with gallery and bands, zine, merch shop with cart and contacts, in the festival's red-and-black imagery. Live at suburbiaefest.com.",
+          "tags": [
+            "Website",
+            "Web Design",
+            "Festival Design",
+            "E-commerce"
+          ],
+          "url": "https://suburbiaefest.com",
+          "frames": [
+            "assets/projects/suburbiae-sito/01.jpg",
+            "assets/projects/suburbiae-sito/02.jpg",
+            "assets/projects/suburbiae-sito/03.jpg",
+            "assets/projects/suburbiae-sito/04.jpg",
+            "assets/projects/suburbiae-sito/05.jpg"
           ]
         }
       ]

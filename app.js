@@ -135,11 +135,14 @@
   /* --- costruzione categorie --- */
   function build(sections, vids) {
     const CATS = [];
-    sections.forEach((s) => {
-      const items = (s.projects || []).map((p) => ({
-        kind: "proj", name: p.name, frames: p.frames || [],
-        type: (EN && p.type_en) || p.type || null, description: (EN && p.description_en) || p.description || null, tags: p.tags || []
-      }));
+    const toItems = (s) => (s.projects || []).map((p) => ({
+      kind: "proj", name: p.name, frames: p.frames || [], url: p.url || null,
+      type: (EN && p.type_en) || p.type || null, description: (EN && p.description_en) || p.description || null, tags: p.tags || []
+    }));
+    // la sezione "website" di projects.json (siti con immagini) va nella categoria Website, prima delle card video
+    const webSec = sections.find((s) => s.id === "website");
+    sections.filter((s) => s.id !== "website").forEach((s) => {
+      const items = toItems(s);
       if (s.id === "exhibit" && vids.exhibitCards && vids.exhibitCards.items) {
         vids.exhibitCards.items.forEach((it) => items.push({ kind: "video", name: it.title, vid: it.id }));
       }
@@ -153,9 +156,9 @@
       vids.visual.items.forEach((it) => (it.videos || []).forEach((v) => items.push({ kind: "video", name: it.title || (it.id ? pretty(it.id) : "Videoclip"), vid: v })));
       CATS.push({ id: "videoclip", name: "Videoclip & Motion", items });
     }
-    if (vids.website && vids.website.items) {
-      CATS.push({ id: "website", name: "Website", items: vids.website.items.map((it) => ({ kind: "site", name: it.title, vid: it.id, url: it.url })) });
-    }
+    const webItems = (webSec ? toItems(webSec) : []).concat(
+      vids.website && vids.website.items ? vids.website.items.map((it) => ({ kind: "site", name: it.title, vid: it.id, url: it.url })) : []);
+    if (webItems.length) CATS.push({ id: "website", name: "Website", items: webItems });
     // "Virtual & VR Experience" ha pochi items → in fondo
     const vIdx = CATS.findIndex((c) => /virtual/i.test(c.name));
     if (vIdx >= 0) CATS.push(CATS.splice(vIdx, 1)[0]);
