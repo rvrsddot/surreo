@@ -1,6 +1,7 @@
 /* Gallery: provino in home (#gal-sheet) + pagina gallery.html (#gal-grid, filtri, lightbox). */
 (function () {
   var SETS = window.GALLERY || [];
+  var T = window.T || function (s) { return s; };
   var BASE = "assets/gallery/";
   function pad(n) { return String(n).padStart(3, "0"); }
 
@@ -23,7 +24,7 @@
     var picks = [2, 9, 13];
     sheet.innerHTML = mix.map(function (p, i) {
       return '<a class="sheet__f' + (picks.indexOf(i) > -1 ? " is-pick" : "") + '" href="gallery.html?f=' + p.name + '">' +
-        '<span class="sheet__ph"><img loading="lazy" decoding="async" src="' + th(p) + '" alt="' + p.alt + ', foto ' + (i + 1) + '"></span>' +
+        '<span class="sheet__ph"><img loading="lazy" decoding="async" src="' + th(p) + '" alt="' + p.alt + ', ' + T('foto') + ' ' + (i + 1) + '"></span>' +
         '<span class="sheet__cap"><span>' + pad(i + 1) + 'A</span><span>' + p.name.toUpperCase() + '</span></span></a>';
     }).join("");
     var cnt = document.getElementById("gal-count");
@@ -37,13 +38,13 @@
   var st = document.getElementById("gal-status");
   var cur = ALL, idx = 0;
 
-  tabs.innerHTML = '<button type="button" class="is-on" data-f="all">Tutte <i>' + ALL.length + '</i></button>' +
+  tabs.innerHTML = '<button type="button" class="is-on" data-f="all">' + T("Tutte") + ' <i>' + ALL.length + '</i></button>' +
     SETS.map(function (s) { return '<button type="button" data-f="' + s.id + '">' + s.label + ' <i>' + s.count + '</i></button>'; }).join("");
 
   function draw(f) {
     cur = f === "all" ? ALL : ALL.filter(function (p) { return p.set === f; });
     grid.innerHTML = cur.map(function (p, i) {
-      return '<figure class="gal__f" data-i="' + i + '" tabindex="0"><img loading="lazy" decoding="async" src="' + th(p) + '" alt="' + p.alt + ', foto ' + (i + 1) + '">' +
+      return '<figure class="gal__f" data-i="' + i + '" tabindex="0"><img loading="lazy" decoding="async" src="' + th(p) + '" alt="' + p.alt + ', ' + T('foto') + ' ' + (i + 1) + '">' +
         '<figcaption><span>' + pad(i + 1) + '</span><span>' + p.label + '</span></figcaption></figure>';
     }).join("");
     if (st) st.textContent = "[ " + cur.length + " FILES ]";
@@ -60,7 +61,7 @@
     idx = (i + cur.length) % cur.length;
     var p = cur[idx];
     img.src = fu(p);
-    img.alt = p.alt + ", foto " + (idx + 1);
+    img.alt = p.alt + ", " + T("foto") + " " + (idx + 1);
     document.getElementById("gal-lb-name").textContent = p.name.toUpperCase() + ".JPG · " + p.label;
     document.getElementById("gal-lb-count").textContent = pad(idx + 1) + " / " + pad(cur.length);
     [1, -1].forEach(function (d) { var n = cur[(idx + d + cur.length) % cur.length]; new Image().src = fu(n); });

@@ -5,6 +5,7 @@
 (function () {
   "use strict";
 
+  var T = window.T || function (s) { return s; };
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var coarse = window.matchMedia("(hover: none), (pointer: coarse)").matches;
   var ed = window.EDITION || {};
@@ -22,7 +23,7 @@
   set("hero-edition", (ed.edition || "N.—") + (ed.year ? " · " + ed.year : ""));
   set("hero-when", ed.dates || "—");
   set("hero-where", ed.city ? ed.city + ", IT" : "—");
-  set("hero-format", ed.days || "3–5 giorni");
+  set("hero-format", ed.days || T("3–5 giorni"));
 
   /* Wordmark: tilt 3D che segue il mouse — solo transform (leggero).
      Off su touch/reduced-motion → mobile resta la scritta base, ferma. */
@@ -65,7 +66,7 @@
     card.setAttribute("aria-haspopup", "dialog");
     card.setAttribute("aria-controls", "course-modal");
     card.setAttribute("aria-label",
-      (soon ? "Slot in arrivo" : "Corso " + c.number + " — " + c.title) + " · apri i dettagli");
+      (soon ? T("Slot in arrivo") : T("Corso") + " " + c.number + " — " + c.title) + " · " + T("apri i dettagli"));
     card.dataset.course = String(idx);
 
     /* Palette per card (accento colorato) */
@@ -107,8 +108,8 @@
         (c.dates ? '<span>' + esc(c.dates) + '</span>' : '') +
       '</div>' +
       '<div class="card__frontcta">' +
-        '<span class="card__hint">apri scheda</span>' +
-        '<span class="card__enroll" aria-hidden="true">Dettagli →</span>' +
+        '<span class="card__hint">' + T("apri scheda") + '</span>' +
+        '<span class="card__enroll" aria-hidden="true">' + T("Dettagli →") + '</span>' +
       '</div>';
 
     cards.appendChild(card);
@@ -151,7 +152,7 @@
           '<video class="cmedia__video" data-src="' + esc(it.src) + '"' +
           ' muted playsinline preload="none" loop' +
           (it.poster ? ' poster="' + esc(it.poster) + '"' : '') +
-          ' aria-label="Anteprima video del workshop"></video></div>';
+          ' aria-label="' + esc(T("Anteprima video del workshop")) + '"></video></div>';
       }
       return '<div class="cmedia__slide" data-idx="' + i + '"' + (dup ? ' aria-hidden="true"' : '') + '>' +
         '<img class="cmedia__img" src="' + esc(it.src) + '" alt="' + (dup ? '' : esc(it.alt || "")) + '" loading="lazy" decoding="async" />' +
@@ -159,7 +160,7 @@
     }
     var one = m.items.map(function (it, i) { return slide(it, i, false); }).join("");
     var two = m.items.map(function (it, i) { return slide(it, i, true); }).join("");
-    var kindLabel = isVideo ? "// Video del corso" : "// Immagini del corso";
+    var kindLabel = T(isVideo ? "// Video del corso" : "// Immagini del corso");
     return (
       '<section class="cmodal__section cmodal__section--media">' +
         '<h3 class="cmodal__sec-title">' + kindLabel + '</h3>' +
@@ -193,7 +194,7 @@
       ["Aperto a", c.audience],
     ].filter(function (r) { return r[1]; })
      .map(function (r) {
-       return '<li><b>' + esc(r[0]) + '</b><span>' + esc(r[1]) + '</span></li>';
+       return '<li><b>' + esc(T(r[0])) + '</b><span>' + esc(r[1]) + '</span></li>';
      }).join("");
 
     return (
@@ -201,20 +202,20 @@
         '<span class="cmodal__eyebrow">WSK/' + esc(c.number) + ' · ' + esc(c.dates || "") + '</span>' +
         '<h2 id="cmodal-title" class="cmodal__title">' + esc(c.title) + '</h2>' +
         '<p class="cmodal__theme">' + esc(c.theme || "") + '</p>' +
-        (c.tutor ? '<p class="cmodal__by">con <b>' + esc(c.tutor) + '</b>' +
+        (c.tutor ? '<p class="cmodal__by">' + T("con") + ' <b>' + esc(c.tutor) + '</b>' +
           (c.tutorRole ? ' — <em>' + esc(c.tutorRole) + '</em>' : '') + '</p>' : '') +
       '</article>' +
 
       mediaHtml(c) +
 
       '<section class="cmodal__section cmodal__section--spec">' +
-        '<h3 class="cmodal__sec-title">// Info workshop</h3>' +
+        '<h3 class="cmodal__sec-title">' + T("// Info workshop") + '</h3>' +
         '<ul class="cmodal__spec">' + spec + '</ul>' +
-        (c.recommended ? '<p class="cmodal__reco"><b>Consigliato a:</b> ' + esc(c.recommended) + '</p>' : '') +
+        (c.recommended ? '<p class="cmodal__reco"><b>' + T("Consigliato a:") + '</b> ' + esc(c.recommended) + '</p>' : '') +
       '</section>' +
 
       '<section class="cmodal__section">' +
-        '<h3 class="cmodal__sec-title">// Obiettivo workshop</h3>' +
+        '<h3 class="cmodal__sec-title">' + T("// Obiettivo workshop") + '</h3>' +
         '<div class="cmodal__prose">' + paraHtml(c.description) + '</div>' +
       '</section>' +
 
@@ -227,7 +228,7 @@
 
       (c.tutorBio ? (
         '<section class="cmodal__section cmodal__section--tutor">' +
-          '<h3 class="cmodal__sec-title">// Il docente</h3>' +
+          '<h3 class="cmodal__sec-title">' + T("// Il docente") + '</h3>' +
           '<div class="cmodal__prose">' +
             '<p class="cmodal__tutorname">' + esc(c.tutor) +
               (c.tutorRole ? '<span> — ' + esc(c.tutorRole) + '</span>' : '') + '</p>' +
@@ -424,9 +425,9 @@
   if (sbMsg) {
     var lines = [
       "SAAD WORKSHOP WEEK // " + (ed.year || ""),
-      (courses.length ? courses.length + " CORSI · " + (ed.days || "3–5 GG") : "NESSUN CORSO ATTIVO · ARCHIVIO APERTO") + " · " + (ed.city || "ASCOLI").toUpperCase(),
-      "DESIGN + ARCHITETTURA @ VELOCITÀ DEL LAMPO",
-      courses.length ? "ISCRIZIONI APERTE — POSTI LIMITATI" : "PROSSIMA EDIZIONE IN ARRIVO",
+      (courses.length ? courses.length + " " + T("CORSI") + " · " + (ed.days || T("3–5 GG")) : T("NESSUN CORSO ATTIVO · ARCHIVIO APERTO")) + " · " + (ed.city || "ASCOLI").toUpperCase(),
+      T("DESIGN + ARCHITETTURA @ VELOCITÀ DEL LAMPO"),
+      T(courses.length ? "ISCRIZIONI APERTE — POSTI LIMITATI" : "PROSSIMA EDIZIONE IN ARRIVO"),
       "EST. 2018 — ASCOLI PICENO, IT",
     ];
     if (reduce) { sbMsg.textContent = lines[0]; }
@@ -516,7 +517,7 @@
       bar.setAttribute("role", "button");
       bar.setAttribute("tabindex", "0");
       bar.setAttribute("aria-expanded", "true");
-      bar.setAttribute("aria-label", "Chiudi / apri la sezione");
+      bar.setAttribute("aria-label", T("Chiudi / apri la sezione"));
       function toggle() {
         var collapsed = win.classList.toggle("is-collapsed");
         bar.setAttribute("aria-expanded", String(!collapsed));
