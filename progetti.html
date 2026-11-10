@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="/lang.js"></script>
 <title data-en="Projects — Surreo Studio">Progetti — Surreo Studio</title>
   <meta name="description" data-en-content="Index of Surreo Studio’s work: graphic and branding, industrial design, exhibit and videomapping, music videos and motion, websites, virtual experiences and VR." content="Indice dei lavori di Surreo Studio: graphic e branding, industrial design, exhibit e videomapping, videoclip e motion, website, esperienze virtuali e VR." />
   <link rel="canonical" href="https://surreostudio.com/progetti.html" />
@@ -122,12 +123,12 @@
   <section class="ph">
     <div class="g ph__meta mono"><span>Surreo · Index</span><span>Showcase · Video · Motion · Website</span><span>Ed. 2026</span><span id="cnt">—</span></div>
     <h1 class="ph__t disp gl" data-t="Projects" data-fit="320">Projects</h1>
-    <div class="g ph__sub"><p class="dec">Ogni progetto, dall’identità allo spazio, dal sito al film.</p><span class="r mono">Clicca un progetto per aprire la scheda</span></div>
+    <div class="g ph__sub"><p class="dec" data-en="Every project, from identity to space, from website to film.">Ogni progetto, dall’identità allo spazio, dal sito al film.</p><span class="r mono" data-en="Click a project to open its sheet">Clicca un progetto per aprire la scheda</span></div>
   </section>
 
   <div class="fl" id="fl">
     <div class="fl__c" id="cats"></div>
-    <div class="fl__v"><button class="chip" data-v="ix" aria-pressed="true">Indice</button><button class="chip" data-v="gr" aria-pressed="false">Griglia</button></div>
+    <div class="fl__v"><button class="chip" data-v="ix" aria-pressed="true" data-en="Index">Indice</button><button class="chip" data-v="gr" aria-pressed="false" data-en="Grid">Griglia</button></div>
   </div>
 
   <section id="list">
@@ -139,12 +140,12 @@
 <div class="pv" id="pv"><div class="gi bw" style="position:absolute;inset:0"><img class="base" alt=""><img class="sl" alt=""><img class="sl" alt=""></div><div class="pv__cap mono"><span id="pvK"></span><span id="pvC"></span></div></div>
 
 <!-- scheda -->
-<div class="sd" id="sd" aria-hidden="true" role="dialog" aria-label="Scheda progetto">
+<div class="sd" id="sd" aria-hidden="true" role="dialog" aria-label="Scheda progetto" data-en-aria-label="Project sheet">
   <div class="sd__bar mono">
     <button class="sd__back mono" id="sdClose">← Index</button>
     <span class="sd__pos" id="sdPos"></span>
     <span class="sd__cat" id="sdCat"></span>
-    <div class="sd__nav"><button id="sdPrev">← Prec.</button><button id="sdNext">Succ. →</button><button id="sdX">Chiudi ✕</button></div>
+    <div class="sd__nav"><button id="sdPrev" data-en="← Prev">← Prec.</button><button id="sdNext" data-en="Next →">Succ. →</button><button id="sdX" data-en="Close ✕">Chiudi ✕</button></div>
   </div>
   <div class="g sd__body">
     <div class="sd__info">
@@ -152,15 +153,15 @@
       <h2 class="sd__name disp" id="sdName"></h2>
       <p class="sd__desc" id="sdDesc"></p>
       <ul class="sd__tags" id="sdTags"></ul>
-      <button class="chip sd__vid" id="sdVid" hidden>▶ Guarda il video</button>
+      <button class="chip sd__vid" id="sdVid" hidden data-en="▶ Watch the video">▶ Guarda il video</button>
     </div>
     <div class="sd__view">
       <div class="sd__main" id="sdMain"><div class="gi" id="sdGi"><img class="base" alt=""><img class="sl" alt=""><img class="sl" alt=""></div></div>
-      <div class="sd__cnt mono"><span id="sdFr"></span><span>Clic sull’immagine o ← → per scorrere</span></div>
+      <div class="sd__cnt mono"><span id="sdFr"></span><span data-en="Click the image or use ← → to browse">Clic sull’immagine o ← → per scorrere</span></div>
       <div class="sd__th" id="sdTh"></div>
     </div>
   </div>
-  <button class="sd__next" id="sdNextBig"><span class="mono"><span>Prossimo progetto</span><span id="sdNextK"></span></span><b class="disp" id="sdNextN"></b></button>
+  <button class="sd__next" id="sdNextBig"><span class="mono"><span data-en="Next project">Prossimo progetto</span><span id="sdNextK"></span></span><b class="disp" id="sdNextN"></b></button>
 </div>
 
 <footer data-bn="cta"></footer>
@@ -174,16 +175,17 @@
     fetch('/videos.json').then(r => r.json()).catch(() => ({}))
   ]);
   const beside = (vids && vids.beside) || {};
+  const EN = document.documentElement.lang === 'en';
   const L = [];
   data.sections.forEach(s => s.projects.forEach(p => {
     if (!p.frames || !p.frames.length) return;
-    L.push({ id: p.id, name: p.name || p.id, type: p.type || '', cat: s.id, catT: s.title,
-      desc: p.description || '', tags: p.tags || [],
+    L.push({ id: p.id, name: p.name || p.id, type: p.type || '', cat: s.id, catT: (EN && s.title_en) || s.title,
+      desc: (EN && p.description_en) || p.description || '', tags: p.tags || [],
       frames: p.frames.map(f => '/' + f), thumbs: p.frames.map(f => '/' + f.replace(/\/([^/]+)$/, '/m/$1')),
       vid: beside[p.id] && beside[p.id][0] });
   }));
   const pad = n => String(n).padStart(3, '0');
-  document.getElementById('cnt').textContent = pad(L.length) + ' progetti';
+  document.getElementById('cnt').textContent = pad(L.length) + (EN ? ' projects' : ' progetti');
 
   /* indice + griglia */
   const ix = document.getElementById('ix'), gr = document.getElementById('gr');
@@ -200,8 +202,8 @@
   /* filtri */
   const cats = document.getElementById('cats'); const cnt = {};
   L.forEach(p => cnt[p.cat] = (cnt[p.cat] || 0) + 1);
-  cats.innerHTML = `<button class="chip" data-c="all" aria-pressed="true">Tutti<b>${L.length}</b></button>` +
-    data.sections.filter(s => cnt[s.id]).map(s => `<button class="chip" data-c="${s.id}" aria-pressed="false">${s.title}<b>${cnt[s.id]}</b></button>`).join('');
+  cats.innerHTML = `<button class="chip" data-c="all" aria-pressed="true">${EN ? 'All' : 'Tutti'}<b>${L.length}</b></button>` +
+    data.sections.filter(s => cnt[s.id]).map(s => `<button class="chip" data-c="${s.id}" aria-pressed="false">${(EN && s.title_en) || s.title}<b>${cnt[s.id]}</b></button>`).join('');
   let filter = 'all';
   const visible = () => L.map((p, i) => i).filter(i => filter === 'all' || L[i].cat === filter);
   const applyFilter = c => {
@@ -251,7 +253,7 @@
     const nm = $('sdName'); nm.textContent = p.name;
     $('sdDesc').textContent = p.desc;
     $('sdTags').innerHTML = p.tags.map((t, j) => `<li><span>${String(j + 1).padStart(2, '0')}</span>${t}</li>`).join('');
-    th.innerHTML = p.thumbs.map((t, j) => `<button aria-label="Immagine ${j + 1}"><img loading="lazy" src="${t}" alt=""><span>${String(j + 1).padStart(2, '0')}</span></button>`).join('');
+    th.innerHTML = p.thumbs.map((t, j) => `<button aria-label="${EN ? 'Image' : 'Immagine'} ${j + 1}"><img loading="lazy" src="${t}" alt=""><span>${String(j + 1).padStart(2, '0')}</span></button>`).join('');
     th.querySelectorAll('button').forEach((b, j) => b.onclick = () => showFrame(j));
     $('sdVid').hidden = !p.vid;
     const nx = L[v[(pos + 1) % v.length]];

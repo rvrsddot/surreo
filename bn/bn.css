@@ -108,3 +108,7 @@ button{font:inherit;color:inherit}
   .bb a:first-child{background:var(--w);color:var(--k)}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* interruttore lingua */
+.lang-chip{display:flex;border:1px solid currentColor}.lang-chip button{appearance:none;background:none;border:0;color:inherit;font:inherit;padding:6px 8px;cursor:pointer;opacity:.45}.lang-chip button.is-on{opacity:1;text-decoration:underline;text-underline-offset:3px}.lang-chip button+button{border-left:1px solid currentColor}
+@media (max-width:700px){.hd__r .lang-chip{display:none}}

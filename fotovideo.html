@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="/lang.js"></script>
 <title>Photo &amp; Film — Surreo Studio</title>
   <meta name="description" content="Photography &amp; Moving Image di Surreo Studio: shooting, reel, backstage. Sezione in costruzione." />
   <link rel="canonical" href="https://surreostudio.com/fotovideo.html" />
@@ -57,22 +58,22 @@ body{background:var(--k)}
 <body data-page="fotovideo">
 <main class="dark">
   <section class="ph">
-    <div class="g ph__meta mono"><span>Surreo Studio</span><span>Photography &amp; moving image</span><span>PF · Archivio foto e video</span><span>00 lavori · prossimamente</span></div>
+    <div class="g ph__meta mono"><span>Surreo Studio</span><span>Photography &amp; moving image</span><span data-en="PF · Photo and video archive">PF · Archivio foto e video</span><span data-en="00 works · coming soon">00 lavori · prossimamente</span></div>
     <h1 class="ph__t disp" data-fit="320">Photo &amp; <span class="it">Film</span></h1>
-    <div class="g ph__sub"><p class="dec">Photography &amp; moving image — sezione in costruzione</p><span class="r mono">PF · Photo &amp; Film · 00 lavori</span></div>
+    <div class="g ph__sub"><p class="dec" data-en="Photography &amp; moving image — section under construction">Photography &amp; moving image — sezione in costruzione</p><span class="r mono" data-en="PF · Photo &amp; Film · 00 works">PF · Photo &amp; Film · 00 lavori</span></div>
     <div class="wip mono" aria-hidden="true"><div class="wip__t"></div><div class="wip__t"></div></div>
   </section>
 
   <section class="g fx">
-    <div class="fx__head mono"><span>PF · Archivio foto e video</span><span>12 slot</span></div>
+    <div class="fx__head mono"><span data-en="PF · Photo and video archive">PF · Archivio foto e video</span><span>12 slot</span></div>
     <div class="fx__grid" id="grid"></div>
   </section>
 
   <section class="g msg">
-    <p class="msg__t dec">Stiamo costruendo la galleria di foto e video: shooting, reel, backstage. Torna presto.</p>
+    <p class="msg__t dec" data-en="We’re building the photo and video gallery: shoots, reels, behind the scenes. Come back soon.">Stiamo costruendo la galleria di foto e video: shooting, reel, backstage. Torna presto.</p>
     <div class="msg__b mono">
       <a class="btn" href="/"><span>← Home</span><span></span></a>
-      <a class="btn" href="/progetti.html"><span>Vedi i progetti</span><span>→</span></a>
+      <a class="btn" href="/progetti.html"><span data-en="See the projects">Vedi i progetti</span><span>→</span></a>
     </div>
   </section>
 </main>
@@ -86,7 +87,7 @@ body{background:var(--k)}
     const n = String(i + 1).padStart(2, '0');
     return `<div class="fr" data-gk><div class="fr__scr"><canvas width="48" height="60"></canvas><span class="fr__bar"></span>
       <span class="fr__rec mono"><i></i>Rec</span><span class="fr__tc mono">00:00:${n}</span>
-      <span class="fr__lab mono"><b class="gl" data-t="PF·${n}">PF·${n}</b><span>in arrivo</span></span></div></div>`;
+      <span class="fr__lab mono"><b class="gl" data-t="PF·${n}">PF·${n}</b><span>${document.documentElement.lang === 'en' ? 'coming soon' : 'in arrivo'}</span></span></div></div>`;
   }).join('');
   // rumore TV in bianco e nero, a bassa risoluzione
   const cs = [...grid.querySelectorAll('canvas')].map(c => [c, c.getContext('2d')]);

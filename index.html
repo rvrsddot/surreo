@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="/lang.js"></script>
 <title>Surreo — Creative Studio</title>
   <meta name="description" data-en-content="Creative studio across every discipline: branding and creativity are our strength. We design by combining strategy, aesthetics and artificial intelligence — from idea to result. Co-founders of Workshok (formerly SAAD Workshop Week) — AI, design and architecture workshops in Ascoli Piceno since 2018." content="Creative studio a 360°: branding e creatività sono il nostro forte. Progettiamo unendo strategia, estetica e intelligenza artificiale — dall'idea al risultato. Co-founder di Workshok (già SAAD Workshop Week) — workshop AI, design e architettura ad Ascoli Piceno dal 2018." />
   <meta name="keywords" content="creative studio, studio creativo, branding, brand identity, creatività, direzione creativa, design a 360, intelligenza artificiale, AI design, social media, grafica, video, motion graphics, spot, videoclip, animazione, 3D, rendering, industrial design, interior design, exhibit, videomapping, web design, tour 360, Abruzzo, Marche, Italia, Surreo, Workshok, SAAD Workshop Week, SAAD Workshop Week 2026, workshop AI, workshop design Ascoli Piceno, UNICAM SAAD, Suburbiæ Music Fest" />
@@ -317,6 +318,8 @@ a{color:inherit;text-decoration:none}
   .bb a:first-child{background:var(--w);color:var(--k)}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.lang-chip{display:flex;border:1px solid currentColor}.lang-chip button{appearance:none;background:none;border:0;color:inherit;font:inherit;padding:6px 8px;cursor:pointer;opacity:.45}.lang-chip button.is-on{opacity:1;text-decoration:underline;text-underline-offset:3px}.lang-chip button+button{border-left:1px solid currentColor}
+@media (max-width:700px){.hd__r .lang-chip{display:none}}
 </style>
 <link rel="stylesheet" href="/bn/menu.css">
 </head>
@@ -325,7 +328,7 @@ a{color:inherit;text-decoration:none}
 <header class="hd">
   <a class="hd__logo" href="#top">SURREO</a>
   <nav class="hd__nav mono"><a href="/progetti.html">Projects</a><a href="/fotovideo.html">Photo &amp; Film</a><a href="/lapidary.html">Lapidary</a><a href="#about">About</a><a href="/workshok/">Workshok</a></nav>
-  <div class="hd__r mono"><button class="hd__menu mono" id="menuOpen">Menu</button></div>
+  <div class="hd__r mono"><span class="lang-chip mono" role="group" aria-label="Lingua · Language"><button type="button" data-lang="it" lang="it" aria-label="Italiano">IT</button><button type="button" data-lang="en" lang="en" aria-label="English">EN</button></span><button class="hd__menu mono" id="menuOpen">Menu</button></div>
 </header>
 
 <!-- 00 HERO -->
@@ -337,73 +340,73 @@ a{color:inherit;text-decoration:none}
       <span class="b">Product · Media strategy · Graphic &amp; Motion · Photo &amp; Film</span>
       <span class="c">Deutschland — Italy</span>
     </div>
-    <div class="g"><p class="hero__claim">Non partiamo da una disciplina.<br>Partiamo da <span class="it">un’idea.</span></p></div>
+    <div class="g"><p class="hero__claim" data-en="We don’t start from a discipline.<br>We start from <span class=&quot;it&quot;>an idea.</span>">Non partiamo da una disciplina.<br>Partiamo da <span class="it">un’idea.</span></p></div>
     <ul class="hero__svc mono" style="display:none"><li>Product</li><li>Media strategy</li><li>Graphic &amp; Motion</li><li>Photo &amp; Film</li></ul>
   </div>
   <div class="word" id="word">
     <div class="word__row" id="wordRow"><span>S</span><span>U</span><span>R</span><span>R</span><span>E</span><span>O</span></div>
   </div>
   <div class="g hero__foot mono">
-    <span><i class="dot"></i>Studio aperto</span>
+    <span><i class="dot"></i><span data-en="Studio open">Studio aperto</span></span>
     <span>Ed. 2026</span>
-    <span>Scorri ↓</span>
+    <span data-en="Scroll ↓">Scorri ↓</span>
     <span>N. 001</span>
   </div>
 </section>
 
 <!-- 01 STUDIO -->
 <section class="light" id="studio">
-  <div class="g sh"><span class="sh__n mono">01 / 05</span><span class="sh__t">Cosa facciamo</span><span class="sh__r mono">Studio</span></div>
+  <div class="g sh"><span class="sh__n mono">01 / 05</span><span class="sh__t" data-en="What we do">Cosa facciamo</span><span class="sh__r mono">Studio</span></div>
   <div class="rule"></div>
   <div class="g">
-    <h2 class="st__big dec">Hub creativo <span class="it">indipendente.</span></h2>
-    <p class="st__lead mono">Lavoriamo su quattro fronti, spesso insieme nello stesso progetto</p>
-    <p class="st__sub">Poi diventa quello che serve: un’identità, uno spazio, un oggetto, un sito, una campagna, un’esperienza.</p>
+    <h2 class="st__big dec" data-en="An <span class=&quot;it&quot;>independent</span> creative hub.">Hub creativo <span class="it">indipendente.</span></h2>
+    <p class="st__lead mono" data-en="We work on four fronts, often together in the same project">Lavoriamo su quattro fronti, spesso insieme nello stesso progetto</p>
+    <p class="st__sub" data-en="Then it becomes whatever it needs to be: an identity, a space, an object, a website, a campaign, an experience.">Poi diventa quello che serve: un’identità, uno spazio, un oggetto, un sito, una campagna, un’esperienza.</p>
   </div>
   <div class="fr" id="fronts">
-    <div class="fr__row"><span class="fr__n mono">A.</span><b class="fr__name gl" data-t="Product">Product</b><span class="fr__d mono">oggetti, interni, allestimenti</span><span class="fr__c mono">→</span></div>
-    <div class="fr__row"><span class="fr__n mono">B.</span><b class="fr__name gl" data-t="Media strategy">Media strategy</b><span class="fr__d mono">social, campagne, contenuti</span><span class="fr__c mono">→</span></div>
-    <div class="fr__row"><span class="fr__n mono">C.</span><b class="fr__name gl" data-t="Graphic &amp; Motion">Graphic &amp; Motion</b><span class="fr__d mono">brand, grafica, animazione, 3D</span><span class="fr__c mono">→</span></div>
-    <div class="fr__row"><span class="fr__n mono">D.</span><b class="fr__name gl" data-t="Photo &amp; Film">Photo &amp; Film</b><span class="fr__d mono">shooting, spot, videoclip</span><span class="fr__c mono">→</span></div>
+    <div class="fr__row"><span class="fr__n mono">A.</span><b class="fr__name gl" data-t="Product">Product</b><span class="fr__d mono" data-en="objects, interiors, exhibitions">oggetti, interni, allestimenti</span><span class="fr__c mono">→</span></div>
+    <div class="fr__row"><span class="fr__n mono">B.</span><b class="fr__name gl" data-t="Media strategy">Media strategy</b><span class="fr__d mono" data-en="social, campaigns, content">social, campagne, contenuti</span><span class="fr__c mono">→</span></div>
+    <div class="fr__row"><span class="fr__n mono">C.</span><b class="fr__name gl" data-t="Graphic &amp; Motion">Graphic &amp; Motion</b><span class="fr__d mono" data-en="brand, graphics, animation, 3D">brand, grafica, animazione, 3D</span><span class="fr__c mono">→</span></div>
+    <div class="fr__row"><span class="fr__n mono">D.</span><b class="fr__name gl" data-t="Photo &amp; Film">Photo &amp; Film</b><span class="fr__d mono" data-en="shoots, commercials, music videos">shooting, spot, videoclip</span><span class="fr__c mono">→</span></div>
   </div>
 </section>
 
 <!-- 02 PROGETTI -->
 <span id="projects"></span>
 <section class="light pj" id="progetti">
-  <div class="g sh"><span class="sh__n mono">02 / 05</span><span class="sh__t">Progetti</span><span class="sh__r mono">Archivio</span></div>
+  <div class="g sh"><span class="sh__n mono">02 / 05</span><span class="sh__t" data-en="Projects">Progetti</span><span class="sh__r mono" data-en="Archive">Archivio</span></div>
   <div class="rule"></div>
   <div class="g">
     <div class="pj__bar">
-      <h2 class="pj__big">Archivio<sup id="pjCount">—</sup></h2>
+      <h2 class="pj__big"><span data-en="Archive">Archivio</span><sup id="pjCount">—</sup></h2>
       <div class="sf__key mono" id="sfKey"></div>
     </div>
   </div>
   <div class="sf" id="sf"></div>
-  <div class="sf__help mono"><span>Passa sui dorsi per aprirli · clic per la scheda</span><span id="sfCur"></span></div>
-  <a class="sf__all mono" href="/progetti.html"><span>Indice completo</span><b>Tutti i progetti →</b></a>
+  <div class="sf__help mono"><span data-en="Hover the spines to open them · click for the project sheet">Passa sui dorsi per aprirli · clic per la scheda</span><span id="sfCur"></span></div>
+  <a class="sf__all mono" href="/progetti.html"><span data-en="Full index">Indice completo</span><b data-en="All projects →">Tutti i progetti →</b></a>
 </section>
 
 <!-- 03 COLLATERAL -->
 <section class="dark co" id="collateral">
-  <div class="g sh"><span class="sh__n mono">03 / 05</span><span class="sh__t">Collateral</span><span class="sh__r mono">Idee nostre</span></div>
+  <div class="g sh"><span class="sh__n mono">03 / 05</span><span class="sh__t">Collateral</span><span class="sh__r mono" data-en="Our own ideas">Idee nostre</span></div>
   <div class="rule" style="opacity:.4"></div>
   <div class="g">
-    <h2 class="co__lead dec">Progetti che abbiamo <span class="it">fondato</span>,<br>non solo disegnato.</h2>
+    <h2 class="co__lead dec" data-en="Projects we <span class=&quot;it&quot;>founded</span>,<br>not just designed.">Progetti che abbiamo <span class="it">fondato</span>,<br>non solo disegnato.</h2>
     <div class="co__list">
       <a class="co__i" href="/workshok/">
-        <span class="co__tag mono"><span>Co-founder</span><span>Dal 2018</span></span>
+        <span class="co__tag mono"><span>Co-founder</span><span data-en="Since 2018">Dal 2018</span></span>
         <span class="co__logo"><img src="/assets/collateral/saad-logo.svg" alt="SAAD Workshop Week"></span>
         <b class="co__nm">SAAD Workshop Week</b>
-        <p class="co__p">SAAD Workshop Week — oggi Workshok · Ascoli Piceno · dal 2018</p>
-        <span class="co__go mono">Vai a Workshok →</span>
+        <p class="co__p" data-en="SAAD Workshop Week — now Workshok · Ascoli Piceno · since 2018">SAAD Workshop Week — oggi Workshok · Ascoli Piceno · dal 2018</p>
+        <span class="co__go mono" data-en="Go to Workshok →">Vai a Workshok →</span>
       </a>
       <a class="co__i" href="/workshok/">
         <span class="co__tag mono"><span>Co-founder · Creative direction</span><span>AP</span></span>
         <span class="co__logo"><img src="/assets/collateral/workshok-mark-crema.svg" alt="Workshok"></span>
         <b class="co__nm">Workshok</b>
-        <p class="co__p">Workshok — Workshop AI, Design, Grafica e Architettura · Ascoli Piceno</p>
-        <span class="co__go mono">Vai a Workshok →</span>
+        <p class="co__p" data-en="Workshok — AI, Design, Graphics and Architecture workshops · Ascoli Piceno">Workshok — Workshop AI, Design, Grafica e Architettura · Ascoli Piceno</p>
+        <span class="co__go mono" data-en="Go to Workshok →">Vai a Workshok →</span>
       </a>
       <a class="co__i" href="https://www.suburbiaefest.com" target="_blank" rel="noopener">
         <span class="co__tag mono"><span>Co-founder · Creative direction</span><span>TE</span></span>
@@ -413,51 +416,51 @@ a{color:inherit;text-decoration:none}
         <span class="co__go mono">suburbiaefest.com ↗</span>
       </a>
     </div>
-    <div class="co__swipe mono" style="display:none"><span>01 — 03</span><span>Scorri →</span></div>
+    <div class="co__swipe mono" style="display:none"><span>01 — 03</span><span data-en="Swipe →">Scorri →</span></div>
   </div>
 </section>
 
 <!-- 04 ABOUT -->
 <section class="light ab" id="about">
-  <div class="g sh"><span class="sh__n mono">04 / 05</span><span class="sh__t">About</span><span class="sh__r mono">Chi siamo · Come lavoriamo</span></div>
+  <div class="g sh"><span class="sh__n mono">04 / 05</span><span class="sh__t">About</span><span class="sh__r mono" data-en="Who we are · How we work">Chi siamo · Come lavoriamo</span></div>
   <div class="rule"></div>
   <div class="g">
-    <h2 class="ab__big dec">Non partiamo<br>da una disciplina.<br>Partiamo da <span class="it">un’idea.</span></h2>
+    <h2 class="ab__big dec" data-en="We don’t start<br>from a discipline.<br>We start from <span class=&quot;it&quot;>an idea.</span>">Non partiamo<br>da una disciplina.<br>Partiamo da <span class="it">un’idea.</span></h2>
     <div class="ab__cols">
-      <div class="ab__c"><span class="mono">01 · Chi</span><h3>Hub creativo <em>indipendente</em>.</h3><p>Branding, grafica, foto, video, motion, web, prodotto, interior, allestimenti. Ci muoviamo tra tutto, senza recinti.</p></div>
-      <div class="ab__c"><span class="mono">02 · Come</span><h3>Non partiamo da una disciplina.<br>Partiamo da <em>un’idea</em>.</h3><p>Poi diventa quello che serve: un’identità, uno spazio, un oggetto, un sito, una campagna, un’esperienza.</p></div>
-      <div class="ab__c"><span class="mono">03 · Con cosa</span><h3>Matita e <em>AI generativa</em>,<br>stesso metodo.</h3><p>Ricerca ed estetica restano al centro. Dal concept alla realizzazione, sempre insieme.</p></div>
-      <div class="ab__c"><span class="mono">04 · Dove</span><h3>Italia · Germania ·<br>ovunque serva <em>un’idea</em>.</h3><p>Base tra Abruzzo e Marche, operativi in tutta Europa.</p></div>
+      <div class="ab__c"><span class="mono" data-en="01 · Who">01 · Chi</span><h3 data-en="An <em>independent</em> creative hub.">Hub creativo <em>indipendente</em>.</h3><p data-en="Branding, graphics, photo, video, motion, web, product, interiors, exhibition design. We move across all of it, with no fences.">Branding, grafica, foto, video, motion, web, prodotto, interior, allestimenti. Ci muoviamo tra tutto, senza recinti.</p></div>
+      <div class="ab__c"><span class="mono" data-en="02 · How">02 · Come</span><h3 data-en="We don’t start from a discipline.<br>We start from <em>an idea</em>.">Non partiamo da una disciplina.<br>Partiamo da <em>un’idea</em>.</h3><p data-en="Then it becomes whatever it needs to be: an identity, a space, an object, a website, a campaign, an experience.">Poi diventa quello che serve: un’identità, uno spazio, un oggetto, un sito, una campagna, un’esperienza.</p></div>
+      <div class="ab__c"><span class="mono" data-en="03 · With what">03 · Con cosa</span><h3 data-en="Pencil and <em>generative AI</em>,<br>same method.">Matita e <em>AI generativa</em>,<br>stesso metodo.</h3><p data-en="Research and aesthetics stay at the core. From concept to execution, always together.">Ricerca ed estetica restano al centro. Dal concept alla realizzazione, sempre insieme.</p></div>
+      <div class="ab__c"><span class="mono" data-en="04 · Where">04 · Dove</span><h3 data-en="Italy · Germany ·<br>wherever <em>an idea</em> is needed.">Italia · Germania ·<br>ovunque serva <em>un’idea</em>.</h3><p data-en="Based between Abruzzo and Marche, working all over Europe.">Base tra Abruzzo e Marche, operativi in tutta Europa.</p></div>
     </div>
     <div class="ab__stats">
       <div class="ab__s"><span class="v">Unbased</span><span class="mono">Studio</span></div>
-      <div class="ab__s"><span class="v" id="abN">XXX</span><span class="mono">Progetti</span></div>
-      <div class="ab__s"><span class="v">2025</span><span class="mono">Fondato</span></div>
-      <div class="ab__s"><span class="v">IT / DE</span><span class="mono">Basi</span></div>
+      <div class="ab__s"><span class="v" id="abN">XXX</span><span class="mono" data-en="Projects">Progetti</span></div>
+      <div class="ab__s"><span class="v">2025</span><span class="mono" data-en="Founded">Fondato</span></div>
+      <div class="ab__s"><span class="v">IT / DE</span><span class="mono" data-en="Bases">Basi</span></div>
     </div>
   </div>
 </section>
 
 <!-- 05 CONTATTI -->
 <section class="dark ct" id="contatti">
-  <div class="g sh"><span class="sh__n mono">05 / 05</span><span class="sh__t">Contatti</span><span class="sh__r mono">Parliamone</span></div>
+  <div class="g sh"><span class="sh__n mono">05 / 05</span><span class="sh__t" data-en="Contact">Contatti</span><span class="sh__r mono" data-en="Let’s talk">Parliamone</span></div>
   <div class="rule" style="opacity:.4"></div>
   <div class="g">
-    <h2 class="ct__q dec">Hai un’idea,<br>anche solo <span class="it">a metà?</span></h2>
-    <p class="ct__a">È il punto da cui ci piace partire.</p>
+    <h2 class="ct__q dec" data-en="Got an idea,<br>even a <span class=&quot;it&quot;>half-formed</span> one?">Hai un’idea,<br>anche solo <span class="it">a metà?</span></h2>
+    <p class="ct__a" data-en="That’s exactly where we like to start.">È il punto da cui ci piace partire.</p>
   </div>
   <a class="ct__mail gl" data-t="surreocreative@gmail.com" href="mailto:surreocreative@gmail.com">surreocreative<br class="br-m">@gmail.com</a>
   <div class="g ct__btns mono">
-    <a href="tel:+393313510091"><span>Chiama</span><span>↗</span></a>
+    <a href="tel:+393313510091"><span data-en="Call">Chiama</span><span>↗</span></a>
     <a href="mailto:surreocreative@gmail.com"><span>Mail me</span><span>↗</span></a>
     <a href="https://www.instagram.com/surreo_studio/" target="_blank" rel="noopener"><span>@surreo_studio</span><span>↗</span></a>
-    <a href="/progetti.html"><span>Tutti i progetti</span><span>→</span></a>
+    <a href="/progetti.html"><span data-en="All projects">Tutti i progetti</span><span>→</span></a>
   </div>
   <div class="g ft mono"><span>Surreo Studio</span><span>Unbased #Design Studio · Deutschland–Italy</span><span><a href="/cv.html">CV</a> · <a href="/privacy.html">Privacy</a></span><span>© 2026</span></div>
 </section>
 
-<nav class="bb mono" id="bb" aria-label="Contatti rapidi">
-  <a href="#contatti"><span>Parliamone</span><span>→</span></a>
+<nav class="bb mono" id="bb" aria-label="Contatti rapidi" data-en-aria-label="Quick contact">
+  <a href="#contatti"><span data-en="Let’s talk">Parliamone</span><span>→</span></a>
   <a href="tel:+393313510091"><span>Chiama</span><span>↗</span></a>
   <a href="mailto:surreocreative@gmail.com"><span>Mail</span><span>↗</span></a>
 </nav>
@@ -595,17 +598,18 @@ document.querySelectorAll('.fr__row').forEach(r => { r.addEventListener('mouseen
   const L = [];
   data.sections.forEach(sec => sec.projects.forEach(p => {
     if (!p.frames || !p.frames.length) return;
-    L.push({ id: p.id, name: p.name || p.id, cat: sec.id, catT: sec.title,
+    L.push({ id: p.id, name: p.name || p.id, cat: sec.id, catT: (document.documentElement.lang === 'en' && sec.title_en) || sec.title,
       img: '/' + p.frames[0].replace(/\/([^/]+)$/, '/m/$1') });
   }));
   const pad = n => String(n).padStart(3, '0');
+  const EN = document.documentElement.lang === 'en';
   document.getElementById('pjCount').textContent = pad(L.length);
   document.getElementById('abN').textContent = L.length;
   const catIx = {}, cnt = {};
   data.sections.forEach((s, k) => catIx[s.id] = k);
   L.forEach(p => cnt[p.cat] = (cnt[p.cat] || 0) + 1);
   document.getElementById('sfKey').innerHTML = data.sections.filter(s => cnt[s.id])
-    .map(s => `<span><i class="${catIx[s.id] % 2 ? '' : 'ink'}"></i>${s.title} · ${String(cnt[s.id]).padStart(2, '0')}</span>`).join('');
+    .map(s => `<span><i class="${catIx[s.id] % 2 ? '' : 'ink'}"></i>${(EN && s.title_en) || s.title} · ${String(cnt[s.id]).padStart(2, '0')}</span>`).join('');
   const sf = document.getElementById('sf');
   const img = src => `<img class="base" loading="lazy" src="${src}" alt=""><img class="sl" loading="lazy" src="${src}" alt=""><img class="sl" loading="lazy" src="${src}" alt="">`;
   sf.innerHTML = L.map((p, i) => `<a class="sf__s${catIx[p.cat] % 2 ? '' : ' ink'}" href="/progetti.html?p=${p.id}" data-i="${i}">

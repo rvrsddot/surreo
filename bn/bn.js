@@ -3,6 +3,8 @@
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const MOB = () => matchMedia('(max-width:700px)').matches;
   const page = document.body.dataset.page || '';
+  const EN = document.documentElement.lang === 'en';
+  const T = (it, en) => EN ? en : it;
   const H = '/';
 
   /* ---------- header + menu + barra mobile ---------- */
@@ -19,12 +21,12 @@
   <header class="hd">
     <a class="hd__logo" href="${H}">SURREO</a>
     <nav class="hd__nav mono">${nav.slice(0, 5).map(n => `<a href="${n[0]}"${n[3] === page ? ' aria-current="page"' : ''}>${n[1]}</a>`).join('')}</nav>
-    <div class="hd__r mono"><button class="hd__menu mono" id="menuOpen">Menu</button></div>
+    <div class="hd__r mono"><span class="lang-chip mono" role="group" aria-label="Lingua · Language"><button type="button" data-lang="it" lang="it" aria-label="Italiano">IT</button><button type="button" data-lang="en" lang="en" aria-label="English">EN</button></span><button class="hd__menu mono" id="menuOpen">Menu</button></div>
   </header>`);
   document.body.insertAdjacentHTML('beforeend', `
-  <nav class="bb mono" id="bb" aria-label="Contatti rapidi">
-    <a href="mailto:surreocreative@gmail.com"><span>Parliamone</span><span>→</span></a>
-    <a href="tel:+393313510091"><span>Chiama</span><span>↗</span></a>
+  <nav class="bb mono" id="bb" aria-label="${T('Contatti rapidi', 'Quick contact')}">
+    <a href="mailto:surreocreative@gmail.com"><span>${T('Parliamone', 'Let’s talk')}</span><span>→</span></a>
+    <a href="tel:+393313510091"><span>${T('Chiama', 'Call')}</span><span>↗</span></a>
     <a href="https://wa.me/393313510091"><span>WhatsApp</span><span>↗</span></a>
   </nav>
 `);
@@ -35,10 +37,10 @@
     ft.className = 'dark';
     ft.innerHTML = `${ft.dataset.bn === 'cta' ? `
     <div class="g cta">
-      <h2 class="cta__q disp dec">Hai un’idea,<br>anche solo <span class="it">a metà?</span></h2>
+      <h2 class="cta__q disp dec">${T('Hai un’idea,<br>anche solo <span class="it">a metà?</span>', 'Got an idea,<br>even a <span class="it">half-formed</span> one?')}</h2>
       <div class="cta__b mono">
         <a class="btn" href="mailto:surreocreative@gmail.com"><span>Mail me</span><span>↗</span></a>
-        <a class="btn" href="tel:+393313510091"><span>Chiama</span><span>↗</span></a>
+        <a class="btn" href="tel:+393313510091"><span>${T('Chiama', 'Call')}</span><span>↗</span></a>
         <a class="btn" href="https://wa.me/393313510091"><span>WhatsApp</span><span>↗</span></a>
         <a class="btn" href="https://www.instagram.com/surreo_studio/" target="_blank" rel="noopener"><span>@surreo_studio</span><span>↗</span></a>
       </div>
