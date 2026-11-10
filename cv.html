@@ -23,22 +23,27 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/bn/bn.css">
 <style>
-/* hero */
-.cvh{padding-top:64px;padding-bottom:var(--pad);min-height:100svh;display:flex;flex-direction:column}
+/* hero compatta: foto piccola, nome, dati essenziali in un blocco */
+.cvh{padding-top:64px;padding-bottom:0}
 .cvh__top>*{grid-column:span 3}.cvh__top>:last-child{text-align:right}
-.cvh__main{flex:1;align-items:end;margin-top:30px}
-.cvh__ph{grid-column:1/5;align-self:stretch;display:flex;flex-direction:column;gap:8px}
-.cvh__ph .gi{flex:1;min-height:320px;background:#111}
+.cvh__main{margin-top:clamp(28px,3vw,44px);align-items:end}
+.cvh__ph{grid-column:1/3}
+.cvh__ph .gi{aspect-ratio:4/5;background:#111}
 .cvh__ph .gi img{object-position:50% 20%}
-.cvh__nm{grid-column:5/13;display:flex;flex-direction:column;justify-content:flex-end;gap:18px}
-.cvh__nm h1{font-size:clamp(60px,10.5vw,190px);line-height:.8}
-.cvh__nm h1 small{display:block;margin-top:.25em;font:400 clamp(26px,3vw,48px)/1 var(--serif);font-style:italic;text-transform:none;letter-spacing:-.01em}
-.cvh__soc{display:flex;gap:8px}
-.cvh__soc a{border:1px solid rgba(255,255,255,.5);padding:6px 9px}
+.cvh__nm{grid-column:3/13;display:flex;flex-direction:column;justify-content:flex-end;padding-left:clamp(4px,1vw,14px)}
+.cvh__nm h1{font-size:clamp(56px,8.6vw,150px);line-height:.8}
+.cvh__nm h1 small{display:block;margin-top:.22em;font:400 clamp(22px,2.3vw,38px)/1 var(--serif);font-style:italic;text-transform:none;letter-spacing:-.01em}
+.cvh__info{margin-top:clamp(28px,3vw,44px);border-top:1px solid rgba(255,255,255,.35);list-style:none}
+.cvh__info li{grid-column:span 2;padding:12px 0 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.cvh__info li:nth-child(2),.cvh__info li:nth-child(3){grid-column:span 3}
+.cvh__info em{font-style:normal;color:var(--g)}
+.cvh__info a,.cvh__info span{overflow-wrap:anywhere}
+.cvh__soc{display:flex;gap:8px;flex-wrap:wrap}
+.cvh__soc a{border:1px solid rgba(255,255,255,.5);padding:5px 8px}
 .cvh__soc a:hover{background:var(--w);color:var(--k)}
 /* intro */
 .cvi{padding-top:clamp(50px,6vw,90px);padding-bottom:clamp(40px,5vw,70px);align-items:start}
-.cvi__p{grid-column:1/8;font:300 clamp(20px,1.9vw,30px)/1.25 var(--sans)}
+.cvi__p{grid-column:1/10;font:300 clamp(20px,1.9vw,30px)/1.25 var(--sans)}
 .cvi__p u{text-decoration:none;font-family:var(--serif);font-style:italic;font-size:1.08em;border-bottom:1px solid currentColor}
 .cvi__d{grid-column:9/13;list-style:none;border-top:1px solid var(--k)}
 .cvi__d li{display:grid;grid-template-columns:52px 1fr;padding:8px 0;border-bottom:1px solid var(--k)}
@@ -103,9 +108,12 @@
 .more a{text-decoration:underline}
 @media (max-width:700px){
   .cvh__top>*{grid-column:span 6}.cvh__top>:nth-child(n+3){display:none}
-  .cvh__ph{grid-column:1/13}.cvh__ph .gi{min-height:52svh}
-  .cvh__nm{grid-column:1/13;margin-top:18px}
-  .cvh__nm h1{font-size:19vw}
+  .cvh__ph{grid-column:1/5}
+  .cvh__nm{grid-column:5/13;padding-left:0}
+  .cvh__nm h1{font-size:12.4vw}
+  .cvh__nm h1 small{font-size:5.4vw}
+  .cvh__info li,.cvh__info li:nth-child(2),.cvh__info li:nth-child(3){grid-column:span 6;padding:10px 0 12px}
+  .cvh__info li:nth-child(2),.cvh__info li:nth-child(3){grid-column:1/13}
   .cvi__p,.cvi__d{grid-column:1/13}.cvi__d{margin-top:24px}
   .rl__n{grid-column:1/13}.rl__y{grid-column:1/4}.rl__s{grid-column:4/13}
   .cvn{grid-template-columns:repeat(6,auto);overflow-x:auto;scrollbar-width:none}.cvn::-webkit-scrollbar{display:none}
@@ -122,25 +130,25 @@
 <body data-page="cv">
 <main>
   <section class="dark cvh">
-    <div class="g cvh__top mono"><span>Surreo Studio</span><span>fig. LDG · 2026</span><span>Curriculum</span><a href="/">← Home</a></div>
+    <div class="g cvh__top mono"><span>Surreo Studio</span><span>Curriculum · 2026</span><span>fig. LDG</span><a href="/">← Home</a></div>
     <div class="g cvh__main">
-      <figure class="cvh__ph" data-gk><div class="gi bw"><img class="base" src="/assets/cv/ldg.jpg" alt="Lorenzo Di Gioacchino"><img class="sl" src="/assets/cv/ldg.jpg" alt=""><img class="sl" src="/assets/cv/ldg.jpg" alt=""></div><figcaption class="mono">fig. LDG · 2026</figcaption></figure>
+      <figure class="cvh__ph" data-gk><div class="gi bw"><img class="base" src="/assets/cv/ldg.jpg" alt="Lorenzo Di Gioacchino"><img class="sl" src="/assets/cv/ldg.jpg" alt=""><img class="sl" src="/assets/cv/ldg.jpg" alt=""></div></figure>
       <div class="cvh__nm">
         <h1 class="disp dec">Lorenzo<br>Di Gioacchino<small>Multidisciplinary designer</small></h1>
-        <div class="cvh__soc mono"><a href="https://www.instagram.com/riverside1310/" target="_blank" rel="noopener">Instagram ↗</a><a href="https://www.linkedin.com/in/lorenzo-di-gioacchino-661380223" target="_blank" rel="noopener">LinkedIn ↗</a></div>
       </div>
     </div>
+    <ul class="g cvh__info mono">
+      <li><em>Born</em><span>13/10/1994</span></li>
+      <li><em>@</em><a href="mailto:surreocreative@gmail.com">surreocreative@gmail.com</a></li>
+      <li><em>@</em><a href="mailto:rvrsd.dot@gmail.com">rvrsd.dot@gmail.com</a></li>
+      <li><em>Lang</em><span>Italian · Basic English</span></li>
+      <li><em>Social</em><span class="cvh__soc"><a href="https://www.instagram.com/riverside1310/" target="_blank" rel="noopener">Instagram ↗</a><a href="https://www.linkedin.com/in/lorenzo-di-gioacchino-661380223" target="_blank" rel="noopener">LinkedIn ↗</a></span></li>
+    </ul>
   </section>
 
   <section class="light">
     <div class="g cvi">
       <p class="cvi__p">Multidisciplinary designer working across visual identity, creative direction, product design, editorial projects, digital culture and independent cultural events. I develop projects <u>from concept to execution</u>, combining research, visual systems, communication strategy and hands-on creative production.</p>
-      <ul class="cvi__d mono">
-        <li><em>Born</em><span>13/10/1994</span></li>
-        <li><em>@</em><a href="mailto:surreocreative@gmail.com">surreocreative@gmail.com</a></li>
-        <li><em>@</em><a href="mailto:rvrsd.dot@gmail.com">rvrsd.dot@gmail.com</a></li>
-        <li><em>Lang</em><span>Italian · Basic English</span></li>
-      </ul>
       <p class="roles" id="roles" aria-label="Roles"></p>
       <a class="cta1" href="/progetti.html"><span class="mono">Discover</span><b>My projects</b><span class="mono">→</span></a>
       <div class="rl" id="rl">
