@@ -188,11 +188,12 @@ a{color:inherit;text-decoration:none}
 .cq.dim .cq__q:not(.on) .cq__n{font-size:clamp(22px,2.2vw,42px)}
 .cq__now{position:absolute;right:22px;bottom:22px;max-width:45%;text-align:right;opacity:.75}
 .cq.dim .cq__q:not(.on) .cq__now{display:none}
-/* Safari: ridimensionare 18 immagini filtrate a ogni fotogramma lo blocca. Lì il riquadro si apre di colpo (il glitch copre lo scatto)
-   e il bianco e nero lo fa la scheda grafica (immagini su livello proprio) */
-.saf .cq,.saf .cq__svc,.saf .cq__sh{transition:none}
-.saf .cq__im img{transform:translateZ(0);transition:filter .6s}
-.saf .cq__q.on .cq__im img.base{transform:translateZ(0)}
+/* Safari: ridimensionare 18 immagini filtrate a ogni fotogramma lo blocca. Lì le immagini hanno già la misura
+   del riquadro aperto e restano ferme al centro: il riquadro si allarga e le scopre, senza ridisegnarle */
+@media (min-width:701px){
+  .saf .cq__im img{left:50%;top:50%;right:auto;bottom:auto;width:calc((100vw - 2 * var(--pad)) * .56);height:calc(min(92vh,880px) * .67);transform:translate(-50%,-50%) translateZ(0);transition:transform 6s linear,filter .6s}
+  .saf .cq__q.on .cq__im img.base{transform:translate(-50%,-50%) translateZ(0) scale(1.08)}
+}
 .cq__q.ai .cq__scan{position:absolute;inset:0;pointer-events:none;transform:translateZ(0);background:repeating-linear-gradient(0deg,rgba(255,255,255,.06) 0 1px,transparent 1px 3px)}
 .cq__ai{display:inline-block;margin-left:10px;padding:3px 6px;background:var(--w);color:var(--k);font:500 10px var(--mono);vertical-align:middle;letter-spacing:.04em}
 /* ---------- 02 PROGETTI: SCAFFALE ---------- */
@@ -573,10 +574,10 @@ const scanner = (() => {
   const frame = now => {
     if (!visible || document.hidden) return;            // fuori schermo o scheda nascosta: si ferma
     requestAnimationFrame(frame);
-    if (now - last < (SAF ? 125 : 90)) return;                          // la parola cambia ~11 volte al secondo: il resto della pagina resta fluido
+    if (now - last < 90) return;                          // la parola cambia ~11 volte al secondo: il resto della pagina resta fluido
     last = now;
     const t = (now - t0) / 1000;
-    const top = MOB() ? 100 : 151, Q = SAF ? 9 : 3;
+    const top = MOB() ? 100 : 151, Q = 3;
     const fv = L.map((s, i) => `"wdth" ${Math.round((25 + (top - 25) * (.5 + .5 * Math.sin(t * .9 + i * (Math.PI * 2 / L.length)))) / Q) * Q},"opsz" 144`);
     L.forEach((s, i) => { if (s._fv !== fv[i]) { s.style.fontVariationSettings = fv[i]; s._fv = fv[i]; } });
     if (burst > now) {
