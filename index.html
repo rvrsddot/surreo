@@ -164,7 +164,7 @@ a{color:inherit;text-decoration:none}
 .fr__row:hover{--bg:var(--k);--fg:var(--w)}
 
 /* ---------- 01 COSA FACCIAMO: QUATTRO QUADRANTI ---------- */
-.cq{display:grid;height:min(92vh,860px);margin:clamp(40px,5vw,70px) var(--pad) 0;grid-template-columns:var(--c1,1fr) var(--c2,1fr);grid-template-rows:var(--r1,1fr) var(--r2,1fr);gap:2px;background:var(--k);border:2px solid var(--k);transition:grid-template-columns .8s var(--ease),grid-template-rows .8s var(--ease)}
+.cq{display:grid;height:min(92vh,880px);margin:clamp(40px,5vw,70px) var(--pad) 0;grid-template-columns:var(--c1,1fr) var(--c2,1fr) var(--c3,1fr);grid-template-rows:var(--r1,1fr) var(--r2,1fr);gap:2px;background:var(--k);border:2px solid var(--k);transition:grid-template-columns .8s var(--ease),grid-template-rows .8s var(--ease)}
 .cq__q{position:relative;overflow:hidden;color:var(--w);--bg:var(--k);--fg:var(--w);cursor:pointer;background:#111}
 .cq__im{position:absolute;inset:0;overflow:hidden}
 .cq__im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.2);transition:transform 6s linear,filter .6s}
@@ -176,16 +176,20 @@ a{color:inherit;text-decoration:none}
 .cq__q.on .cq__sh{background:linear-gradient(180deg,rgba(10,10,10,.15),rgba(10,10,10,.8))}
 .cq__ui{position:absolute;inset:0;padding:22px;display:flex;flex-direction:column;justify-content:space-between}
 .cq__top{display:flex;justify-content:space-between;transition:opacity .4s}
-.cq__d{font:400 clamp(20px,2vw,34px)/1 var(--serif);font-style:italic;opacity:.9;margin-bottom:6px}
-.cq__n{display:block;font:1000 clamp(44px,6vw,120px)/.82 var(--sans);font-variation-settings:"wdth" 25,"opsz" 144;text-transform:uppercase;white-space:nowrap;transition:font-variation-settings .8s var(--ease),font-size .8s var(--ease)}
-.cq__q.on .cq__n{font-variation-settings:"wdth" 60,"opsz" 144;font-size:clamp(56px,8vw,170px)}
+.cq__d{font:400 clamp(18px,1.6vw,30px)/1 var(--serif);font-style:italic;opacity:.9;margin-bottom:6px}
+.cq__n{display:block;font:1000 clamp(32px,3.4vw,72px)/.84 var(--sans);font-variation-settings:"wdth" 25,"opsz" 144;text-transform:uppercase;text-wrap:balance;transition:font-variation-settings .8s var(--ease),font-size .8s var(--ease)}
+.cq__q.on .cq__n{font-variation-settings:"wdth" 50,"opsz" 144;font-size:clamp(46px,5.4vw,120px)}
 .cq__svc{list-style:none;max-height:0;overflow:hidden;opacity:0;transition:max-height .7s var(--ease),opacity .4s}
 .cq__q.on .cq__svc{max-height:220px;opacity:1;transition-delay:.2s}
 .cq__svc li{display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.4);padding:7px 0;font:500 clamp(14px,1.2vw,18px)/1 var(--sans);text-transform:uppercase;font-variation-settings:"wdth" 80}
 .cq__svc li:last-child{border-bottom:1px solid rgba(255,255,255,.4)}
 .cq.dim .cq__q:not(.on) .cq__top{opacity:.4}
 .cq.dim .cq__q:not(.on) .cq__d{display:none}
-.cq.dim .cq__q:not(.on) .cq__n{font-size:clamp(26px,2.8vw,52px)}
+.cq.dim .cq__q:not(.on) .cq__n{font-size:clamp(22px,2.2vw,42px)}
+.cq__now{position:absolute;right:22px;bottom:22px;max-width:45%;text-align:right;opacity:.75}
+.cq.dim .cq__q:not(.on) .cq__now{display:none}
+.cq__q.ai .cq__scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.06) 0 1px,transparent 1px 3px)}
+.cq__ai{display:inline-block;margin-left:10px;padding:3px 6px;background:var(--w);color:var(--k);font:500 10px var(--mono);vertical-align:middle;letter-spacing:.04em}
 /* ---------- 02 PROGETTI: SCAFFALE ---------- */
 .pj{padding-bottom:clamp(50px,6vw,90px)}
 .pj__bar{grid-column:1/13;display:flex;justify-content:space-between;gap:20px;align-items:end;padding:26px 0 18px;flex-wrap:wrap}
@@ -307,7 +311,8 @@ a{color:inherit;text-decoration:none}
   .st__sub{margin-top:16px}
   /* cosa facciamo: quadranti impilati, tocco = apre */
   .cq{height:auto;grid-template-columns:1fr!important;grid-template-rows:none!important;margin-top:28px}
-  .cq__q{height:52svh}
+  .cq__q{height:50svh}
+  .cq__now{display:none}
   .cq__n{font-size:13vw}.cq__q.on .cq__n{font-size:15vw}
   .cq.dim .cq__q:not(.on) .cq__n{font-size:11vw}
   /* progetti: scaffale che scorre in orizzontale */
@@ -388,7 +393,7 @@ a{color:inherit;text-decoration:none}
   <div class="rule"></div>
   <div class="g">
     <h2 class="st__big dec" data-en="An <span class=&quot;it&quot;>independent</span> creative hub.">Hub creativo <span class="it">indipendente.</span></h2>
-    <p class="st__lead mono" data-en="We work on four fronts, often together in the same project">Lavoriamo su quattro fronti, spesso insieme nello stesso progetto</p>
+    <p class="st__lead mono" data-en="We work on six fronts, often together in the same project — AI included">Lavoriamo su sei fronti, spesso insieme nello stesso progetto — AI compresa</p>
     <p class="st__sub" data-en="Then it becomes whatever it needs to be: an identity, a space, an object, a website, a campaign, an experience.">Poi diventa quello che serve: un’identità, uno spazio, un oggetto, un sito, una campagna, un’esperienza.</p>
   </div>
   <div class="cq" id="cq"></div>
@@ -624,45 +629,48 @@ document.querySelectorAll('.fr__row').forEach(r => { r.addEventListener('mouseen
   document.querySelectorAll('.dec').forEach(el => io.observe(el));
 })();
 
-/* ---------- COSA FACCIAMO: QUATTRO QUADRANTI ---------- */
+/* ---------- COSA FACCIAMO: SEI CATEGORIE (immagini scelte da Surreo, a rotazione come una GIF) ---------- */
 (async () => {
   const EN = document.documentElement.lang === 'en';
-  const C = EN ? [
-    { n: 'Identity', q: 'Need a brand people recognise?', s: ['Brand identity', 'Graphic design', 'Packaging', 'Illustration'] },
-    { n: 'Digital', q: 'Need a website, social media, a new idea?', s: ['Web design', 'Social & Media strategy', 'AI Concepting'] },
-    { n: 'Space & Object', q: 'Need an object, a shop, an exhibition?', s: ['Product design', 'Interiors', 'Exhibitions & Videomapping'] },
-    { n: 'Image', q: 'Need photos and videos that last?', s: ['Photography', 'Film & Music videos', 'Motion & 3D'] },
-  ] : [
-    { n: 'Identità', q: 'Ti serve un marchio che si riconosca?', s: ['Brand identity', 'Grafica', 'Packaging', 'Illustrazione'] },
-    { n: 'Digitale', q: 'Ti serve un sito, i social, un’idea nuova?', s: ['Web design', 'Social & Media strategy', 'AI Concepting'] },
-    { n: 'Spazio & Oggetto', q: 'Ti serve un oggetto, un negozio, una mostra?', s: ['Product design', 'Interni', 'Allestimenti & Videomapping'] },
-    { n: 'Immagine', q: 'Ti servono foto e video che restino?', s: ['Fotografia', 'Film & Videoclip', 'Motion & 3D'] },
+  const T = (it, en) => EN ? en : it;
+  const C = [
+    { n: T('Identità', 'Identity'), q: T('Ti serve un marchio che si riconosca?', 'Need a brand people recognise?'), s: [T('Brand identity', 'Brand identity'), T('Grafica', 'Graphic design'), 'Packaging', T('Illustrazione', 'Illustration')],
+      p: ['caffe-meletti', 'palandrani-technical', 'shine-soap', 'castelmania', 'suburbi', 'lagarock', 'rumore-x-suburbiae', 'suburbiae-3-edizione', 'caffe-design'] },
+    { n: T('Web & Digitale', 'Web & Digital'), q: T('Ti serve un sito che funzioni e venda?', 'Need a website that works and sells?'), s: ['Web design', 'E-commerce', T('Interfacce', 'Interfaces')],
+      p: ['palandrani-technical', 'spd-ing', 'panetta-bakery', 'suburbiae-sito', 'panetta-sito', 'magno-sito'] },
+    { n: T('Social & Strategia', 'Social & Strategy'), q: T('Ti serve farti vedere sui social?', 'Need to get seen on social media?'), s: ['Media strategy', 'Social', T('Campagne', 'Campaigns'), 'Meta Ads'],
+      p: ['appicciafuoco', 'mybestlazio', 'gian-e-gli-spiriti', 'villa-ebe', 'workshok', 'gizzi-fisioterapista', 'zioma-fritti'] },
+    { n: 'AI', ai: 1, q: T('Ti serve un’idea che ancora non esiste?', 'Need an idea that doesn’t exist yet?'), s: ['AI Concepting', T('Immagini e video generativi', 'Generative images & video'), T('Prototipi', 'Prototypes')],
+      p: ['concept-04', 'concept-03', 'concept-02', 'concept-05', 'concept-10', 'concept-11', 'suburbiae-3-edizione'] },
+    { n: T('Spazio & Oggetto', 'Space & Object'), q: T('Ti serve un oggetto, un negozio, una mostra?', 'Need an object, a shop, an exhibition?'), s: ['Product design', T('Interni', 'Interiors'), T('Allestimenti & Videomapping', 'Exhibitions & Videomapping')],
+      p: ['helmix', 'render-architettura', 'concept-09', 'concept-08', 'concept-10', 'concept-04', 'concept-11', 'concept-01', 'concept-02', 'orikata', 'dum-md-drone', 'concept-06', 'concept-07', 'etni-psichedelic', 'unnecessary-exhibit', 'butterfly-effect-exhibit', 'about-rock-exhibit'] },
+    { n: T('Immagine', 'Image'), q: T('Ti servono foto e video che restino?', 'Need photos and videos that last?'), s: [T('Fotografia', 'Photography'), T('Film & Videoclip', 'Film & Music videos'), 'Motion & 3D'],
+      p: ['imuri-band', 'merletto-di-offida', 'caffe-design', 'villa-ebe', 'appicciafuoco', 'samisdat', 'diemme-caffe-concorso'] },
   ];
-  // quali progetti finiscono in quale categoria (dai tag)
-  const RE = [/brand|logo|graphic|packaging|illustration|merch|editorial|book/, /website|web design|e-commerce|interface|ux|social|meta ads|media|generative|augmented|virtual|experience/,
-    /industrial|product|3d model|interior|exhibit|display|lighting|machine|set design|videomapping|architect|parametric/, /photo|video|film|movie|editing|animation|motion|rotoscop|still life/];
   const data = await (window.__pj ||= fetch('/projects.json').then(r => r.json()));
-  C.forEach(c => { c.imgs = []; c.np = 0; });
-  data.sections.forEach(sec => sec.projects.forEach(p => {
-    if (!p.frames || !p.frames.length) return;
-    const tags = (p.tags || []).map(t => t.toLowerCase()).join(' | ');
-    RE.forEach((re, i) => { if (re.test(tags)) { C[i].np++; C[i].imgs.push(...p.frames.slice(0, 3).map(f => '/' + f.replace(/\/([^/]+)$/, '/m/$1'))); } });
-  }));
-  C.forEach(c => { for (let i = c.imgs.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [c.imgs[i], c.imgs[j]] = [c.imgs[j], c.imgs[i]]; } c.imgs = c.imgs.slice(0, 10); });
+  const byId = {};
+  data.sections.forEach(sec => sec.projects.forEach(p => { if (p.frames && p.frames.length) byId[p.id] = p; }));
+  // fotogrammi della "GIF": fino a 3 immagini per progetto, alternando i progetti
+  C.forEach(c => {
+    const ps = c.p.map(id => byId[id]).filter(Boolean);
+    c.fr = [];
+    for (let k = 0; k < 3; k++) ps.forEach(p => { if (p.frames[k]) c.fr.push({ src: '/' + p.frames[k].replace(/\/([^/]+)$/, '/m/$1'), name: p.name || p.id }); });
+  });
   const esc = s => s.replace(/&/g, '&amp;');
-  const im = src => `<div class="cq__im"><img class="base" loading="lazy" src="${src}" alt=""><img class="sl" loading="lazy" src="${src}" alt=""><img class="sl" loading="lazy" src="${src}" alt=""></div>`;
+  const im = f => `<div class="cq__im"><img class="base" src="${f.src}" alt=""><img class="sl" src="${f.src}" alt=""><img class="sl" src="${f.src}" alt=""></div>`;
   const box = document.getElementById('cq');
-  box.innerHTML = C.map((c, i) => `<div class="cq__q" data-i="${i}" tabindex="0" role="button" aria-label="${esc(c.n)}">${im(c.imgs[0] || '')}<div class="cq__sh"></div>
-    <div class="cq__ui"><div class="cq__top mono"><span>0${i + 1} / 04</span><span>${String(c.np).padStart(2, '0')} ${EN ? 'projects' : 'progetti'}</span></div>
-    <div><p class="cq__d">${esc(c.q)}</p><b class="cq__n">${esc(c.n)}</b><ul class="cq__svc">${c.s.map((x, j) => `<li><span>${esc(x)}</span><span class="mono">0${j + 1}</span></li>`).join('')}</ul></div></div></div>`).join('');
+  box.innerHTML = C.map((c, i) => `<div class="cq__q${c.ai ? ' ai' : ''}" data-i="${i}" tabindex="0" role="button" aria-label="${esc(c.n)}">${im(c.fr[0])}<div class="cq__sh"></div>${c.ai ? '<div class="cq__scan"></div>' : ''}
+    <div class="cq__ui"><div class="cq__top mono"><span>0${i + 1} / 06</span><span>${c.ai ? T('Progettiamo con l’AI', 'We design with AI') : ''}</span></div>
+    <div><p class="cq__d">${esc(c.q)}</p><b class="cq__n">${esc(c.n)}${c.ai ? '<span class="cq__ai">' + T('ANCHE CON L’AI', 'AI-POWERED') + '</span>' : ''}</b><ul class="cq__svc">${c.s.map((x, j) => `<li><span>${esc(x)}</span><span class="mono">0${j + 1}</span></li>`).join('')}</ul></div></div>
+    <span class="cq__now mono">${esc(c.fr[0].name)}</span></div>`).join('');
   const qs = [...box.children]; let on = -1;
   const mob = () => matchMedia('(max-width:700px)').matches;
   const set = i => {
     on = i;
     qs.forEach((q, j) => q.classList.toggle('on', j === i)); box.classList.toggle('dim', i >= 0);
-    const col = i < 0 ? ['1fr', '1fr'] : (i % 2 ? ['1fr', '2.6fr'] : ['2.6fr', '1fr']);
-    const row = i < 0 ? ['1fr', '1fr'] : (i < 2 ? ['2fr', '1fr'] : ['1fr', '2fr']);
-    box.style.setProperty('--c1', col[0]); box.style.setProperty('--c2', col[1]); box.style.setProperty('--r1', row[0]); box.style.setProperty('--r2', row[1]);
+    const col = ['1fr', '1fr', '1fr'], row = ['1fr', '1fr'];
+    if (i >= 0) { col[i % 3] = '2.4fr'; row[i < 3 ? 0 : 1] = '1.9fr'; }
+    col.forEach((v, j) => box.style.setProperty('--c' + (j + 1), v)); row.forEach((v, j) => box.style.setProperty('--r' + (j + 1), v));
     if (i >= 0) kick(qs[i].querySelector('.cq__im'));
   };
   qs.forEach((q, i) => {
@@ -671,11 +679,14 @@ document.querySelectorAll('.fr__row').forEach(r => { r.addEventListener('mouseen
     q.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); set(on === i ? -1 : i); } });
   });
   box.addEventListener('mouseleave', () => { if (!mob()) set(-1); });
-  const swap = (q, src) => { q.querySelectorAll('.cq__im img').forEach(x => x.src = src); kick(q.querySelector('.cq__im')); };
-  let k = 1;
-  let cqVis = false; new IntersectionObserver(es => cqVis = es[0].isIntersecting).observe(box);
+  // la "GIF": ogni categoria sfoglia i suoi fotogrammi; quella aperta va più veloce
+  const pos = C.map(() => 0);
+  const step = i => { const c = C[i], q = qs[i]; pos[i] = (pos[i] + 1) % c.fr.length; const f = c.fr[pos[i]];
+    q.querySelectorAll('.cq__im img').forEach(x => x.src = f.src); kick(q.querySelector('.cq__im')); q.querySelector('.cq__now').textContent = f.name; };
+  let vis = false, tick = 0; new IntersectionObserver(es => vis = es[0].isIntersecting).observe(box);
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches)
-    setInterval(() => cqVis && !document.hidden && qs.forEach((q, i) => { if (C[i].imgs.length && Math.random() < .5) swap(q, C[i].imgs[k++ % C[i].imgs.length]); }), 2200);
+    setInterval(() => { if (!vis || document.hidden) return; tick++;
+      qs.forEach((q, i) => { if (i === on || (tick + i) % 3 === 0) step(i); }); }, 700);
 })();
 
 /* ---------- PROGETTI: SCAFFALE ---------- */
