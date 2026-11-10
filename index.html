@@ -696,9 +696,10 @@ document.querySelectorAll('.fr__row').forEach(r => { r.addEventListener('mouseen
   const step = i => { const c = C[i], q = qs[i]; pos[i] = (pos[i] + 1) % c.fr.length; const f = c.fr[pos[i]];
     q.querySelectorAll('.cq__im img').forEach(x => { x.decoding = 'async'; x.src = f.src; }); kick(q.querySelector('.cq__im')); q.querySelector('.cq__now').textContent = f.name; };
   let vis = false, tick = 0; new IntersectionObserver(es => vis = es[0].isIntersecting).observe(box);
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches)
-    setInterval(() => { if (!vis || document.hidden) return; tick++;
-      qs.forEach((q, i) => { if (i === on || (tick + i) % 3 === 0) step(i); }); }, 700);
+  // gira anche con "Riduci movimento" (iPhone): è solo un cambio di foto, più lento; i glitch li spegne già il CSS
+  const rmGif = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  setInterval(() => { if (!vis || document.hidden) return; tick++;
+    qs.forEach((q, i) => { if (i === on || (tick + i) % 3 === 0) step(i); }); }, rmGif ? 1200 : 700);
 })();
 
 /* ---------- PROGETTI: SCAFFALE ---------- */
