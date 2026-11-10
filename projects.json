@@ -166,7 +166,8 @@
             "assets/projects/workshok/05.jpg",
             "assets/projects/workshok/06.jpg",
             "assets/projects/workshok/07.jpg"
-          ]
+          ],
+          "cover": 1
         },
         {
           "id": "sww-since-2018",
@@ -308,7 +309,8 @@
             "assets/projects/samisdat/08.jpg",
             "assets/projects/samisdat/09.jpg",
             "assets/projects/samisdat/10.jpg"
-          ]
+          ],
+          "cover": 6
         },
         {
           "id": "donna-mayla",
@@ -418,7 +420,8 @@
             "assets/projects/zioma-fritti/03.jpg",
             "assets/projects/zioma-fritti/04.jpg",
             "assets/projects/zioma-fritti/05.jpg"
-          ]
+          ],
+          "cover": 1
         },
         {
           "id": "jay27-asd",
@@ -441,7 +444,8 @@
             "assets/projects/jay27-asd/04.jpg",
             "assets/projects/jay27-asd/05.jpg",
             "assets/projects/jay27-asd/06.jpg"
-          ]
+          ],
+          "cover": 4
         },
         {
           "id": "panetta-bakery",
@@ -496,7 +500,8 @@
             "assets/projects/spd-ing/11.jpg",
             "assets/projects/spd-ing/12.jpg",
             "assets/projects/spd-ing/13.jpg"
-          ]
+          ],
+          "cover": 4
         },
         {
           "id": "gizzi-illustration",
