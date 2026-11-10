@@ -217,6 +217,8 @@ a{color:inherit;text-decoration:none}
 .sf__s.on .sf__sp{opacity:0}
 .sf__s.on .sf__lab{opacity:1}
 .sf__s.on::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 45%,rgba(0,0,0,.75));z-index:2}
+.m-only{display:none}
+@media (hover:none){.m-only{display:inline}.d-only{display:none}}
 .sf__help{display:flex;justify-content:space-between;padding:10px var(--pad) 0;color:var(--g)}
 .sf__all{display:flex;justify-content:space-between;align-items:center;margin:26px var(--pad) 0;padding:14px 0;border-top:1px solid var(--k);border-bottom:1px solid var(--k)}
 .sf__all b{font:900 clamp(30px,4vw,64px)/.9 var(--sans);font-variation-settings:"wdth" 25,"opsz" 144;text-transform:uppercase;transition:font-variation-settings .6s var(--ease)}
@@ -411,7 +413,7 @@ a{color:inherit;text-decoration:none}
     </div>
   </div>
   <div class="sf" id="sf"></div>
-  <div class="sf__help mono"><span data-en="Hover the spines to open them · click for the project sheet">Passa sui dorsi per aprirli · clic per la scheda</span><span id="sfCur"></span></div>
+  <div class="sf__help mono"><span class="d-only" data-en="Hover the spines to open them · click for the project sheet">Passa sui dorsi per aprirli · clic per la scheda</span><span class="m-only" data-en="Tap a spine to open it · tap again for the project sheet · swipe for more">Tocca un dorso per aprirlo · tocca ancora per la scheda · scorri per gli altri</span><span id="sfCur"></span></div>
   <a class="sf__all mono" href="/progetti.html"><span data-en="Full index">Indice completo</span><b data-en="All projects →">Tutti i progetti →</b></a>
 </section>
 
@@ -721,8 +723,9 @@ document.querySelectorAll('.fr__row').forEach(r => { r.addEventListener('mouseen
     sp.forEach((x, j) => x.classList.toggle('on', j === i));
     if (i >= 0) { load(sp[i]); load(sp[i + 1]); load(sp[i - 1]); kick(sp[i].querySelector('.sf__im')); cur.textContent = pad(i + 1) + ' / ' + pad(L.length); } else cur.textContent = '';
   };
-  sf.addEventListener('mouseover', e => { const s = e.target.closest('.sf__s'); if (s) open(+s.dataset.i); });
-  sf.addEventListener('mouseleave', () => open(-1));
+  const touch = () => matchMedia('(hover: none)').matches;
+  sf.addEventListener('mouseover', e => { if (touch()) return; const s = e.target.closest('.sf__s'); if (s) open(+s.dataset.i); });
+  sf.addEventListener('mouseleave', () => { if (!touch()) open(-1); });
   // touch: primo tocco apre il dorso, il secondo apre la scheda
   sf.addEventListener('click', e => {
     const s = e.target.closest('.sf__s'); if (!s) return;

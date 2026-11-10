@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="/bn/bn.css">
 <style>
 /* barra filtri */
-.fl{position:sticky;top:0;z-index:30;background:var(--w);border-top:1px solid var(--k);border-bottom:1px solid var(--k);padding:10px var(--pad) 10px;display:flex;justify-content:space-between;gap:16px;align-items:center;margin-top:10px}
+.fl{position:sticky;top:0;padding-top:58px!important;margin-top:-48px;z-index:30;background:var(--w);border-top:1px solid var(--k);border-bottom:1px solid var(--k);padding:10px var(--pad) 10px;display:flex;justify-content:space-between;gap:16px;align-items:center;margin-top:10px}
 .fl__c{display:flex;gap:6px;flex-wrap:wrap}
 .fl__v{display:flex;gap:6px;flex:none}
 .fl__n{flex:none}
@@ -101,7 +101,9 @@
   .ix__k{grid-column:1}.ix__t{grid-column:2;font-size:21px;line-height:.95}
   .ix__c{grid-column:2;grid-row:2;color:var(--g);font-size:10px;margin-top:4px}
   .ix__d,.ix__a{display:none}
-  .ix__m{display:block;grid-column:3;grid-row:1/3;width:64px;aspect-ratio:1;background:#ddd}
+  .ix__m{display:block;grid-column:3;grid-row:1/3;width:64px;aspect-ratio:1;background:#ddd;position:relative;overflow:hidden}
+  .ix__m .gi{position:absolute;inset:0}
+
   .ix__r:hover::before{opacity:0}.ix__r:hover{color:inherit}
   .ix__r.on::before{opacity:1}.ix__r.on{color:var(--w)}
   .ix__r.on .ix__t{font-variation-settings:"wdth" 120,"opsz" 48}
