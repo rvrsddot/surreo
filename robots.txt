@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /workshok/admin/
+Disallow: /assets/cv/cv-dati.html
 
 Sitemap: https://surreostudio.com/sitemap.xml
 Sitemap: https://surreostudio.com/workshok/sitemap.xml

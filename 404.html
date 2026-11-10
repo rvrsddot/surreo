@@ -1,62 +1,66 @@
 <!doctype html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <title>404 — Surreo Studio</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="robots" content="noindex,follow" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&display=swap" />
-  <style>
-    :root{--paper:#f2ede0;--muted:#8d8677}
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0}
-    body{
-      min-height:100vh;
-      background:#111;color:var(--paper);
-      font-family:"Bricolage Grotesque",system-ui,sans-serif;
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
-      padding:32px 20px;text-align:center;gap:clamp(28px,4vw,44px);
-    }
-    .logo{width:clamp(80px,10vw,120px);height:auto;display:block;opacity:.95}
-    .code{
-      font-weight:800;font-size:clamp(96px,18vw,220px);line-height:.9;letter-spacing:-.06em;margin:0;
-    }
-    .msg{
-      font-weight:500;font-size:clamp(16px,2vw,22px);line-height:1.3;color:var(--paper);margin:0;max-width:32ch;text-wrap:balance;
-    }
-    .sub{
-      font:600 11px/1 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0;
-    }
-    .back{
-      display:inline-flex;align-items:center;gap:10px;
-      color:var(--paper);text-decoration:none;
-      border:1.5px solid var(--paper);border-radius:999px;
-      padding:14px 22px;font-weight:700;font-size:14px;letter-spacing:-.01em;
-      transition:background .15s ease,color .15s ease,transform .12s ease;
-    }
-    .back:hover{background:var(--paper);color:#111;transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--paper)}
-    .back:focus-visible{outline:3px solid var(--paper);outline-offset:3px}
-    .foot{
-      position:fixed;bottom:16px;left:0;right:0;
-      font:600 10px/1 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
-    }
-  </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/bn/bn.css">
+<style>
+body{background:var(--k)}
+.e{min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;padding-top:64px;position:relative;overflow:hidden}
+.e__scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.04) 0 1px,transparent 1px 3px)}
+.e__meta>*{grid-column:span 4}.e__meta>:last-child{text-align:right}
+.n{position:relative;margin:0 var(--pad);display:flex;justify-content:space-between;font:1000 10px/.74 var(--sans);font-variation-settings:"wdth" 60,"opsz" 144}
+.n span{display:block}
+.n__g{position:absolute;inset:0;background:var(--k);opacity:0;pointer-events:none}
+.n__inv{position:absolute;left:-2%;right:-2%;height:0;background:#fff;mix-blend-mode:difference}
+.e__txt{align-items:end;padding-bottom:var(--pad)}
+.e__txt p{grid-column:1/8;font:300 clamp(22px,2.6vw,40px)/1.1 var(--sans)}
+.e__txt .btn{grid-column:10/13}
+@media (max-width:700px){.e__meta>*{grid-column:span 6}.e__meta>:nth-child(2){display:none}.e__txt p,.e__txt .btn{grid-column:1/13}.e__txt .btn{margin-top:20px}}
+</style>
 </head>
-<body>
-  <img class="logo" src="/favicon.svg" alt="Surreo Studio" />
-  <div>
-    <p class="sub">Errore</p>
-    <h1 class="code">404</h1>
+<body data-page="404">
+<main class="dark e">
+  <div class="e__scan"></div>
+  <div class="g e__meta mono"><span>Errore</span><span>Surreo Studio · surreostudio.com</span><span>404</span></div>
+  <div class="n" id="n"><div class="n__row" id="row" style="display:flex;justify-content:space-between;width:100%"><span>4</span><span>0</span><span>4</span></div></div>
+  <div class="g e__txt">
+    <p class="dec">Questa pagina non esiste — o non esiste più.</p>
+    <a class="btn mono" href="/"><span>Torna alla home</span><span>→</span></a>
   </div>
-  <p class="msg">Questa pagina non esiste — o non esiste più.</p>
-  <a class="back" href="/">
-    <span>Torna alla home</span>
-    <svg viewBox="0 0 72 14" width="34" height="10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 7h64M56 2l10 5-10 5"/></svg>
-  </a>
-  <p class="foot">Surreo Studio · surreostudio.com</p>
+</main>
+<script src="/bn/bn.js"></script>
+<script>
+(() => {
+  const n = document.getElementById('n'), row = document.getElementById('row'), L = [...row.children];
+  const fit = () => { n.style.fontSize = Math.min(innerWidth * .62, innerHeight * .78) + 'px'; };
+  fit(); addEventListener('resize', fit);
+  const gs = [0, 1, 2, 3].map(() => { const g = row.cloneNode(true); g.removeAttribute('id'); g.className = 'n__g'; g.style.display = 'flex'; g.style.justifyContent = 'space-between'; n.appendChild(g); return g; });
+  const inv = document.createElement('div'); inv.className = 'n__inv'; n.appendChild(inv);
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  let burst = 0;
+  const f = now => {
+    const t = now / 1000;
+    L.forEach((s, i) => s.style.fontVariationSettings = `"wdth" ${(25 + 126 * (.5 + .5 * Math.sin(t * 1.3 + i * 2.1))).toFixed(1)},"opsz" 144`);
+    gs.forEach(g => [...g.children].forEach((s, i) => s.style.fontVariationSettings = L[i].style.fontVariationSettings));
+    if (burst > now) {
+      gs.forEach(g => { const y = rnd(0, 90), h = rnd(2, 14); g.style.opacity = 1; g.style.clipPath = `inset(${y}% 0 ${100 - y - h}% 0)`; g.style.transform = `translateX(${rnd(-8, 8)}%)`; });
+      inv.style.top = rnd(0, 85) + '%'; inv.style.height = rnd(3, 18) + '%';
+    } else { gs.forEach(g => g.style.opacity = 0); inv.style.height = 0; }
+    requestAnimationFrame(f);
+  };
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    requestAnimationFrame(f);
+    (function s() { burst = performance.now() + rnd(200, 600); setTimeout(s, rnd(700, 2200)); })();
+  }
+})();
+</script>
 </body>
 </html>
