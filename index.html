@@ -128,10 +128,10 @@ a{color:inherit;text-decoration:none}
 .hero__claim .it{font-size:1.12em}
 .word{position:relative;margin:0 var(--pad);transform-origin:50% 100%;will-change:transform;contain:layout paint}
 .word__row{display:flex;justify-content:space-between;align-items:flex-end;font:1000 10px/.74 var(--sans);font-variation-settings:"wdth" 60,"opsz" 144;text-transform:uppercase;user-select:none}
-.word__row span{display:block;will-change:font-variation-settings}
+.word__row span{display:block}
 .word__ghost{position:absolute;inset:0;pointer-events:none;background:var(--k);opacity:0}
 .word__inv{position:absolute;left:-2%;right:-2%;height:0;background:#fff;mix-blend-mode:difference;pointer-events:none}
-.hero__scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px)}
+.hero__scan{position:absolute;inset:0;pointer-events:none;transform:translateZ(0);background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px)}
 .hero__foot{margin-top:18px;border-top:1px solid rgba(255,255,255,.35);padding-top:10px}
 .hero__foot>*{grid-column:span 3}
 .hero__foot>:last-child{text-align:right}
@@ -168,8 +168,8 @@ a{color:inherit;text-decoration:none}
 .cq__q{position:relative;overflow:hidden;color:var(--w);--bg:var(--k);--fg:var(--w);cursor:pointer;background:#111}
 .cq__im{position:absolute;inset:0;overflow:hidden}
 .cq__im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.2);transition:transform 6s linear,filter .6s}
-.cq__im .sl{opacity:0}
-.cq__im.go .sl{opacity:1;animation:slice .42s steps(1) forwards}
+.cq__im .sl{opacity:0;visibility:hidden}
+.cq__im.go .sl{visibility:visible;opacity:1;animation:slice .42s steps(1) forwards}
 .cq__q.on .cq__im img.base{transform:scale(1.08)}
 .cq__q.on .cq__im img{filter:none}
 .cq__sh{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.35),rgba(10,10,10,.85));transition:background .6s}
@@ -177,7 +177,7 @@ a{color:inherit;text-decoration:none}
 .cq__ui{position:absolute;inset:0;padding:22px;display:flex;flex-direction:column;justify-content:space-between}
 .cq__top{display:flex;justify-content:space-between;transition:opacity .4s}
 .cq__d{font:400 clamp(18px,1.6vw,30px)/1 var(--serif);font-style:italic;opacity:.9;margin-bottom:6px}
-.cq__n{display:block;font:1000 clamp(32px,3.4vw,72px)/.84 var(--sans);font-variation-settings:"wdth" 25,"opsz" 144;text-transform:uppercase;text-wrap:balance;transition:font-variation-settings .8s var(--ease),font-size .8s var(--ease)}
+.cq__n{display:block;font:1000 clamp(32px,3.4vw,72px)/.84 var(--sans);font-variation-settings:"wdth" 25,"opsz" 144;text-transform:uppercase;text-wrap:balance}
 .cq__q.on .cq__n{font-variation-settings:"wdth" 50,"opsz" 144;font-size:clamp(46px,5.4vw,120px)}
 .cq__svc{list-style:none;max-height:0;overflow:hidden;opacity:0;transition:max-height .7s var(--ease),opacity .4s}
 .cq__q.on .cq__svc{max-height:220px;opacity:1;transition-delay:.2s}
@@ -188,7 +188,12 @@ a{color:inherit;text-decoration:none}
 .cq.dim .cq__q:not(.on) .cq__n{font-size:clamp(22px,2.2vw,42px)}
 .cq__now{position:absolute;right:22px;bottom:22px;max-width:45%;text-align:right;opacity:.75}
 .cq.dim .cq__q:not(.on) .cq__now{display:none}
-.cq__q.ai .cq__scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.06) 0 1px,transparent 1px 3px)}
+/* Safari: ridimensionare 18 immagini filtrate a ogni fotogramma lo blocca. Lì il riquadro si apre di colpo (il glitch copre lo scatto)
+   e il bianco e nero lo fa la scheda grafica (immagini su livello proprio) */
+.saf .cq,.saf .cq__svc,.saf .cq__sh{transition:none}
+.saf .cq__im img{transform:translateZ(0);transition:filter .6s}
+.saf .cq__q.on .cq__im img.base{transform:translateZ(0)}
+.cq__q.ai .cq__scan{position:absolute;inset:0;pointer-events:none;transform:translateZ(0);background:repeating-linear-gradient(0deg,rgba(255,255,255,.06) 0 1px,transparent 1px 3px)}
 .cq__ai{display:inline-block;margin-left:10px;padding:3px 6px;background:var(--w);color:var(--k);font:500 10px var(--mono);vertical-align:middle;letter-spacing:.04em}
 /* ---------- 02 PROGETTI: SCAFFALE ---------- */
 .pj{padding-bottom:clamp(50px,6vw,90px)}
@@ -208,8 +213,8 @@ a{color:inherit;text-decoration:none}
 .sf__sp i{font:500 8px var(--mono);font-style:normal}
 .sf__im{position:absolute;inset:0;opacity:0;transition:opacity .4s;overflow:hidden}
 .sf__im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.15)}
-.sf__im .sl{opacity:0}
-.sf__im.go .sl{opacity:1;animation:slice .42s steps(1) forwards}
+.sf__im .sl{opacity:0;visibility:hidden}
+.sf__im.go .sl{visibility:visible;opacity:1;animation:slice .42s steps(1) forwards}
 .sf__lab{position:absolute;left:12px;right:12px;bottom:12px;z-index:3;color:var(--w);opacity:0;transition:opacity .3s .15s}
 .sf__lab b{display:block;margin-top:6px;font:900 clamp(28px,3vw,52px)/.86 var(--sans);font-variation-settings:"wdth" 25,"opsz" 144;text-transform:uppercase}
 .sf.hov .sf__s.on{flex:0 0 min(30vw,420px)}
@@ -440,7 +445,7 @@ a{color:inherit;text-decoration:none}
       </a>
       <a class="co__i" href="https://www.suburbiaefest.com" target="_blank" rel="noopener">
         <span class="co__tag mono"><span>Co-founder · Creative direction</span><span>TE</span></span>
-        <span class="co__logo"><img src="/assets/collateral/suburbiae-gatto.png" alt="Suburbiæ Music Fest"></span>
+        <span class="co__logo"><img src="/assets/collateral/suburbiae-gatto.webp" alt="Suburbiæ Music Fest"></span>
         <b class="co__nm">Suburbiæ Fest</b>
         <p class="co__p">Suburbiæ Music Fest · Teramo</p>
         <span class="co__go mono">suburbiaefest.com ↗</span>
@@ -502,6 +507,8 @@ a{color:inherit;text-decoration:none}
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const rnd = (a, b) => a + Math.random() * (b - a);
 const MOB = () => matchMedia('(max-width:700px)').matches;
+const SAF = /^((?!chrome|chromium|android|crios|fxios|edg).)*safari/i.test(navigator.userAgent);
+document.documentElement.classList.toggle('saf', SAF);
 
 /* scanner mobile: la riga che passa al centro dello schermo si accende */
 const scanner = (() => {
@@ -547,7 +554,8 @@ const scanner = (() => {
     const k = Math.max(1, Math.min(3.2, (innerHeight * .58) / h));
     word.style.transform = `scaleY(${k.toFixed(3)})`;
   };
-  fit(); addEventListener('resize', fit);
+  // su mobile la barra dell'indirizzo cambia l'altezza mentre si scorre: ridimensiona solo se cambia la larghezza
+  let lw = innerWidth; fit(); addEventListener('resize', () => { if (MOB() && innerWidth === lw) return; lw = innerWidth; fit(); });
   document.fonts && document.fonts.ready.then(fit);
 
   // copie per il glitch
@@ -565,11 +573,11 @@ const scanner = (() => {
   const frame = now => {
     if (!visible || document.hidden) return;            // fuori schermo o scheda nascosta: si ferma
     requestAnimationFrame(frame);
-    if (now - last < 90) return;                          // la parola cambia ~11 volte al secondo: il resto della pagina resta fluido
+    if (now - last < (SAF ? 125 : 90)) return;                          // la parola cambia ~11 volte al secondo: il resto della pagina resta fluido
     last = now;
     const t = (now - t0) / 1000;
-    const top = MOB() ? 100 : 151;
-    const fv = L.map((s, i) => `"wdth" ${Math.round((25 + (top - 25) * (.5 + .5 * Math.sin(t * .9 + i * (Math.PI * 2 / L.length)))) / 3) * 3},"opsz" 144`);
+    const top = MOB() ? 100 : 151, Q = SAF ? 9 : 3;
+    const fv = L.map((s, i) => `"wdth" ${Math.round((25 + (top - 25) * (.5 + .5 * Math.sin(t * .9 + i * (Math.PI * 2 / L.length)))) / Q) * Q},"opsz" 144`);
     L.forEach((s, i) => { if (s._fv !== fv[i]) { s.style.fontVariationSettings = fv[i]; s._fv = fv[i]; } });
     if (burst > now) {
       ghosts.forEach(g => {
@@ -602,12 +610,11 @@ document.querySelectorAll('.fr__row').forEach(r => { r.addEventListener('mouseen
 /* barra contatti mobile: compare dopo la hero, sparisce sui contatti */
 (() => {
   const bb = document.getElementById('bb'), hero = document.getElementById('top'), ct = document.getElementById('contatti');
-  const upd = () => {
-    const past = hero.getBoundingClientRect().bottom < 0;
-    const atCt = ct.getBoundingClientRect().top < innerHeight * .8;
-    bb.classList.toggle('on', past && !atCt);
-  };
-  addEventListener('scroll', upd, { passive: true }); upd();
+  // osservatori invece di misure a ogni scroll: niente ricalcoli forzati della pagina
+  let past = false, atCt = false;
+  const upd = () => bb.classList.toggle('on', past && !atCt);
+  new IntersectionObserver(es => { past = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; upd(); }).observe(hero);
+  new IntersectionObserver(es => { atCt = es[0].isIntersecting || es[0].boundingClientRect.top < 0; upd(); }, { rootMargin: '0px 0px -20% 0px' }).observe(ct);
 })();
 
 /* ---------- decodifica dei titoli all'ingresso ---------- */
@@ -684,7 +691,7 @@ document.querySelectorAll('.fr__row').forEach(r => { r.addEventListener('mouseen
   // la "GIF": ogni categoria sfoglia i suoi fotogrammi; quella aperta va più veloce
   const pos = C.map(() => 0);
   const step = i => { const c = C[i], q = qs[i]; pos[i] = (pos[i] + 1) % c.fr.length; const f = c.fr[pos[i]];
-    q.querySelectorAll('.cq__im img').forEach(x => x.src = f.src); kick(q.querySelector('.cq__im')); q.querySelector('.cq__now').textContent = f.name; };
+    q.querySelectorAll('.cq__im img').forEach(x => { x.decoding = 'async'; x.src = f.src; }); kick(q.querySelector('.cq__im')); q.querySelector('.cq__now').textContent = f.name; };
   let vis = false, tick = 0; new IntersectionObserver(es => vis = es[0].isIntersecting).observe(box);
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches)
     setInterval(() => { if (!vis || document.hidden) return; tick++;
