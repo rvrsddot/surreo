@@ -191,11 +191,13 @@
 
   /* indice + griglia */
   const ix = document.getElementById('ix'), gr = document.getElementById('gr');
-  const gi = (src, cls = 'bw') => `<div class="gi ${cls}"><img class="base" loading="lazy" src="${src}" alt=""><img class="sl" loading="lazy" src="${src}" alt=""><img class="sl" loading="lazy" src="${src}" alt=""></div>`;
+  // miniatura 560px, e 1200px (l/) quando lo schermo ne ha bisogno (retina, griglia larga): niente immagini sgranate
+  const ss = (src, sz) => src.includes('/m/') ? ` srcset="${src} 560w, ${src.replace('/m/', '/l/')} 1200w" sizes="${sz}"` : '';
+  const gi = (src, cls = 'bw', sz = '(max-width:700px) 50vw, 25vw') => `<div class="gi ${cls}"><img class="base" loading="lazy" src="${src}"${ss(src, sz)} alt=""><img class="sl" loading="lazy" src="${src}"${ss(src, sz)} alt=""><img class="sl" loading="lazy" src="${src}"${ss(src, sz)} alt=""></div>`;
   ix.innerHTML = L.map((p, i) => `<a class="ix__r" href="?p=${p.id}" data-i="${i}" data-c="${p.cat}">
     <span class="ix__k mono">${pad(i + 1)}</span><b class="ix__t">${p.name}</b><span class="ix__c mono">${p.catT}</span>
     <span class="ix__d mono">${p.tags.slice(0, 3).join(' · ')}</span><span class="ix__a mono">↗</span>
-    <span class="ix__m">${gi(p.thumbs[0])}</span></a>`).join('');
+    <span class="ix__m">${gi(p.thumbs[0], 'bw', '64px')}</span></a>`).join('');
   gr.innerHTML = L.map((p, i) => `<a class="gc" href="?p=${p.id}" data-i="${i}" data-c="${p.cat}" data-gk>${gi(p.thumbs[0])}
     <div class="gc__l"><b>${p.name}</b><span class="mono">${pad(i + 1)}</span></div></a>`).join('');
   ix.querySelectorAll('.ix__r').forEach(window.bnScan);
@@ -228,7 +230,7 @@
   ix.addEventListener('mouseover', e => {
     const r = e.target.closest('.ix__r'); if (!r || matchMedia('(max-width:700px)').matches) return;
     const i = +r.dataset.i; if (i === hov) return; hov = i;
-    pvI.forEach(im => im.src = L[i].thumbs[0]);
+    pvI.forEach(im => im.src = L[i].thumbs[0].replace('/m/', '/l/'));
     document.getElementById('pvK').textContent = pad(i + 1); document.getElementById('pvC').textContent = L[i].catT;
     pv.classList.add('on'); kick(pvG);
   });
