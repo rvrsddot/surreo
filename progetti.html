@@ -183,7 +183,7 @@
     if (!p.frames || !p.frames.length) return;
     L.push({ id: p.id, name: p.name || p.id, type: p.type || '', cat: s.id, catT: (EN && s.title_en) || s.title,
       desc: (EN && p.description_en) || p.description || '', tags: p.tags || [],
-      frames: (p.cover ? p.frames.slice(p.cover).concat(p.frames.slice(0, p.cover)) : p.frames).map(f => '/' + f), thumbs: (p.cover ? p.frames.slice(p.cover).concat(p.frames.slice(0, p.cover)) : p.frames).map(f => '/' + f.replace(/\/([^/]+)$/, '/m/$1')),
+      frames: (p.cover ? p.frames.slice(p.cover).concat(p.frames.slice(0, p.cover)) : p.frames).map(f => '/' + f), thumbs: (p.cover ? p.frames.slice(p.cover).concat(p.frames.slice(0, p.cover)) : p.frames).map(f => '/' + f.replace(/\/([^/]+)\.jpg$/, '/m/$1.webp')),
       vid: beside[p.id] && beside[p.id][0] });
   }));
   const pad = n => String(n).padStart(3, '0');

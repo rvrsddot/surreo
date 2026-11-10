@@ -663,7 +663,7 @@ document.querySelectorAll('.fr__row').forEach(r => { r.addEventListener('mouseen
   C.forEach(c => {
     const ps = c.p.map(id => byId[id]).filter(Boolean);
     c.fr = [];
-    for (let k = 0; k < 3; k++) ps.forEach(p => { const fr = (p.cover ? p.frames.slice(p.cover).concat(p.frames.slice(0, p.cover)) : p.frames); if (fr[k]) c.fr.push({ src: '/' + fr[k].replace(/\/([^/]+)$/, '/m/$1'), name: p.name || p.id }); });
+    for (let k = 0; k < 3; k++) ps.forEach(p => { const fr = (p.cover ? p.frames.slice(p.cover).concat(p.frames.slice(0, p.cover)) : p.frames); if (fr[k]) c.fr.push({ src: '/' + fr[k].replace(/\/([^/]+)\.jpg$/, '/m/$1.webp'), name: p.name || p.id }); });
   });
   const esc = s => s.replace(/&/g, '&amp;');
   const im = f => `<div class="cq__im"><img class="base" src="${f.src}" alt=""><img class="sl" src="${f.src}" alt=""><img class="sl" src="${f.src}" alt=""></div>`;
@@ -705,7 +705,7 @@ document.querySelectorAll('.fr__row').forEach(r => { r.addEventListener('mouseen
   data.sections.forEach(sec => sec.projects.forEach(p => {
     if (!p.frames || !p.frames.length) return;
     L.push({ id: p.id, name: p.name || p.id, cat: sec.id, catT: (document.documentElement.lang === 'en' && sec.title_en) || sec.title,
-      img: '/' + p.frames[p.cover || 0].replace(/\/([^/]+)$/, '/m/$1') });
+      img: '/' + p.frames[p.cover || 0].replace(/\/([^/]+)\.jpg$/, '/m/$1.webp') });
   }));
   const pad = n => String(n).padStart(3, '0');
   const EN = document.documentElement.lang === 'en';

@@ -3,6 +3,7 @@
 
 assets/projects/<id>/NN.jpg  ->  assets/projects/<id>/t/NN.jpg   lato corto 256px (miniature)
                              ->  assets/projects/<id>/m/NN.jpg   lato corto 560px (mobile: copertine e feed)
+                             ->  assets/projects/<id>/m/NN.webp  stessa misura in WebP q74 (sito B/N)
 JPEG q76.
 Idempotente: rigenera solo se il frame sorgente è più recente della miniatura.
 Viene lanciato anche in coda a build_assets.py."""
@@ -13,6 +14,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 IMG_DIR = os.path.join(ROOT, "assets", "projects")
 SIZES = {"t": 256, "m": 560}
 QUALITY = 76
+WEBP_QUALITY = 74
 
 
 def make_thumbs():
@@ -31,7 +33,8 @@ def make_thumbs():
                 src, dst = os.path.join(pdir, f), os.path.join(tdir, f)
                 if sub == "t":
                     before += os.path.getsize(src)
-                if os.path.exists(dst) and os.path.getmtime(dst) >= os.path.getmtime(src):
+                webp_ok = sub != "m" or os.path.exists(dst[:-4] + ".webp")
+                if webp_ok and os.path.exists(dst) and os.path.getmtime(dst) >= os.path.getmtime(src):
                     skipped += 1
                     after += os.path.getsize(dst)
                     continue
@@ -42,6 +45,8 @@ def make_thumbs():
                     if k < 1:
                         im = im.resize((round(w * k), round(h * k)), Image.LANCZOS)
                     im.save(dst, "JPEG", quality=QUALITY, optimize=True, progressive=True)
+                    if sub == "m":  # sito B/N: home e pagina progetti usano la versione WebP (~38% più leggera)
+                        im.save(dst[:-4] + ".webp", "WEBP", quality=WEBP_QUALITY, method=6)
                 made += 1
                 after += os.path.getsize(dst)
     mb = lambda b: f"{b / 1048576:.1f} MB"
