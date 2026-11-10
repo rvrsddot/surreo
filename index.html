@@ -687,19 +687,27 @@ document.querySelectorAll('.fr__row').forEach(r => { r.addEventListener('mouseen
   };
   qs.forEach((q, i) => {
     q.addEventListener('mouseenter', () => { if (!mob()) set(i); });
-    q.addEventListener('click', () => set(on === i && mob() ? -1 : i));
+    q.addEventListener('click', () => { if (on !== i) set(i); });
     q.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); set(on === i ? -1 : i); } });
   });
   box.addEventListener('mouseleave', () => { if (!mob()) set(-1); });
-  // la "GIF": ogni categoria sfoglia i suoi fotogrammi; quella aperta va più veloce
+  // mobile: si attiva da solo il quadrato che passa al centro dello schermo mentre scorri
+  let raf = 0;
+  const center = () => { raf = 0; if (!mob()) return;
+    const mid = innerHeight / 2; let best = -1;
+    qs.forEach((q, i) => { const r = q.getBoundingClientRect(); if (r.top <= mid && r.bottom > mid) best = i; });
+    if (best !== on) set(best); };
+  addEventListener('scroll', () => raf || (raf = requestAnimationFrame(center)), { passive: true });
+  // la "GIF": parte solo sul quadrato attivo (mouse sopra / centro dello schermo); gli altri restano fermi
   const pos = C.map(() => 0);
+  const pre = src => { const im = new Image(); im.decoding = 'async'; im.src = src; };
   const step = i => { const c = C[i], q = qs[i]; pos[i] = (pos[i] + 1) % c.fr.length; const f = c.fr[pos[i]];
-    q.querySelectorAll('.cq__im img').forEach(x => { x.decoding = 'async'; x.src = f.src; }); kick(q.querySelector('.cq__im')); q.querySelector('.cq__now').textContent = f.name; };
-  let vis = false, tick = 0; new IntersectionObserver(es => vis = es[0].isIntersecting).observe(box);
-  // gira anche con "Riduci movimento" (iPhone): è solo un cambio di foto, più lento; i glitch li spegne già il CSS
+    q.querySelectorAll('.cq__im img').forEach(x => x.src = f.src); q.querySelector('.cq__now').textContent = f.name;
+    pre(c.fr[(pos[i] + 1) % c.fr.length].src); };
+  let vis = false; new IntersectionObserver(es => vis = es[0].isIntersecting).observe(box);
+  // anche con "Riduci movimento" (iPhone) gira: è solo un cambio di foto, più lento
   const rmGif = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  setInterval(() => { if (!vis || document.hidden) return; tick++;
-    qs.forEach((q, i) => { if (i === on || (tick + i) % 3 === 0) step(i); }); }, rmGif ? 1200 : 700);
+  setInterval(() => { if (vis && !document.hidden && on >= 0) step(on); }, rmGif ? 900 : 420);
 })();
 
 /* ---------- PROGETTI: SCAFFALE ---------- */
@@ -709,7 +717,7 @@ document.querySelectorAll('.fr__row').forEach(r => { r.addEventListener('mouseen
   data.sections.forEach(sec => sec.projects.forEach(p => {
     if (!p.frames || !p.frames.length) return;
     L.push({ id: p.id, name: p.name || p.id, cat: sec.id, catT: (document.documentElement.lang === 'en' && sec.title_en) || sec.title,
-      img: '/' + p.frames[p.cover || 0].replace(/\/([^/]+)\.jpg$/, '/l/$1.webp') });
+      fr: (p.cover ? p.frames.slice(p.cover).concat(p.frames.slice(0, p.cover)) : p.frames).map(f => '/' + f.replace(/\/([^/]+)\.jpg$/, '/l/$1.webp')) });
   }));
   const pad = n => String(n).padStart(3, '0');
   const EN = document.documentElement.lang === 'en';
@@ -724,12 +732,13 @@ document.querySelectorAll('.fr__row').forEach(r => { r.addEventListener('mouseen
   const img = src => `<img class="base" data-src="${src}" alt=""><img class="sl" data-src="${src}" alt=""><img class="sl" data-src="${src}" alt="">`;
   const load = el => el && el.querySelectorAll('img[data-src]').forEach(i => { i.src = i.dataset.src; i.removeAttribute('data-src'); });
   sf.innerHTML = L.map((p, i) => `<a class="sf__s${catIx[p.cat] % 2 ? '' : ' ink'}" href="/progetti.html?p=${p.id}" data-i="${i}">
-    <span class="sf__im">${img(p.img)}</span>
+    <span class="sf__im">${img(p.fr[0])}</span>
     <span class="sf__sp"><i>${p.catT[0]}</i><b>${p.name}</b><i>${String(i + 1).padStart(2, '0')}</i></span>
     <span class="sf__lab"><span class="mono">${pad(i + 1)} · ${p.catT}</span><b>${p.name}</b></span></a>`).join('');
-  const sp = [...sf.children], cur = document.getElementById('sfCur'); let on = -1;
+  const sp = [...sf.children], cur = document.getElementById('sfCur'); let on = -1, fi = 0;
   const open = i => {
-    if (i === on) return; on = i;
+    if (i === on) return; on = i; fi = 0;
+    if (on >= 0 && L[on].fr.length > 1) { const im = new Image(); im.src = L[on].fr[1]; }
     sf.classList.toggle('hov', i >= 0);
     sp.forEach((x, j) => x.classList.toggle('on', j === i));
     if (i >= 0) { load(sp[i]); load(sp[i + 1]); load(sp[i - 1]); kick(sp[i].querySelector('.sf__im')); cur.textContent = pad(i + 1) + ' / ' + pad(L.length); } else cur.textContent = '';
@@ -737,14 +746,27 @@ document.querySelectorAll('.fr__row').forEach(r => { r.addEventListener('mouseen
   const touch = () => matchMedia('(hover: none)').matches;
   sf.addEventListener('mouseover', e => { if (touch()) return; const s = e.target.closest('.sf__s'); if (s) open(+s.dataset.i); });
   sf.addEventListener('mouseleave', () => { if (!touch()) open(-1); });
-  // touch: primo tocco apre il dorso, il secondo apre la scheda
+  // touch: tocco su un dorso chiuso lo apre, su quello aperto apre la scheda
   sf.addEventListener('click', e => {
     const s = e.target.closest('.sf__s'); if (!s) return;
-    if (matchMedia('(hover: none)').matches && +s.dataset.i !== on) {
+    if (touch() && +s.dataset.i !== on) {
       e.preventDefault(); open(+s.dataset.i);
       s.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     }
   });
+  // touch: mentre fai scorrere lo scaffale col dito, quando ti fermi si apre da solo il dorso al centro
+  const mid = () => { const c = sf.getBoundingClientRect(); const x = c.left + c.width / 2; let best = -1, d = 1e9;
+    sp.forEach((s, j) => { const r = s.getBoundingClientRect(); const k = Math.abs(r.left + r.width / 2 - x); if (k < d) { d = k; best = j; } }); return best; };
+  let st = 0, auto = false;
+  sf.addEventListener('scroll', () => { if (!touch() || auto) return; clearTimeout(st);
+    st = setTimeout(() => { const j = mid(); if (j !== on) { open(j); auto = true; sp[j].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }); setTimeout(() => auto = false, 600); } }, 140); }, { passive: true });
+  // la "GIF": il dorso aperto sfoglia le foto del suo progetto
+  let sfVis = false;
+  new IntersectionObserver(es => { sfVis = es[0].isIntersecting; if (sfVis && touch() && on < 0) open(mid()); }, { threshold: .4 }).observe(sf);
+  const rmGif = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  setInterval(() => { if (!sfVis || document.hidden || on < 0) return; const f = L[on].fr; if (f.length < 2) return;
+    fi = (fi + 1) % f.length; sp[on].querySelectorAll('.sf__im img').forEach(x => { x.removeAttribute('data-src'); x.src = f[fi]; });
+    const im = new Image(); im.src = f[(fi + 1) % f.length]; }, rmGif ? 900 : 420);
 })();
 
 
