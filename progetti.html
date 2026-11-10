@@ -231,9 +231,11 @@
     pv.classList.add('on'); kick(pvG);
   });
   ix.addEventListener('mouseleave', () => { pv.classList.remove('on'); hov = -1; });
-  (function f() { x += (tx - x) * .18; y += (ty - y) * .18;
+  let run = false;
+  const f = () => { x += (tx - x) * .18; y += (ty - y) * .18;
     pv.style.transform = `translate(${Math.min(x, innerWidth - pv.offsetWidth - 16)}px,${Math.max(60, Math.min(y, innerHeight - pv.offsetHeight - 16))}px)`;
-    requestAnimationFrame(f); })();
+    if (pv.classList.contains('on')) requestAnimationFrame(f); else run = false; };
+  ix.addEventListener('mouseover', () => { if (!run && pv.classList.contains('on')) { run = true; requestAnimationFrame(f); } });
 
   /* ---------- scheda ---------- */
   const sd = document.getElementById('sd'), $ = id => document.getElementById(id);
