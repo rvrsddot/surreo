@@ -9,7 +9,7 @@
 
   /* ---------- header + menu + barra mobile ---------- */
   const nav = [
-    ['/progetti.html', 'Projects', 'Showcase · Video · Motion · Website', 'progetti'],
+    ['/progetti.html', 'Project', 'Showcase · Video · Motion · Website', 'progetti'],
     ['/fotovideo.html', 'Photo &amp; Film', 'Photography · Moving image', 'fotovideo'],
     ['/lapidary.html', 'Lapidary', 'Scrittura · Font trovati per strada', 'lapidary', 1],
     [H + '#about', 'About', 'Studio · Manifesto · Come lavoriamo', 'about'],
@@ -46,7 +46,7 @@
       </div>
     </div><div class="rule"></div>` : ''}
     <div class="g ft mono">
-      <span>Surreo Studio</span><a href="/cv.html">CV</a><a href="/privacy.html">Privacy</a>
+      <span>Surreo Studio</span><a href="/cv.html">CV</a><a href="/cv2.html">CV2</a><a href="/privacy.html">Privacy</a>
       <a href="https://www.instagram.com/surreo_studio/" target="_blank" rel="noopener">Instagram</a>
       <span>Unbased #Design Studio · IT / DE · © 2026</span>
     </div>`;

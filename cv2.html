@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="/lang.js"></script>
+<title>CV — Lerry Carlini · Surreo Studio</title>
+  <meta name="description" content="CV of Lerry Carlini, co-founder of Surreo Studio. Industrial and digital design, 3D modelling, AI." />
+  
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Surreo Studio" />
+  <meta property="og:title" content="CV — Lerry Carlini" />
+  <meta property="og:description" content="Lerry Carlini — co-founder of Surreo Studio. Industrial and digital design, 3D modelling, AI." />
+  <meta property="og:url" content="https://surreostudio.com/cv2.html" />
+  <meta property="og:image" content="https://surreostudio.com/og-image.jpg" />
+  <meta property="og:locale" content="it_IT" />
+  <!-- Archivo variabile (titolo Work in progress) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/bn/bn.css">
+<style>
+/* hero compatta: foto piccola, nome, dati essenziali in un blocco */
+.cvh{padding-top:64px;padding-bottom:0}
+.cvh__top>*{grid-column:span 3}.cvh__top>:last-child{text-align:right}
+.cvh__main{margin-top:clamp(28px,3vw,44px);align-items:end}
+.cvh__ph{grid-column:1/3}
+.cvh__ph .gi{aspect-ratio:4/5;background:#111}
+.cvh__ph .gi img{object-position:50% 20%}
+.cvh__nm{grid-column:3/13;display:flex;flex-direction:column;justify-content:flex-end;padding-left:clamp(4px,1vw,14px)}
+.cvh__nm h1{font-size:clamp(56px,8.6vw,150px);line-height:.8}
+.cvh__nm h1 small{display:block;margin-top:.22em;font:400 clamp(22px,2.3vw,38px)/1 var(--serif);font-style:italic;text-transform:none;letter-spacing:-.01em}
+.cvh__info{margin-top:clamp(28px,3vw,44px);border-top:1px solid rgba(255,255,255,.35);list-style:none}
+.cvh__info li{grid-column:span 2;padding:12px 0 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.cvh__info li:nth-child(2),.cvh__info li:nth-child(3){grid-column:span 3}
+.cvh__info em{font-style:normal;color:var(--g)}
+.cvh__info a,.cvh__info span{overflow-wrap:anywhere}
+.cvh__soc{display:flex;gap:8px;flex-wrap:wrap}
+.cvh__soc a{border:1px solid rgba(255,255,255,.5);padding:5px 8px}
+.cvh__soc a:hover{background:var(--w);color:var(--k)}
+/* intro */
+.cvi{padding-top:clamp(50px,6vw,90px);padding-bottom:clamp(40px,5vw,70px);align-items:start}
+.cvi__p{grid-column:1/10;font:300 clamp(20px,1.9vw,30px)/1.25 var(--sans)}
+.cvi__p u{text-decoration:none;font-family:var(--serif);font-style:italic;font-size:1.08em;border-bottom:1px solid currentColor}
+.cvi__d{grid-column:9/13;list-style:none;border-top:1px solid var(--k)}
+.cvi__d li{display:grid;grid-template-columns:52px 1fr;padding:8px 0;border-bottom:1px solid var(--k)}
+.cvi__d em{font-style:normal;color:var(--g)}
+.roles{grid-column:1/13;margin-top:clamp(40px,5vw,70px);display:flex;flex-wrap:wrap;gap:0 .35em;font:900 clamp(26px,3.6vw,60px)/1 var(--sans);font-variation-settings:"wdth" 30,"opsz" 144;text-transform:uppercase}
+.roles span{transition:font-variation-settings .45s var(--ease)}
+.roles span:hover{font-variation-settings:"wdth" 130,"opsz" 144}
+.roles i{font-style:normal;font-weight:300;color:var(--g)}
+.cta1{grid-column:1/13;margin-top:30px;display:flex;justify-content:space-between;align-items:center;border:1px solid var(--k);padding:14px 16px;transition:background .2s,color .2s}
+.cta1:hover{background:var(--k);color:var(--w)}
+.cta1 b{font:900 clamp(22px,2.4vw,38px)/1 var(--sans);font-variation-settings:"wdth" 60;text-transform:uppercase}
+.rl{grid-column:1/13;margin-top:clamp(40px,5vw,70px);border-top:1px solid var(--k)}
+.rl__r{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gut);align-items:baseline;border-bottom:1px solid var(--k);padding:8px 0;position:relative}
+.rl__r::before{content:"";position:absolute;inset:0 calc(var(--pad) * -1);background:var(--k);transform:scaleY(0);transform-origin:bottom;transition:transform .4s var(--ease)}
+.rl__r>*{position:relative;transition:color .3s}
+.rl__r:hover::before,.rl__r.on::before{transform:none}
+.rl__r:hover>*,.rl__r.on>*{color:var(--w)}
+.rl__y{grid-column:1/2}
+.rl__n{grid-column:2/8;font-size:clamp(34px,4.6vw,78px)}
+.rl__s{grid-column:8/13;text-align:right}
+/* nav sezioni */
+.cvn{position:sticky;top:0;z-index:20;background:var(--w);display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-top:1px solid var(--k);border-bottom:1px solid var(--k)}
+.cvn a{padding:10px var(--pad);display:flex;gap:10px;border-right:1px solid var(--k);transition:background .15s,color .15s}
+.cvn a:last-child{border-right:0}
+.cvn a:hover,.cvn a.on{background:var(--k);color:var(--w)}
+/* sezioni */
+.cs{padding-bottom:clamp(40px,5vw,70px)}
+.cs__h{display:flex;justify-content:space-between;align-items:end;padding:clamp(50px,6vw,90px) var(--pad) 14px;border-bottom:1px solid var(--k);scroll-margin-top:40px}
+.cs__h b{font-size:clamp(48px,8vw,140px);display:flex;gap:.25em;align-items:flex-start;flex:1;min-width:0}
+.cs__h b sup{font:400 12px var(--mono);letter-spacing:0;padding-top:.6em}
+.row{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gut);padding:18px var(--pad);border-bottom:1px solid var(--k);align-items:start}
+.row__y{grid-column:1/3}
+.row__c{grid-column:3/11}
+.row__c h3{font:800 clamp(22px,2.4vw,38px)/1 var(--sans);font-variation-settings:"wdth" 60,"opsz" 48;text-transform:uppercase}
+.row__s{display:block;margin-top:8px;color:var(--g)}
+.row__c p{margin-top:10px;font:300 16px/1.5 var(--sans);max-width:70ch}
+.row__c a{text-decoration:underline;text-underline-offset:3px}
+.row__t{grid-column:11/13;text-align:right}
+.row__t span{border:1px solid var(--k);padding:4px 6px}
+.ed{list-style:none;margin-top:14px;border-top:1px solid #cfcfca}
+.ed li{display:grid;grid-template-columns:200px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid #cfcfca;font:400 15px/1.35 var(--sans)}
+.ed li b{font:400 11px/1.6 var(--mono);text-transform:uppercase}
+.crs__h{display:block;margin-top:18px}
+.crs{list-style:none;margin-top:10px;border-top:1px solid var(--k)}
+.crs li{display:grid;grid-template-columns:120px 40px 1.2fr 1fr;gap:12px;padding:7px 0;border-bottom:1px solid #cfcfca;align-items:baseline}
+.crs li b{font:800 15px/1.1 var(--sans);font-variation-settings:"wdth" 75;text-transform:uppercase}
+.crs li span{font:300 14px/1.3 var(--sans)}
+.crs li .mono{font-size:10px}
+.crs.pre li:nth-child(n+9){display:none}
+.crs__b{margin-top:12px}
+.tags{display:flex;flex-wrap:wrap;gap:0 .3em;padding:22px var(--pad);font:900 clamp(26px,3.4vw,56px)/1.02 var(--sans);font-variation-settings:"wdth" 30,"opsz" 144;text-transform:uppercase}
+.tags span{transition:font-variation-settings .4s var(--ease)}
+.tags span:hover{font-variation-settings:"wdth" 140,"opsz" 144}
+.tags i{font-style:normal;font-weight:200;color:var(--g)}
+.tools{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--gut);padding:20px var(--pad)}
+.tool{border-top:1px solid var(--k)}
+.tool__h{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--k);gap:8px}
+.tool ul{list-style:none}
+.tool li{display:grid;grid-template-columns:34px 1fr;padding:6px 0;border-bottom:1px solid #d6d6d2;font:400 14px/1.2 var(--sans)}
+.tool li i{font:500 11px/1.3 var(--mono);font-style:normal;background:var(--k);color:var(--w);text-align:center;width:24px;height:16px;line-height:16px}
+.more{padding:22px var(--pad)}
+.more a{text-decoration:underline}
+@media (max-width:700px){
+  .cvh__top>*{grid-column:span 6}.cvh__top>:nth-child(n+3){display:none}
+  .cvh__ph{grid-column:1/5}
+  .cvh__nm{grid-column:5/13;padding-left:0}
+  .cvh__nm h1{font-size:12.4vw}
+  .cvh__nm h1 small{font-size:5.4vw}
+  .cvh__info li,.cvh__info li:nth-child(2),.cvh__info li:nth-child(3){grid-column:span 6;padding:10px 0 12px}
+  .cvh__info li:nth-child(2),.cvh__info li:nth-child(3){grid-column:1/13}
+  .cvi__p,.cvi__d{grid-column:1/13}.cvi__d{margin-top:24px}
+  .rl__n{grid-column:1/13}.rl__y{grid-column:1/4}.rl__s{grid-column:4/13}
+  .cvn{grid-template-columns:repeat(6,auto);overflow-x:auto;scrollbar-width:none}.cvn::-webkit-scrollbar{display:none}
+  .cvn a{padding:10px 12px;white-space:nowrap}
+  .row__y{grid-column:1/9}.row__t{grid-column:9/13}.row__c{grid-column:1/13;margin-top:8px}
+  .ed li{grid-template-columns:1fr;gap:2px}
+  .crs li{grid-template-columns:1fr 34px;gap:2px 10px}
+  .crs li>:nth-child(1){grid-column:1}.crs li>:nth-child(2){grid-column:2;grid-row:1;text-align:right}
+  .crs li b,.crs li>span:last-child{grid-column:1/3}
+  .tools{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body data-page="cv">
+<main>
+  <section class="dark cvh">
+    <div class="g cvh__top mono"><span>Surreo Studio</span><span>Curriculum · 2026</span><span>fig. LC</span><a href="/">← Home</a></div>
+    <div class="g cvh__main">
+      <figure class="cvh__ph" data-gk><div class="gi bw" style="display:grid;place-items:center;color:#777;font:400 12px var(--mono)">FOTO</div></figure>
+      <div class="cvh__nm">
+        <h1 class="disp dec">Lerry<br>Carlini<small>Industrial &amp; digital designer</small></h1>
+      </div>
+    </div>
+    <ul class="g cvh__info mono">
+      <li><em>Nato</em><span>20/05/1993 · Fermo</span></li>
+      <li><em>@</em><a href="mailto:carlinilerry@gmail.com">carlinilerry@gmail.com</a></li>
+      <li><em>Lang</em><span>Italiano madrelingua · Inglese intermedio · Spagnolo base</span></li>
+    </ul>
+  </section>
+  <section class="light">
+    <div class="g cvi">
+      <a class="cta1" href="/progetti.html"><span class="mono">Discover</span><b>Founded projects</b><span class="mono">→</span></a>
+      <div class="rl" id="rl">
+        <div class="rl__r"><span class="rl__y mono">2024</span><b class="rl__n disp">Surreo Studio</b><span class="rl__s mono">Co-Founder</span></div>
+        <div class="rl__r"><span class="rl__y mono">2026</span><b class="rl__n disp">Æ-Zine</b><span class="rl__s mono">Co-Founder</span></div>
+      </div>
+    </div>
+    <nav class="cvn mono" id="cvn"><a href="#cv-01"><span>01</span><span>Esperienza lavorativa</span></a><a href="#cv-02"><span>02</span><span>Formazione</span></a><a href="#cv-03"><span>03</span><span>Workshok</span></a><a href="#cv-04"><span>04</span><span>Progetti</span></a><a href="#cv-05"><span>05</span><span>Software &amp; strumenti</span></a></nav>
+    <div id="secs"><section class="cs" id="cv-01"><div class="cs__h"><b class="disp" data-fit="150"><span class="dec">Esperienza lavorativa</span><sup>01</sup></b><span class="mono">06 voci</span></div><div class="row"><span class="row__y mono">Dal 20 Nov 2026</span><div class="row__c"><h3>Æ-Zine</h3><span class="row__s mono">Co-founder</span><p>Online magazine and zine, founded on 20 November and born inside Suburbiæ: subculture, bands and the design behind it, made in Teramo. A searchable archive of articles and numbered microzines.</p></div><span class="row__t mono"></span></div><div class="row"><span class="row__y mono">Dal 2025</span><div class="row__c"><h3>Workshok! Hub</h3><span class="row__s mono">Project Manager</span><p>Workshok! is an independent HUB for architecture and design education, focused on workshops, experimental laboratories and interdisciplinary learning experiences. It operates across physical and digital spaces, connecting research, education and design practice.</p><p>Project management of the hub's workshops and learning experiences.</p></div><span class="row__t mono"></span></div><div class="row"><span class="row__y mono">Dal 2025</span><div class="row__c"><h3>Surreo Studio</h3><span class="row__s mono">Co-founder</span><p>A multidisciplinary creative studio founded to develop complex projects across design, visual identity, communication and creative direction</p></div><span class="row__t mono"></span></div><div class="row"><span class="row__y mono">Dic 2021 – Set 2026</span><div class="row__c"><h3>Promo Spa</h3><span class="row__s mono">Corridonia (MC), Italia</span><p>Progettazione di modelli 3D per strutture in acciaio e facciate architettoniche, inclusi rendering e visualizzazione.</p><p>Gestione delle attività commerciali, sviluppo delle relazioni con i clienti e garantire la loro soddisfazione.</p></div><span class="row__t mono"></span></div><div class="row"><span class="row__y mono">Giu – Set 2014</span><div class="row__c"><h3>Trismeccanica Srl</h3><span class="row__s mono">Fermo (FM), Italia</span><p>Operatore CNC con esperienza nella produzione di componenti meccanici di precisione, garantendo elevati standard qualitativi.</p><p>Monitoraggio delle prestazioni delle macchine, regolazione dei parametri e ottimizzazione dell'efficienza produttiva per raggiungere gli obiettivi prefissati.</p></div><span class="row__t mono"></span></div><div class="row"><span class="row__y mono">Giu – Set 2012</span><div class="row__c"><h3>Savelli ascensori SRL</h3><span class="row__s mono">Fermo (FM), Italy</span><p>Operatore CNC con esperienza nella produzione di componenti meccanici di precisione, garantendo elevati standard qualitativi.</p><p>Monitoraggio delle prestazioni delle macchine, regolazione dei parametri e ottimizzazione dell'efficienza produttiva per raggiungere gli obiettivi prefissati.</p></div><span class="row__t mono"></span></div></section><section class="cs" id="cv-02"><div class="cs__h"><b class="disp" data-fit="150"><span class="dec">Formazione</span><sup>02</sup></b><span class="mono">08 voci</span></div><div class="row"><span class="row__y mono">Dic 2021</span><div class="row__c"><h3>Laurea Magistrale: Design per l'Innovazione Digitale</h3><span class="row__s mono">Unicam, SAAD "Eduardo Vittoria" - Ascoli Piceno</span><p>Laureato: 110L/110 - dicembre 2021</p><p>Progetto di tesi: "Dispositivi di protezione individuale (casco da ciclismo) potenziati con dispositivi digitali per migliorare la sicurezza degli utenti in ambienti urbani"</p></div><span class="row__t mono"></span></div><div class="row"><span class="row__y mono">18 Giu 2019</span><div class="row__c"><h3>Aula Emprende — Regione Marche</h3><p>Progetto finanziato da Interreg Europe per definire percorsi e soluzioni intelligenti volte a rafforzare ambienti imprenditoriali innovativi per giovani imprenditori, con l'obiettivo di rendere più efficaci e accessibili gli interventi di FSE e FESR.</p></div><span class="row__t mono"></span></div><div class="row"><span class="row__y mono">Maggio 2019</span><div class="row__c"><h3>Laboratorio di paesaggi luminosi sociali — iGuzzini group</h3><span class="row__s mono">Laboratorio di ricerca sociale nel lighting design</span><p>Progettazione illuminotecnica "sociale" nei villaggi abitativi di emergenza ad Arquata</p></div><span class="row__t mono"></span></div><div class="row"><span class="row__y mono">Apr 2019</span><div class="row__c"><h3>Laurea triennale: Progettazione Industriale e Ambientale (L4)</h3><span class="row__s mono">Unicam, SAAD "Eduardo Vittoria" - Ascoli Piceno</span><p>Laureato: 100/110 - aprile 2019</p><p>Progetto di tesi: "Ambienti Protetti per l'Apicoltura"</p></div><span class="row__t mono"></span></div><div class="row"><span class="row__y mono">17 Dic 2018</span><div class="row__c"><h3>Programma formativo: 24 CFU</h3><span class="row__s mono">Unicam - Università degli Studi di Camerino – Camerino</span><p>Tirocinio in Metodologie e tecnologie didattiche nelle discipline antropo-psico pedagogiche</p></div><span class="row__t mono"></span></div><div class="row"><span class="row__y mono">Gen – Giu 2015</span><div class="row__c"><h3>Corso di Business Technology Development: Disegno Industriale e Progettazione CAD (2D e 3D)</h3><span class="row__s mono">Pragma STA</span><p>Durata: 70 ore | Software: Autodesk AutoCAD + 3Ds Max</p></div><span class="row__t mono"></span></div><div class="row"><span class="row__y mono">4 Lug 2014</span><div class="row__c"><h3>Diploma: Tecnico Industrie Meccaniche</h3><span class="row__s mono">Istituto Professionale per l'Industria e l'Artigianato "O. Ricci" - Fermo</span></div><span class="row__t mono"></span></div><div class="row"><span class="row__y mono">Nov – Apr 2014</span><div class="row__c"><h3>Corso: Tecnico dell'Automazione (Operatore di Controllo Numerico)</h3><span class="row__s mono">Centro di Formazione Territoriale - Regione Marche</span><p>Durata: 100 ore | Software: Cimatron</p></div><span class="row__t mono"></span></div></section><section class="cs" id="cv-03"><div class="cs__h"><b class="disp" data-fit="150"><span class="dec">Workshok</span><sup>03</sup></b><span class="mono">02 voci</span></div><div class="row"><span class="row__y mono">7–9 Set 2022</span><div class="row__c"><h3>Mapping Projection</h3><span class="row__s mono">Studio Ultravioletto · TouchDesigner</span><p>Videomapping con TouchDesigner. Videomapping su superfici tridimensionali con TouchDesigner.</p></div><span class="row__t mono"></span></div><div class="row"><span class="row__y mono">Settembre 2026</span><div class="row__c"><h3>Ai &amp; Creativity</h3><p>Un workshop intensivo sull'intelligenza artificiale come alleata del processo creativo. Dopo casi studio e una breve introduzione, ogni partecipante ha lavorato a un progetto originale con FloraFauna AI (immagini, concept, direzione visiva) fino a impaginarlo e presentarlo.</p></div><span class="row__t mono"></span></div></section><section class="cs" id="cv-04"><div class="cs__h"><b class="disp" data-fit="150"><span class="dec">Progetti</span><sup>04</sup></b><span class="mono">02 voci</span></div><div class="row"><span class="row__y mono">2024</span><div class="row__c"><h3>Surreo studio — Co-founder</h3><p>A multidisciplinary creative studio founded to develop complex projects across design, visual identity, communication and creative direction</p></div><span class="row__t mono"></span></div><div class="row"><span class="row__y mono">2026</span><div class="row__c"><h3>Æ-Zine — Co-founder</h3><p>Online magazine and zine, founded on 20 November and born inside Suburbiæ: subculture, bands and the design behind it, made in Teramo. A searchable archive of articles and numbered microzines.</p></div><span class="row__t mono"></span></div></section><section class="cs" id="cv-05"><div class="cs__h"><b class="disp" data-fit="150"><span class="dec">Software &amp; strumenti</span><sup>05</sup></b><span class="mono">04 gruppi</span></div><div class="tools"><div class="tool"><div class="tool__h mono"><span>#3D &amp; modellazione</span><span>06 apps</span></div><ul><li><i>Rh</i><span>Rhinoceros</span></li><li><i>F3</i><span>Fusion 360</span></li><li><i>Bl</i><span>Blender</span></li><li><i>Cr</i><span>PTC Creo Parametric</span></li><li><i>Un</i><span>Unreal</span></li><li><i>Ci</i><span>Cimatron E</span></li></ul></div><div class="tool"><div class="tool__h mono"><span>#Foto, grafica &amp; video</span><span>01 apps</span></div><ul><li><i>Ad</i><span>Adobe — fotografia, progettazione grafica, editing video</span></li></ul></div><div class="tool"><div class="tool__h mono"><span>#AI</span><span>01 apps</span></div><ul><li><i>Ai</i><span>Software di Ai — grafica brand identity, render, video</span></li></ul></div><div class="tool"><div class="tool__h mono"><span>#Ufficio &amp; elettronica</span><span>02 apps</span></div><ul><li><i>Of</i><span>Microsoft Office</span></li><li><i>Ar</i><span>Arduino</span></li></ul></div></div></section></div>
+  </section>
+</main>
+<footer data-bn></footer>
+<script src="/bn/bn.js"></script>
+<script>
+(() => {
+  document.querySelectorAll('.rl__r').forEach(window.bnScan);
+  const out = document.getElementById('secs');
+  out.querySelectorAll('.dec').forEach(window.bnObserve);
+  window.bnFit && window.bnFit();
+  const as = [...document.querySelectorAll('#cvn a')];
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) as.forEach(a => a.classList.toggle('on', a.hash === '#' + e.target.id)); }), { rootMargin: '-40% 0px -55% 0px' });
+  out.querySelectorAll('.cs').forEach(s => io.observe(s));
+})();
+</script>
+</body>
+</html>

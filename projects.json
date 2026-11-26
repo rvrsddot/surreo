@@ -37,6 +37,27 @@
           ]
         },
         {
+          "id": "aezine",
+          "name": "Æ-ZINE",
+          "type": "Project",
+          "description": "Rivista online e zine, fondata il 20 novembre e nata dentro Suburbiæ: subcultura, band e design dietro la subcultura, fatta a Teramo. Un archivio di articoli da cercare e leggere e microzine a numeri. Direzione creativa di Lorenzo Di Gioacchino, direttore e creative director.",
+          "description_en": "Online magazine and zine, founded on 20 November and born inside Suburbiæ: subculture, bands and the design behind it, made in Teramo. A searchable archive of articles and numbered microzines. Directed by Lorenzo Di Gioacchino, director and creative director.",
+          "tags": [
+            "Magazine",
+            "Editorial Design",
+            "Creative Direction",
+            "Co-Founding"
+          ],
+          "url": "https://suburbiaefest.com/magazine/",
+          "frames": [
+            "assets/projects/aezine/01.jpg",
+            "assets/projects/aezine/02.jpg",
+            "assets/projects/aezine/03.jpg",
+            "assets/projects/aezine/04.jpg",
+            "assets/projects/aezine/05.jpg"
+          ]
+        },
+        {
           "id": "magno-pack",
           "name": "MAGNO — PACK PANETTONE",
           "type": "Project",

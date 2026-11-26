@@ -6,7 +6,7 @@
   const T = (it, en) => EN ? en : it;
   const H = '/';
   const ITEMS = [
-    ['progetti', 'Projects', 'Showcase · Video · Motion · Website', '/progetti.html'],
+    ['progetti', 'Project', 'Showcase · Video · Motion · Website', '/progetti.html'],
     ['fotovideo', 'Photo & Film', 'Photography · Moving image', '/fotovideo.html'],
     ['lapidary', 'Lapidary', T('Scrittura · Font trovati per strada', 'Lettering · Fonts found on the street'), '/lapidary.html', 1],
     ['about', 'About', T('Studio · Manifesto · Come lavoriamo', 'Studio · Manifesto · How we work'), onHome ? '#about' : H + '#about'],
@@ -28,7 +28,7 @@
           <div><dt>${T('Segui', 'Follow')}</dt><dd><a href="https://www.instagram.com/surreo_studio/" target="_blank" rel="noopener">Instagram @surreo_studio</a></dd></div>
         </dl>
         <div><dt style="color:var(--g);margin-bottom:6px">${T('Lingua', 'Language')}</dt><span class="mn__lg"><span data-l="it">IT</span><span data-l="en">EN</span></span>
-          <div class="mn__leg"><a href="/cv.html">CV</a><a href="/privacy.html">Privacy</a><span>© 2026</span></div></div>
+          <div class="mn__leg"><a href="/cv.html">CV</a><a href="/cv2.html">CV2</a><a href="/privacy.html">Privacy</a><span>© 2026</span></div></div>
       </aside>
       <nav class="mn__nav" aria-label="${T('Sezioni', 'Sections')}">${ITEMS.map((x, i) => `
         <a href="${x[3]}"${x[4] ? ' class="ext"' : ''} style="--i:${i}"${x[0] === page ? ' aria-current="page"' : ''}>
